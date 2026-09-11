@@ -1,0 +1,1505 @@
+{
+  "description": "300 mid-level logical questions on Python file handling (modes, read/write, bytes, encoding, json/csv, os/pathlib, exceptions)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "A text file poem.txt contains exactly the two lines 'twinkle twinkle' and 'little star' (that is, the content 'twinkle twinkle\\nlittle star'). This code runs: `f = open('poem.txt', 'r'); print(repr(f.read())); f.close()`. What is printed?",
+      "answer": "The output is `'twinkle twinkle\\nlittle star'`. read() with no argument reads the entire file from the current cursor position all the way to EOF and returns it as a single string, preserving every internal newline. The trailing newline translation in text mode has already normalized any \\r\\n endings, so the string shows plain \\n."
+    },
+    {
+      "id": 2,
+      "question": "poem.txt contains 'twinkle twinkle\\nlittle star'. This code runs: `f = open('poem.txt', 'r'); print(repr(f.read(7))); f.close()`. What is printed?",
+      "answer": "The output is `'twinkle'`. read(7) reads at most the next 7 characters from the current cursor position and stops — it never reads past the 7-character limit. In text mode the argument counts characters (code points), not bytes."
+    },
+    {
+      "id": 3,
+      "question": "poem.txt contains 'twinkle twinkle\\nlittle star'. This code runs: `f = open('poem.txt', 'r'); f.read(); print(repr(f.read())); f.close()`. What is printed?",
+      "answer": "The output is `''`. The first read() consumed the whole file, so the cursor is already at EOF. A second read() has nothing left to return and yields the empty string — it does not raise an error and does not rewind. The empty string is the standard 'nothing more' signal."
+    },
+    {
+      "id": 4,
+      "question": "numbers.txt contains 'one\\ntwo\\nthree'. This code runs: `f = open('numbers.txt', 'r'); a = f.readline(); b = f.readline(); print(repr(a), repr(b)); f.close()`. What is printed?",
+      "answer": "The output is `'one\\n' 'two\\n'`. readline() reads from the cursor through the next newline inclusive, so the returned line keeps its trailing '\\n' character. Nothing is stripped automatically — you have to call strip() yourself if you do not want the newline."
+    },
+    {
+      "id": 5,
+      "question": "names.txt contains the characters: a l i c e newline b o b (no trailing newline at the end of the file). This code runs: `f = open('names.txt', 'r'); print(f.readlines()); f.close()`. What is printed?",
+      "answer": "The output is `['alice\\n', 'bob']`. readlines() consumes the rest of the file and returns one list element per line, split at '\\n'. Each line keeps its own trailing newline if it had one, and the final line 'bob' has none because the file does not end with a newline."
+    },
+    {
+      "id": 6,
+      "question": "You must process a 2 GB log file one line at a time. Compare these two approaches: `for line in f:` versus `for line in f.readlines():`. Which is memory-friendly and why?",
+      "answer": "Using `for line in f:` is memory-friendly. A text file object is its own iterator, so each loop iteration calls readline() internally and only the current line is held in memory at any moment. readlines() instead reads the entire file and builds one list containing every line, so all 2 GB (plus list overhead) would be in RAM at once. Iterate the file object directly for large files; readlines() suits small ones."
+    },
+    {
+      "id": 7,
+      "question": "data.txt contains 'a\\nb\\nc\\n'. This code runs: `f = open('data.txt', 'r'); [print(i, repr(line)) for i, line in enumerate(f)]`. Wait, that comprehension abuses a side effect — the equivalent loop is: `for i, line in enumerate(f): print(i, repr(line))`. What is printed?",
+      "answer": "The output is:\n0 'a\\n'\n1 'b\\n'\n2 'c\\n'\nIterating a file object reads one line at a time until readline() returns '' at EOF. Every yielded line keeps its trailing '\\n', and here the last line also has it because the file ends with a newline character."
+    },
+    {
+      "id": 8,
+      "question": "hello.txt contains 'hello\\nworld\\n'. This code runs: `f = open('hello.txt', 'r'); f.readline(); print(f.tell()); f.close()`. What is printed?",
+      "answer": "The output is `6`. After readline() the cursor sits just past the newline, i.e. directly after the 6 characters 'hello\\n'. tell() reports the byte offset at which the next read or readline will begin; every character is 1 byte here because the content is ASCII."
+    },
+    {
+      "id": 9,
+      "question": "hello.txt contains 'hello\\nworld\\n'. This code runs: `f = open('hello.txt', 'r'); f.read(); print(f.tell()); f.close()`. What is printed?",
+      "answer": "The output is `12`. read() consumed the whole file and stopped at EOF, and tell() therefore equals the file size: 'hello\\nworld\\n' is 5+1+5+1 = 12 bytes. tell() at EOF is the reliable way to learn the byte length of the content you just read."
+    },
+    {
+      "id": 10,
+      "question": "hello.txt contains 'hello\\nworld\\n'. This code runs: `f = open('hello.txt', 'r'); f.read(); f.seek(0); print(repr(f.read())); f.close()`. What is printed?",
+      "answer": "The output is `'hello\\nworld\\n'`. seek(0) moves the cursor back to the start of the file, so the second read() re-reads the whole content. In text mode, only seek(0) and seek() to positions previously returned by tell() are guaranteed to behave sensibly."
+    },
+    {
+      "id": 11,
+      "question": "a file mini.txt contains 'x\\ny' (it does NOT end with a newline). This code runs: `f = open('mini.txt', 'r'); print(repr(f.readline())); print(repr(f.readline())); print(repr(f.readline())); f.close()`. What is printed?",
+      "answer": "The output is:\n'x\\n'\n'y'\n''\nThe first readline() returns the line including its newline. The second returns 'y', the last chunk of the file, with no trailing newline because the file ends there. The third call is at EOF, so it returns '' — that empty string is the standard check for end of file when using readline() in a while loop."
+    },
+    {
+      "id": 12,
+      "question": "data.txt contains 'hello' (5 characters, no newline). This code runs: `f = open('data.txt', 'r'); f.seek(3); print(repr(f.read(100))); f.close()`. What is printed?",
+      "answer": "The output is `'lo'`. read(100) is capped by what remains before EOF: only 2 characters are left after the cursor moves to offset 3, so it returns just those two. read() never pads, never raises, and never reads beyond EOF — it simply returns whatever is available."
+    },
+    {
+      "id": 13,
+      "question": "blank.txt is a completely empty file (0 bytes). This code runs: `f = open('blank.txt', 'r'); print(repr(f.read())); print(repr(f.readline())); print(f.readlines()); f.close()`. What is printed?",
+      "answer": "The output is:\n''\n''\n[]\nAn empty file has no data at all, so read() and readline() both give '' and readlines() gives an empty list. None of them raise an exception; you detect the absence of content by checking the empty string or empty list."
+    },
+    {
+      "id": 14,
+      "question": "missing.txt does not exist. This code runs: `f = open('missing.txt', 'r')`. Which exception is raised?",
+      "answer": "`FileNotFoundError: [Errno 2] No such file or directory: 'missing.txt'`. Reading requires a file to read from, and 'r' (like 'r+') never creates a file, so the failure happens at open time. FileNotFoundError is a subclass of OSError, raised before any read call is made."
+    },
+    {
+      "id": 15,
+      "question": "data.txt already exists. This code runs: `f = open('data.txt', 'x')`. Which exception is raised?",
+      "answer": "`FileExistsError: [Errno 17] File exists: 'data.txt'`. Mode 'x' is exclusive creation: open() creates the file for writing only if it is absent, so colliding with an existing file is reported instead of silently overwriting it. On a brand-new path, 'x' creates the file and opens it with the cursor at position 0."
+    },
+    {
+      "id": 16,
+      "question": "journal.txt does not exist. This code runs: `f = open('journal.txt', 'r+')`. Which exception is raised, and how does 'w+' differ in behavior for the same missing file?",
+      "answer": "`FileNotFoundError: [Errno 2] No such file or directory: 'journal.txt'`. Mode 'r+' opens for both reading and writing but requires the file to already exist and never truncates. 'w+' would succeed, both reads and writes while creating the missing file — but it also truncates any existing file to zero bytes, which is the key risk of choosing it over 'r+'."
+    },
+    {
+      "id": 17,
+      "question": "log.txt currently contains 'old log'. This code runs: `f = open('log.txt', 'w'); f.write('new'); f.close()`. After it finishes, what exactly is inside log.txt?",
+      "answer": "The file contains the 3 bytes `new` — the old 'old log' content is completely gone. Mode 'w' opens for writing and truncates the existing file to zero length at open time, before any write happens. The new write then starts at offset 0, so what you write is all the file holds."
+    },
+    {
+      "id": 18,
+      "question": "data.txt currently contains 'AAAA'. This code runs: `f = open('data.txt', 'a'); f.write('BB'); f.close()`. After it finishes, what exactly is inside data.txt?",
+      "answer": "The file contains the 6 characters `'AAAABB'`. Append mode 'a' never truncates existing content; it positions the cursor at the end of the file on open, so every write lands after the existing bytes. The file grows from 4 bytes to 6 bytes."
+    },
+    {
+      "id": 19,
+      "question": "data.txt currently contains 'AAAA'. This code runs: `f = open('data.txt', 'a'); f.seek(0); f.write('ZZ'); f.close()`. After it finishes, what exactly is inside data.txt?",
+      "answer": "The file contains `'AAAAZZ'`. seek(0) moves the cursor to the start, but every write in append mode still lands at the very end of the file, because the descriptor was opened with O_APPEND and the OS forces each write to sink before it. You cannot overwrite earlier content through an 'a' handle; use 'r+' for that."
+    },
+    {
+      "id": 20,
+      "question": "data.bin is a binary file whose first two bytes are 0x01 0x02. This code runs: `f = open('data.bin', 'ab'); f.write(b'\\x03\\x04'); f.read()`. What happens?",
+      "answer": "The read() call raises `io.UnsupportedOperation: not readable`. Mode 'ab' is binary append: it is write-only by design, so no reading is possible at all. Because the operation is unsupported on this stream, Python raises UnsupportedOperation immediately rather than returning any data."
+    },
+    {
+      "id": 21,
+      "question": "f.txt currently contains 'hello'. This code runs: `f = open('f.txt', 'w+'); print(f.tell()); print(repr(f.read())); f.close()`. What is printed?",
+      "answer": "The output is:\n0\n''\nMode 'w+' opens for both reading and writing but truncates the existing content to zero bytes immediately on open. The cursor starts at 0 and read() right away finds nothing, so you get ''. With 'w+' you must write first (then seek back) before you can read any meaningful data back."
+    },
+    {
+      "id": 22,
+      "question": "letters.txt contains the text 'hello'. This code runs: `with open('letters.txt', 'rb') as f: print(repr(f.read(3))); print(f.tell())`. What is printed?",
+      "answer": "The output is:\nb'hel'\n3\nBinary mode 'rb' returns raw bytes, so read(3) produces a three-byte bytes object b'hel'. The '3' counts bytes here (in text mode it counts characters); the two numbers agree only because the content is ASCII."
+    },
+    {
+      "id": 23,
+      "question": "f.txt currently contains 'abcdefghij'. This code runs: `with open('f.txt', 'r+') as f: f.seek(3); f.write('XY')`. After it finishes, what exactly is inside f.txt?",
+      "answer": "The file contains `'abcXYfghij'`. Mode 'r+' keeps the existing bytes and write() overwrites in place at the cursor, so positions 3 and 4 become 'XY' and the characters after them ('fghij') are untouched — nothing is inserted and nothing is shifted. This in-place overwriting is the normal purpose of 'r+'."
+    },
+    {
+      "id": 24,
+      "question": "Match modes to behavior: for each of 'r', 'w', 'a', 'x', 'r+', 'w+', 'a+' say which (a) require the file to exist, (b) create the file if missing, (c) truncate existing content, (d) allow reading as well as writing.",
+      "answer": "'r' and 'r+' require the file to exist (FileNotFoundError otherwise), never create, never truncate, and only 'r+' allows writing. 'w', 'w+', 'a', 'a+', and 'x' all create a missing file. 'w' and 'w+' truncate existing content to zero; 'a', 'a+', 'r', 'r+', 'x' do not. 'r+', 'w+', and 'a+' are the read-write modes; 'r'/'w'/'a'/'x' are single-purpose (x also writes). Also note 'w' truncates without requesting read, and 'a' writes only at the end."
+    },
+    {
+      "id": 25,
+      "question": "f.bin is a 5-byte file containing b'abcde'. This code runs: `with open('f.bin', 'rb') as f: f.seek(0, 2); print(f.tell())`. What is printed?",
+      "answer": "The output is `5`. seek(0, 2) uses whence=SEEK_END: offset 0 positions the cursor at the end of the file, and tell() consequently equals the file size. This seek-to-end idiom is how you discover a file's length or where an append write would begin."
+    },
+    {
+      "id": 26,
+      "question": "f.bin is a 10-byte file containing the ASCII bytes b'0123456789'. This code runs: `with open('f.bin', 'rb') as f: f.seek(3, 0); print(repr(f.read(3)))`. What is printed?",
+      "answer": "The output is `b'345'`. whence=0 (SEEK_SET) makes the offset absolute from the start of the file, so the cursor moves to byte 3, i.e. the character '3'. Reading the next 3 bytes then yields b'345'. whence=0 is the default when you call seek() with a single argument."
+    },
+    {
+      "id": 27,
+      "question": "f.bin is a 10-byte file containing b'0123456789'. This code runs: `with open('f.bin', 'rb') as f: f.seek(-2, 2); print(f.tell())`. What is printed?",
+      "answer": "The output is `8`. whence=2 (SEEK_END) anchors the offset to the end of the file, and a negative offset moves BACKWARD from it, so the cursor lands at 10 - 2 = 8. Combining offset and whence lets you position relative to the start, the current position, or the end without knowing the exact file size."
+    },
+    {
+      "id": 28,
+      "question": "f.txt contains 'abc' (3 bytes). This code runs: `with open('f.txt', 'rb') as f: f.seek(100); print(repr(f.read())); print(f.tell())`. What is printed?",
+      "answer": "The output is:\nb''\n100\nThe kernel lets you seek past the end of a file without error; it simply records the huge offset 100. read() then finds nothing between the cursor and EOF and returns b'', yet the cursor stays at 100, which tell() reports. No bytes were read — the cursor simply jumped past everything."
+    },
+    {
+      "id": 29,
+      "question": "data.txt exists and contains 'hello world'. This code runs: `f = open('data.txt', 'r'); print(f.tell()); f.close()`. What is printed?",
+      "answer": "The output is `0`. A freshly opened file (in 'r', 'r+', 'w', 'w+', or 'x' mode) always begins with its cursor at offset 0, ready to read or write from the start. tell() reports the position of the next byte; only 'a' and 'a+' start the cursor somewhere else (at the end)."
+    },
+    {
+      "id": 30,
+      "question": "f.bin is a large file. This code runs: `with open('f.bin', 'rb') as f: print(f.seek(10))`. What is printed, and why?",
+      "answer": "The output is `10`. seek() is not just a mutator: it returns the new absolute byte offset from the start of the file. That return value is handy for confirming where a relative or end-anchored move actually landed, and it equals 10 here because the offset is already absolute."
+    },
+    {
+      "id": 31,
+      "question": "f.txt is a new empty text file. This code runs: `f = open('f.txt', 'w'); print(f.write('hello')); f.close()`. What is printed, and what does the row '5' mean?",
+      "answer": "The output is `5`. In text mode write() returns the number of CHARACTERS written (in binary mode it returns bytes written). For a regular file the write is almost always complete, so the return equals the length of the string — it effectively confirms how much of the buffer made it out."
+    },
+    {
+      "id": 32,
+      "question": "out.txt is new. This code runs: `f = open('out.txt', 'w'); f.writelines(['line1\\n', 'line2\\n', 'line3']); f.close()`. What exactly is inside out.txt?",
+      "answer": "The file contains `'line1\\nline2\\nline3'`. writelines() writes each string in the iterable exactly as given and adds NO newlines or separators of its own. The '\\n' characters are inside the string literals themselves, and because the last element 'line3' has no newline, the file does not end with one."
+    },
+    {
+      "id": 33,
+      "question": "f.txt is new. This code runs: `f = open('f.txt', 'w'); f.writelines([1, 2, 3])`. What happens?",
+      "answer": "`TypeError: write() argument must be str, not int` is raised. writelines() is just a loop that calls write() once per element, and write() requires a str in text mode (or bytes in binary mode). Integer elements are not converted, so the very first element triggers the TypeError."
+    },
+    {
+      "id": 34,
+      "question": "out.txt is new. This code runs: `with open('out.txt', 'w') as f: print('hello', file=f); print('world', file=f)`. What exactly is inside out.txt?",
+      "answer": "The file contains `'hello\\nworld\\n'`. print(..., file=f) formats exactly like print to stdout: arguments joined by spaces (never here) and followed by its default end='\\n' separator. So two print calls produce two lines, each terminated by a newline."
+    },
+    {
+      "id": 35,
+      "question": "f.txt is new. This code runs: `f = open('f.txt', 'w'); f.write(123)`. What happens, and how would you fix it?",
+      "answer": "`TypeError: write() argument must be str, not int` is raised. write() performs no implicit conversions: text mode accepts only str, binary mode only bytes. The fix is to convert the value yourself first, such as `f.write(str(123))` or `str(123).encode()` for a binary handle."
+    },
+    {
+      "id": 36,
+      "question": "f.txt is a new empty file. This code runs: `f = open('f.txt', 'w'); f.write('ab'); print(f.tell()); f.close()`. What is printed?",
+      "answer": "The output is `2`. Writing advances the cursor by the number of characters written, so after 'ab' the cursor is at offset 2. tell() after a write shows exactly where the next read or write will occur — here, at the end of what you just wrote."
+    },
+    {
+      "id": 37,
+      "question": "f.txt is new. This code runs: `with open('f.txt', 'w+') as f: f.write('hello'); print(repr(f.read()))`. What is printed?",
+      "answer": "The output is `''`. After write('hello') the cursor sits at offset 5, which is EOF for this file, and read() continues from the cursor rather than rewinding. The text you wrote is behind the cursor, so read() finds nothing — you must call f.seek(0) (or re-open the file) before you can read back what you wrote."
+    },
+    {
+      "id": 38,
+      "question": "f.txt currently contains 'abcdefghij'. This code runs: `with open('f.txt', 'r+') as f: f.seek(12); f.write('XY')`. After it finishes, what exactly is inside f.txt?",
+      "answer": "The file contains `'abcdefghij\\x00\\x00XY'`. seek(12) lands two bytes past the current EOF, and writing there forces a gap; regular files fill that gap with two null bytes \\x00. So 'r+' lets you extend a file into sparse territory, but unless you intentionally want that, you should seek to a position at or before the file size before writing."
+    },
+    {
+      "id": 39,
+      "question": "f.txt exists. This code runs: `with open('f.txt', 'r') as f: content = f.read()`. Then `print(f.closed)`. What is printed?",
+      "answer": "The output is `True`. The with statement runs f.__exit__() when the block ends, which closes the file automatically even though no close() was ever called. f.closed therefore becomes True the instant the block finishes — that guarantee is the entire point of the context manager."
+    },
+    {
+      "id": 40,
+      "question": "f.txt exists. This code runs: `with open('f.txt', 'r') as f: data = f.read()`. Then this line runs: `print(f.read())`. What happens?",
+      "answer": "`ValueError: I/O operation on closed file.` is raised. The variable f still refers to the handle, but the file was closed when the with block ended. Any I/O method (read, readline, write, seek, flush) called on a closed handle raises ValueError, because the underlying file system resource is no longer available."
+    },
+    {
+      "id": 41,
+      "question": "f.txt exists. This code runs: `try: with open('f.txt', 'r') as f: raise ZeroDivisionError\nexcept ZeroDivisionError: print(f.closed)`. What is printed?",
+      "answer": "The output is `True`. Even when an exception jumps out of the with block, __exit__ still runs first and closes the file before the exception propagates. Closing on normal exit AND on exception is the core cleanliness guarantee of with — the file never leaks open regardless of how the block ends."
+    },
+    {
+      "id": 42,
+      "question": "Fill in the single missing keyword so this snippet always closes the file whether read() succeeds or raises:\n`f = open('f.txt', 'r')\ntry:\n    data = f.read()\n______:\n    f.close()`",
+      "answer": "The blank must be `finally`:\n`f = open('f.txt', 'r')\ntry:\n    data = f.read()\nfinally:\n    f.close()`\nfinally-statement code runs in both the success and the exception path, guaranteeing the handle is released. The `with open(...) as f:` statement is the idiomatic one-liner that compiles down to exactly this try/finally semantics."
+    },
+    {
+      "id": 43,
+      "question": "f.txt exists. This code runs: `f = open('f.txt', 'r'); f.close(); f.close(); print(f.closed)`. What is printed?",
+      "answer": "The output is `True`, and no exception occurs. close() is idempotent: calling it a second time on an already-closed file is permitted and does nothing. Only other operations (read, write, seek, and friends) raise the ValueError on a closed file — double close() itself is harmless."
+    },
+    {
+      "id": 44,
+      "question": "On a Linux system, this code runs: `with open('/tmp', 'r') as f: f.read()`. What happens, and at which call does the failure occur?",
+      "answer": "`IsADirectoryError: [Errno 21] Is a directory: '/tmp'` is raised at the open() call, before f.read() is even reached. A directory is not a regular file and cannot be read as a text stream, so the OS rejects it at open time. IsADirectoryError is a subclass of OSError."
+    },
+    {
+      "id": 45,
+      "question": "On a Linux system, this code runs: `with open('/proc/version', 'w') as f: f.write('x')`. What happens, and at which call does the failure occur?",
+      "answer": "`PermissionError: [Errno 13] Permission denied: '/proc/version'` is raised at the open() call. The /proc pseudo-filesystem exposes read-only kernel information, so the OS refuses write access with EPERM regardless of user privileges. PermissionError, another OSError subclass, is the Python view of that refusal."
+    },
+    {
+      "id": 46,
+      "question": "This code runs: `with open('data.bin', 'wb') as f: f.write(b'\\xff\\xfe\\x41')`. Then this runs: `with open('data.bin', 'r', encoding='ascii') as f: f.read()`. What happens?",
+      "answer": "`UnicodeDecodeError: 'ascii' codec can't decode byte 0xff in position 0: ordinal not in range(128)` is raised during the read() call. Text mode decodes bytes with the given codec as data flows in, and 0xff and 0xfe are not valid ASCII. Decoding happens lazily, so the error surfaces on read(), not at open() — the same file read with a UTF-8 or binary handle would succeed."
+    },
+    {
+      "id": 47,
+      "question": "This code runs: `f = open('data.txt', 'r', encoding='klingon')`. What happens?",
+      "answer": "`LookupError: unknown encoding: klingon` is raised at the open() call. The name 'klingon' is not registered in Python's codec registry, and open() looks up the encoding when the file is created. This is a codec-name lookup failure (LookupError), entirely separate from a UnicodeDecodeError, which concerns the data inside the file."
+    },
+    {
+      "id": 48,
+      "question": "On Linux, a file crlf.txt was transferred from Windows and contains these exact bytes: l i n e 1 \\r \\n l i n e 2 \\r \\n l i n e 3 (that is, LF lines that also carry a preceding CR). This code runs: `with open('crlf.txt', 'r') as f: print(repr(f.read()))`. What is printed?",
+      "answer": "The output is `'line1\\nline2\\nline3'`. Default text mode enables universal newline translation: \\r\\n (and lone \\r) are all converted to a single '\\n' as the data is read. Cross-platform code therefore sees one consistent newline representation no matter which line-ending style produced the file."
+    },
+    {
+      "id": 49,
+      "question": "The same crlf.txt as above (bytes 'line1\\r\\nline2\\r\\nline3') is now read like this: `with open('crlf.txt', 'r', newline='') as f: print(repr(f.read()))`. What is printed?",
+      "answer": "The output is `'line1\\r\\nline2\\r\\nline3'`. Passing newline='' disables universal newline translation, so the raw '\\r\\n' byte pairs are passed through untouched. With this setting, readlines() also splits only on '\\n' and keeps the '\\r' inside each returned line, which is how a parser that must distinguish '\\r' from '\\n' inspects raw text."
+    },
+    {
+      "id": 50,
+      "question": "On Linux, a file line1.txt contains the bytes l i n e 1 \\r \\n l i n e 2 (one CRLF-terminated line, one bare line). This code runs: `with open('line1.txt', 'r') as f: print(repr(f.readline().strip()))`. What is printed, and what trap does strip() hide for whitespace-tolerant data?",
+      "answer": "The output is `'line1'`. Universal newline translation already turned the '\\r\\n' into '\\n' before readline(), so the first line is 'line1\\n', and strip() removes that trailing whitespace newline. The trap: strip() strips ALL leading and trailing whitespace (spaces, tabs, etc.), not just the newline — if the data must keep surrounding spaces, use rstrip('\\n') instead so only the line ending is removed."
+    },
+    {
+      "id": 51,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('old data')\nwith open('data.txt', 'w') as f:\n    f.write('new')\nprint(open('data.txt').read())\n```",
+      "answer": "new\nThe 'w' mode truncates the file to zero length on open, so the first write of 'old data' is destroyed when the second open with 'w' occurs. Only 'new' remains in the file."
+    },
+    {
+      "id": 52,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('start')\nwith open('data.txt', 'a') as f:\n    f.write(' end')\nprint(open('data.txt').read())\n```",
+      "answer": "start end\nThe 'a' mode opens the file for appending; the cursor is placed at the end of existing content, so ' end' is added after 'start' without overwriting."
+    },
+    {
+      "id": 53,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'x') as f:\n    f.write('created')\ntry:\n    with open('data.txt', 'x') as f:\n        f.write('again')\nexcept FileExistsError as e:\n    print(e)\n```",
+      "answer": "[Errno 17] File exists: 'data.txt'\nThe 'x' mode creates a new file exclusively. Since the file already exists from the first open, the second open raises FileExistsError."
+    },
+    {
+      "id": 54,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('hello')\nwith open('data.txt', 'r+') as f:\n    data = f.read()\n    f.write('WORLD')\n    print(data, f.tell())\nprint(open('data.txt').read())\n```",
+      "answer": "hello 10\nhelloWORLD\nIn 'r+' mode the cursor starts at position 0, so f.read() returns 'hello' and moves the cursor to 5. f.write('WORLD') writes 5 characters at position 5 (the end), moving the cursor to 10, so f.tell() reports 10. The file content becomes 'helloWORLD'."
+    },
+    {
+      "id": 55,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('old content')\nwith open('data.txt', 'w+') as f:\n    print(repr(f.read()))\n    f.write('new')\nprint(open('data.txt').read())\n```",
+      "answer": "''\nnew\n'w+' truncates the file to zero length, so f.read() returns an empty string. Then f.write('new') writes to the file, resulting in just 'new'."
+    },
+    {
+      "id": 56,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('data')\nwith open('data.txt', 'a+') as f:\n    print(repr(f.read()), f.tell())\n    f.write('more')\nprint(open('data.txt').read())\n```",
+      "answer": "'more' 4\ndatamore\nIn 'a+' mode the cursor starts at the end (position 4), so f.read() reads nothing. f.tell() returns 4. f.write('more') appends to the file, producing 'datamore'."
+    },
+    {
+      "id": 57,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    result = f.write('hello')\n    print(result)\n```",
+      "answer": "5\nf.write() returns the number of characters (in text mode) or bytes (in binary mode) that were written. Writing 'hello' produces 5."
+    },
+    {
+      "id": 58,
+      "question": "What exception is raised and why?\n```python\nwith open('data.txt', 'w') as f:\n    f.write(b'hello')\n```",
+      "answer": "TypeError: write() argument must be str, not bytes\nWhen a file is opened in text mode (no 'b' in the mode string), f.write() expects a str. Passing bytes to a text-mode file raises TypeError."
+    },
+    {
+      "id": 59,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.writelines(['line1', 'line2', 'line3'])\nprint(repr(open('data.txt').read()))\n```",
+      "answer": "'line1line2line3'\nwritelines() writes each element of the iterable to the file but does NOT add any newline characters between them. The strings are concatenated as-is."
+    },
+    {
+      "id": 60,
+      "question": "What is the output?\n```python\ndef gen():\n    for i in range(3):\n        yield f'item{i}\\n'\nwith open('data.txt', 'w') as f:\n    f.writelines(gen())\nprint(repr(open('data.txt').read()))\n```",
+      "answer": "'item0\\nitem1\\nitem2\\n'\nwritelines() accepts any iterable, including generators. Since each yielded string already contains '\\n', the file ends up with three lines."
+    },
+    {
+      "id": 61,
+      "question": "What is the output?\n```python\nlines = ['alpha', 'beta', 'gamma']\nwith open('data.txt', 'w') as f:\n    f.write('\\n'.join(lines))\nprint(repr(open('data.txt').read()))\n```",
+      "answer": "'alpha\\nbeta\\ngamma'\nstr.join() concatenates all strings in the list using '\\n' as the separator, producing one string with newlines between elements. This is a common pattern for writing lines with explicit newline control."
+    },
+    {
+      "id": 62,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    print('hello', file=f)\n    print('world', file=f)\nprint(open('data.txt').read())\n```",
+      "answer": "hello\\nworld\\n\nprint() with file=f writes to the file instead of stdout. By default, print adds a trailing newline, so each call writes 'hello\\n' and 'world\\n'."
+    },
+    {
+      "id": 63,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    print('no end', end='', file=f)\n    print('line', file=f)\nprint(repr(open('data.txt').read()))\n```",
+      "answer": "'no endline\\n'\nSetting end='' suppresses the default newline after the first print. The second print still adds its default newline, resulting in 'no endline\\n'."
+    },
+    {
+      "id": 64,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('data')\n    f.flush()\n    import os\n    print(os.path.getsize('data.txt'))\n```",
+      "answer": "4\nflush() forces the internal write buffer to be written to the operating system (and disk), so the file size becomes 4 immediately, even though the file has not been closed yet."
+    },
+    {
+      "id": 65,
+      "question": "What is the output?\n```python\nimport os\nwith open('data.txt', 'w') as f:\n    f.write('hello')\n    print(os.path.getsize('data.txt'))\n```",
+      "answer": "0\nWithout an explicit flush() or close(), the data may still be in Python's internal buffer and not yet written to the OS. The file size on disk appears as 0 until the buffer is flushed."
+    },
+    {
+      "id": 66,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('AAAA')\nwith open('data.txt', 'a') as f:\n    f.seek(0)\n    f.write('BB')\nprint(open('data.txt').read())\n```",
+      "answer": "AAAABB\nIn 'a' mode, regardless of where you seek, writes always occur at the end of the file. Even after seek(0), writing 'BB' appends, producing 'AAAABB'."
+    },
+    {
+      "id": 67,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('ABCDEFGHIJ')\nwith open('data.txt', 'r+') as f:\n    f.seek(5)\n    f.write('ZZ')\nprint(open('data.txt').read())\n```",
+      "answer": "ABCDEZZHIJ\nIn 'r+' mode, seeks work normally. seek(5) positions the cursor after 'ABCDE', and writing 'ZZ' overwrites the two characters at positions 5 and 6 ('FG') with 'ZZ'."
+    },
+    {
+      "id": 68,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('ABCDEFGHIJ')\nwith open('data.txt', 'r+') as f:\n    f.seek(3)\n    f.write('XY')\n    f.seek(0)\n    print(f.read())\n```",
+      "answer": "ABCXYFGHIJ\nWriting 'XY' at position 3 overwrites 'DE' with 'XY'. Seeking back to 0 and calling read() shows the whole file with the overwrite in place."
+    },
+    {
+      "id": 69,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('AAAA BBBB CCCC')\nwith open('data.txt', 'r+') as f:\n    f.seek(9)\n    f.write('XX')\nprint(open('data.txt').read())\n```",
+      "answer": "AAAA BBBBXXCCC\n'AAAA BBBB CCCC' has letters at indices 0-3, a space at 4, letters at 5-8, a space at 9, and letters at 10-13. seek(9) lands on the space after 'BBBB'; writing 'XX' replaces that space and the first 'C', yielding 'AAAA BBBBXXCCC'."
+    },
+    {
+      "id": 70,
+      "question": "What is the size of the file after the following?\n```python\nwith open('data.txt', 'wb+') as f:\n    f.seek(10)\n    f.write(b'Z')\nimport os\nprint(os.path.getsize('data.txt'))\n```",
+      "answer": "11\nSeeking to position 10 and writing one byte creates a sparse file of 11 bytes total. Positions 0-9 are filled with null bytes (\\x00) automatically."
+    },
+    {
+      "id": 71,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('hello world')\nwith open('data.txt', 'r+') as f:\n    f.seek(5)\n    f.truncate()\nprint(open('data.txt').read())\n```",
+      "answer": "hello\ntruncate() without an argument truncates the file at the current cursor position. After seeking to position 5, truncation removes everything from position 5 onward, leaving 'hello'."
+    },
+    {
+      "id": 72,
+      "question": "What is the output?\n```python\nfor i in range(3):\n    with open('log.txt', 'a') as f:\n        f.write(f'entry {i}\\n')\nprint(open('log.txt').read())\n```",
+      "answer": "entry 0\nentry 1\nentry 2\n\nUsing 'a' mode in a loop appends each line to the file. Since 'a' always places the cursor at the end, all three entries are preserved."
+    },
+    {
+      "id": 73,
+      "question": "What is the output?\n```python\nfor i in range(3):\n    with open('log.txt', 'w') as f:\n        f.write(f'entry {i}\\n')\nprint(open('log.txt').read())\n```",
+      "answer": "entry 2\n\nUsing 'w' mode in a loop truncates the file on each iteration. Only the last write survives, producing a single line 'entry 2'."
+    },
+    {
+      "id": 74,
+      "question": "What is the output (LBYL pattern)?\n```python\nimport os\npath = 'missing.txt'\nif os.path.exists(path):\n    with open(path) as f:\n        print(f.read())\nelse:\n    print('file not found')\n```",
+      "answer": "file not found\nos.path.exists() returns False because the file does not exist, so the else branch executes. This is the Look Before You Leap (LBYL) approach."
+    },
+    {
+      "id": 75,
+      "question": "What is the output (EAFP pattern)?\n```python\ntry:\n    with open('missing.txt') as f:\n        print(f.read())\nexcept FileNotFoundError:\n    print('file not found')\n```",
+      "answer": "file not found\nPython attempts to open the file, which raises FileNotFoundError. The except clause catches it and prints the message. This is the Easier to Ask Forgiveness than Permission (EAFP) approach."
+    },
+    {
+      "id": 76,
+      "question": "What is the output?\n```python\ntry:\n    with open('nonexistent.txt') as f:\n        data = f.read()\nexcept FileNotFoundError as e:\n    print(type(e).__name__)\n```",
+      "answer": "FileNotFoundError\nOpening a file that does not exist in 'r' mode (the default) raises FileNotFoundError. This is the standard way to detect a missing file."
+    },
+    {
+      "id": 77,
+      "question": "What is the output?\n```python\nimport os\nwith open('data.txt', 'w') as f:\n    f.write('hello')\nprint(os.path.getsize('data.txt'))\n```",
+      "answer": "5\nos.path.getsize() returns the size of the file in bytes on disk. For ASCII text, each character is one byte, so 'hello' has a size of 5."
+    },
+    {
+      "id": 78,
+      "question": "What is the output?\n```python\nimport os\ntry:\n    size = os.path.getsize('nonexistent.txt')\nexcept FileNotFoundError:\n    print('error')\n```",
+      "answer": "error\nos.path.getsize() raises FileNotFoundError when the specified file does not exist. The except block catches it and prints 'error'."
+    },
+    {
+      "id": 79,
+      "question": "What is the output?\n```python\nimport os\nwith open('temp.txt', 'w') as f:\n    f.write('hello')\nos.remove('temp.txt')\nprint(os.path.exists('temp.txt'))\n```",
+      "answer": "False\nos.remove() deletes the file from disk. After removal, os.path.exists() returns False."
+    },
+    {
+      "id": 80,
+      "question": "What is the output?\n```python\nimport os\ntry:\n    os.remove('ghost.txt')\nexcept FileNotFoundError:\n    print('not found')\n```",
+      "answer": "not found\nos.remove() raises FileNotFoundError when the file does not exist. This must be caught with a try/except block."
+    },
+    {
+      "id": 81,
+      "question": "What is the output?\n```python\nimport os\nwith open('src.txt', 'w') as f:\n    f.write('data')\nos.rename('src.txt', 'dst.txt')\nprint(os.path.exists('src.txt'), os.path.exists('dst.txt'))\n```",
+      "answer": "False True\nos.rename() moves/renames the file. The original path no longer exists and the new path does."
+    },
+    {
+      "id": 82,
+      "question": "What is the output?\n```python\nimport os\ntry:\n    os.rename('ghost.txt', 'moved.txt')\nexcept FileNotFoundError:\n    print('source missing')\n```",
+      "answer": "source missing\nos.rename() raises FileNotFoundError if the source file does not exist."
+    },
+    {
+      "id": 83,
+      "question": "What is the output?\n```python\nimport os\ntry:\n    os.mkdir('/tmp')\nexcept FileExistsError:\n    print('already exists')\n```",
+      "answer": "already exists\nos.mkdir() raises FileExistsError when the directory already exists. Use os.makedirs(path, exist_ok=True) to avoid this."
+    },
+    {
+      "id": 84,
+      "question": "What is the output?\n```python\nimport os\nos.makedirs('/tmp/mydir')\ntry:\n    os.makedirs('/tmp/mydir')\nexcept FileExistsError:\n    print('dir exists')\n```",
+      "answer": "dir exists\nThe first os.makedirs() creates the directory. The second call on the same path raises FileExistsError, which is caught and prints 'dir exists'. exist_ok=True avoids this."
+    },
+    {
+      "id": 85,
+      "question": "What is the output?\n```python\nimport shutil, os\nwith open('original.txt', 'w') as f:\n    f.write('content')\nshutil.copy2('original.txt', 'copy.txt')\nprint(os.path.exists('copy.txt'))\nprint(open('copy.txt').read())\n```",
+      "answer": "True\ncontent\nshutil.copy2() copies the file content and metadata. The destination file is created with the same content."
+    },
+    {
+      "id": 86,
+      "question": "What is the output?\n```python\nimport shutil, os\nwith open('before.txt', 'w') as f:\n    f.write('move me')\nshutil.move('before.txt', 'after.txt')\nprint(os.path.exists('before.txt'))\nprint(os.path.exists('after.txt'))\n```",
+      "answer": "False\nTrue\nshutil.move() moves the file from source to destination. The source ceases to exist and the destination is created."
+    },
+    {
+      "id": 87,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w', encoding='utf-8') as f:\n    f.write('caf\\u00e9')\nprint(open('data.txt', encoding='utf-8').read())\n```",
+      "answer": "café\nExplicitly specifying encoding='utf-8' ensures consistent encoding. The character 'é' (U+00E9) is encoded as UTF-8 and read back correctly."
+    },
+    {
+      "id": 88,
+      "question": "What exception is raised and why?\n```python\nwith open('data.txt', 'w', encoding='ascii') as f:\n    f.write('résumé')\n```",
+      "answer": "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe9' in position 1: ordinal not in range(128)\nThe character 'é' cannot be represented in ASCII (which only covers 0-127). Writing non-ASCII text to an ASCII-encoded file raises UnicodeEncodeError."
+    },
+    {
+      "id": 89,
+      "question": "What exception is raised and why?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('café')\nwith open('data.txt', encoding='ascii') as f:\n    print(f.read())\n```",
+      "answer": "UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 3: ordinal not in range(128)\nThe file was written with UTF-8 (default), but opening it with ASCII encoding can't decode the multi-byte UTF-8 representation of 'é'."
+    },
+    {
+      "id": 90,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w', newline='') as f:\n    f.write('line1\\nline2\\n')\nwith open('data.txt', 'rb') as f:\n    print(f.read())\n```",
+      "answer": "b'line1\\nline2\\n'\nUsing newline='' disables universal newline translation on Windows, but on Linux the bytes are written as-is. The output shows the raw bytes with literal newlines."
+    },
+    {
+      "id": 91,
+      "question": "What exception is raised and why?\n```python\nwith open('data.txt', 'wb') as f:\n    f.write('hello')\n```",
+      "answer": "TypeError: a bytes-like object is required, not 'str'\nBinary mode ('wb') requires bytes, not str. The string 'hello' must be encoded to bytes first (e.g., b'hello' or 'hello'.encode())."
+    },
+    {
+      "id": 92,
+      "question": "What exception is raised and why?\n```python\nwith open('data.txt', 'w') as f:\n    f.writelines([b'line1', b'line2'])\n```",
+      "answer": "TypeError: write() argument must be str, not bytes\nwritelines() calls write() internally for each element. In text mode, each element must be a str, not bytes."
+    },
+    {
+      "id": 93,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    result = f.writelines(['a', 'b', 'c'])\n    print(result)\n```",
+      "answer": "None\nwritelines() does not return any value (returns None). It writes the items to the file as a side effect."
+    },
+    {
+      "id": 94,
+      "question": "What is the output?\n```python\nimport os\nwith open('data.txt', 'w') as f:\n    f.writelines([])\nprint(os.path.getsize('data.txt'))\n```",
+      "answer": "0\nPassing an empty list to writelines() writes nothing. The file remains empty with a size of 0 bytes."
+    },
+    {
+      "id": 95,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    print('hello', file=f, flush=True)\n    import os\n    print(os.path.getsize('data.txt'))\n```",
+      "answer": "6\nThe flush=True argument forces print() to flush the buffer immediately after writing. The file contains 'hello\\n' which is 6 bytes, and the size is reported as 6."
+    },
+    {
+      "id": 96,
+      "question": "What exception is raised?\n```python\nwith open('data.txt', 'w', buffering=0) as f:\n    f.write('text')\n```",
+      "answer": "ValueError: can't have unbuffered text I/O\nText mode files require buffering. Setting buffering=0 is only allowed for binary modes ('rb', 'wb')."
+    },
+    {
+      "id": 97,
+      "question": "What is the output?\n```python\nf = open('data.txt', 'w')\nf.close()\ntry:\n    f.write('after close')\nexcept ValueError as e:\n    print(str(e))\n```",
+      "answer": "I/O operation on closed file.\nOnce a file object is closed, any attempt to write to it raises ValueError with the message 'I/O operation on closed file.'"
+    },
+    {
+      "id": 98,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('abcdefghij')\nwith open('data.txt', 'r+') as f:\n    f.read()\n    f.write('YZ')\n    f.seek(0)\n    print(f.read())\n```",
+      "answer": "abcdefghijYZ\nIn 'r+' mode, f.read() consumes the whole file and leaves the cursor at the end (position 10). The subsequent write('YZ') therefore begins at the end and appends. Only after seek(0) does read() show the complete contents."
+    },
+    {
+      "id": 99,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('hello')\nwith open('data.txt', 'r+') as f:\n    f.seek(0, 2)\n    print(f.tell())\n```",
+      "answer": "5\nseek(0, 2) uses the whence parameter: 0 = absolute, 2 = end of file. This moves the cursor to the end of the file (position 5 for 'hello')."
+    },
+    {
+      "id": 100,
+      "question": "What is the output?\n```python\nwith open('data.txt', 'w') as f:\n    f.write('hello world')\nwith open('data.txt', 'r+') as f:\n    f.seek(6)\n    f.write('Python!')\nprint(open('data.txt').read())\n```",
+      "answer": "hello Python!\nSeeking to position 6 places the cursor at 'w' in 'world'. Writing 'Python!' overwrites 'world' with 'Python!' which is exactly 7 characters, perfectly replacing it without residue."
+    },
+    {
+      "id": 101,
+      "question": "A file text.txt was created from the ASCII string 'hello'. What is the exact type and value of d after: d = open('text.txt', 'rb').read()?",
+      "answer": "<class 'bytes'> b'hello'. open with 'rb' opens in binary mode, so read() returns a bytes object, not a str. Because every byte happens to be ASCII, the repr looks like a string, but type(d) is bytes, and bytes and str are different types that never compare equal."
+    },
+    {
+      "id": 102,
+      "question": "What exception, with what exact message, is raised by: with open('out.bin', 'wb') as f: f.write('hi')",
+      "answer": "TypeError: a bytes-like object is required, not 'str'. A binary-mode file object only accepts bytes-like objects (bytes, bytearray, memoryview) in write(). To write text you must encode it to bytes yourself or use a text-mode ('w') file object, which encodes using an encoding such as utf-8."
+    },
+    {
+      "id": 103,
+      "question": "A file words.txt contains the bytes b'l1\\nl2\\n'. What is printed by: print([line for line in open('words.txt', 'rb')])",
+      "answer": "[b'l1\\n', b'l2\\n']. Iterating a binary-mode file yields bytes lines split at the \\n boundaries. The repr shows the bytes type prefix b and the literal \\n at the end of each line, exactly as read from disk."
+    },
+    {
+      "id": 104,
+      "question": "f.txt contains the 5 bytes b'hello'. Both reads are the same file: what does open('f.txt', 'rb').read() == open('f.txt').read() print?",
+      "answer": "False. The binary read returns b'hello' (bytes) while the text read returns 'hello' (str). Python never compares a bytes object and a str as equal, even when they contain the same characters, because equality requires the same type."
+    },
+    {
+      "id": 105,
+      "question": "A file t.txt was written in text mode with the string 'hi'. What is printed by: print(open('t.txt', 'rb').read())",
+      "answer": "b'hi'. Opening a text-created file in binary mode returns the raw bytes that were stored on disk. Binary mode performs no decoding, so you get a bytes object instead of the str that plain text reading would return."
+    },
+    {
+      "id": 106,
+      "question": "b.dat contains the three bytes b'\\x00\\x01\\xff'. Running open('b.dat', encoding='utf-8').read() raises which exception, with what exact message?",
+      "answer": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 2: invalid start byte. The bytes 0x00 and 0x01 are valid UTF-8 control characters, but 0xff can never begin a valid UTF-8 sequence, so the decoder fails on it. Text mode fails loudly instead of silently producing corrupted strings."
+    },
+    {
+      "id": 107,
+      "question": "e.txt is written in text mode with f.write('café') using encoding='utf-8'. What does open('e.txt', 'rb').read() print?",
+      "answer": "b'caf\\xc3\\xa9'. UTF-8 encodes the character 'é' as the two bytes 0xC3 and 0xA9, so the file is 5 bytes on disk rather than 4 characters. Reading in binary mode shows those raw bytes instead of the decoded Unicode string."
+    },
+    {
+      "id": 108,
+      "question": "What is printed by: with open('f.txt', 'w', encoding='utf-8') as f: print(f.encoding)",
+      "answer": "utf-8. A text-mode file object exposes the codec it is using as the .encoding attribute, taken from the encoding= argument (or the platform default when none is given). The repr shows 'utf-8' when the string is printed."
+    },
+    {
+      "id": 109,
+      "question": "A file c.txt contains the UTF-8 bytes b'caf\\xc3\\xa9'. Running open('c.txt', encoding='ascii').read() raises which exception, with what exact message?",
+      "answer": "UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 3: ordinal not in range(128). The ASCII codec can only map bytes in 0..127, and the byte 0xC3 (position 3 of 'café') is outside that range. Picking a codec that cannot represent the stored bytes makes text-mode decoding raise UnicodeDecodeError."
+    },
+    {
+      "id": 110,
+      "question": "Which exception, with what exact message, is raised by: with open('o.txt', 'w', encoding='ascii') as f: f.write('café')",
+      "answer": "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe9' in position 3: ordinal not in range(128). On write, each character is encoded with the given codec, and 'é' (U+00E9) has no ASCII mapping. This is the encode-direction counterpart of the UnicodeDecodeError raised when reading with a codec that cannot decode the bytes."
+    },
+    {
+      "id": 111,
+      "question": "A file is opened with open('o.txt', 'w', encoding='ascii', errors='replace') and then 'café' is written. What bytes land on disk?",
+      "answer": "b'caf?'. The errors='replace' error handler substitutes '?' for any character that cannot be encoded instead of raising UnicodeEncodeError. It is a pragmatic escape hatch, but it silently corrupts data, so it is usually reserved for logs or throwaway output."
+    },
+    {
+      "id": 112,
+      "question": "What is printed by: import sys; print(sys.getdefaultencoding())",
+      "answer": "utf-8. The str.encode() and bytes.decode() defaults come from sys.getdefaultencoding(), which is fixed at 'utf-8' in modern CPython. Note that open() without encoding= instead consults the locale's preferred encoding, which is also UTF-8 on this system but can differ on other machines — which is why explicit encoding= is recommended."
+    },
+    {
+      "id": 113,
+      "question": "A file is opened with open('t.txt', 'w', newline='\\r\\n') and f.write('a\\nb\\n') runs. What exact bytes are written to disk?",
+      "answer": "b'a\\r\\nb\\r\\n'. The newline= argument of open() also controls output: every '\\n' written is translated to the given terminator sequence. With newline='' there would be no translation and the bytes would stay exactly b'a\\nb\\n'."
+    },
+    {
+      "id": 114,
+      "question": "A file contains the bytes b'a\\r\\nb\\r\\n'. Compare: repr(open('t.txt').read()) versus open('t.txt', 'rb').read()",
+      "answer": "'a\\nb\\n' and b'a\\r\\nb\\r\\n'. By default, text mode enables universal newlines: every \\r\\n (and lone \\r) on input is translated to a single '\\n'. Binary mode performs no translation at all and returns the exact byte sequence from disk."
+    },
+    {
+      "id": 115,
+      "question": "The same file with bytes b'a\\rb\\r\\n' is now read with open('t.txt', newline=''). What repr does read() return?",
+      "answer": "'a\\rb\\r\\n'. With newline='' the file object performs NO newline translation, so every \\r and \\r\\n arrives exactly as stored. This matters for CSV data, where a bare \\r byte inside a quoted field must be preserved untouched."
+    },
+    {
+      "id": 116,
+      "question": "Fill the blank: json.dumps(data) returns a ___ while json.dump(data, f) returns ___ and instead writes into the file object f.",
+      "answer": "str and None. json.dumps serializes the object into a string held in memory, handy for printing or sending over a socket; json.dump streams the serialized text into an open file object and returns nothing. They are the same serializer with different destinations."
+    },
+    {
+      "id": 117,
+      "question": "After json.dump({'name': 'zoe', 'scores': [3, 1, 4]}, f) and then reading back with json.load into a fresh file object, what is the result obj == {'name': 'zoe', 'scores': [3, 1, 4]}?",
+      "answer": "True. JSON round-trips plain dicts and lists exactly: the loaded object is a dict with equal string values, ints and lists. Equality would break if the original contained anything JSON cannot preserve directly, such as tuples or sets, which come back as lists."
+    },
+    {
+      "id": 118,
+      "question": "What is printed by json.dumps({1: 'a', 2: 'b'}), and what does the loaded object's keys look like after json.loads on that same string?",
+      "answer": "{\"1\": \"a\", \"2\": \"b\"} and the keys are the strings '1' and '2'. The JSON format only allows string keys on objects, so json.dumps stringifies integer keys on the way out. Reading back therefore yields str keys, not the original ints — a classic round-trip asymmetry."
+    },
+    {
+      "id": 119,
+      "question": "An empty file e.json is opened in text mode. Running json.load(f) raises which exception, with what exact message?",
+      "answer": "JSONDecodeError: Expecting value: line 1 column 1 (char 0). An empty file contains no JSON value at all, so the decoder reports a value missing at the very first position. If empty files are legal in your app, guard the load with a size check or a default."
+    },
+    {
+      "id": 120,
+      "question": "What exactly is printed by: print(json.dumps({'a': 1, 'b': [1, 2]}, indent=2))",
+      "answer": "{\n  \"a\": 1,\n  \"b\": [\n    1,\n    2\n  ]\n}. The indent=2 argument turns the compact one-line output into pretty-printed JSON with two-space nesting. Indenting also switches the separators to ', ' and ': ' while keeping each level on its own line."
+    },
+    {
+      "id": 121,
+      "question": "What is printed by: print(json.dumps({'k': 'café'}))",
+      "answer": "{\"k\": \"caf\\u00e9\"}. By default ensure_ascii=True, so every non-ASCII character is escaped as a \\uXXXX sequence in the JSON text. Passing ensure_ascii=False would write the literal accented é instead of the escape."
+    },
+    {
+      "id": 122,
+      "question": "What is printed by: print(json.dumps((1, 2, 3)))",
+      "answer": "[1, 2, 3]. JSON has no tuple type, so the tuple is serialized as a JSON array. Reading that text back with json.loads yields a Python list [1, 2, 3], not a tuple — data types with no JSON equivalent do not survive round-trips."
+    },
+    {
+      "id": 123,
+      "question": "The field list ['a,b', 'say \"hi\"', 'plain'] is written with csv.writer into an io.StringIO buffer b. What does b.getvalue() show?",
+      "answer": "\"a,b\",\"say \"\"hi\"\"\",plain\\r\\n. A field containing the delimiter (',') or the quotechar ('\"') is wrapped in double quotes, and an inner quotechar is doubled to escape it. The plain field stays unquoted, and the excel dialect terminates the row with \\r\\n."
+    },
+    {
+      "id": 124,
+      "question": "A CSV file holds the lines 'name,val' and 'x,1'. What does list(csv.reader(open('data.csv', newline=''))) produce?",
+      "answer": "[['name', 'val'], ['x', '1']]. csv.reader hands back rows as lists of strings, splitting on the delimiter and honoring quoting. The header is not treated specially — it comes back as an ordinary row; use csv.DictReader when you want headers turned into keys."
+    },
+    {
+      "id": 125,
+      "question": "A CSV file holds the bytes b'\"a\\rb\",1\\r\\n\"c\",2\\r\\n'. Compare reading it with plain open('f.csv') versus open('f.csv', newline='').",
+      "answer": "Plain open(): [['a\\nb', '1'], ['c', '2']]. With newline='': [['a\\rb', '1'], ['c', '2']]. Universal newlines translate even the lone \\r inside the quoted field to '\\n', silently corrupting that field. newline='' disables translation so the \\r survives — the documented reason CSV code requires newline=''."
+    },
+    {
+      "id": 126,
+      "question": "What is printed by: b = io.StringIO(); csv.writer(b).writerow('abcdef'); print(b.getvalue())",
+      "answer": "'a,b,c,d,e,f\\r\\n'. A str is a sequence of single-character strings, so csv.writer treats 'abcdef' as six one-character fields. Pass a list or other sequence of fields instead; a lone string is almost never what you intend."
+    },
+    {
+      "id": 127,
+      "question": "A file is created with csv.DictWriter(f, fieldnames=['a', 'b']) and writerow({'a': 1}) is called. What exactly ends up in the file?",
+      "answer": "'1,\\n' — the value 1, a comma, and nothing after it. A field missing from the dict is written as an empty string taken from restval, which defaults to ''. Supplying a dict that contains a key NOT in fieldnames instead raises ValueError: dict contains fields not in fieldnames."
+    },
+    {
+      "id": 128,
+      "question": "A file contains 'name,age\\nzoe,30\\n'. What does list(csv.DictReader(open('d.csv', newline=''))) produce?",
+      "answer": "[{'name': 'zoe', 'age': '30'}]. DictReader uses the first row as headers and yields one dict per following row, with those headers as keys. The age comes back as the string '30', not the int 30 — the csv module never converts types."
+    },
+    {
+      "id": 129,
+      "question": "A file contains 'a|b\\nc|d\\n'. What does list(csv.reader(open('p.csv', newline='', delimiter='|'))) produce?",
+      "answer": "[['a', 'b'], ['c', 'd']]. The delimiter='|' option overrides the default comma so that | separates the fields. The delimiter must be a single character that does not otherwise appear in the data."
+    },
+    {
+      "id": 130,
+      "question": "A csv.writer writes a row to an open text file, then a second handle reads the same file BEFORE the writer's file handle is closed. What is read?",
+      "answer": "'' (the empty string). The row sits in the text buffer in memory and has not reached the OS file, so another reader sees nothing yet. Closing the writer's file (or calling f.flush()) flushes the buffer, and only then does the content appear."
+    },
+    {
+      "id": 131,
+      "question": "You must inspect every line of a 5 GB log file. Why is 'for line in f:' preferred over data = f.read()?",
+      "answer": "No exception — the contrast is about memory. 'for line in f:' streams one line at a time, so only a single line is held in memory; f.read() allocates the entire 5 GB as one str and risks MemoryError. For binary data, chunked reads (f.read(1024)) are the analogous streaming technique."
+    },
+    {
+      "id": 132,
+      "question": "A 300-byte file is read via open('f.dat', 'rb') and f.read(1024) is called twice. What does each call return?",
+      "answer": "Call 1 returns the 300 remaining bytes; call 2 returns b''. read(n) returns at most n bytes and stops cleanly at EOF, even when fewer than n bytes remain. The empty bytes b'' from the second call is the signal that the end of the file has been reached."
+    },
+    {
+      "id": 133,
+      "question": "A file contains the text 'héllo\\n' written as UTF-8. What are os.path.getsize(f) and len(open(f).read())?",
+      "answer": "7 and 6. os.path.getsize counts raw bytes on disk, and 'é' occupies 2 UTF-8 bytes, while len() counts decoded characters, where 'é' is a single character. The two numbers diverge whenever the file contains any non-ASCII text."
+    },
+    {
+      "id": 134,
+      "question": "A file holds 'a b c\\n'. Predict the output of: n = 0; for line in open('w.txt'): n += len(line.split()); print(n)",
+      "answer": "3. line.split() splits on whitespace, turning 'a b c\\n' into ['a', 'b', 'c'], and the trailing \\n is consumed by split's whitespace handling. This single-line-per-record pattern is the standard way to count space-separated words per line."
+    },
+    {
+      "id": 135,
+      "question": "Fix the bug: with open('big.bin', 'rb') as f:\n    while True:\n        chunk = f.read(1024)\n        process(chunk)",
+      "answer": "Add an explicit stop test and guard inside the loop: if not chunk: break right after reading (before processing). Without it the loop never terminates, because once EOF is reached f.read(1024) keeps returning b'' forever. The empty bytes value doubles as the EOF marker and the loop terminator."
+    },
+    {
+      "id": 136,
+      "question": "A file is created with f.write('a\\nb\\n') in text mode. What does repr(open('f.txt').read()) show?",
+      "answer": "'a\\nb\\n'. read() returns the complete file content including the final newline. The trailing \\n simply terminates the last line; read() never strips it automatically."
+    },
+    {
+      "id": 137,
+      "question": "The same file 'a\\nb\\n' is iterated with list(open('f.txt')). What is the result?",
+      "answer": "['a\\n', 'b\\n']. Text-mode iteration splits lines at newlines while KEEPING the \\n at the end of each yielded line. The trailing newline merely terminates the second line, so exactly two strings are produced — there is no extra '' third element."
+    },
+    {
+      "id": 138,
+      "question": "line = '  hello\\n'. Compare line.strip() against line.rstrip('\\n').",
+      "answer": "strip() gives 'hello', rstrip('\\n') gives '  hello'. strip() removes whitespace from both ends — the spaces and the newline — while rstrip('\\n') removes only trailing newline characters, leaving the leading spaces intact. Choose the one whose whitespace policy matches the data you must keep."
+    },
+    {
+      "id": 139,
+      "question": "Compare 'a\\nb\\n'.splitlines() with 'a\\nb\\n'.split('\\n').",
+      "answer": "splitlines() gives ['a', 'b']; split('\\n') gives ['a', 'b', '']. splitlines() is the smarter line splitter — it recognizes \\n, \\r and \\r\\n — and drops the trailing empty element produced by a final newline. split('\\n') splits literally, leaving '' after the last separator."
+    },
+    {
+      "id": 140,
+      "question": "What happens when f.read() is called after this block completes? with open('f.txt') as f: pass",
+      "answer": "ValueError: I/O operation on closed file. Exiting the with block calls f.close(), which releases the underlying file. Using an already-closed file object raises ValueError instead of silently returning stale bytes."
+    },
+    {
+      "id": 141,
+      "question": "Predict the printed output: with open('n.txt', 'w') as f:\n    f.write('hello')\n    print(open('n.txt').read())",
+      "answer": "Prints '' (the empty string). The write is still sitting in Python's text buffer and has not been flushed to disk, so a second handle opens an empty file. Nothing is lost — the data is staged — but a flush() or a close is required before other readers can see it."
+    },
+    {
+      "id": 142,
+      "question": "Modify the previous snippet by inserting f.flush() right after f.write('hello'). What does the inner read now print?",
+      "answer": "'hello'. flush() pushes the buffered bytes to the operating system, so a second handle now sees the content. Exiting the with block (which closes the file) performs the same flush implicitly."
+    },
+    {
+      "id": 143,
+      "question": "with open('p.txt', 'w') as f: f.write('persisted'). Immediately after the block, what does open('p.txt').read() return?",
+      "answer": "'persisted'. Leaving the with block closes the file, and closing flushes the buffer, making the write durable on disk. This is why 'with open(...) as f:' is preferred over bare open() followed by a write without any close."
+    },
+    {
+      "id": 144,
+      "question": "Predict the output: with open('a.txt') as f:\n    print(f.read())\n    print(f.read())    where a.txt contains 'abc'",
+      "answer": "'abc' and then ''. The first read() consumes to end of file, so the file position is at EOF; the second call starts there and immediately returns ''. The position only resets with a seek(0); a new open() also starts fresh."
+    },
+    {
+      "id": 145,
+      "question": "A file currently contains 'longer content here'. It is re-opened with open('f.txt', 'w') and then 'short' is written. What does the file now contain?",
+      "answer": "'short'. The 'w' mode truncates the file to zero bytes at open time, so the old content is gone before the new write happens. Reopening with 'w' is destructive; use 'a' or keep the original handle if the previous content must survive."
+    },
+    {
+      "id": 146,
+      "question": "On a fresh binary file, two writes run: f.write(b'2\\x00') then f.write(b'2'). What are the resulting file size and full content?",
+      "answer": "3 bytes, and reading back gives b'2\\x002'. Each write appends at the current file position, so the second write extends the first. No encoding or translation runs in binary mode, so the NUL byte 0x00 is stored exactly as-is between the two '2' bytes."
+    },
+    {
+      "id": 147,
+      "question": "Fix the bug. w = open('report.txt', 'w')\ncsv.writer(w).writerow(['a', 'b'])\nprint(open('report.txt').read())   # prints ''\nThe row must be visible before the process ends.",
+      "answer": "Call w.flush() before reading, or better, restructure to: with open('report.txt', 'w') as w: csv.writer(w).writerow(['a', 'b']). The bug is buffering: nothing reaches disk until the buffer is flushed or the file is closed. closing via the with block also releases the handle so later writes and readers do not interfere."
+    },
+    {
+      "id": 148,
+      "question": "A JSON file is the target of two separate calls executing later in time: json.dump([1], open('d.json', 'w')) and then json.dump([2, 3], open('d.json', 'w')). What is the stored content afterwards?",
+      "answer": "[2, 3]. Each call opens the file with 'w', which truncates it, so the second dump entirely replaces the first. JSON has no append-in-place operation; to combine data you must read, merge, and re-serialize the whole structure."
+    },
+    {
+      "id": 149,
+      "question": "A file contains the bytes b'a\\rb\\r\\n'. Compare read() results with open('t.txt', newline='\\n'), open('t.txt', newline=''), and the default open().",
+      "answer": "'a\\rb\\r\\n', 'a\\rb\\r\\n', and 'a\\nb\\n'. Setting newline to a concrete terminator makes input lines end only on that string, so the \\r bytes pass through untranslated — exactly as with newline=''. Only the default universal-newline mode converts each \\r\\n and lone \\r into a single '\\n'."
+    },
+    {
+      "id": 150,
+      "question": "For the same ASCII file containing 'hi\\n', print(repr(open('f.txt').read())) and open('f.txt', 'rb').read() side by side.",
+      "answer": "'hi\\n' (a str) and b'hi\\n' (bytes). For pure ASCII the two look nearly identical, but the types differ: text mode decoded the bytes into a str and applies newline handling, while binary mode returns the raw byte sequence. Pick the mode that matches what you plan to do with the data."
+    },
+    {
+      "id": 151,
+      "question": "Predict the output:\ntry:\n    open('/no/such/file.txt')\n    print('opened')\nexcept FileNotFoundError:\n    print('missing')",
+      "answer": "missing\nWhy: open() raises FileNotFoundError immediately instead of returning None or a falsy handle, so the code never reaches print('opened'). FileNotFoundError carries errno=2 and is a subclass of OSError."
+    },
+    {
+      "id": 152,
+      "question": "Which line raises, and which exception?\nline1: f = open('/tmp')          # /tmp is a directory\nline2: print(f.read())",
+      "answer": "line1 raises IsADirectoryError\nWhy: opening a directory for reading fails at open time with errno 21 (EISDIR); line2 is never reached. The check 'can I open this path as a file?' happens in the OS before any read is attempted, so a later try/except around f.read() cannot help you."
+    },
+    {
+      "id": 153,
+      "question": "Fill in the blank with a single class name: FileNotFoundError, PermissionError, IsADirectoryError, NotADirectoryError and FileExistsError are all subclasses of ___ so one except clause can catch them all.",
+      "answer": "OSError\nWhy: every slice of the exception taxonomy on this list derives from OSError (IOError is an alias of it in Python 3), so `except OSError:` handles any file-related I/O failure. Catching the broad base is mid-level practice, but catching the specific subclass first is usually more precise."
+    },
+    {
+      "id": 154,
+      "question": "Predict the output:\nimport os\nos.makedirs('/tmp/perm_test/ro')\nos.chmod('/tmp/perm_test/ro', 0o444)\ntry:\n    open('/tmp/perm_test/ro/f.txt', 'w')\nexcept PermissionError as e:\n    print(e.errno)",
+      "answer": "13\nWhy: the directory is read-only for non-root users, so creating a file in it fails with PermissionError and errno 13 (EACCES). PermissionError is an OSError subclass, so e.errno is always populated; on Windows e.winerror may also be set."
+    },
+    {
+      "id": 155,
+      "question": "What exception and message do you get from open('/tmp', 'w') where /tmp is a directory?",
+      "answer": "IsADirectoryError: [Errno 21] Is a directory: '/tmp'\nWhy: the 'w' mode needs to create/truncate a regular file, but the target is a directory, so the OS returns EISDIR and Python maps errno 21 to IsADirectoryError (an OSError subclass). The error is raised by open() itself, before any file object exists."
+    },
+    {
+      "id": 156,
+      "question": "Given that /tmp/enant/a.txt is a regular file, which error does open('/tmp/enant/a.txt/sub', 'r') raise?",
+      "answer": "NotADirectoryError: [Errno 20] Not a directory: '/tmp/enant/a.txt/sub'\nWhy: the path component a.txt is a regular file, so the parent of 'sub' is not a directory and the OS returns ENOTDIR (errno 20), surfaced as NotADirectoryError. This proves path resolution errors are reported even when the file itself would exist."
+    },
+    {
+      "id": 157,
+      "question": "Fix the bug:\nif os.path.exists(path):\n    f = open(path, 'r')\n    data = f.read()\n    f.close()",
+      "answer": "try:\n    f = open(path, 'r')\n    data = f.read()\n    f.close()\nexcept FileNotFoundError:\n    print('missing')\nWhy: check-then-open is a TOCTOU (time-of-check to time-of-use) race - the file can be deleted between os.path.exists and open. Also a single open() that fails leaks nothing, but FileNotFoundError must still be handled. Checking existence adds a syscall and never removes the race."
+    },
+    {
+      "id": 158,
+      "question": "Predict the output:\nwith open('/tmp/after.txt', 'w') as f:\n    f.write('a')\nf.write('b')",
+      "answer": "ValueError: I/O operation on closed file. (raised, nothing printed)\nWhy: the with statement calls f.close() in __exit__, so when the block ends the file is closed. The name f still refers to the object, whose .closed attribute is now True, so the write() raises ValueError instead of silently writing. This is the classic 'file already closed' pitfall."
+    },
+    {
+      "id": 159,
+      "question": "Predict the output:\nf = open('/tmp/fr.txt', 'w')\nf.close()\nfor line in f:\n    print(line)",
+      "answer": "ValueError: I/O operation on closed file.\nWhy: iterating a file goes through readline(), which checks f.closed and raises ValueError. The iteration protocol cannot consume anything from a closed file; there is no 'empty' result, only an exception."
+    },
+    {
+      "id": 160,
+      "question": "Predict the output:\nf = open('/tmp/fr.txt', 'w')\nf.close()\nprint(f.closed)\nf.close()\nprint(f.closed)",
+      "answer": "True\nTrue\nWhy: close() is idempotent - calling it on an already closed file is a harmless no-op, so no second exception occurs and .closed stays True. This is why with-blocks are safe even if the file was closed earlier by other code in some paths."
+    },
+    {
+      "id": 161,
+      "question": "Compare: which lines raise TypeError and with what messages?\nA: open('/tmp/fr.txt', 'wb').write('hi')\nB: open('/tmp/fr.txt', 'w').write(b'hi')",
+      "answer": "A: TypeError: a bytes-like object is required, not 'str'\nB: TypeError: write() argument must be str, not bytes\nWhy: text mode accepts only str and binary mode only bytes. The ValueError/mode checks happen at open(), but the type of the payload is checked at write() time. Note the messages differ: binary mode mentions 'bytes-like', text mode mentions 'str'."
+    },
+    {
+      "id": 162,
+      "question": "Predict the output:\ntry:\n    with open('/tmp/fr.txt', 'r') as f:\n        raise ValueError('boom')\nexcept ValueError as e:\n    print('caught', e)\nprint(f.closed)",
+      "answer": "caught boom\nTrue\nWhy: the with statement guarantees cleanup even on failure - f.close() runs during exception unwinding, before the exception leaves the with block. The exception then propagates normally to the except clause, and afterwards f.closed is True because close() already happened."
+    },
+    {
+      "id": 163,
+      "question": "Explain why this code can leak a file handle, and fix it:\nf = open(path, 'r')\ndata = f.read()\nraise RuntimeError('processing failed')\nf.close()",
+      "answer": "f.close() is after the raise, so it never runs; the file stays open. Fix: wrap in try/finally (or better, use a with block):\ntry:\n    f = open(path, 'r')\n    data = f.read()\nfinally:\n    f.close()\nWhy: finally executes close() during exception propagation, ensuring the OS handle is released even when processing fails. Without it you get a leaked descriptor and a ResourceWarning when the garbage collector runs."
+    },
+    {
+      "id": 164,
+      "question": "Predict what happens (with warnings turned into errors for this test):\nimport gc, warnings\nwarnings.simplefilter('error', ResourceWarning)\nf = open('/tmp/fr.txt')\ndel f\ngc.collect()",
+      "answer": "ResourceWarning: unclosed file <_io.TextIOWrapper ...>\nWhy: the file object is garbage-collected while still open, and CPython's destructor reports the leak via ResourceWarning instead of raising. Because of the 'error' filter it is raised here, but by default it is just a warning; either way the file was never closed properly. Using with, or an explicit close(), avoids the warning entirely."
+    },
+    {
+      "id": 165,
+      "question": "Predict the output:\nf = open('/tmp/fr.txt', 'r')\ntry:\n    f.write('x')\nexcept OSError as e:\n    print('OSError', e)\nexcept Exception as e:\n    print(type(e).__name__, repr(e))",
+      "answer": "OSError not writable\nWhy: io.UnsupportedOperation is raised because 'r' mode gives read access only. Importantly, UnsupportedOperation inherits from BOTH OSError and ValueError (MRO: UnsupportedOperation -> OSError -> ValueError), so the `except OSError:` branch catches it, printing 'OSError not writable'. If you wanted the specific type, put the narrower except clause first (e.g. except io.UnsupportedOperation) before except OSError."
+    },
+    {
+      "id": 166,
+      "question": "Predict the output:\nf = open('/tmp/fr.txt', 'w')\nprint(f.read())",
+      "answer": "io.UnsupportedOperation: not readable\nWhy: mode 'w' is write-only; there is no read handle underneath, so read() raises UnsupportedOperation rather than returning something empty. This differs from reading an empty file, which legitimately returns ''."
+    },
+    {
+      "id": 167,
+      "question": "Predict the exception:\nf = open('/tmp/fr.txt', 'r')\nf.truncate(2)",
+      "answer": "io.UnsupportedOperation: truncate\nWhy: truncate() needs write access to resize the file, but 'r' only allows reading. The operation is checked against the file's actual capabilities at call time, so even a zero-length truncate fails. Use 'r+' or 'w+' when you need to resize."
+    },
+    {
+      "id": 168,
+      "question": "Predict the exception:\nf = open('/tmp/fr.txt', 'w')\nfor line in f:\n    print(line)",
+      "answer": "io.UnsupportedOperation: not readable\nWhy: iterating a file object is line iteration, which is implemented by repeatedly calling readline(); that data is only available in read mode, so mode 'w' raises UnsupportedOperation on the very first next(f) call. An empty file opened in 'r' iterates cleanly and yields nothing."
+    },
+    {
+      "id": 169,
+      "question": "Predict the exact exception on 64-bit Linux CPython:\nf = open('/tmp/fr.txt', 'rb')\nf.seek(2**63)",
+      "answer": "ValueError: cannot fit 'int' into an offset-sized integer\nWhy: 2**63 exceeds what CPython's internal C offset type can represent (signed 64-bit), so the check happens before any syscall. Older CPython on smaller platforms raised OverflowError instead, which is why Python docs mention OverflowError as a possible seek exception. ValueError is not documented but is what this build gives -- always catch broadly enough to handle both."
+    },
+    {
+      "id": 170,
+      "question": "Predict the output:\nf = open('/tmp/huge.bin', 'r+b')\nprint(f.seek(2**40))\nprint(f.tell())\nf.close()",
+      "answer": "1099511627776\n1099511627776\nWhy: seek() to a position beyond EOF succeeds - the cursor can point past the end of the file without error. tell() reports the same large offset. Only when you write at that offset does the OS create a sparse (mostly-zero-filled) region."
+    },
+    {
+      "id": 171,
+      "question": "Predict the exception:\nf = open('/tmp/fr.txt', 'r')\nf.seek(-1)",
+      "answer": "ValueError: negative seek position -1\nWhy: text-mode files forbid negative absolute offsets; relative seeks may go backward only when you pass the whence argument (e.g. seek(0, 1)). Here the absolute position would be negative, which is invalid, so ValueError is raised before touching the buffer."
+    },
+    {
+      "id": 172,
+      "question": "Predict the exception:\nf = open('/tmp/fr.txt')\nnext(iter(f))\nprint(f.tell())",
+      "answer": "OSError: telling position disabled by next() call\nWhy: after next() pulls from the buffered line iterator, CPython no longer knows the exact byte offset, so tell() raises OSError. The message 'telling position disabled by next() call' tells you the iterator stole the cursor. Calling tell() before iterating, or not mixing iteration with tell(), avoids this."
+    },
+    {
+      "id": 173,
+      "question": "A file contains 'AAAA\\nBBBB\\nCCCC'. Predict the output:\nf = open('/tmp/seq.txt')\na = next(f)\nb = next(f)\nprint(f.read())",
+      "answer": "CCCC\nWhy: iteration and read() share the SAME underlying cursor. The two next() calls consumed the first two lines, so read() returns everything after the current position ('CCCC'). The printed output is exactly CCC4 (no trailing newline). People often wrongly expect the whole file to be re-read after iterating."
+    },
+    {
+      "id": 174,
+      "question": "Predict the output:\nf = open('/tmp/seq.txt')   # contains 'AAAA\\nBBBB\\nCCCC'\nf.read()\nprint(repr(f.read()))\nprint(list(f))",
+      "answer": "''\n[]\nWhy: the first read() consumed the whole file and left the cursor at EOF. A second read() returns '' at EOF (it does not raise), and iteration over the same file object yields no lines because the cursor never goes back to the start. Every call shares the one position."
+    },
+    {
+      "id": 175,
+      "question": "A file contains exactly 'alpha\\nbeta' (no trailing newline). Predict:\nprint(data.count('\\n'))\nprint(len(data.splitlines()))",
+      "answer": "1\n2\nWhy: counting '\\n' characters finds 1 newline, but the file holds 2 logical lines; splitlines() correctly counts the second line that is missing a trailing newline. This is the classic off-by-one when people count '\n' instead of calling splitlines() or iterating lines."
+    },
+    {
+      "id": 176,
+      "question": "After for line in f: fully iterates a file, what does f.readline() return, and after f.read() consumed everything what does f.read() return?",
+      "answer": "'' in both cases\nWhy: readline() and read() return empty strings ('' ), never None, when the cursor is at EOF. Full iteration leaves the cursor at EOF too. There is no separate 'end-of-file' exception; code just checks for '' to stop, e.g. while (line := f.readline()):."
+    },
+    {
+      "id": 177,
+      "question": "Which of these mode strings are VALID for 'r' semantics: 'r', 'r+t', 'rt+', 'rta'? Predict which one raises ValueError and its message.",
+      "answer": "'r', 'r+t', 'rt+' are valid; 'rta' raises ValueError: must have exactly one of create/read/write/append mode\nWhy: '+' and 't' may be combined in any order as long as the required r/w/a letter survives - 'r+t' and 'rt+' both map to read-plus-text. 'rta' has r AND a, two create/read/write/append letters, which violates the 'exactly one' invariant."
+    },
+    {
+      "id": 178,
+      "question": "What exception does open('/tmp/fr.txt', 'rbt') raise?",
+      "answer": "ValueError: can't have text and binary mode at once\nWhy: 'b' and 't' are mutually exclusive, so a mode string containing both is rejected at open() time with a clear ValueError before any file is opened. The error is purely a mode-string sanity check - the OS never sees it."
+    },
+    {
+      "id": 179,
+      "question": "Predict the output for both cases:\nA: with open('/tmp/newex.txt', 'x') as f: pass      # file already exists\nB: open('/tmp/newok.txt', 'x').close()              # file does not exist",
+      "answer": "A: FileExistsError: [Errno 17] File exists: '/tmp/newex.txt'\nB: succeeds, creating the file with no output\nWhy: 'x' is exclusive-create: it fails with FileExistsError only when the target already exists (atomic, no race). When it does not exist it creates an empty file. This is the safe non-overwriting alternative to 'w'."
+    },
+    {
+      "id": 180,
+      "question": "Which line raises, and what happens to f?\nwith open('/no/such/dir/file.txt') as f:\n    print('in body')",
+      "answer": "open(...) raises FileNotFoundError; the with body never runs and f is never bound.\nWhy: the ContextManager __enter__ fails inside the with statement itself. The runtime propagates the exception out of the with statement, skips the body, and never calls __exit__ because there is nothing to close. No 'unbound local' NameError occurs because the body that used f never executed."
+    },
+    {
+      "id": 181,
+      "question": "Fill in the missing handling so a missing file doesn't crash the program:\n________:\n    with open(path, 'r') as f:\n        data = f.read()\n________ FileNotFoundError:\n    print('file not found')",
+      "answer": "try: (first blank) and except (second blank)\nWhy: the with statement goes inside try, so the exception thrown by open() at __enter__ is caught by the except FileNotFoundError clause. Using try/except around open() is the idiomatic way to check 'can I open this' - there is no if-file-exists check that is both race-free and necessary."
+    },
+    {
+      "id": 182,
+      "question": "Predict the output:\ntry:\n    with open('/tmp/a.txt', 'r') as f, open('/tmp/nope_zzz.txt', 'r') as g:\n        pass\nexcept FileNotFoundError:\n    print('caught')\nprint('first closed:', f.closed)",
+      "answer": "caught\nfirst closed: True\nWhy: if the second open() fails, the first file has already been opened and is therefore torn down by the with machinery - the runtime closes every resource that was successfully opened before the failure. Cleanup ordering is guaranteed, so no leak of the first handle occurs."
+    },
+    {
+      "id": 183,
+      "question": "Predict the output:\ntry:\n    with open('/tmp/a.txt', 'r') as f:\n        with open('/tmp/nope_zzz.txt', 'r') as g:\n            pass\nexcept FileNotFoundError:\n    print('caught')\nprint('outer closed:', f.closed)",
+      "answer": "caught\nouter closed: True\nWhy: when the inner open fails, the inner with raises; as the exception unwinds through the outer with, the outer file's __exit__ runs close() as part of exception propagation. So even a deeply nested failure closes every already-open file."
+    },
+    {
+      "id": 184,
+      "question": "Predict the output:\nf = open('/tmp/a.txt')\nf.close()\ntry:\n    with f:\n        print('body runs')\nexcept ValueError as e:\n    print(type(e).__name__, e)",
+      "answer": "ValueError: I/O operation on closed file.\nWhy: on current CPython, __enter__() refuses a closed file, so the with statement raises before the body can run ('body runs' never prints). This is newer, stricter behavior than in older releases where exiting an already-closed file was silently idempotent - it exists to surface accidental use-after-close."
+    },
+    {
+      "id": 185,
+      "question": "Compare after f.close(): which of f.readable(), f.writable(), f.seekable() return a value and which raise?",
+      "answer": "writable() returns False; readable() and seekable() raise ValueError: I/O operation on closed file\nWhy: the capability flags are precomputed at open time, so writable() can still report the mode; but readable() and seekable() actually probe the underlying handle, which is gone, so they raise ValueError. The asymmetry is a quirk of the io module's implementation, not a contract you should rely on."
+    },
+    {
+      "id": 186,
+      "question": "Predict the output:\nf = open('/tmp/buf.txt', 'w')\nf.write('data1')\ng = open('/tmp/buf.txt')\nprint(repr(g.read()))\ng.close()\nf.flush()\ng = open('/tmp/buf.txt')\nprint(repr(g.read()))\ng.close()\nf.close()",
+      "answer": "''\n'data1'\nWhy: writes are buffered, and the first read happens before any flush, so the buffer still holds 'data1' in memory while the OS file is empty. After flush() (or close), the data is visible to a second reader. This is why cross-handle readers see stale/empty data until buffered writes are flushed."
+    },
+    {
+      "id": 187,
+      "question": "Predict what is written to disk:\nf = open('/tmp/enc.txt', 'w', encoding='ascii')\nf.write('caf' + chr(233))\nf.close()",
+      "answer": "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe9' in position 3: ordinal not in range(128) raised at write()\nWhy: chr(233) is '\\u00e9' (é), which ascii cannot represent, so encoding fails immediately when write() tries to encode the buffer. Setting errors='replace' would write 'caf?' and errors='ignore' would write 'caf' instead. The error with ascii is a buffer-encoding failure at write time, not a file-size or disk check."
+    },
+    {
+      "id": 188,
+      "question": "A file contains the bytes b'abc\\xffdef'. Predict the printed results for the three open() calls:\nprint(open('/tmp/bad.bin', 'r', encoding='utf-8', errors='replace').read())\nprint(open('/tmp/bad.bin', 'r', encoding='utf-8', errors='ignore').read())\nprint(open('/tmp/bad.bin', 'r', encoding='utf-8').read())",
+      "answer": "abc\\ufffddef\nabcdef\nUnicodeDecodeError (no output printed)\nWhy: \\xff is not a valid UTF-8 leading byte. errors='replace' substitutes the replacement character U+FFFD (shown as '�'); errors='ignore' silently drops the byte; the default 'strict' raises UnicodeDecodeError. mid-level file handling routinely passes errors='replace' when parsing imperfect text."
+    },
+    {
+      "id": 189,
+      "question": "Predict the exception:\nopen('/tmp/a.txt', encoding='bogus-encoding')",
+      "answer": "LookupError: unknown encoding: bogus-encoding\nWhy: the value passed to encoding is resolved against the registered codec names, and an unrecognized name raises LookupError at open() time. It is not a file error at all - the file is never opened - so catching OSError would not help here."
+    },
+    {
+      "id": 190,
+      "question": "Compare: os.path.getsize('/tmp') on an existing directory, and os.path.getsize('/no/such/file'). Predict exceptions/output.",
+      "answer": "getsize('/tmp') does NOT raise on Linux; it returns the directory's size as reported by stat (e.g. 180). getsize('/no/such/file') raises FileNotFoundError: [Errno 2] No such file or directory.\nWhy: getsize() merely calls stat(), and stat() succeeds on directories on POSIX, returning whatever st_size the filesystem stores. Missing paths translate errno 2 into FileNotFoundError. This is why 'check if it's a directory before trusting its size' is a common safety rule."
+    },
+    {
+      "id": 191,
+      "question": "Predict the exception:\nos.listdir('/tmp/enant/a.txt')   # a.txt is a regular file",
+      "answer": "NotADirectoryError: [Errno 20] Not a directory: '/tmp/enant/a.txt'\nWhy: listing the entries of a path requires the path to actually be a directory; a regular file returns ENOTDIR (errno 20) from the readdir syscall, mapped to NotADirectoryError. This is the read-side counterpart to open('adir') raising IsADirectoryError."
+    },
+    {
+      "id": 192,
+      "question": "A file contains exactly 'abcdefgh' (no newline). Predict:\nf = open(p)\nprint(f.read(3))\nprint(f.read(3))\nprint(f.read(3))\nprint(f.read(3))",
+      "answer": "abc\ndef\ngh\n(empty string for the fourth call)\nWhy: read(n) returns up to n characters; when fewer than n remain, it returns a partial chunk ('gh', length 2). Once the cursor reaches EOF, every subsequent read() returns '' indefinitely - not an error, just empty. This is how streaming readers detect EOF: until the return value is falsy, keep processing."
+    },
+    {
+      "id": 193,
+      "question": "Predict the output:\nf = open('/tmp/rw.txt', 'w+')\nf.write('xyz')\nprint(repr(f.read()))\nf.seek(0)\nprint(repr(f.read()))\nf.close()",
+      "answer": "''\n'xyz'\nWhy: writing 'xyz' leaves the cursor after the last character (position 3), so read() starts from the cursor and finds nothing. After seek(0) the cursor moves back and the same buffer returns the full content. w+ does not reset the cursor magically - position is state you must manage."
+    },
+    {
+      "id": 194,
+      "question": "A file already contains 'hello' (5 chars). Predict:\nf = open(p, 'a+')\nprint(f.tell())\nf.write('!')",
+      "answer": "5\nWhy: appending mode positions the cursor at the end of the file when opened, so tell() returns 5 and the next write lands at offset 5, giving 'hello!'. Note: in 'a'/'a+' the cursor starts at the end for reading too, so read() before a seek would see nothing."
+    },
+    {
+      "id": 195,
+      "question": "A file contains 'hello world'. Predict the file contents and tell():\nf = open(p, 'r+')\nf.seek(5)\nf.truncate()\nf.seek(0)\nprint(repr(f.read()))",
+      "answer": "'hello'\nWhy: truncate() with no argument truncates at the CURRENT position (defaults to size=tell()), so everything from offset 5 onward is dropped, KEEPING the first 5 characters. This is a common misconception: truncate() does not delete the tail; it keeps everything below the cursor. tell() was 5 right after the truncate call."
+    },
+    {
+      "id": 196,
+      "question": "Predict the output:\nf = open('/tmp/grow.bin', 'w+b')\nf.truncate(5)\nf.seek(0)\nprint(f.read())",
+      "answer": "b'\\x00\\x00\\x00\\x00\\x00'\nWhy: truncate(5) on an empty file grows it to exactly 5 bytes, and the new region is filled with zero bytes (on Linux often sparse on disk, but reads return zeros). The '\\x00'*5 is real data from the reader's point of view. resize can both shrink and grow - growing pads with NULs."
+    },
+    {
+      "id": 197,
+      "question": "Fix the bug so the file ALWAYS closes even when read_copy() raises:\nf = open(path, 'r')\ndata = read_copy(f)",
+      "answer": "f = None\ntry:\n    f = open(path, 'r')\n    data = read_copy(f)\nfinally:\n    if f is not None:\n        f.close()\nWhy: if open() itself fails, f is never bound, so the finally must guard with `if f is not None` (or `if f` is unsafe anyway - see truthiness). If read_copy() raises, finally still closes the handle. This pattern preserves the ability to distinguish 'couldn't open' from 'processing failed'."
+    },
+    {
+      "id": 198,
+      "question": "Predict:\nf = open('/tmp/a.txt')\nprint(bool(f))\nf.close()\nprint(bool(f))",
+      "answer": "True\nTrue\nWhy: file objects are always truthy - they do not implement __bool__/__len__ based on openness or remaining data - so `if f:` cannot tell an open file from a closed one. An empty file is still truthy too. Always test f.closed or f.readable() instead of relying on truthiness."
+    },
+    {
+      "id": 199,
+      "question": "Predict:\nf = open('/tmp/a.txt', 'rb')\nprint(f.mode, f.name)\nf.close()",
+      "answer": "rb /tmp/a.txt\nWhy: f.mode echoes the mode string actually used (here 'rb') and f.name is the path passed to open(). Both remain readable after close() - they are plain attributes, not checked against the handle - which is handy for logging, but it does not mean the file is open."
+    },
+    {
+      "id": 200,
+      "question": "Which single except clause catches FileNotFoundError, PermissionError, IsADirectoryError, NotADirectoryError and FileExistsError? And what is the old alias for the base?",
+      "answer": "except OSError: (IOError is the old alias)\nWhy: every one of those five classes derives from OSError, and in Python 3 IOError is just an alias for OSError, so `except OSError` handles all of them. The lesson to remember is the taxonomy: open() failures surface as various OSError subclasses with different errno values (2, 13, 20, 21, 17), so you can catch OSError for blanket I/O failure handling or a specific subclass for precision."
+    },
+    {
+      "id": 201,
+      "question": "What does `os.path.join('/home', 'user', 'docs', 'file.txt')` return?",
+      "answer": "'/home/user/docs/file.txt'. The `os.path.join` function concatenates path segments with the OS-appropriate separator (forward slash on Linux/macOS, backslash on Windows), inserting separators only where needed."
+    },
+    {
+      "id": 202,
+      "question": "Given `path = '/home/user/docs/file.txt'`, what do `os.path.dirname(path)` and `os.path.basename(path)` return respectively?",
+      "answer": "dirname returns '/home/user/docs' and basename returns 'file.txt'. `dirname` returns everything before the last path separator, and `basename` returns everything after the last separator."
+    },
+    {
+      "id": 203,
+      "question": "What is the result of `os.path.splitext('archive.tar.gz')`?",
+      "answer": "('archive.tar', '.gz'). `splitext` splits at the **last** dot in the filename, so only the final extension '.gz' is separated, not '.tar.gz'."
+    },
+    {
+      "id": 204,
+      "question": "After `open('data.txt', 'w').close()`, what does `os.path.exists('data.txt')` return?",
+      "answer": "True. `open` with mode 'w' creates the file if it doesn't exist, and `os.path.exists` returns True for both files and directories that exist at the given path."
+    },
+    {
+      "id": 205,
+      "question": "If `file.txt` contains exactly `hello` (5 bytes), what does `os.path.getsize('file.txt')` return?",
+      "answer": "5. `getsize` returns the file size in bytes as reported by the filesystem. The string 'hello' is 5 ASCII bytes."
+    },
+    {
+      "id": 206,
+      "question": "What does `os.path.abspath('file.txt')` return when the current working directory is `/home/user`?",
+      "answer": "'/home/user/file.txt'. `abspath` resolves a relative path against the current working directory. If given an absolute path like '/tmp/file.txt', it returns it unchanged."
+    },
+    {
+      "id": 207,
+      "question": "A directory contains files `a.txt`, `b.py`, and a subdirectory `subdir`. What does `sorted(os.listdir('/mydir'))` return?",
+      "answer": "['a.txt', 'b.py', 'subdir']. `os.listdir` returns a list of entry names (not full paths) in arbitrary order, including both files and directories. `sorted` arranges them alphabetically."
+    },
+    {
+      "id": 208,
+      "question": "A directory `walk_test/` contains files `x.txt` and `y.py`. What does `os.walk` yield for the first iteration when `topdown=True`?",
+      "answer": "A tuple `(root, dirs, files)` where `files` is `['x.txt', 'y.py']` (order may vary) and `dirs` is `[]` (empty list since no subdirectories exist). The root is the starting directory path."
+    },
+    {
+      "id": 209,
+      "question": "If a directory contains `a.txt`, `b.py`, and `c.txt`, what does `glob.glob('*.txt')` return?",
+      "answer": "A list of all `.txt` files matching the pattern, e.g. `['a.txt', 'c.txt']`. `glob.glob` uses shell-style wildcards where `*` matches any characters except the path separator, and `.txt` restricts to that extension."
+    },
+    {
+      "id": 210,
+      "question": "What does `Path('data') / 'files' / 'report.csv'` produce?",
+      "answer": "A `Path` object representing `Path('data/files/report.csv')`. The `/` operator on `Path` objects joins path segments, creating platform-appropriate paths without manual string concatenation."
+    },
+    {
+      "id": 211,
+      "question": "After `p = Path('output.txt'); p.write_text('hello pathlib')`, what does `p.read_text()` return?",
+      "answer": "'hello pathlib'. `write_text` opens the file, writes the string (encoding UTF-8 by default), and closes it. `read_text` reads the entire file contents and returns it as a string."
+    },
+    {
+      "id": 212,
+      "question": "If `p = Path('data.txt')` and the file exists with 13 bytes, what does `p.exists()` and `p.stat().st_size` return?",
+      "answer": "exists() returns True and stat().st_size returns 13. `exists()` checks if the path points to an existing file or directory, and `stat().st_size` gives the file size in bytes from the file's metadata."
+    },
+    {
+      "id": 213,
+      "question": "After `p.write_text('data'); p.unlink()`, what does `p.exists()` return?",
+      "answer": "False. The `unlink()` method deletes the file at the path. After deletion, `exists()` returns False because the file no longer exists on the filesystem."
+    },
+    {
+      "id": 214,
+      "question": "A directory contains `g1.py`, `g2.py`, and `g3.txt`. What does `list(Path('.').glob('*.py'))` return (names only)?",
+      "answer": "[Path('g1.py'), Path('g2.py')] (exact paths depend on directory). `Path.glob('*.py')` yields Path objects matching the pattern in the directory. The `.py` extension filter excludes `g3.txt`."
+    },
+    {
+      "id": 215,
+      "question": "What happens when you call `Path('nonexistent.txt').read_text()`?",
+      "answer": "Raises `FileNotFoundError`. Even though `read_text` is a convenience method, it still calls `open()` under the hood, which raises `FileNotFoundError` if the file doesn't exist."
+    },
+    {
+      "id": 216,
+      "question": "What is the difference between `os.mkdir('a/b/c')` and `os.makedirs('a/b/c')`?",
+      "answer": "`os.mkdir` fails with `FileNotFoundError` if parent directories don't exist. `os.makedirs` creates all intermediate directories in the path, similar to `mkdir -p` in shell."
+    },
+    {
+      "id": 217,
+      "question": "If directory `mydir` already exists, what does `os.makedirs('mydir', exist_ok=True)` do vs `os.makedirs('mydir')`?",
+      "answer": "`os.makedirs('mydir')` raises `FileExistsError`. `os.makedirs('mydir', exist_ok=True)` silently does nothing and completes without error, which is useful when you want to ensure a directory exists."
+    },
+    {
+      "id": 218,
+      "question": "What is the difference between `os.remove('file.txt')` and `os.rmdir('empty_dir')`?",
+      "answer": "`os.remove` deletes a file (raises `IsADirectoryError` on a directory). `os.rmdir` removes an empty directory (raises `OSError` if the directory is not empty). They target different filesystem entry types."
+    },
+    {
+      "id": 219,
+      "question": "What exception is raised by `os.remove('my_directory')` if `my_directory` is a directory?",
+      "answer": "`IsADirectoryError`. `os.remove` can only delete files, not directories. Attempting to remove a directory with `os.remove` raises this specific exception."
+    },
+    {
+      "id": 220,
+      "question": "What exception is raised by `os.rmdir('nonempty_dir')` if the directory contains files?",
+      "answer": "`OSError` (with message 'Directory not empty'). `os.rmdir` only works on empty directories. To remove a directory and its contents, use `shutil.rmtree` instead."
+    },
+    {
+      "id": 221,
+      "question": "A directory has three files: `a.txt` (3 bytes), `b.py` (5 bytes), `c.log` (10 bytes). What does `sum(os.path.getsize(f) for f in os.listdir(d) if os.path.isfile(os.path.join(d, f)))` return?",
+      "answer": "18. The expression lists all entries, filters to files only with `isfile`, joins each name with the directory path, gets their sizes, and sums them: 3 + 5 + 10 = 18."
+    },
+    {
+      "id": 222,
+      "question": "Two `.txt` files exist: `a.txt` with content `'hello world'` (2 words) and `b.txt` with content `'one'` (1 word). What does a word-counting loop over `.txt` files in the directory return?",
+      "answer": "3. The loop reads each `.txt` file, splits content by whitespace with `str.split()`, counts the resulting list length, and accumulates: 2 + 1 = 3."
+    },
+    {
+      "id": 223,
+      "question": "A directory contains `script.py`, `style.py`, `readme.md`, `data.csv`. What does `[f for f in os.listdir(d) if f.endswith('.py')]` return?",
+      "answer": "['script.py', 'style.py']. The list comprehension filters `os.listdir` output using `endswith('.py')`, keeping only filenames that end with the `.py` extension."
+    },
+    {
+      "id": 224,
+      "question": "If today is July 15, 2025, what does `f\"log-{datetime.date(2025, 7, 15)}.txt\"` evaluate to?",
+      "answer": "'log-2025-07-15.txt'. The f-string calls `datetime.date.__str__()` which formats the date as ISO format 'YYYY-MM-DD', and it's embedded directly into the filename string."
+    },
+    {
+      "id": 225,
+      "question": "If `report.txt` and `report-1.txt` both exist, what filename does a counter-based uniqueness loop produce next?",
+      "answer": "'report-2.txt'. The loop starts with counter=1 and candidate='report.txt'. Since report.txt exists, it checks 'report-1.txt', which also exists, incrementing to 2. It then checks 'report-2.txt', finds it doesn't exist, and returns it as the safe filename."
+    },
+    {
+      "id": 226,
+      "question": "After exiting a `with tempfile.NamedTemporaryFile(delete=True) as tmp:` block, does `os.path.exists(tmp.name)` return True or False?",
+      "answer": "False. When `delete=True` (the default), the temporary file is automatically deleted when the context manager exits (the file is closed), so the path no longer exists."
+    },
+    {
+      "id": 227,
+      "question": "What happens when you use `tempfile.NamedTemporaryFile(delete=False)` — does the file persist after closing?",
+      "answer": "Yes, the file persists after closing. Setting `delete=False` prevents automatic deletion when the file is closed. You must manually delete it later with `os.unlink()` to clean up."
+    },
+    {
+      "id": 228,
+      "question": "If you call `open('data.txt', 'w')` after `os.chdir('/tmp')`, where is the file created — in `/tmp` or in your original working directory?",
+      "answer": "In `/tmp`. `open()` with a relative path always creates/opens files relative to the current working directory (cwd), which was changed to `/tmp` by `os.chdir()`."
+    },
+    {
+      "id": 229,
+      "question": "For `PurePath('/home/user/docs/file.txt')`, what do `.parent`, `.name`, `.stem`, and `.suffix` return?",
+      "answer": "parent is '/home/user/docs', name is 'file.txt', stem is 'file', and suffix is '.txt'. `PurePath` provides these decompositions: parent is the path without the last component, name is the final component, stem is the name without the suffix, and suffix is the file extension."
+    },
+    {
+      "id": 230,
+      "question": "If `d` is a directory, what does `os.path.isdir(d)` and `os.path.isfile(d)` return?",
+      "answer": "isdir returns True and isfile returns False. `isdir` checks if the path points to a directory, while `isfile` checks if it points to a regular file. A path cannot be both a directory and a file."
+    },
+    {
+      "id": 231,
+      "question": "When `os.walk` traverses a flat directory (no subdirectories) with `topdown=True`, what is the `dirs` list in the yielded tuple?",
+      "answer": "An empty list `[]`. When there are no subdirectories in the current directory, `os.walk` yields an empty `dirs` list. The `dirs` list only contains names of immediate subdirectories."
+    },
+    {
+      "id": 232,
+      "question": "Does `os.listdir('/dir')` return full paths or just filenames? What about `glob.glob('/dir/*')`?",
+      "answer": "`os.listdir` returns just filenames (e.g. `['a.txt', 'subdir']`). `glob.glob` returns full paths (e.g. `['/dir/a.txt', '/dir/subdir']`). This is a key difference between the two."
+    },
+    {
+      "id": 233,
+      "question": "What is `Path('/home') / 'user'` — does it return a `PurePath` or a `Path` object?",
+      "answer": "A `Path` object. When the left operand is a concrete `Path`, the `/` operator returns a `Path`. If the left operand is a `PurePath`, the result would be a `PurePath`."
+    },
+    {
+      "id": 234,
+      "question": "What does `os.path.splitext` return for each of: `'image.jpg'`, `'noext'`, `'.hidden'`?",
+      "answer": "('image', '.jpg'), ('noext', ''), ('.hidden', ''). Files without an extension get an empty string as the extension. Files starting with a dot that have no other dot are treated as having no extension."
+    },
+    {
+      "id": 235,
+      "question": "What exception does `os.mkdir('nonexistent/parent/child')` raise if `nonexistent/parent` doesn't exist?",
+      "answer": "`FileNotFoundError`. `os.mkdir` can only create the final directory in the path; it doesn't create parent directories. Use `os.makedirs` instead to create the full path."
+    },
+    {
+      "id": 236,
+      "question": "What does `(Path('/tmp') / 'sub' / '..' / 'file.txt').resolve()` return?",
+      "answer": "'/tmp/file.txt'. `resolve()` normalizes the path, removing `..` components and returning the absolute canonical path. It collapses `sub/..` into nothing, leaving just `/tmp/file.txt`."
+    },
+    {
+      "id": 237,
+      "question": "What format does `time.strftime('%Y%m%d-%H%M%S')` produce for generating unique timestamped filenames?",
+      "answer": "A string like '20250715-143022'. `%Y` is 4-digit year, `%m` is month, `%d` is day, `%H` is 24-hour, `%M` is minutes, `%S` is seconds. This produces a sortable, filesystem-safe timestamp for filenames like `data-20250715-143022.csv`."
+    },
+    {
+      "id": 238,
+      "question": "What happens when you call `os.path.getsize('/some_directory')` on a directory?",
+      "answer": "Raises `OSError`. `getsize` is designed for regular files and returns their byte size. On a directory, the behavior is OS-dependent and typically raises an error on Linux."
+    },
+    {
+      "id": 239,
+      "question": "What is the difference between `Path('.').glob('*.txt')` and `Path('.').rglob('*.txt')`?",
+      "answer": "`glob('*.txt')` searches only the immediate directory. `rglob('*.txt')` searches recursively through all subdirectories, equivalent to `glob('**/*.txt')`. `rglob` is for deep searches."
+    },
+    {
+      "id": 240,
+      "question": "What does `Path('data.txt').stat().st_size` return if the file contains `'hello'` (5 bytes)?",
+      "answer": "5. `stat()` returns a named tuple of file metadata, and `st_size` is the file size in bytes. For the ASCII string 'hello', that's 5 bytes."
+    },
+    {
+      "id": 241,
+      "question": "What happens when you pass `topdown=False` to `os.walk` — which directories are visited first?",
+      "answer": "Bottom-up order: leaf directories are yielded before their parents. With `topdown=True` (default), parents come first. `topdown=False` is useful when you want to delete or modify subdirectories before processing their parents."
+    },
+    {
+      "id": 242,
+      "question": "Does `os.listdir('.')` include hidden files (names starting with `.`)?",
+      "answer": "Yes, `os.listdir` includes all entries including hidden files like `.gitignore` or `.env`. It does not filter by name pattern — every directory entry is returned."
+    },
+    {
+      "id": 243,
+      "question": "What does `glob.glob('/project/**/*.py', recursive=True)` do that `glob.glob('/project/*.py')` doesn't?",
+      "answer": "The `recursive=True` with `**` searches through all subdirectories at any depth. Without it, `*.py` only matches `.py` files directly in `/project/`. The `**` pattern matches zero or more directory levels."
+    },
+    {
+      "id": 244,
+      "question": "When iterating `Path('/dir').iterdir()`, what are the items — strings or `Path` objects?",
+      "answer": "`Path` objects. Each item yielded by `iterdir()` is a full `Path` object (not just the name). You can call `.is_file()`, `.is_dir()`, `.name`, etc. directly on each item."
+    },
+    {
+      "id": 245,
+      "question": "After `os.chdir('/tmp')`, what does `open('test.txt', 'w')` create — at `/tmp/test.txt` or at the original working directory?",
+      "answer": "At `/tmp/test.txt`. `os.chdir` changes the process's current working directory. All subsequent relative-path `open()` calls resolve against this new cwd."
+    },
+    {
+      "id": 246,
+      "question": "What does `PurePath('archive.tar.gz').suffixes` return?",
+      "answer": "['.tar', '.gz']. Unlike `.suffix` which returns only the last extension, `.suffixes` returns a list of all extensions (all dot-separated suffixes). This is useful for multi-extension filenames."
+    },
+    {
+      "id": 247,
+      "question": "What does `os.path.join('/home/user', '/tmp/file.txt')` return when the second argument is an absolute path?",
+      "answer": "'/tmp/file.txt'. When any component after the first is an absolute path, `os.path.join` discards all previous components and returns the absolute path. This is a common gotcha."
+    },
+    {
+      "id": 248,
+      "question": "What does `Path('empty.txt').stat().st_size` return if you just created an empty file with `Path('empty.txt').write_text('')`?",
+      "answer": "0. An empty file has zero bytes. `write_text('')` writes nothing, creating a valid but zero-length file, and `st_size` reports 0."
+    },
+    {
+      "id": 249,
+      "question": "What does `Path('script.py').stat().st_mode` tell you, and what does `stat.S_ISDIR(mode)` return for a regular file?",
+      "answer": "`st_mode` encodes both file type and permissions as an integer. `stat.S_ISDIR(mode)` returns False for a regular file — it returns True only for directories. Use `stat.S_ISREG(mode)` to check for regular files."
+    },
+    {
+      "id": 250,
+      "question": "What does `glob.glob('file[12]*')` match against files `file1.txt`, `file2.txt`, `file3.py`?",
+      "answer": "It matches `file1.txt` and `file2.txt` but not `file3.py`. The `[12]` bracket expression matches exactly '1' or '2', so only filenames starting with 'file1' or 'file2' are included."
+    },
+    {
+      "id": 251,
+      "question": "Predict the output (data.txt initially contains the text: abcdef):\n\n    with open('data.txt', 'r+') as f:\n        f.write('XY')\n        print(f.read())",
+      "answer": "cdef. In 'r+' the cursor starts at position 0, so write('XY') overwrites the first two characters and leaves the cursor at position 2; read() then returns everything from the cursor onwards, i.e. the remaining four characters. The file ends up as 'XYcdef'."
+    },
+    {
+      "id": 252,
+      "question": "Predict the output (data.txt initially contains the text: ABCD):\n\n    with open('data.txt', 'r+') as f:\n        print(f.read())\n        f.write('EF')\n        print(f.read())",
+      "answer": "ABCD followed by an empty line. The first read() consumes the whole file and leaves the cursor at the end; write('EF') then appends at the end; the second read() starts from the end, so it returns the empty string rather than the file contents. The file becomes 'ABCDEF'."
+    },
+    {
+      "id": 253,
+      "question": "Predict what data.txt contains afterwards (it originally contains the text: hello world long content):\n\n    with open('data.txt', 'r+') as f:\n        f.seek(0)\n        f.write('short')",
+      "answer": "'short world long content'. seek(0)+write only overwrites the first five bytes with the new text; without truncate() the remaining 18 old characters stay in the file. The cursor was reset to the start for the write, but the old tail was never removed."
+    },
+    {
+      "id": 254,
+      "question": "Predict the final content of data.txt (it originally contains the text: hello world):\n\n    with open('data.txt', 'r+') as f:\n        data = f.read()\n        f.seek(0)\n        f.write(data.upper())\n        f.truncate()",
+      "answer": "'HELLO WORLD'. read() loads everything, seek(0) moves the cursor back to position 0, write() puts the transformed text back in place, and truncate() cuts off any bytes beyond the new content length. This is the correct in-place read-modify-write-back sequence."
+    },
+    {
+      "id": 255,
+      "question": "Predict the output (data.txt contains three lines: line1, line2, line3):\n\n    with open('data.txt') as f:\n        for line in f:\n            print(line.strip())\n        print(repr(f.read()))",
+      "answer": "line1\nline2\nline3\n''. Iterating with 'for line in f' moves the cursor line by line until it reaches end-of-file, so the subsequent read() has nothing left to return. The cursor is NOT reset automatically after the loop; you would need f.seek(0) or a fresh open() to read the file again."
+    },
+    {
+      "id": 256,
+      "question": "Predict the output (data.txt contains four lines: line1, line2, line3, line4):\n\n    with open('data.txt') as f:\n        for line in f:\n            if 'line2' in line:\n                break\n        print(repr(f.read()))",
+      "answer": "'line3\\nline4\\n'. Breaking out of the loop stops the iteration but leaves the cursor positioned just after the line that was read (line2), so read() returns everything from that position to the end of the file. The remaining tail is not lost; it is simply only reachable from the current cursor position."
+    },
+    {
+      "id": 257,
+      "question": "Predict the output (data.txt contains two lines: a and b):\n\n    with open('data.txt') as f:\n        print(repr(f.readline()))\n        print(repr(f.readline()))\n        print(repr(f.readline()))\n        print(repr(f.readline()))",
+      "answer": "'a\\n'\n'b\\n'\n''\n''. readline() returns the next line including its trailing newline; once the cursor has passed the last line it repeatedly returns the empty string, which is the EOF marker. It neither raises an exception nor returns None."
+    },
+    {
+      "id": 258,
+      "question": "Predict the output:\n\n    f = open('data.txt')\n    print(bool(f))\n    f.close()\n    print(bool(f))",
+      "answer": "True\nTrue. File objects do not define __bool__() or __len__(), so they are ALWAYS truthy, even after close(). The common assumption that bool(f) turns False once the file is closed is wrong; to test whether a handle is usable you must examine f.closed explicitly."
+    },
+    {
+      "id": 259,
+      "question": "Predict the output:\n\n    with open('data.txt', 'w+') as f:\n        f.write('hello')\n        print(repr(f.read()))",
+      "answer": "''. 'w+' creates/truncates the file and allows both reading and writing, but after write('hello') the cursor sits at position 5. read() returns whatever starts at the cursor, so it returns the empty string; you must seek(0) before reading back what you wrote."
+    },
+    {
+      "id": 260,
+      "question": "Predict the output:\n\n    with open('data.txt', 'w+') as f:\n        f.write('hello')\n        f.seek(0)\n        print(f.read())",
+      "answer": "'hello'. seek(0) moves the cursor to the beginning of the file, so the following read() starts at position 0 and returns the data that was just written. This is the standard pattern for writing and reading a file through a single 'w+' handle."
+    },
+    {
+      "id": 261,
+      "question": "A file was created like this:\n\n    with open('data.txt', 'wb') as f:\n        f.write('hello'.encode('utf-16'))\n\nPredict the output when you read it back plainly:\n\n    with open('data.txt') as f:\n        print(f.read())",
+      "answer": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte. Opening in text mode without an encoding parameter defaults to UTF-8, and the UTF-16 data begins with a 0xFF byte (plus embedded 0x00 bytes) that is not valid UTF-8, so decoding fails. Opening with encoding='utf-16' decodes the bytes correctly."
+    },
+    {
+      "id": 262,
+      "question": "A file was written with open('data.txt', 'w', encoding='utf-8') and contains the text: café. Predict the output:\n\n    with open('data.txt', encoding='latin-1') as f:\n        print(f.read())",
+      "answer": "cafÃ©. Latin-1 maps every single byte directly to a codepoint, so no exception is raised, but the two-byte UTF-8 sequence that encodes 'é' gets decoded as two separate characters, producing mojibake. Even when there is no error, reading with a different encoding than the write encoding corrupts the data."
+    },
+    {
+      "id": 263,
+      "question": "A file was created with open('data.txt', 'wb') containing 'café'.encode('latin-1'). Predict what happens when you read it back plainly:\n\n    with open('data.txt') as f:\n        print(f.read())",
+      "answer": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe9 in position 3: unexpected end of data. The 0xE9 byte produced by Latin-1 encoding is not a valid UTF-8 sequence, so the default decoder rejects it. Specifying encoding='latin-1' in the open() call matches the write side and fixes the read."
+    },
+    {
+      "id": 264,
+      "question": "Predict the output:\n\n    with open('data.txt', 'w') as f:\n        f.write(b'hello')",
+      "answer": "TypeError: write() argument must be str, not bytes. A text-mode file only accepts str; bytes must go through a binary handle opened with 'wb' (or be decoded to str first). Mixing types fails immediately rather than writing anything."
+    },
+    {
+      "id": 265,
+      "question": "Predict the output:\n\n    with open('data.bin', 'wb') as f:\n        f.write('hello')",
+      "answer": "TypeError: a bytes-like object is required, not 'str'. This is the mirror image of the previous questions: a binary handle only accepts bytes-like objects. Either open the file in text mode, or encode the string first with f.write('hello'.encode())."
+    },
+    {
+      "id": 266,
+      "question": "Predict the content of dst.txt (src.txt contains the text: hello from source):\n\n    with open('src.txt') as src, open('dst.txt', 'w') as dst:\n        dst.write(src.read())",
+      "answer": "'hello from source'. Two files opened in a single with-statement both stay open for the whole block; src.read() loads the full content at once and it is written verbatim to dst. Both handles are closed automatically when the block ends."
+    },
+    {
+      "id": 267,
+      "question": "Predict the content of dst.txt (src.txt contains one line: source content, with no trailing newline):\n\n    with open('src.txt') as src, open('dst.txt', 'w') as dst:\n        for line in src:\n            dst.write(line.upper())",
+      "answer": "'SOURCE CONTENT'. Iterating src line by line while dst stays open lets you transform and stream data instead of loading the whole input into memory, which scales to very large files. Because the source has no trailing newline, none is added to the output."
+    },
+    {
+      "id": 268,
+      "question": "Predict the output (data.txt contains three lines: a, b, c):\n\n    with open('data.txt') as f:\n        lines = f.readlines()\n        print(lines)\n        for line in f:\n            print(line.strip())",
+      "answer": "['a\\n', 'b\\n', 'c\\n']\n[the for-loop then prints nothing]. readlines() consumes the ENTIRE file and returns a list snapshot, leaving the cursor at end-of-file; iterating the same handle afterwards yields no lines. To keep the snapshot AND iterate the lines, re-open the file or call f.seek(0) first."
+    },
+    {
+      "id": 269,
+      "question": "Predict the output (data.txt contains the text: hello world):\n\n    with open('data.txt') as f:\n        print(repr(f.read()))\n        print(repr(f.read()))",
+      "answer": "'hello world'\n''. Each call to read() without a size returns everything from the current cursor to the end of the file; after the first call the cursor is already at the end, so the second call returns an empty string. A file handle has one moving cursor, and reading does not reset it."
+    },
+    {
+      "id": 270,
+      "question": "Predict the output (data.txt contains two lines: x and y):\n\n    with open('data.txt') as f:\n        for line in f:\n            print('pass1:', line.strip())\n        for line in f:\n            print('pass2:', line.strip())",
+      "answer": "pass1: x\npass1: y\n[the second for-loop prints nothing]. The first loop advances the cursor past every line to end-of-file, so the second loop over the SAME handle iterates zero lines. To traverse the file twice you must re-open it or call f.seek(0) between the passes."
+    },
+    {
+      "id": 271,
+      "question": "Predict the output (data.txt contains the text: hello world):\n\n    with open('data.txt', 'w'):\n        pass\n    with open('data.txt') as f:\n        print(repr(f.read()))",
+      "answer": "''. Opening a file in 'w' mode truncates it to zero bytes at the moment of opening, even if nothing is written. This is a handy way to clear a file, but it is also the classic bug when the intention was to read-modify it with 'r+'."
+    },
+    {
+      "id": 272,
+      "question": "Predict the output (data.txt initially contains: old content):\n\n    with open('data.txt', 'w') as f:\n        f.write('first')\n    with open('data.txt', 'w') as f:\n        f.write('second')\n    with open('data.txt') as f:\n        print(f.read())",
+      "answer": "second. Each open in 'w' mode truncates the file from scratch, so the second write completely clobbers the first; nothing of 'first' survives. If both writes were meant to accumulate, the second handle should open in 'a' (append) mode instead."
+    },
+    {
+      "id": 273,
+      "question": "data.txt currently contains the text 'old data' followed by a newline, and src.txt contains the single line 'data from source'. Predict the output:\n\n    with open('src.txt') as s, open('data.txt', 'a') as d:\n        d.write(s.read())\n    with open('data.txt') as f:\n        print(f.read())",
+      "answer": "old data\ndata from source. Append mode preserves the existing contents and always writes at the end, so the source content lands below the old data instead of replacing it. This is the pattern for growing a log or merging data into an existing file."
+    },
+    {
+      "id": 274,
+      "question": "a.txt contains the lines 'one' and 'two'; b.txt contains the lines 'three' and 'four' (each line ending in a newline). Predict the output:\n\n    with open('merged.txt', 'w') as out:\n        for name in ['a.txt', 'b.txt']:\n            with open(name) as inp:\n                out.write(inp.read())\n    print(open('merged.txt').read())",
+      "answer": "one\ntwo\nthree\nfour\n[each on its own line]. Each input file is read completely and concatenated, in order, into the single output handle, preserving any existing newlines. Because both inputs end with a newline, the merged file shows four clean, separate lines."
+    },
+    {
+      "id": 275,
+      "question": "Predict the output (data.txt contains five lines: aaa, bbb, ccc, ddd, eee):\n\n    with open('data.txt') as f:\n        lines = f.readlines()\n    for i in range(0, len(lines), 2):\n        print(f'chunk {i//2}: {lines[i:i+2]}')",
+      "answer": "chunk 0: ['aaa\\n', 'bbb\\n']\nchunk 1: ['ccc\\n', 'ddd\\n']\nchunk 2: ['eee\\n']. readlines() returns a list of lines including their newlines, and slicing it with a step of 2 produces chunks of at most two lines, leaving the final chunk short. This is a quick way to batch a file by lines, though a streaming loop is better for huge files."
+    },
+    {
+      "id": 276,
+      "question": "src.bin contains the six bytes b'\\x00\\x01\\x02\\xff\\xfe\\xfd'. Predict the output:\n\n    with open('src.bin', 'rb') as s, open('dst.bin', 'wb') as d:\n        while True:\n            chunk = s.read(3)\n            if not chunk:\n                break\n            d.write(chunk)\n            print(chunk)\n    print(open('dst.bin', 'rb').read())",
+      "answer": "b'\\x00\\x01\\x02'\nb'\\xff\\xfe\\xfd'\nb'\\x00\\x01\\x02\\xff\\xfe\\xfd'. read(3) returns at most three bytes per call, and an empty bytes object signals end-of-file and ends the loop, so a six-byte file is copied in exactly two chunks. Chunked copying is the memory-safe way to transfer large or binary files byte-for-byte."
+    },
+    {
+      "id": 277,
+      "question": "Predict the output:\n\n    with open('data.txt', 'w') as f:\n        print('hello', file=f)\n    with open('data.txt') as f:\n        print(repr(f.read()))",
+      "answer": "'hello\\n'. The print(file=f) argument routes the output to the file handle instead of stdout and still appends print's default newline. The first with-block produces no console output; only the final repr appears, and print() itself returns None."
+    },
+    {
+      "id": 278,
+      "question": "Predict the output:\n\n    with open('data.txt', 'a') as f:\n        f.write('more')\n        print(f.read())",
+      "answer": "io.UnsupportedOperation: not readable. 'a' mode opens the file for writing only; the resulting file object does not support read() at all, so the exception occurs regardless of any seek. To append and also read through one handle you need 'a+'."
+    },
+    {
+      "id": 279,
+      "question": "config.txt contains:\n\n    name=Alice\n    city=Boston\n\nPredict the output:\n\n    result = {}\n    with open('config.txt') as f:\n        for line in f:\n            line = line.strip()\n            if '=' in line:\n                k, v = line.split('=', 1)\n                result[k] = v\n    print(result)",
+      "answer": "{'name': 'Alice', 'city': 'Boston'}. strip() removes the trailing newline, lines without an '=' are skipped, and split('=', 1) keeps any '=' that appears inside the value. This is a minimal, safe way to parse simple key=value file formats."
+    },
+    {
+      "id": 280,
+      "question": "Predict the output:\n\n    with open('data.csv', 'w') as fout:\n        w = csv.writer(fout)\n        w.writerow(['a', 'b'])\n    with open('data.csv', 'rb') as f:\n        print(repr(f.read()))",
+      "answer": "b'a,b\\r\\n'. The csv module writes rows with a default lineterminator of '\\r\\n', so this is a carriage return plus newline on ANY platform. The csv docs therefore recommend opening the file with newline='' so that text-mode newline translation does not interfere (on Windows, translation would double the '\\r', causing blank lines)."
+    },
+    {
+      "id": 281,
+      "question": "people.csv contains:\n\n    name,age\n    Bob,25\n    Eve,30\n\nPredict the output:\n\n    result = []\n    with open('people.csv') as f:\n        reader = csv.DictReader(f)\n        for row in reader:\n            result.append(dict(row))\n    print(result)",
+      "answer": "[{'name': 'Bob', 'age': '25'}, {'name': 'Eve', 'age': '30'}]. The first row supplies the field names, and every later row becomes a dict keyed by those headers. Note that values stay strings: 25 is the text '25', so numeric conversion must be done explicitly."
+    },
+    {
+      "id": 282,
+      "question": "Predict the output:\n\n    from pathlib import Path\n    p = Path('data.txt')\n    p.write_text('hello via pathlib')\n    print(p.read_text())",
+      "answer": "hello via pathlib. Path.write_text() and read_text() are convenience wrappers around open() that handle opening and closing for you and default to UTF-8. write_text() also truncates any existing file, exactly like opening in 'w' mode."
+    },
+    {
+      "id": 283,
+      "question": "Predict the output:\n\n    data = {'name': 'Bob', 'scores': [10, 20]}\n    with open('data.json', 'w') as f:\n        json.dump(data, f)\n    with open('data.json') as f:\n        back = json.load(f)\n    print(back)",
+      "answer": "{'name': 'Bob', 'scores': [10, 20]}. json.dump serializes the dict into the handle and json.load parses it back into an equivalent Python object. Types such as lists and ints survive the round trip exactly, unlike CSV where every value comes back as a string."
+    },
+    {
+      "id": 284,
+      "question": "Fix the bug / fill the blank. data.txt currently contains 'ABCDEFGH' and the goal is to replace the whole file with 'XY':\n\n    with open('data.txt', 'r+') as f:\n        f.seek(0)\n        f.write('XY')\n        f._____()\n\nWhat goes in the blank, and what does data.txt contain if that line is left OUT?",
+      "answer": "truncate(). With truncate(): 'XY'; without it: 'XYCDEFGH'. seek(0)+write overwrites only the first two bytes while the trailing six remain in the file; truncate() cuts the file at the current cursor, dropping the leftover tail. Forgetting truncate() in an in-place 'r+' edit is one of the most common file-handling bugs."
+    },
+    {
+      "id": 285,
+      "question": "Predict the output (data.txt contains the text: hello):\n\n    with open('data.txt', 'r+') as f:\n        f.seek(0, 2)\n        print(repr(f.read()))\n        f.seek(0)\n        print(repr(f.read()))",
+      "answer": "''\n'hello'. seek(0, 2) moves the cursor to the end of the file (offset 0 relative to the end), so the first read() finds nothing; seek(0) then returns to the start. The two-argument form is useful for jumping to EOF and other relative positioning."
+    },
+    {
+      "id": 286,
+      "question": "Predict the output (data.txt contains the text: hi):\n\n    with open('data.txt') as f:\n        print(repr(f.read(5)))\n        print(repr(f.read(5)))",
+      "answer": "'hi'\n''. read(size) returns at most that many characters and does not raise when fewer are available; the two-character file yields 'hi' on the first call and '' on the second because the cursor is already at end-of-file. The 'if not chunk: break' idiom is the standard EOF check in chunked loops."
+    },
+    {
+      "id": 287,
+      "question": "Predict the output (src.txt contains the text: to be copied):\n\n    import shutil\n    shutil.copy2('src.txt', 'dst.txt')\n    print(open('dst.txt').read())",
+      "answer": "to be copied. shutil.copy2 copies the file content (and metadata) in a single call, creating or overwriting the destination. It is the idiomatic one-liner for a straight file copy when you do not need a custom read/write loop."
+    },
+    {
+      "id": 288,
+      "question": "Predict the output:\n\n    with open('data.txt', 'r') as f:\n        f.write('x')",
+      "answer": "io.UnsupportedOperation: not writable. Plain 'r' mode is read-only by design, so a write attempt raises immediately. To read and write through one handle you need 'r+', 'w+', or 'a+', never plain 'r'."
+    },
+    {
+      "id": 289,
+      "question": "Predict the output:\n\n    with open('missing_file.txt') as f:\n        print(f.read())",
+      "answer": "FileNotFoundError: [Errno 2] No such file or directory: 'missing_file.txt'. open() raises at the moment of opening, before the with-body runs. There is no automatic empty-content fallback; you must catch the exception or first check os.path.exists()/Path.is_file()."
+    },
+    {
+      "id": 290,
+      "question": "Predict the output:\n\n    import tempfile, os\n    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt') as f:\n        f.write('temporary')\n        print(os.path.exists(f.name))\n    print(os.path.exists(f.name))",
+      "answer": "True\nFalse. NamedTemporaryFile(delete=True) removes the file automatically when the handle closes, including at the end of the with-block. The path is valid while the block runs and gone once it exits; pass delete=False if the file must outlive the handle."
+    },
+    {
+      "id": 291,
+      "question": "Predict the output (data.txt contains three lines):\n\n    with open('data.txt') as f:\n        lines = f.readlines()\n    for i in range(3):\n        with open('data.txt') as f2:\n            print(f'iter {i}: {len(f2.readlines())} lines')",
+      "answer": "iter 0: 3 lines\niter 1: 3 lines\niter 2: 3 lines. Reopening the file inside the loop creates a fresh handle whose cursor starts at position 0 every iteration, so each pass sees the whole file. It is correct, but wasteful when the data does not change between iterations."
+    },
+    {
+      "id": 292,
+      "question": "Predict the output (data.txt contains the text: hello):\n\n    with open('data.txt') as f:\n        d = f.read(3)\n        print(repr(d), type(d).__name__)",
+      "answer": "'hel' str. A text-mode handle returns str even for chunked reads; only 'rb' mode yields bytes. The open() mode determines the type you get back, so text mode is the default and gives you characters."
+    },
+    {
+      "id": 293,
+      "question": "Predict the output (data.txt contains two lines: aaa and bbb):\n\n    with open('data.txt') as f:\n        for line in f:\n            pass\n        f.seek(0)\n        print(list(f))",
+      "answer": "['aaa\\n', 'bbb\\n']. After the first loop the cursor sits at end-of-file; seek(0) moves it back to the beginning of the file, so the same handle can be iterated again. seek() is the tool for reusing one handle without re-opening the file."
+    },
+    {
+      "id": 294,
+      "question": "Predict the output:\n\n    with open('data.txt', 'w') as f:\n        f.write('aaa\\nbbb\\n')\n    lines = []\n    with open('data.txt') as f1:\n        for line in f1:\n            lines.append(line.strip())\n    with open('data.txt') as f2:\n        for line in f2:\n            lines.append(line.strip())\n    print(lines)",
+      "answer": "['aaa', 'bbb', 'aaa', 'bbb']. The second with-block opens a completely NEW file object with its own cursor starting at position 0, so the first handle's consumed cursor has no influence. Re-opening resets the read position; there is no shared state between handles, even for the same path."
+    },
+    {
+      "id": 295,
+      "question": "A file was created containing 'hello'.encode('utf-16'). Predict the output:\n\n    print(open('data.txt', encoding='utf-16').read())",
+      "answer": "hello. Declaring the same encoding that was used at write time lets the decoder consume the byte-order mark and the 0x00 bytes UTF-16 uses for ASCII letters. The encoding must match on both sides; the file content alone cannot be guessed reliably because the same bytes decode differently under different codecs."
+    },
+    {
+      "id": 296,
+      "question": "Predict the output:\n\n    with open('data.txt', 'w', encoding='latin-1') as f:\n        f.write('café')\n    print(open('data.txt', encoding='latin-1').read())",
+      "answer": "café. A single-byte encoding used consistently on both write and read reproduces the original text exactly, because every character maps to exactly one byte. The corruption seen earlier appears only when the read encoding differs from the write encoding."
+    },
+    {
+      "id": 297,
+      "question": "Predict the output (data.txt currently contains the text: AB):\n\n    with open('data.txt', 'a') as f:\n        f.seek(0)\n        f.write('X')\n    print(open('data.txt').read())",
+      "answer": "ABX. In append mode every write is forced to the end of the file regardless of the cursor, so the 'X' lands after the existing bytes even though seek(0) was called. To overwrite anywhere other than the end, use 'r+' or 'w' (with the truncate caveats discussed earlier)."
+    },
+    {
+      "id": 298,
+      "question": "config.txt contains:\n\n    name = Alice\n    age = 30\n\nPredict the content of config.json after this runs:\n\n    import json\n    result = {}\n    with open('config.txt') as f:\n        for line in f:\n            if '=' in line:\n                k, v = line.split('=', 1)\n                result[k.strip()] = v.strip()\n    with open('config.json', 'w') as f:\n        json.dump(result, f)\n    print(open('config.json').read())",
+      "answer": "{\"name\": \"Alice\", \"age\": \"30\"}. This is a two-stage workflow: the file is parsed line by line into a dict, then json.dump serializes it into a new file (the print shows the raw JSON text on disk, with double-quoted keys). Note the values stay strings unless you convert them explicitly, e.g. int('30')."
+    },
+    {
+      "id": 299,
+      "question": "people.csv contains:\n\n    name,age\n    Bob,25\n\nPredict the content of out.csv after this runs:\n\n    with open('people.csv') as inp, open('out.csv', 'w', newline='') as out:\n        reader = csv.DictReader(inp)\n        writer = csv.writer(out)\n        for row in reader:\n            writer.writerow([row['name'], int(row['age']) * 2])\n    print(open('out.csv').read())",
+      "answer": "Bob,50\n. DictReader yields each row keyed by the header ('age' is the string '25'), int() converts it, and the writer emits the transformed row into a new CSV. The newline='' option keeps the csv writer's '\\r\\n' terminator from being interfered with by text-mode newline translation."
+    },
+    {
+      "id": 300,
+      "question": "Predict the output:\n\n    f = open('data.txt', 'w')\n    f.write('hello')\n    print(repr(open('data.txt').read()))\n    f.close()\n    print(repr(open('data.txt').read()))",
+      "answer": "''\n'hello'. While f is still open and un-flushed, the new data sits in Python's user-space buffer and has not reached the file on disk, so a separate open() reads the still-empty file. Closing the handle (or calling f.flush()) pushes the buffer out; this is why you must finish or flush a write before reading the file through another handle."
+    }
+  ]
+}

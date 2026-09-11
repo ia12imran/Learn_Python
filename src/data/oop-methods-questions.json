@@ -1,0 +1,505 @@
+{
+  "description": "100 deep logical questions on instance, class, and static methods in Python OOP",
+  "questions": [
+    {
+      "id": 1,
+      "question": "A method stored on a class is a plain function that only becomes a bound method through attribute lookup. Predict the exact output of printing the function straight off the class vs. through an instance:\n```python\nclass A:\n    def f(self):\n        return 'f'\na = A()\nprint(A.f)\nprint(a.f)\n```",
+      "answer": "Output:\n```\n<function A.f at 0x...>\n<bound method A.f of <__main__.A object at 0x...>>\n```\nA function stored in the class dict is a descriptor. Accessing it via the class calls `A.f.__get__(None, A)` and returns the bare function object, while accessing it via an instance calls `A.f.__get__(a, A)` and returns a new bound method whose `__self__` is `a` and `__func__` is the original function. That is why the two reprs (and the two behaviors) differ. The `0x...` memory addresses vary from run to run."
+    },
+    {
+      "id": 2,
+      "question": "Drive the descriptor protocol by hand. Predict the exact output:\n```python\nclass A:\n    def f(self):\n        return 1\na = A()\nprint(A.__dict__['f'].__get__(a, A)())\nprint(A.__dict__['f'].__get__(None, A) is A.__dict__['f'])\n```",
+      "answer": "Output:\n```\n1\nTrue\n```\nThe first line calls `f.__get__(a, A)`, which binds the instance into the first parameter: the returned method when invoked calls `A.f(a)` and yields `1`. With an instance of `None`, `__get__` performs no binding and simply returns the original function object itself, so the `is` comparison is `True`. This is exactly what the attribute machinery does for `a.f` vs `A.f` automatically."
+    },
+    {
+      "id": 3,
+      "question": "Bound methods compare by identity of their underlying pieces. Predict the exact output:\n```python\nclass A:\n    def f(self):\n        return 'x'\na = A()\nm = A.__dict__['f'].__get__(a, A)\nprint(type(m).__name__)\nprint(m == a.f)\nprint(m())\n```",
+      "answer": "Output:\n```\nmethod\nTrue\nx\n```\n`__get__` with a real instance produces a `method` object. Bound methods compare equal when their `__self__` and `__func__` are equal, so `m == a.f` is `True` even though `a.f` creates a fresh method wrapper on every access. Calling the bound method re-inserts `a` as `self`, so it returns `'x'`."
+    },
+    {
+      "id": 4,
+      "question": "How does a classmethod bind when inherited and when reached through an instance? Predict the exact output:\n```python\nclass A:\n    @classmethod\n    def cm(cls):\n        return cls.__name__\nclass B(A):\n    pass\nprint(A.cm())\nprint(B.cm())\nprint(B().cm())\n```",
+      "answer": "Output:\n```\nA\nB\nB\n```\nA `classmethod` binds the class, not the instance: `cls` is passed automatically. Reaching it through the subclass binds `B`, and reaching it through an instance of `B` binds the instance's class (`type(instance)`), which is `B` again. The receiver is never `None`, and the instance itself is never passed."
+    },
+    {
+      "id": 5,
+      "question": "staticmethods ignore every receiver. Predict the exact output:\n```python\nclass A:\n    @staticmethod\n    def sm(x):\n        return x * 2\nprint(A.sm(3))\nprint(A().sm(3))\n```",
+      "answer": "Output:\n```\n6\n6\n```\n`@staticmethod` stores the function untouched, so neither the class nor the instance is prepended to the argument list. Access via the class and via an instance both return exactly the same underlying function, so `3` is the first positional argument in both calls and the result is identically `6`."
+    },
+    {
+      "id": 6,
+      "question": "`a.f(x)` is sugar for `A.f(a, x)`. What happens when you drop the instance? Predict the exact output:\n```python\nclass A:\n    def f(self, x):\n        return x + 1\na = A()\nprint(a.f(1))\ntry:\n    A.f(1)\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output:\n```\n2\nTypeError: A.f() missing 1 required positional argument: 'x'\n```\n`a.f(1)` auto-binds `a` into `self`, so `1` fills `x` and the answer is `2`. `A.f` is the raw function object (no binding, since type access supplies no instance), so `A.f(1)` drops `1` into `self`, leaving `x` unsatisfied. The error message reveals exactly this off-by-one argument bookkeeping."
+    },
+    {
+      "id": 7,
+      "question": "A property is a data descriptor built from method-like functions. Predict the exact output:\n```python\nclass A:\n    def __init__(self):\n        self._x = 5\n    @property\n    def x(self):\n        return self._x\n    @x.setter\n    def x(self, v):\n        self._x = v * 2\na = A()\na.x = 10\nprint(a.x)\n```",
+      "answer": "Output:\n```\n20\n```\nThe `@x.setter` wraps the original property so that `a.x = 10` runs the setter function, storing `10 * 2 = 20`. Reading `a.x` then triggers the getter, which returns `self._x` — already `20`. Without the setter, `a.x = 10` would have raised `AttributeError`."
+    },
+    {
+      "id": 8,
+      "question": "Property vs instance dict: which wins? Predict the exact output:\n```python\nclass A:\n    @property\n    def x(self):\n        return 'prop'\na = A()\na.__dict__['x'] = 'dict'\nprint(a.x)\n```",
+      "answer": "Output:\n```\nprop\n```\nA `property` is a data descriptor because it defines `__get__` and `__set__`, and data descriptors feed on type lookups. Attribute access checks the type's data descriptors before the instance `__dict__`, so the manually planted `'dict'` is ignored and the getter runs, returning `'prop'`. Only non-data descriptors (plain functions) lose to the instance dict — a property never does."
+    },
+    {
+      "id": 9,
+      "question": "A getter-only property still intercepts writes. Predict the exact output:\n```python\nclass A:\n    def __init__(self):\n        self._x = 1\n    @property\n    def x(self):\n        return self._x\na = A()\ntry:\n    a.x = 5\nexcept AttributeError as e:\n    print(e)\nprint(a.x)\n```",
+      "answer": "Output:\n```\nAttributeError: property 'x' of 'A' object has no setter\n1\n```\nBecause no `@x.setter` was declared, the property's `fset` slot is empty; `a.x = 5` invokes the descriptor's `__set__`, which has nothing to call and raises `AttributeError`. The instance attribute was never created, so the subsequent getter still returns `1`. This is why read-only properties are a real enforcement, not a convention."
+    },
+    {
+      "id": 10,
+      "question": "The property deleter gives you control over `del`. Predict the exact output:\n```python\nclass A:\n    def __init__(self):\n        self._v = 1\n    @property\n    def v(self):\n        return self._v\n    @v.deleter\n    def v(self):\n        del self._v\na = A()\ndel a.v\nprint(hasattr(a, '_v'))\n```",
+      "answer": "Output:\n```\nFalse\n```\n`del a.v` triggers the property's `__delete__`, which calls the `@v.deleter` function that removes `_v` from the instance namespace. `hasattr(a, '_v')` therefore returns `False` (and would raise `AttributeError` if accessed afterwards). The deleter must be applied to an already-existing property object via `@v.deleter`, which is why the getter is declared first."
+    },
+    {
+      "id": 11,
+      "question": "The classic default-mutable pitfall, but with instances sharing it through an `__init__` default. Predict the exact output:\n```python\nclass A:\n    def __init__(self, items=[]):\n        self.items = items\n    def add(self, x):\n        self.items.append(x)\n        return self\na = A()\nb = A()\na.add(1)\nb.add(2)\nprint(a.items)\nprint(b.items)\nprint(A.__init__.__defaults__)\n```",
+      "answer": "Output:\n```\n[1, 2]\n[1, 2]\n([1, 2],)\n```\nThe default `[]` is evaluated once, at method definition time, and the same list object is passed to every later call missing that argument. Both `a` and `b` store pointers to that shared list, so each `add` mutates the very default; `__defaults__` even shows the mutated list. The fix is `def __init__(self, items=None): self.items = items if items is not None else []`."
+    },
+    {
+      "id": 12,
+      "question": "Returning `self` makes methods composable. Trace the full chain and predict the exact output:\n```python\nclass A:\n    def __init__(self):\n        self.v = 0\n    def inc(self, n=1):\n        self.v += n\n        return self\na = A().inc().inc(2).inc()\nprint(a.v)\nprint(a.__dict__)\n```",
+      "answer": "Output:\n```\n4\n{'v': 4}\n```\nEach `inc` ends with `return self`, so the intermediate result of one call becomes the receiver of the next; the collector variable `a` ends up the very same object created by `A()`. The increments accumulate on one instance: `1 + 2 + 1 = 4`, reflected in that single `{'v': 4}` dict. This is the fluent/Builder pattern and relies entirely on method return values."
+    },
+    {
+      "id": 13,
+      "question": "Find the bug: the author expected the chain to keep working. Predict the exact output and point out the single missing keyword:\n```python\nclass A:\n    def __init__(self):\n        self.v = 0\n    def inc(self):\n        self.v += 1\na = A().inc()\nprint(a)\n```",
+      "answer": "Output:\n```\nNone\n```\n`inc` never returns the instance, so `A().inc()` evaluates to `None`; `a` is `None`, not an `A`. The one-line fix is adding `return self` at the end of `inc`. Without it any further chained call would blow up with `AttributeError: 'NoneType' object has no attribute '...'`."
+    },
+    {
+      "id": 14,
+      "question": "Monkey-patching a method onto one instance. Predict the exact output:\n```python\nclass A:\n    def f(self):\n        return 'orig'\na = A()\na.f = lambda: 'patched'\nprint(a.f())\nprint(A().f())\n```",
+      "answer": "Output:\n```\npatched\norig\n```\nAssigning to the instance dict stores the lambda as a plain attribute, and attribute lookup prefers the instance dict over a non-data descriptor (a regular function is non-data). So `a.f` returns the lambda and calls it with no arguments. The class method lives on unchanged, so a fresh instance still calls the bound original and prints `orig`."
+    },
+    {
+      "id": 15,
+      "question": "Monkey-patching at class level instead. Predict the exact output:\n```python\nclass A:\n    def f(self):\n        return 'orig'\ndef g(self):\n    return 'patched'\nA.f = g\nprint(A().f())\n```",
+      "answer": "Output:\n```\npatched\n```\nReplacing the class attribute with a function is enough because the descriptor protocol works on whatever function object sits in the class dict: `A().f` calls `g.__get__(instance, A)` and returns a bound method. As long as the replacement is a plain function (not already a bound method or lambda target), binding of `self` happens automatically."
+    },
+    {
+      "id": 16,
+      "question": "`a.f = A.f` looks innocent but breaks binding. Predict the exact output:\n```python\nclass A:\n    def f(self):\n        return 'orig'\na = A()\na.f = A.f\ntry:\n    a.f()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output:\n```\nTypeError: A.f() missing 1 required positional argument: 'self'\n```\n`A.f` evaluates to the raw function object, and assigning it to `a.f` deposits that function in the instance dict. The descriptor protocol never runs for instance-dict values, so `a.f()` calls the function with zero arguments — `self` is not supplied. It would have worked as `a.f = A.f.__get__(a, A)` or simply `a.f = A.__dict__['f'].__get__(a, A)`."
+    },
+    {
+      "id": 17,
+      "question": "Multi-step state tracking across chained method calls. Trace every mutation and predict the exact output:\n```python\nclass Account:\n    def __init__(self):\n        self.balance = 0\n        self.log = []\n    def deposit(self, amount):\n        self.balance += amount\n        self.log.append(('deposit', amount))\n        return self\n    def withdraw(self, amount):\n        if amount > self.balance:\n            raise ValueError('insufficient')\n        self.balance -= amount\n        self.log.append(('withdraw', amount))\n        return self\n    def summary(self):\n        return (self.balance, len(self.log))\nacc = Account().deposit(100).deposit(50).withdraw(30)\nprint(acc.summary())\nprint([x[0] for x in acc.log])\n```",
+      "answer": "Output:\n```\n(120, 3)\n['deposit', 'deposit', 'withdraw']\n```\nChaining works because each mutator ends with `return self`, so every operation touches the same `Account`. Balance evolves `0 -> 100 -> 150 -> 120`, and three operations leave three log entries whose first elements are, in order, `deposit`, `deposit`, `withdraw`. Note that `amount > self.balance` would have made a withdraw raise `ValueError` after mutating nothing."
+    },
+    {
+      "id": 18,
+      "question": "Methods implementing the iterator protocol. Predict the exact output:\n```python\nclass Countdown:\n    def __init__(self, n):\n        self.n = n\n    def __iter__(self):\n        return self\n    def __next__(self):\n        if self.n <= 0:\n            raise StopIteration\n        self.n -= 1\n        return self.n\nprint(list(Countdown(3)))\n```",
+      "answer": "Output:\n```\n[2, 1, 0]\n```\n`list()` repeatedly calls the special method `__next__` (found on the type, not the instance) until `StopIteration` propagates, so the mutable counter drives the exhaustion. Each `__next__` decrements first and yields the new value on top of the local state `n`, producing `2, 1, 0` then a `StopIteration`. The object is its own iterator, which is exactly why `__iter__` returns `self`."
+    },
+    {
+      "id": 19,
+      "question": "A method that silently replaces itself with a number. Predict the exact output:\n```python\nclass A:\n    def f(self):\n        self.f = 100\n        return self.f * 2\na = A()\nprint(a.f())\nprint(a.f)\n```",
+      "answer": "Output:\n```\n200\n100\n```\nDuring the call, `self.f = 100` plants a plain attribute in the instance dict, which shadows the class-level non-data descriptor for future lookups. Inside the same call the getter still sees `100`, so it returns `100 * 2 = 200`. Afterwards `a.f` is the integer `100`; any second call like `a.f()` would fail with `TypeError: 'int' object is not callable`."
+    },
+    {
+      "id": 20,
+      "question": "Implicit special-method lookup is different from ordinary attribute lookup. Predict the exact output:\n```python\nclass A:\n    def __init__(self):\n        self.__len__ = lambda: 99\n    def __len__(self):\n        return 1\na = A()\nprint(a.__len__())\nprint(len(a))\nprint(type(a).__len__(a))\n```",
+      "answer": "Output:\n```\n99\n1\n1\n```\nPlain attribute access honors the instance dict first, so `a.__len__()` finds the lambda and returns `99`. But `len(a)` performs an *implicit* special lookup on `type(a)` only — the instance dict is bypassed, so the class method `__len__` runs and returns `1`. Explicitly calling `type(a).__len__(a)` reproduces the same lookup-path result."
+    },
+    {
+      "id": 21,
+      "question": "`super()` inside a method. Predict the exact output:\n```python\nclass A:\n    def f(self):\n        return 'A'\nclass B(A):\n    def f(self):\n        return super().f() + 'B'\nprint(B().f())\n```",
+      "answer": "Output:\n```\nAB\n```\n`B.f` calls `super().f()`, which in zero-argument form uses the `__class__` cell and the current instance to continue along the MRO past `B`, so `A.f` runs and returns `'A'`; string concatenation yields `'AB'`. Importantly, `super()` still binds `self` to the instance — the call is `A.f(self)` internally — so any instance state is shared."
+    },
+    {
+      "id": 22,
+      "question": "Constructor chaining with `super()`. Predict the exact output:\n```python\nclass A:\n    def __init__(self, x):\n        self.x = x\nclass B(A):\n    def __init__(self, x, y):\n        super().__init__(x)\n        self.y = y\nb = B(1, 2)\nprint(b.x, b.y)\n```",
+      "answer": "Output:\n```\n1 2\n```\n`super().__init__(x)` forwards along the MRO so `A.__init__` (not shadowed) sets `self.x = 1`, then `B.__init__` itself sets `self.y = 2`. The instance is fully initialized by the cooperation of both layer constructors. Forgetting the `super().__init__` line is a classic bug where `b.x` would raise `AttributeError`."
+    },
+    {
+      "id": 23,
+      "question": "A diamond with cooperative `super()`. Trace the MRO carefully and predict the exact output:\n```python\nclass A:\n    def f(self):\n        return 'A'\nclass B(A):\n    def f(self):\n        return 'B' + super().f()\nclass C(A):\n    def f(self):\n        return 'C' + super().f()\nclass D(B, C):\n    pass\nprint(D().f())\nprint([c.__name__ for c in D.__mro__])\n```",
+      "answer": "Output:\n```\nBCA\n['D', 'B', 'C', 'A', 'object']\n```\nThe MRO is `D, B, C, A, object`. `D.f` resolves to `B.f` (first in MRO); `B.f` calls `super()`, which continues to `C`, whose own `super()` continues to `A`. The returns nest outward as `A` -> `'C' + 'A'` -> `'B' + 'CA'`, giving `BCA`. Without C3 linearization this cooperative chain would call `A.f` twice."
+    },
+    {
+      "id": 24,
+      "question": "Override followed by inheritance: which `f` runs? Predict the exact output:\n```python\nclass A:\n    def f(self):\n        return 'A'\nclass B(A):\n    def f(self):\n        return 'B'\nclass C(B):\n    pass\nprint(C().f())\nprint([c.__name__ for c in C.__mro__])\n```",
+      "answer": "Output:\n```\nB\n['C', 'B', 'A', 'object']\n```\nMethod lookup walks the MRO of `C`: first `C` (no own `f`), then `B`, which defines `f` returning `'B'`. So the override from `B` wins for instances of `C`, even though `C` declares nothing itself. This shows that 'inheriting' a method really means finding the first definition while walking the linearization."
+    },
+    {
+      "id": 25,
+      "question": "`__getattr__` can fabricate methods on the fly. Predict the exact output:\n```python\nclass A:\n    def __getattr__(self, name):\n        return lambda: 'dyn:' + name\na = A()\nprint(a.foo())\n```",
+      "answer": "Output:\n```\ndyn:foo\n```\n`__getattr__` runs only when normal lookup fails (no data descriptor, not in the instance dict, not elsewhere in the type). Here it builds a closure capturing `name='foo'` and returns it, and because the lambda is returned as an instance attribute rather than a class function it is *not* bound — calling it passes no arguments. Every new attribute name yields a dynamically generated zero-argument callable."
+    },
+    {
+      "id": 26,
+      "question": "Three flavors of `getattr` inside methods. Predict the exact output:\n```python\nclass A:\n    def __init__(self):\n        self.x = 1\n    def g1(self):\n        return getattr(self, 'x')\n    def g2(self):\n        return getattr(self, 'y', 42)\n    def g3(self):\n        return getattr(self, 'y')\ntry:\n    A().g3()\nexcept AttributeError:\n    print('AttributeError')\nprint(A().g1())\nprint(A().g2())\n```",
+      "answer": "Output:\n```\nAttributeError\n1\n42\n```\n`getattr(obj, name)` is `obj.name` in function form and leaves the *entire* attribute machinery untouched: missing attribute with no default raises `AttributeError` (here inside `g3`, which propagates). `g1` finds the instance attribute `1`; `g2` supplies a fallback of `42`. The exception printed first because the `try` block runs before the two prints."
+    },
+    {
+      "id": 27,
+      "question": "Generator methods are lazy. Predict the exact output:\n```python\nclass Squares:\n    def gen(self, n):\n        for i in range(n):\n            yield i * i\ng = Squares().gen(3)\nprint(next(g))\nprint(list(g))\n```",
+      "answer": "Output:\n```\n0\n[1, 4]\n```\nMerely calling the method delivers a *generator object*; the body does not start until iteration. `next(g)` runs up to the first `yield`, producing `0 * 0 = 0`. The remaining `list(g)` pulls the rest (`1`, `4`) and stops when `range` is exhausted, so the answer concatenates `0` then `[1, 4]`."
+    },
+    {
+      "id": 28,
+      "question": "`send` into a generator hosted inside a method. Predict the exact output:\n```python\nclass A:\n    def g(self):\n        x = yield 'start'\n        yield x * 2\ngen = A().g()\nprint(next(gen))\nprint(gen.send(21))\n```",
+      "answer": "Output:\n```\nstart\n42\n```\nThe first `next()` advances to the first `yield`, which is the expression `yield 'start'`, producing `'start'`. `gen.send(21)` resumes the generator with `21` as the value of that `yield` expression, so `x = 21`; the next `yield x * 2` emits `42`. The generator resumes each time from its saved frame inside the bound method."
+    },
+    {
+      "id": 29,
+      "question": "Methods collecting `*args` and `**kwargs`. Predict the exact output:\n```python\nclass Calc:\n    def total(self, *args, **kwargs):\n        return sum(args) + sum(kwargs.values())\nprint(Calc().total(1, 2, 3, a=4, b=5))\n```",
+      "answer": "Output:\n```\n15\n```\n`self` swallows the instance, `*args` gathers `(1, 2, 3)` and `**kwargs` gathers `{'a': 4, 'b': 5}`; the method sums them: `6 + 9 = 15`. Because `self` always occupies the first slot, the variadic forms make the method usable with arbitrarily many positional and keyword payloads."
+    },
+    {
+      "id": 30,
+      "question": "A positional-only parameter in a method (note the `/`). Predict the exact output:\n```python\nclass A:\n    def f(self, x, /):\n        return x\nprint(A().f(10))\ntry:\n    print(A().f(x=10))\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output:\n```\n10\nTypeError: A.f() got some positional-only arguments passed as keyword arguments: 'x'\n```\nThe `/` marker makes `x` positional-only, so passing it by keyword is refused at call time. `A().f(10)` binds `10` positionally into `x` and prints `10`; `A().f(x=10)` is a `TypeError` even though the intent is identical. The marker sits after `self` exactly because `self` itself is always bound positionally."
+    },
+    {
+      "id": 31,
+      "question": "A keyword-only parameter in a method (the `*`). Predict the exact output:\n```python\nclass A:\n    def f(self, *, x):\n        return x * 2\nprint(A().f(x=3))\ntry:\n    A().f(3)\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output:\n```\n6\nTypeError: A.f() takes 1 positional argument but 2 were given\n```\n`A().f(x=3)` is fine: `x` is keyword-only and returns `6`. But `A().f(3)` binds `3` as `self` (a positional requirement) and then tries to squeeze `3` into another positional slot, exceeding the single allowed positional — hence the `TypeError`. The presence of `self` changes the reported counts, which is the classic confusion here."
+    },
+    {
+      "id": 32,
+      "question": "A factory classmethod inherited by a subclass. Predict the exact output:\n```python\nclass A:\n    @classmethod\n    def make(cls):\n        return cls()\n    def who(self):\n        return type(self).__name__\nclass B(A):\n    pass\nprint(B.make().who())\n```",
+      "answer": "Output:\n```\nB\n```\n`B.make()` calls the inherited `classmethod` with `cls = B`, so `cls()` constructs a `B`, not an `A`. `.who()` then reports `type(instance).__name__`, which is `'B'`. This is the polymorphic-factory pattern: one `classmethod` definition behaves correctly for every subclass without any override."
+    },
+    {
+      "id": 33,
+      "question": "Stacked method decorators. Predict the exact output:\n```python\ndef deco(fn):\n    def wrapper(*a, **k):\n        return '[' + fn(*a, **k) + ']'\n    return wrapper\nclass A:\n    @deco\n    @deco\n    def f(self):\n        return 'x'\nprint(A().f())\n```",
+      "answer": "Output:\n```\n[[x]]\n```\nDecorators apply bottom-up: the first `@deco` wraps the raw method, the second wraps that wrapper. The `*a, **k` forwarding keeps `self` flowing through both levels of `wrapper`, and each level adds one set of brackets. The result nests outward, `[[x]]`, and the returned object is still a plain function, so instance binding still works on `A().f()`."
+    },
+    {
+      "id": 34,
+      "question": "Identity audits of classmethod/staticmethod access. Predict the exact output:\n```python\nclass A:\n    @classmethod\n    def cm(cls):\n        return cls\n    @staticmethod\n    def sm():\n        return 'sm'\nclass B(A):\n    pass\nprint(B.cm.__func__ is A.cm.__func__)\nprint(A.sm is B.sm)\nprint(B.cm is A.cm)\nprint(B.cm is B.cm)\n```",
+      "answer": "Output:\n```\nTrue\nTrue\nFalse\nFalse\n```\n`B.cm.__func__` and `A.cm.__func__` are the very same stored function (only the bound `cls` differs), so `is` is `True`. A `staticmethod` returns the identical function object every time, so `A.sm is B.sm` is `True`. But every classmethod access manufactures a fresh bound-method wrapper — `B.cm` on one access is never the same *object* as on another — hence the two `False` results."
+    },
+    {
+      "id": 35,
+      "question": "A decorator that must preserve the `self` slot. Predict the exact output:\n```python\ndef dub(fn):\n    def wrapper(self, *a, **k):\n        return fn(self, *a, **k) * 2\n    return wrapper\nclass A:\n    @dub\n    def f(self, x):\n        return x + 1\nprint(A().f(5))\n```",
+      "answer": "Output:\n```\n12\n```\nThe wrapped method must still bind the instance, so the wrapper's first parameter is named `self` and it forwards everything using `*a, **k`. When `A().f(5)` runs, `self` is the instance, the original `f` computes `5 + 1 = 6`, and `dub` doubles it to `12`. A decorator written as `wrapper(*args)` would work too here, but the explicit `self` makes the intent unmissable."
+    },
+    {
+      "id": 36,
+      "question": "`super()` inside a classmethod. Predict the exact output:\n```python\nclass A:\n    @classmethod\n    def gm(cls):\n        return cls.__name__.lower()\nclass B(A):\n    @classmethod\n    def gm(cls):\n        return super().gm() + '!'\nprint(B().gm() if False else B.gm())\n```",
+      "answer": "Output:\n```\nb!\n```\nIn a classmethod, zero-argument `super()` builds a `superproxy` bound to the type and class; here `cls = B`, so it continues the MRO to `A.gm` and passes `cls = B` along. `A.gm` returns `'b'` (B's name lowercased), and `B.gm` appends `'!'` to yield `b!`. Note that the name reflects `B`, not `A`, because the cooperative machinery keeps forwarding the real `cls`."
+    },
+    {
+      "id": 37,
+      "question": "A classmethod mutating shared class state — including via an instance. Predict the exact output:\n```python\nclass A:\n    count = 0\n    @classmethod\n    def bump(cls):\n        cls.count += 1\n        return cls.count\nprint(A.bump(), A().bump(), A.bump())\n```",
+      "answer": "Output:\n```\n1 2 3\n```\n`bump` writes through the *class attribute* `count`, so every invocation — class-level or instance-level — mutates the one shared integer. Instance access still binds `cls = A`, so `A().bump()` bumps the same counter: `1`, then `2`, then `3`. If instead it mutated `self.count`, an instance assignment would create a fresh per-instance attribute and the trace would diverge."
+    },
+    {
+      "id": 38,
+      "question": "Closures created inside a method — per call or shared? Predict the exact output:\n```python\nclass A:\n    def make_counter(self):\n        count = [0]\n        def inc():\n            count[0] += 1\n            return count[0]\n        return inc\nc1 = A().make_counter()\nc2 = A().make_counter()\nc1(); c1(); c2()\nprint(c1())\nprint(c2())\nprint(c1.__closure__ is c2.__closure__)\n```",
+      "answer": "Output:\n```\n3\n2\nFalse\n```\n`make_counter` allocates a fresh `count` cell in its own frame every call, and each returned `inc` closes over its own cell — even though both instances share the class. `c1` increments three times (`3`), `c2` only twice (`2`). The `is` test is `False` because the two functions close over distinct cell *tuples*, proving there is no hidden sharing here."
+    },
+    {
+      "id": 39,
+      "question": "Multistep fluent methods reading a class-level shared store. Predict the exact output:\n```python\nclass A:\n    _mem = {}\n    def set(self, k, v):\n        type(self)._mem[k] = v\n        return self\n    def get(self, k):\n        return type(self)._mem.get(k)\na = A(); b = A()\na.set('x', 1).set('y', 2)\nb.set('x', 99)\nprint(a.get('x'), a.get('y'), b.get('x'))\n```",
+      "answer": "Output:\n```\n99 2 99\n```\n`type(self)._mem` reaches the same class dict from both instances, so all writes land in one shared store — `b.set('x', 99)` overwrites `a`'s earlier `x`. The fluent `return self` lets `a.set('x', 1).set('y', 2)` run as one expression. Nothing here is per-instance state, which is why `a` sees the value written through `b`."
+    },
+    {
+      "id": 40,
+      "question": "`super()` returning strings to a subclass `__str__`. Predict the exact output:\n```python\nclass A:\n    def __str__(self):\n        return 'A'\nclass B(A):\n    pass\nclass C(A):\n    def __str__(self):\n        return super().__str__() + 'C'\nprint(str(B()))\nprint(str(C()))\n```",
+      "answer": "Output:\n```\nA\nAC\n```\n`str()` looks up the `__str__` special method on the type: `B` inherits `A.__str__`, so the first print is `'A'`. `C` overrides it, and `super().__str__()` delegates back up the MRO to `A.__str__` returning `'A'`, then appends `'C'` to give `AC`. The delegation binds the same instance `self`, but the returned string is fixed by each method in the chain."
+    },
+    {
+      "id": 41,
+      "question": "`__slots__` vs methods and attribute creation. Predict the exact output:\n```python\nclass A:\n    __slots__ = ('x',)\n    def set(self, v):\n        self.x = v\n    def get(self):\n        return self.x\na = A()\na.set(7)\nprint(a.get())\ntry:\n    a.y = 1\nexcept AttributeError as e:\n    print(e)\ntry:\n    print(a.__dict__)\nexcept AttributeError:\n    print('no dict')\n```",
+      "answer": "Output:\n```\n7\nAttributeError: 'A' object has no attribute 'y' and no __dict__ for setting new attributes\nno dict\n```\n`__slots__` replaces the per-instance `__dict__` with fixed descriptors for the named slot `x`, so the methods happily write and read `x`. Any other attribute name fails at assignment because there is no dict to absorb it, and the mangled slot descriptors never match `y`. Accessing `a.__dict__` itself fails because instances have no dict at all."
+    },
+    {
+      "id": 42,
+      "question": "Slots in a base, none in the subclass. Predict the exact output:\n```python\nclass A:\n    __slots__ = ('x',)\nclass B(A):\n    pass\nb = B()\nb.x = 1\nb.y = 2\nprint(b.x, b.y)\nprint(hasattr(b, '__dict__'))\n```",
+      "answer": "Output:\n```\n1 2\nTrue\n```\n`B` inherits the `x` slot descriptor from `A`, so `b.x = 1` works. But because `B` does not declare its own `__slots__`, the default instance layout kicks back in: `B` instances get a real `__dict__`, so `b.y = 2` also works. This asymmetric behavior — inherited slots plus a fresh dict — is a frequent surprise for people expecting slots to 'propagate' downwards."
+    },
+    {
+      "id": 43,
+      "question": "Fill in the blank with the correct decorator so both `from_symbol` calls return a *class instance* (and predict the exact outputs):\n```python\nclass Bank:\n    def __init__(self, symbol):\n        self.symbol = symbol\n    def __repr__(self):\n        return self.symbol\n    ____ def from_symbol(cls, symbol):\n        return cls(symbol)\nclass BankUS(Bank):\n    pass\nprint(Bank.from_symbol('$'))\nprint(BankUS.from_symbol('%'))\n```",
+      "answer": "Output:\n```\n$\n%\n```\nThe blank is `@classmethod`. With it, `cls` is supplied automatically (the class on which the call is made) and `cls(symbol)` constructs a real instance; `Bank.from_symbol('$')` builds `Bank`, `BankUS.from_symbol('%')` builds `BankUS`. `__repr__` then prints the stored symbol. Using `@staticmethod` would leave `cls` undefined and raise `NameError: name 'cls' is not defined` at call time."
+    },
+    {
+      "id": 44,
+      "question": "Dynamic dispatch through `getattr` inside a method. Predict the exact output:\n```python\nclass A:\n    def inc(self, n):\n        return n + 1\n    def work(self, op, n):\n        return getattr(self, op)(n)\nprint(A().work('inc', 41))\ntry:\n    A().work('missing', 1)\nexcept AttributeError:\n    print('AE')\n```",
+      "answer": "Output:\n```\n42\nAE\n```\n`getattr(self, op)` performs a full attribute lookup, so `'inc'` resolves to a *bound* method of `a`; calling it with `(n)` supplies `41` as the payload and produces `42`. An unknown name falls through every normal lookup path and raises `AttributeError`, which the `try` block reports as `AE`. This is the textbook pattern for strategy-like dispatch without `if/elif`."
+    },
+    {
+      "id": 45,
+      "question": "Counting property reads between mutations. Predict the exact output:\n```python\nclass A:\n    def __init__(self):\n        self._x = 1\n        self.reads = 0\n    @property\n    def x(self):\n        self.reads += 1\n        return self._x\na = A()\ns = a.x + a.x\nprint(s, a.reads)\n```",
+      "answer": "Output:\n```\n2 2\n```\nEvery `a.x` appearance re-runs the getter function: reading `a.x` twice increments `reads` twice and returns `1` each time, so `s = 1 + 1 = 2`. The getter is ordinary Python code with effects — it is *not* a plain attribute read, which is a key mental shift when using `@property`. A hot loop touching `a.x` calls the getter each iteration."
+    },
+    {
+      "id": 46,
+      "question": "Two subtly different reads of a class constant — spot which one honors the override. Predict the exact output:\n```python\nclass A:\n    V = 10\n    def f(self):\n        return self.V\n    def g(self):\n        return A.V\nclass B(A):\n    V = 99\nb = B()\nprint(b.f(), b.g())\n```",
+      "answer": "Output:\n```\n99 10\n```\n`f` reads `self.V`, which triggers dynamic lookup from the instance: `B`'s override shadows `A`'s, so the value is `99`. `g` hard-codes `A.V`, bypassing the instance/type lookup entirely and returning the base constant `10`. The two lines look nearly identical but differ in binding: attribute lookup starts from the object's type, whereas `A.V` is a resolved class-dict read."
+    },
+    {
+      "id": 47,
+      "question": "A method that returns a list vs one that yields — where does the body run? Predict the exact output:\n```python\nclass A:\n    def g(self):\n        print('ran')\n        return [i for i in range(3)]\nclass B:\n    def g(self):\n        print('ran')\n        for i in range(3):\n            yield i\na = A(); x = a.g()\nb = B(); y = b.g()\nprint('created')\nprint(list(x))\nprint(list(y))\n```",
+      "answer": "Output:\n```\nran\ncreated\n[0, 1, 2]\nran\n[0, 1, 2]\n```\nThe list-returning method executes immediately, so `a.g()` prints `ran` before the `created` line. The `yield`-bearing method only manufactures a generator, so nothing prints at call time; `'ran'` appears only when `list(y)` starts consuming. Both eventually deliver the same `[0, 1, 2]`, but one is eager and the other deferred."
+    },
+    {
+      "id": 48,
+      "question": "Delegating one generator method into another with `yield from`. Predict the exact output:\n```python\nclass A:\n    def inner(self):\n        yield 1\n        yield 2\n    def outer(self):\n        yield from self.inner()\nprint(list(A().outer()))\n```",
+      "answer": "Output:\n```\n[1, 2]\n```\n`outer` suspends and forwards control to the generator returned by `self.inner()`. `yield from` delegates the protocol (including `next`, `send`, and exception delivery) so every value the inner generator produces gets passed straight through. The two `yield`s in `inner` therefore surface as `1` and `2` in the consumed list."
+    },
+    {
+      "id": 49,
+      "question": "Private name mangling breaks a seemingly inherited access. Predict the exact output:\n```python\nclass A:\n    def __init__(self):\n        self.__x = 1\n    def get(self):\n        return self.__x\nclass B(A):\n    def get(self):\n        return self.__x\na = A(); b = B()\nprint(a.get())\ntry:\n    b.get()\nexcept AttributeError as e:\n    print(e)\n```",
+      "answer": "Output:\n```\n1\nAttributeError: 'B' object has no attribute '_B__x'\n```\nInside `A`'s body, `__x` is mangled to `_A__x` (which `A.__init__` sets) and `A.get` reads that exact name, so `a.get()` returns `1`. Inside `B`'s body the mangling uses the *defining class*, becoming `_B__x`, which nothing ever wrote. The `AttributeError` names the mangled attribute, exposing that 'private' was lexical, not runtime."
+    },
+    {
+      "id": 50,
+      "question": "Grand finale: combine fluent chaining, shared class state, `classmethod` registry, and re-reads through two references. Predict the exact output:\n```python\nclass Stack:\n    _registry = {}\n    def __init__(self, name):\n        self.name = name\n        self._items = []\n        Stack._registry[name] = self\n    def push(self, *vals):\n        self._items.extend(vals)\n        return self\n    def pop(self):\n        return self._items.pop() if self._items else None\n    @classmethod\n    def named(cls, name):\n        return cls._registry.get(name)\ns1 = Stack('a').push(1, 2)\ns2 = Stack.named('a')\nprint(s1 is s2)\ns1.push(3)\nprint(s2.pop())\nprint(s1.pop())\n```",
+      "answer": "Output:\n```\nTrue\n3\n2\n```\n`s1` is the `Stack('a')` instance and the registry stored the very same object, so `named('a')` retrieves it and `s1 is s2` is `True` — two names, one object. `s1.push(3)` message passes through `*vals`, extends the shared list to `[1, 2, 3]`, and returns `self`. `s2.pop()` pops `3` (LIFO), and `s1.pop()` sees the same storage and pops `2`."
+    },
+    {
+      "id": 51,
+      "question": "What is the output of the following code?\n```python\nclass Desc:\n    def __get__(self, obj, objtype=None):\n        return 'desc_get'\n\nclass MyClass:\n    attr = Desc()\n\nobj = MyClass()\nobj.attr = 'instance_val'\nprint(obj.attr)\n```",
+      "answer": "instance_val\n\nDesc only defines __get__, making it a non-data descriptor. Instance __dict__ entries take precedence over non-data descriptors because the default __getattribute__ checks the instance __dict__ before invoking non-data descriptors."
+    },
+    {
+      "id": 52,
+      "question": "What is the output of the following code?\n```python\nclass DataDesc:\n    def __get__(self, obj, objtype=None):\n        return 'data_get'\n    def __set__(self, obj, value):\n        print(f'set: {value}')\n\nclass MyClass:\n    attr = DataDesc()\n\nobj = MyClass()\nobj.attr = 'instance_val'\nprint(obj.attr)\n```",
+      "answer": "set: instance_val\ndata_get\n\nBecause DataDesc defines both __get__ and __set__, it is a data descriptor. Data descriptors take priority over instance __dict__, so the __set__ method is invoked on assignment and __get__ is called on access, preventing instance-level storage."
+    },
+    {
+      "id": 53,
+      "question": "What is the output of the following code?\n```python\nclass MyClass:\n    def __getattr__(self, name):\n        return f'getattr_{name}'\n    def __getattribute__(self, name):\n        if name == 'special':\n            return 'intercepted'\n        return super().__getattribute__(name)\n\nobj = MyClass()\nprint(obj.special)\nprint(obj.normal)\nprint(obj.missing)\n```",
+      "answer": "intercepted\ngetattr_normal\ngetattr_missing\n\n__getattribute__ is called for every attribute access. Here it intercepts 'special' before the normal lookup. For 'normal' and 'missing', the default lookup fails, so __getattr__ is invoked as a fallback, returning the formatted string."
+    },
+    {
+      "id": 54,
+      "question": "What is the output of the following code?\n```python\nclass Base:\n    @classmethod\n    def create(cls):\n        return cls()\n    def __init__(self):\n        self.type = self.__class__.__name__\n\nclass Child(Base):\n    pass\n\nobj = Child.create()\nprint(obj.type)\n```",
+      "answer": "Child\n\nclassmethod binds cls to the actual class it is called on, not where it is defined. When Child.create() is called, cls is Child. Therefore cls() creates a Child instance, and self.__class__.__name__ is 'Child'."
+    },
+    {
+      "id": 55,
+      "question": "What is the output of the following code?\n```python\nclass Base:\n    @staticmethod\n    def greet():\n        return 'hello'\n\nclass Child(Base):\n    @staticmethod\n    def greet():\n        return 'hi'\n\nprint(Base.greet())\nprint(Child.greet())\nprint(Child().greet())\n```",
+      "answer": "hello\nhi\nhi\n\nstaticmethod methods are regular functions stored in the class dict. Child.greet() overrides Base.greet(), and accessing greet on an instance follows the same MRO lookup, finding Child.greet in the class hierarchy."
+    },
+    {
+      "id": 56,
+      "question": "What is the output of the following code?\n```python\nclass Prop:\n    @property\n    def val(self):\n        return self._val\n    @val.setter\n    def val(self, v):\n        self._val = v * 2\n    @val.deleter\n    def val(self):\n        del self._val\n\nobj = Prop()\nobj.val = 5\nprint(obj.val)\ndel obj.val\ntry:\n    print(obj.val)\nexcept AttributeError as e:\n    print(f'Error: {e}')\n```",
+      "answer": "10\nError: 'Prop' object has no attribute '_val'\n\nThe setter stores v * 2, so setting 5 stores 10 in _val. The getter returns self._val which is 10. After deletion, _val no longer exists in the instance dict, so accessing self._val in the getter raises AttributeError."
+    },
+    {
+      "id": 57,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    def greet(self): return 'A'\nclass B(A):\n    def greet(self): return 'B'\nclass C(A):\n    def greet(self): return 'C'\nclass D(B, C):\n    pass\n\nprint(D().greet())\nprint(D.__mro__)\n```",
+      "answer": "B\n(<class 'D'>, <class 'B'>, <class 'C'>, <class 'A'>, <class 'object'>)\n\nPython's C3 linearization produces MRO D -> B -> C -> A. Since D does not override greet, attribute lookup follows the MRO and finds B.greet first."
+    },
+    {
+      "id": 58,
+      "question": "What is the output of the following code?\n```python\nfrom functools import partial\n\nclass Adder:\n    def __init__(self, base):\n        self.base = base\n    def add(self, x, y):\n        return self.base + x + y\n\nobj = Adder(10)\npartial_add = partial(obj.add, 5)\nprint(partial_add(3))\n```",
+      "answer": "18\n\nobj.add is a bound method already bound to obj. partial(obj.add, 5) further pre-fills the first positional arg x=5. Calling partial_add(3) passes y=3, resulting in 10 + 5 + 3 = 18."
+    },
+    {
+      "id": 59,
+      "question": "What is the output of the following code?\n```python\nclass MyClass:\n    pass\n\ndef dynamic_method(self):\n    return 'dynamic'\n\nMyClass.method = dynamic_method\nobj = MyClass()\nprint(obj.method())\n```",
+      "answer": "dynamic\n\nFunctions assigned to a class attribute become unbound methods in Python 3. When accessed via an instance, the descriptor protocol automatically binds self, so obj.method() works with self correctly bound to obj."
+    },
+    {
+      "id": 60,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    def method(self): return 'A'\nclass B(A):\n    def method(self): return 'B' + super().method()\nclass C(A):\n    def method(self): return 'C' + super().method()\nclass D(B, C):\n    def method(self): return 'D' + super().method()\n\nprint(D().method())\n```",
+      "answer": "DBCA\n\nThe MRO is D -> B -> C -> A. D.method calls super() which resolves to B.method, whose super() resolves to C (not A, because of C3 linearization), and C.method's super() resolves to A. So the chain is D + B + C + A = DBCA."
+    },
+    {
+      "id": 61,
+      "question": "What is the output of the following code?\n```python\nclass Field:\n    def __set_name__(self, owner, name):\n        self.name = name\n        self.storage = f'_field_{name}'\n    def __get__(self, obj, objtype=None):\n        if obj is None: return self\n        return getattr(obj, self.storage, None)\n    def __set__(self, obj, value):\n        setattr(obj, self.storage, value)\n\nclass Model:\n    x = Field()\n    y = Field()\n\nm = Model()\nm.x = 10\nm.y = 20\nprint(m.x, m.y)\nprint(m.__dict__)\n```",
+      "answer": "10 20\n{'_field_x': 10, '_field_y': 20}\n\n__set_name__ is called by the metaclass during class creation, providing the attribute name. Each Field instance stores a unique private key (_field_x, _field_y) so multiple descriptors coexist without colliding in the instance __dict__."
+    },
+    {
+      "id": 62,
+      "question": "What is the output of the following code?\n```python\nclass Cached:\n    @property\n    def expensive(self):\n        if not hasattr(self, '_cache'):\n            print('computing')\n            self._cache = 42\n        return self._cache\n\nc = Cached()\nprint(c.expensive)\nprint(c.expensive)\n```",
+      "answer": "computing\n42\n42\n\nThe first access triggers computation and stores 42 in self._cache. Subsequent accesses find _cache already exists via hasattr, so computation is skipped. Note this caches per-instance by writing directly into the instance __dict__."
+    },
+    {
+      "id": 63,
+      "question": "What is the output of the following code?\n```python\nclass Foo:\n    @staticmethod\n    def bar():\n        return locals()\n\nresult = Foo.bar()\nprint('self' in result)\n```",
+      "answer": "False\n\nstaticmethod does not receive any implicit first argument. There is no self or cls parameter, so locals() contains no 'self' key. This demonstrates that staticmethod truly disconnects the function from the class/instance binding."
+    },
+    {
+      "id": 64,
+      "question": "What is the output of the following code?\n```python\nclass Meta:\n    def __getattribute__(self, name):\n        if name.startswith('_'):\n            raise AttributeError(f'No access to {name}')\n        return super().__getattribute__(name)\n\nm = Meta()\nm.public = 42\nprint(m.public)\ntry:\n    print(m._hidden)\nexcept AttributeError as e:\n    print(f'Error: {e}')\n```",
+      "answer": "42\nError: No access to _hidden\n\n__getattribute__ intercepts every attribute access. For 'public', it delegates to the default lookup which finds 42 in the instance dict. For '_hidden', the name starts with '_' so an AttributeError is raised before any actual lookup occurs."
+    },
+    {
+      "id": 65,
+      "question": "What is the output of the following code?\n```python\nclass Factory:\n    @classmethod\n    def create_a(cls):\n        return cls._build('A')\n    @classmethod\n    def _build(cls, label):\n        obj = cls()\n        obj.label = label\n        return obj\n\nclass SubFactory(Factory):\n    pass\n\nobj = SubFactory.create_a()\nprint(obj.label, type(obj).__name__)\n```",
+      "answer": "A SubFactory\n\nclassmethods propagate cls through the chain. When SubFactory.create_a() is called, cls is SubFactory, and it remains SubFactory when passed to _build, so cls() creates a SubFactory instance."
+    },
+    {
+      "id": 66,
+      "question": "What is the output of the following code?\n```python\nclass Transform:\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return lambda x: x.upper()\n        return lambda x: x.lower()\n\nclass Text:\n    transform = Transform()\n\nprint(Text().transform('HELLO'))\nprint(Text.transform('HELLO'))\n```",
+      "answer": "hello\nHELLO\n\nDescriptors can inspect the obj argument to differentiate class-level vs instance-level access. When obj is None (class access), it returns upper(); when obj is an instance, it returns lower(). This allows a single descriptor to behave differently per access context."
+    },
+    {
+      "id": 67,
+      "question": "What is the output of the following code?\n```python\nclass Base:\n    @property\n    def value(self):\n        return 'base'\n\nclass Child(Base):\n    @property\n    def value(self):\n        return 'child'\n\nc = Child()\nprint(c.value)\nprint(Base().value)\n```",
+      "answer": "child\nbase\n\nChild.value property overrides Base.value in the MRO. The property decorator creates a data descriptor on each class independently. Instance access on a Child object finds Child.value first; Base().value uses Base's own property descriptor."
+    },
+    {
+      "id": 68,
+      "question": "What error occurs and why?\n```python\nclass Chain:\n    def __getattr__(self, name):\n        if name == 'target':\n            return 42\n        return getattr(self, name)\n\nc = Chain()\nprint(c.other)\n```",
+      "answer": "RecursionError\n\nWhen c.other is accessed, __getattr__ is called with 'other'. Since it is not 'target', getattr(self, 'other') is called, which triggers __getattr__ again with 'other', creating infinite recursion. There is no base case for the 'other' name."
+    },
+    {
+      "id": 69,
+      "question": "What is the output of the following code?\n```python\nclass Foo:\n    def bar(self):\n        return 42\n\nf = Foo()\nprint(type(f.bar))\nprint(type(Foo.bar))\n```",
+      "answer": "<class 'method'>\n<class 'function'>\n\nIn Python 3, Foo.bar is a plain function. When accessed through an instance, the descriptor protocol binds it, creating a bound method object. Thus f.bar is a method while Foo.bar is a function."
+    },
+    {
+      "id": 70,
+      "question": "What is the output of the following code?\n```python\ndef repeat(n):\n    def decorator(func):\n        def wrapper(self, *args, **kwargs):\n            result = None\n            for _ in range(n):\n                result = func(self, *args, **kwargs)\n            return result\n        return wrapper\n    return decorator\n\nclass Greeter:\n    @repeat(3)\n    def greet(self):\n        print('hi', end=' ')\n        return 'done'\n\ng = Greeter()\nresult = g.greet()\nprint()\nprint(result)\n```",
+      "answer": "hi hi hi \ndone\n\nThe decorator factory repeat(3) wraps greet to execute it 3 times. Each call prints 'hi' with no newline. The wrapper returns only the last result, which is 'done'. The final print adds a newline after the repeated output."
+    },
+    {
+      "id": 71,
+      "question": "What is the output of the following code?\n```python\nclass Callable:\n    def __init__(self, val):\n        self.val = val\n    def __call__(self, x):\n        return self.val + x\n\nc = Callable(10)\nprint(c(5))\nprint(callable(c))\n```",
+      "answer": "15\nTrue\n\nDefining __call__ makes instances of Callable callable like functions. c(5) invokes __call__(self, 5) returning 10 + 5 = 15. The callable() builtin returns True because the instance has a __call__ method."
+    },
+    {
+      "id": 72,
+      "question": "What is the output of the following code?\n```python\nclass Strict:\n    def __get__(self, obj, objtype=None):\n        if obj is None: return self\n        return obj.__dict__.get('x', 'not_set')\n    def __set__(self, obj, value):\n        if not isinstance(value, int):\n            raise TypeError('Must be int')\n        obj.__dict__['x'] = value\n\nclass MyClass:\n    x = Strict()\n\nobj = MyClass()\nobj.x = 42\nprint(obj.x)\nobj.x = 'bad'\n```",
+      "answer": "42\nTypeError: Must be int\n\nStrict is a data descriptor that validates in __set__. Assigning 42 passes the isinstance check and stores it in obj.__dict__['x']. Assigning 'bad' fails the isinstance(value, int) check, raising TypeError before any storage occurs."
+    },
+    {
+      "id": 73,
+      "question": "What is the output of the following code?\n```python\nclass Factory:\n    def __init__(self, x=None, y=None):\n        if x is not None and y is not None:\n            self.x, self.y = x, y\n        elif x is not None:\n            self.x, self.y = x, 0\n        else:\n            self.x, self.y = 0, 0\n    @classmethod\n    def from_tuple(cls, t):\n        return cls(t[0], t[1])\n\nf = Factory.from_tuple((3, 7))\nprint(f.x, f.y)\n```",
+      "answer": "3 7\n\nfrom_tuple is a classmethod alternative factory that unpacks a tuple and forwards to __init__. Because cls is the class itself (Factory here), cls(t[0], t[1]) calls Factory(3, 7), which sets x=3, y=7."
+    },
+    {
+      "id": 74,
+      "question": "What is the output of the following code?\n```python\nclass Base:\n    def method(self):\n        return 'base'\n\nclass Intercept(Base):\n    def __getattribute__(self, name):\n        if name == 'method':\n            return lambda: 'intercepted'\n        return super().__getattribute__(name)\n\ni = Intercept()\nprint(i.method())\nprint(Base().method())\n```",
+      "answer": "intercepted\nbase\n\nIntercept's __getattribute__ intercepts access to 'method' and returns a plain lambda (not a bound method). Calling i.method() invokes that lambda. Base().method() is unaffected because Base uses the default __getattribute__."
+    },
+    {
+      "id": 75,
+      "question": "What is the output of the following code?\n```python\nclass Slot:\n    __slots__ = ['x']\n    def __init__(self, x):\n        self.x = x\n\ns = Slot(10)\nprint(hasattr(s, '__dict__'))\nprint(s.x)\ns.x = 20\nprint(s.x)\n```",
+      "answer": "False\n10\n20\n\n__slots__ replaces the instance __dict__ with a fixed set of attribute slots. hasattr(s, '__dict__') is False because slots-based classes do not have a __dict__. Attribute access is faster but dynamic attribute addition is impossible."
+    },
+    {
+      "id": 76,
+      "question": "What is the output of the following code?\n```python\nclass Logged:\n    def __init__(self):\n        self.log = []\n    def __get__(self, obj, objtype=None):\n        if obj is None: return self\n        self.log.append(obj)\n        return lambda: len(self.log)\n\nclass Tracker:\n    counter = Logged()\n\nt1 = Tracker()\nt2 = Tracker()\nprint(t1.counter())\nprint(t2.counter())\nprint(len(Tracker.counter.log))\n```",
+      "answer": "1\n2\n2\n\nThe Logged descriptor instance is shared across all instances of Tracker. When t1.counter is accessed, t1 is appended to the shared log. Then t2.counter appends t2. Both return a lambda that reads the shared log's length, which is 2."
+    },
+    {
+      "id": 77,
+      "question": "What is the output of the following code?\n```python\nclass Base:\n    registry = []\n    def __init_subclass__(cls, **kwargs):\n        super().__init_subclass__(**kwargs)\n        Base.registry.append(cls.__name__)\n\nclass A(Base): pass\nclass B(Base): pass\n\nprint(Base.registry)\n```",
+      "answer": "['A', 'B']\n\n__init_subclass__ is called by the metaclass whenever a new subclass is created. Each time A and B are defined, they are registered in Base.registry. This is a powerful pattern for automatic class registration without metaclasses."
+    },
+    {
+      "id": 78,
+      "question": "What is the output of the following code?\n```python\nclass MyClass:\n    _value = 100\n    @property\n    def value(self):\n        return MyClass._value\n\nobj = MyClass()\nprint(obj.value)\nMyClass._value = 200\nprint(obj.value)\n```",
+      "answer": "100\n200\n\nThe property getter reads MyClass._value directly each time it is called. After mutating the class variable to 200, the next access through the property reflects the new value because the getter is evaluated on each access."
+    },
+    {
+      "id": 79,
+      "question": "What is the output of the following code?\n```python\nclass ClassDesc:\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return 'class_access'\n        return 'instance_access'\n\nclass MyClass:\n    desc = ClassDesc()\n\nprint(MyClass.desc)\nprint(MyClass().desc)\n```",
+      "answer": "class_access\ninstance_access\n\nWhen accessed via the class (MyClass.desc), obj is None in __get__, allowing class-level behavior. When accessed via an instance, obj is the instance. This pattern enables descriptors to provide different behavior depending on the access context."
+    },
+    {
+      "id": 80,
+      "question": "What is the output of the following code?\n```python\nclass Foo:\n    def method(self):\n        return 'original'\n\nf = Foo()\nf.method = lambda: 'override'\nprint(f.method())\nprint(Foo().method())\n```",
+      "answer": "override\noriginal\n\nAssigning f.method writes the lambda into f's instance __dict__. Instance __dict__ takes priority over class attributes during lookup, so f.method returns the lambda. A fresh Foo() instance has no such override, so it uses the class method."
+    },
+    {
+      "id": 81,
+      "question": "What is the output of the following code?\n```python\nclass Safe:\n    def __getattr__(self, name):\n        if name == 'computed':\n            return 42\n        raise AttributeError(f'{name} not found')\n\ns = Safe()\nprint(s.computed)\ntry:\n    print(s.other)\nexcept AttributeError as e:\n    print(e)\n```",
+      "answer": "42\nother not found\n\n__getattr__ is called only when normal attribute lookup fails. For 'computed', it returns 42. For any other name, it explicitly raises AttributeError with a descriptive message. This is the recommended pattern for providing safe fallback attributes."
+    },
+    {
+      "id": 82,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    @staticmethod\n    def f(): return 'static'\n    @classmethod\n    def g(cls): return cls.__name__\n\nclass B(A):\n    @staticmethod\n    def f(): return 'static_B'\n\nb = B()\nprint(b.f())\nprint(b.g())\nprint(A.g())\n```",
+      "answer": "static_B\nB\nA\n\nB.f() overrides A.f() in the MRO. classmethod g() on A binds cls to the actual class at call time: b.g() uses cls=B returning 'B', while A.g() uses cls=A returning 'A'. staticmethod and classmethod have independent inheritance."
+    },
+    {
+      "id": 83,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    def method(self): return 'A'\n\nclass B(A):\n    def method(self):\n        s = super()\n        print(type(s))\n        return s.method()\n\nprint(B().method())\n```",
+      "answer": "<class 'super'>\nA\n\nsuper() returns a proxy object of type super, not the parent class itself. Calling s.method() on the super proxy delegates to A.method via the MRO. The super object tracks the class and instance to forward calls correctly."
+    },
+    {
+      "id": 84,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    def method(self): return 'A'\nclass B(A):\n    def method(self): return 'B'\nclass C(A):\n    def method(self): return 'C'\nclass D(B, C):\n    pass\n\nprint(D().method())\nprint(D.__mro__)\n```",
+      "answer": "B\n(<class 'D'>, <class 'B'>, <class 'C'>, <class 'A'>, <class 'object'>)\n\nD inherits from B and C, both of which inherit from A. The C3 linearization produces MRO D -> B -> C -> A -> object. Since D has no method override, lookup finds B.method first in the MRO."
+    },
+    {
+      "id": 85,
+      "question": "What is the output of the following code?\n```python\nclass Foo:\n    def bar(self, x):\n        return x * 2\n\nf = Foo()\nprint(type(Foo.bar))\nprint(Foo.bar(f, 5))\nprint(f.bar(5))\n```",
+      "answer": "<class 'function'>\n10\n10\n\nIn Python 3, Foo.bar is a regular function, not an 'unbound method'. You can call it directly with an explicit instance: Foo.bar(f, 5). Accessing f.bar creates a bound method, so f.bar(5) also works equivalently."
+    },
+    {
+      "id": 86,
+      "question": "What is the output of the following code?\n```python\nimport types\n\nclass MyClass:\n    pass\n\ndef greet(self):\n    return f'hello {self.name}'\n\nobj = MyClass()\nobj.name = 'World'\nobj.greet = types.MethodType(greet, obj)\nprint(obj.greet())\n```",
+      "answer": "hello World\n\ntypes.MethodType binds a function to an instance, creating a bound method. When obj.greet() is called, self is automatically passed as obj, so self.name resolves to 'World'. This allows adding methods to individual instances."
+    },
+    {
+      "id": 87,
+      "question": "What is the output of the following code?\n```python\nclass NoDataDesc:\n    def __get__(self, obj, objtype=None):\n        return 'nodata'\n\nclass DataDesc:\n    def __get__(self, obj, objtype=None):\n        return 'data'\n    def __set__(self, obj, value):\n        pass\n\nclass Mix:\n    a = NoDataDesc()\n    b = DataDesc()\n\nm = Mix()\nm.a = 'inst_a'\nm.b = 'inst_b'\nprint(m.a)\nprint(m.b)\n```",
+      "answer": "inst_a\ndata\n\nNoDataDesc only has __get__, so it is a non-data descriptor. Instance __dict__ values shadow non-data descriptors, so m.a returns 'inst_a'. DataDesc has __set__, making it a data descriptor that intercepts both reads and writes, so m.b always returns 'data'."
+    },
+    {
+      "id": 88,
+      "question": "What is the output of the following code?\n```python\nclass Meta(type):\n    def __call__(cls, *args, **kwargs):\n        print(f'Creating {cls.__name__}')\n        return super().__call__(*args, **kwargs)\n\nclass MyClass(metaclass=Meta):\n    def __init__(self, x):\n        self.x = x\n\nobj = MyClass(42)\nprint(obj.x)\n```",
+      "answer": "Creating MyClass\n42\n\nWhen MyClass(42) is called, Python invokes Meta.__call__, which intercepts the instantiation to print a message. super().__call__() delegates to type.__call__, which creates the instance and calls __init__ with x=42."
+    },
+    {
+      "id": 89,
+      "question": "What is the output of the following code?\n```python\nfrom functools import partial\n\nclass MyClass:\n    @classmethod\n    def create(cls, x, y):\n        return (cls.__name__, x, y)\n\ncreate_zero = partial(MyClass.create, y=0)\nprint(create_zero(5))\n```",
+      "answer": "('MyClass', 5, 0)\n\nMyClass.create is a bound classmethod already bound to MyClass. partial pre-fills y=0. Calling create_zero(5) passes x=5, producing (cls.__name__, 5, 0) which is ('MyClass', 5, 0)."
+    },
+    {
+      "id": 90,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    def __getattr__(self, name):\n        return f'A_{name}'\n\na = A()\na.x = 10\na.__getattr__ = lambda name: f'inst_{name}'\nprint(a.x)\nprint(a.y)\n```",
+      "answer": "10\nA_y\n\na.x is found in the instance dict, returning 10. For a.y, normal lookup fails and __getattr__ is invoked. Crucially, Python looks up __getattr__ on the type (A), not the instance dict, so the instance-assigned lambda is never used by the protocol."
+    },
+    {
+      "id": 91,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    def process(self): return ['A']\nclass B(A):\n    def process(self): return super().process() + ['B']\nclass C(A):\n    def process(self): return super().process() + ['C']\nclass D(B, C):\n    def process(self): return super().process() + ['D']\n\nprint(D().process())\n```",
+      "answer": "['A', 'C', 'B', 'D']\n\nMRO: D -> B -> C -> A. D.process calls super() -> B.process, B.process calls super() -> C.process (skipping A due to C3), C.process calls super() -> A.process returning ['A']. Results accumulate: ['A'] + ['C'] + ['B'] + ['D']."
+    },
+    {
+      "id": 92,
+      "question": "What is the output of the following code?\n```python\nclass MyClass:\n    def method(self): return 42\n\nMyClass.alias = MyClass.method\nobj = MyClass()\nprint(obj.alias())\nprint(obj.method())\nprint(obj.alias == obj.method)\n```",
+      "answer": "42\n42\nTrue\n\nMyClass.alias and MyClass.method reference the same function object. Both bound methods wrap the same function and instance (self), so they are equal. However, obj.alias is obj.method is False because each access creates a new bound method object."
+    },
+    {
+      "id": 93,
+      "question": "What is the output of the following code?\n```python\nclass Plugin:\n    _plugins = {}\n    def __init_subclass__(cls, name=None, **kwargs):\n        super().__init_subclass__(**kwargs)\n        Plugin._plugins[name or cls.__name__] = cls\n\nclass Alpha(Plugin, name='alpha'): pass\nclass Beta(Plugin, name='beta'): pass\n\nprint(sorted(Plugin._plugins.keys()))\nprint(Plugin._plugins['alpha'] is Alpha)\n```",
+      "answer": "['alpha', 'beta']\nTrue\n\n__init_subclass__ with keyword arguments provides a clean registration pattern. Each subclass passname='alpha', which is captured and used as the registry key. This replaces the need for __init_subclass__ or metaclass-based registration."
+    },
+    {
+      "id": 94,
+      "question": "What is the output of the following code?\n```python\nclass OnlySet:\n    def __set__(self, obj, value):\n        obj.__dict__['x'] = value * 10\n\nclass MyClass:\n    x = OnlySet()\n\nm = MyClass()\nm.x = 5\nprint(m.x)\n```",
+      "answer": "50\n\nOnlySet defines __set__ but not __get__. The __set__ stores value * 10 = 50 into m.__dict__['x']. On access, Python finds no __get__ on OnlySet (not a data descriptor), falls through to normal lookup, and finds 50 in the instance __dict__."
+    },
+    {
+      "id": 95,
+      "question": "What is the output of the following code?\n```python\nclass MyClass:\n    method = lambda self, x: x ** 2\n\nobj = MyClass()\nprint(obj.method(5))\nprint(type(obj.method))\n```",
+      "answer": "25\n<class 'method'>\n\nLambda assigned to a class attribute behaves identically to a regular function. The descriptor protocol still applies: accessing obj.method binds self automatically, creating a bound method object. The lambda computes 5 ** 2 = 25."
+    },
+    {
+      "id": 96,
+      "question": "What is the output of the following code?\n```python\nclass Validated:\n    def __set_name__(self, owner, name):\n        self.name = name\n        self.private = f'_{name}'\n    def __get__(self, obj, objtype=None):\n        if obj is None: return self\n        return getattr(obj, self.private, 0)\n    def __set__(self, obj, value):\n        if value < 0:\n            raise ValueError(f'{self.name} must be non-negative')\n        setattr(obj, self.private, value)\n\nclass Account:\n    balance = Validated()\n\na = Account()\na.balance = 100\nprint(a.balance)\na.balance = -50\n```",
+      "answer": "100\nValueError: balance must be non-negative\n\n__set_name__ provides the attribute name 'balance', used to derive the private storage key '_balance'. The setter validates that the value is non-negative before storing. Assigning -50 fails the check and raises ValueError."
+    },
+    {
+      "id": 97,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    def __getattr__(self, name): return f'A_{name}'\nclass B(A):\n    def __getattr__(self, name): return f'B_{name}'\nclass C(B): pass\n\nc = C()\nprint(c.test)\nprint(c.other)\n\nclass D(C):\n    def __getattr__(self, name): return f'D_{name}'\n\nd = D()\nprint(d.test)\n```",
+      "answer": "B_test\nB_other\nD_test\n\nC inherits from B but does not override __getattr__, so attribute lookups on C instances use B.__getattr__. D overrides __getattr__ with its own version. Each class in the hierarchy independently contributes to behavior via MRO."
+    },
+    {
+      "id": 98,
+      "question": "What is the output of the following code?\n```python\nfrom functools import reduce\n\nclass Accumulator:\n    def __init__(self, val): self.val = val\n    def __add__(self, other):\n        return Accumulator(self.val + other.val)\n    def __repr__(self):\n        return f'Accumulator({self.val})'\n    @classmethod\n    def from_values(cls, values):\n        return reduce(lambda a, b: a + b, [cls(v) for v in values])\n\nprint(Accumulator.from_values([1, 2, 3]))\n```",
+      "answer": "Accumulator(6)\n\nfrom_values creates Accumulator instances from the list [1, 2, 3]. reduce applies __add__ cumulatively: Accumulator(1) + Accumulator(2) = Accumulator(3), then Accumulator(3) + Accumulator(3) = Accumulator(6). __repr__ formats the final result."
+    },
+    {
+      "id": 99,
+      "question": "What is the output of the following code?\n```python\nclass A:\n    def method(self): return 'A'\nclass B(A): pass\nclass C(B):\n    def method(self): return 'C' + super().method()\n\nprint(C().method())\nprint(B().method())\n```",
+      "answer": "CA\nA\n\nC().method() calls super().method(), which follows MRO: C -> B -> A. Since B has no override, super() resolves to A.method(), producing 'CA'. B().method() has no override either, so it directly finds A.method returning 'A'."
+    },
+    {
+      "id": 100,
+      "question": "What is the output of the following code?\n```python\nclass Field:\n    def __set_name__(self, owner, name):\n        self.name = name\n    def __get__(self, obj, objtype=None):\n        if obj is None: return self\n        return obj.__dict__.get(self.name, f'default_{self.name}')\n    def __set__(self, obj, value):\n        obj.__dict__[self.name] = value\n\nclass Base:\n    x = Field()\n    y = Field()\n\nclass Child(Base):\n    y = Field()\n\nb = Base()\nb.x = 10\nb.y = 20\nprint(b.x, b.y)\nc = Child()\nc.x = 30\nc.y = 40\nprint(c.x, c.y)\nb2 = Base()\nprint(b2.x, b2.y)\n```",
+      "answer": "10 20\n30 40\ndefault_x default_y\n\nEach Field stores its attribute name via __set_name__. Child.y shadows Base.y with a new Field instance. Each object gets its own __dict__ entries. A fresh Base() has no prior values, so __get__ returns the default fallback for both x and y."
+    }
+  ]
+}

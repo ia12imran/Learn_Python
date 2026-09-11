@@ -1,0 +1,370 @@
+npm notice run python-learning@0.1.0 npx
+npm notice run 'next' dev --port 3000
+▲ Next.js 16.3.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.3:3000
+✓ Ready in 2.3s
+✓ Running next.config.ts took 170ms
+⚠ Slow filesystem detected. The benchmark took 237ms. If /run/media/maan/20EE23CBEE239854/PracticeCode/python-learning/.next/dev is a network drive, consider moving it to a local folder.
+See more: https://nextjs.org/docs/app/guides/local-development
+
+○ Compiling / ...
+ GET / 200 in 18.8s (next.js: 17.4s, application-code: 1434ms)
+ GET / 200 in 7.6s (next.js: 5.8s, application-code: 1809ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <body
+                            className="min-h-screen flex flex-col bg-slate-50 antialiased"
+-                           data-new-gr-c-s-check-loaded="14.1328.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+ 
+ GET /learn/intro/what-is-python 200 in 5.5s (next.js: 5.3s, application-code: 222ms)
+ GET /practice 200 in 394ms (next.js: 226ms, application-code: 169ms)
+ GET /quiz 200 in 428ms (next.js: 250ms, application-code: 178ms)
+ GET / 200 in 163ms (next.js: 12ms, application-code: 152ms)
+ GET /learn/intro/what-is-python 200 in 118ms (next.js: 26ms, application-code: 92ms)
+ GET /learn/intro/getting-started 200 in 78ms (next.js: 25ms, application-code: 52ms)
+ GET /learn/intro/what-is-python 200 in 162ms (next.js: 28ms, application-code: 134ms)
+ GET /learn/intro/getting-started 200 in 144ms (next.js: 25ms, application-code: 119ms)
+ GET /learn/intro/what-is-python 200 in 75ms (next.js: 23ms, application-code: 52ms)
+ GET /learn/syntax/basic-syntax 200 in 80ms (next.js: 28ms, application-code: 52ms)
+ GET /learn/syntax/basic-syntax 200 in 3.9s (next.js: 3.4s, application-code: 510ms)
+ GET /learn/syntax/basic-syntax 200 in 406ms (next.js: 31ms, application-code: 374ms)
+ GET /learn/syntax/basic-syntax 200 in 388ms (next.js: 7ms, application-code: 381ms)
+ GET /learn/syntax/basic-syntax 200 in 185ms (next.js: 16ms, application-code: 169ms)
+ GET /learn/syntax/basic-syntax 200 in 313ms (next.js: 9ms, application-code: 304ms)
+ GET /learn/syntax/basic-syntax 200 in 131ms (next.js: 21ms, application-code: 109ms)
+ GET /learn/syntax/basic-syntax 200 in 269ms (next.js: 8ms, application-code: 261ms)
+ GET /learn/syntax/basic-syntax 200 in 372ms (next.js: 9ms, application-code: 363ms)
+ GET /learn/syntax/basic-syntax 200 in 312ms (next.js: 17ms, application-code: 295ms)
+ GET /learn/syntax/basic-syntax 200 in 209ms (next.js: 6ms, application-code: 204ms)
+ GET /learn/syntax/basic-syntax 200 in 183ms (next.js: 32ms, application-code: 150ms)
+ GET /learn/syntax/basic-syntax 200 in 271ms (next.js: 12ms, application-code: 259ms)
+ GET /learn/syntax/basic-syntax 200 in 197ms (next.js: 30ms, application-code: 167ms)
+ GET /learn/syntax/basic-syntax 200 in 80ms (next.js: 8ms, application-code: 72ms)
+✓ Compiled in 8.2s
+✓ Compiled in 1799ms
+ GET /learn/syntax/basic-syntax 200 in 157ms (next.js: 29ms, application-code: 129ms)
+○ Compiling /api/questions ...
+ GET /api/questions 200 in 14.8s (next.js: 14.7s, application-code: 115ms)
+ GET /api/questions?section=basic_syntax 200 in 28ms (next.js: 4ms, application-code: 24ms)
+ GET /api/questions?section=variables 200 in 59ms (next.js: 43ms, application-code: 16ms)
+ GET /api/questions?section=data_types 200 in 90ms (next.js: 26ms, application-code: 65ms)
+ GET /quiz 200 in 1374ms (next.js: 18ms, application-code: 1356ms)
+ GET / 200 in 583ms (next.js: 54ms, application-code: 529ms)
+ GET /quiz 200 in 351ms (next.js: 17ms, application-code: 334ms)
+ GET /learn/syntax/basic-syntax 200 in 2.6s (next.js: 2.1s, application-code: 420ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/learn/syn..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <body
+                            className="min-h-screen flex flex-col bg-slate-50 antialiased"
+-                           data-new-gr-c-s-check-loaded="14.1328.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+ 
+ GET /learn/syntax/basic-syntax 200 in 49ms (next.js: 29ms, application-code: 20ms)
+ GET /learn/syntax/basic-syntax 200 in 86ms (next.js: 17ms, application-code: 68ms)
+ GET /learn/strings/string-basics 200 in 94ms (next.js: 27ms, application-code: 67ms)
+ GET /learn/syntax/basic-syntax 200 in 93ms (next.js: 18ms, application-code: 75ms)
+ GET /practice 200 in 1169ms (next.js: 856ms, application-code: 313ms)
+ GET /learn/intro/what-is-python 200 in 765ms (next.js: 60ms, application-code: 705ms)
+ GET / 200 in 631ms (next.js: 436ms, application-code: 194ms)
+ GET /practice 200 in 248ms (next.js: 8ms, application-code: 240ms)
+✓ Compiled in 8.4s
+ GET /learn/syntax/basic-syntax 200 in 193ms (next.js: 49ms, application-code: 144ms)
+ GET /learn/syntax/basic-syntax 200 in 133ms (next.js: 47ms, application-code: 85ms)
+ GET /learn/syntax/basic-syntax 200 in 246ms (next.js: 80ms, application-code: 165ms)
+✓ Compiled in 253ms
+ GET /learn/syntax/basic-syntax 200 in 214ms (next.js: 78ms, application-code: 136ms)
+ GET / 200 in 197ms (next.js: 5ms, application-code: 192ms)
+ GET /learn/python-basics/variables 200 in 252ms (next.js: 49ms, application-code: 203ms)
+ GET /practice 200 in 352ms (next.js: 31ms, application-code: 321ms)
+ GET /quiz 200 in 619ms (next.js: 374ms, application-code: 246ms)
+ GET /practice 200 in 180ms (next.js: 6ms, application-code: 174ms)
+ GET /practice 200 in 119ms (next.js: 7ms, application-code: 112ms)
+ GET /learn/python-basics/variables 200 in 135ms (next.js: 26ms, application-code: 109ms)
+ GET /learn/python-basics/variables 200 in 351ms (next.js: 58ms, application-code: 292ms)
+ GET /learn/python-basics/variables 200 in 301ms (next.js: 59ms, application-code: 242ms)
+ GET /learn/syntax/basic-syntax 200 in 245ms (next.js: 47ms, application-code: 197ms)
+ GET /learn/syntax/basic-syntax 200 in 381ms (next.js: 62ms, application-code: 319ms)
+ GET /learn/syntax/variables 200 in 183ms (next.js: 38ms, application-code: 145ms)
+ GET /learn/syntax/data-types 200 in 68ms (next.js: 9ms, application-code: 59ms)
+ GET /learn/syntax/basic-syntax 200 in 136ms (next.js: 38ms, application-code: 97ms)
+ GET /learn/syntax/variables 200 in 84ms (next.js: 24ms, application-code: 61ms)
+ GET /learn/syntax/basic-syntax 200 in 146ms (next.js: 43ms, application-code: 103ms)
+ GET /learn/syntax/basic-syntax 200 in 1470ms (next.js: 122ms, application-code: 1348ms)
+✓ Compiled in 6.7s
+✓ Compiled in 769ms
+ GET /learn/syntax/basic-syntax 200 in 619ms (next.js: 209ms, application-code: 410ms)
+✓ Compiled in 2.1s
+ GET /learn/syntax/basic-syntax 200 in 552ms (next.js: 56ms, application-code: 496ms)
+✓ Compiled in 827ms
+ GET /learn/syntax/basic-syntax 200 in 330ms (next.js: 80ms, application-code: 251ms)
+ GET /learn/syntax/basic-syntax 200 in 516ms (next.js: 98ms, application-code: 418ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/learn/syn..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <body
+                            className="min-h-screen flex flex-col bg-slate-50 antialiased"
+-                           data-new-gr-c-s-check-loaded="14.1328.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+ 
+✓ Compiled in 710ms
+ GET /learn/syntax/basic-syntax 200 in 230ms (next.js: 81ms, application-code: 149ms)
+✓ Compiled in 252ms
+ GET /learn/syntax/basic-syntax 200 in 277ms (next.js: 175ms, application-code: 101ms)
+✓ Compiled in 315ms
+ GET /learn/syntax/basic-syntax 200 in 296ms (next.js: 58ms, application-code: 238ms)
+✓ Compiled in 177ms
+ GET /learn/syntax/basic-syntax 200 in 318ms (next.js: 117ms, application-code: 201ms)
+ GET /learn/syntax/basic-syntax 200 in 619ms (next.js: 123ms, application-code: 496ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/learn/syn..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <body
+                            className="min-h-screen flex flex-col bg-slate-50 antialiased"
+-                           data-new-gr-c-s-check-loaded="14.1328.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+ 
+ GET /learn/syntax/variables 200 in 126ms (next.js: 33ms, application-code: 93ms)
+ GET /learn/syntax/basic-syntax 200 in 190ms (next.js: 49ms, application-code: 141ms)
+ GET /learn/syntax/variables 200 in 112ms (next.js: 44ms, application-code: 68ms)
+✓ Compiled in 1817ms
+ GET /learn/syntax/variables 200 in 302ms (next.js: 51ms, application-code: 252ms)
+✓ Compiled in 284ms
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /learn/syntax/variables 200 in 703ms (next.js: 135ms, application-code: 568ms)
+ GET /api/questions?section=variables 200 in 105ms (next.js: 24ms, application-code: 81ms)
+ GET /api/questions?section=variables 200 in 132ms (next.js: 14ms, application-code: 117ms)
+✓ Compiled in 1055ms
+ GET /learn/syntax/variables 200 in 314ms (next.js: 105ms, application-code: 209ms)
+✓ Compiled in 554ms
+ GET /learn/syntax/variables 200 in 362ms (next.js: 115ms, application-code: 247ms)
+ GET /api/questions?section=variables 200 in 89ms (next.js: 5ms, application-code: 84ms)
+ GET /api/questions?section=variables 200 in 51ms (next.js: 9ms, application-code: 42ms)
+ GET /api/questions?section=variables 200 in 115ms (next.js: 11ms, application-code: 103ms)
+ GET /api/questions?section=variables 200 in 45ms (next.js: 18ms, application-code: 27ms)
+ GET /learn/syntax/data-types 200 in 302ms (next.js: 86ms, application-code: 215ms)
+ GET /api/questions?section=data_types 200 in 32ms (next.js: 8ms, application-code: 25ms)
+ GET /api/questions?section=data_types 200 in 56ms (next.js: 10ms, application-code: 46ms)
+ GET /api/questions?section=data_types 200 in 69ms (next.js: 8ms, application-code: 62ms)
+✓ Compiled in 1820ms
+✓ Compiled in 209ms
+ GET /learn/syntax/data-types 200 in 240ms (next.js: 107ms, application-code: 133ms)
+✓ Compiled in 5.4s
+ GET /learn/syntax/data-types 200 in 295ms (next.js: 62ms, application-code: 233ms)
+ GET /learn/syntax/data-types 200 in 324ms (next.js: 125ms, application-code: 199ms)
+ GET /api/questions?section=python_strings 200 in 98ms (next.js: 7ms, application-code: 91ms)
+ GET /api/questions?section=python_strings 200 in 161ms (next.js: 29ms, application-code: 132ms)
+ GET /learn/strings/string-basics 200 in 128ms (next.js: 42ms, application-code: 86ms)
+ GET /api/questions?section=python_strings 200 in 240ms (next.js: 43ms, application-code: 198ms)
+ GET /api/questions?section=python_strings 200 in 253ms (next.js: 65ms, application-code: 189ms)
+ GET /learn/strings/string-methods 200 in 123ms (next.js: 33ms, application-code: 90ms)
+ GET /api/questions?section=python_strings 200 in 62ms (next.js: 19ms, application-code: 43ms)
+ GET /api/questions?section=python_strings 200 in 41ms (next.js: 5ms, application-code: 36ms)
+ GET /learn/strings/string-formatting 200 in 99ms (next.js: 34ms, application-code: 65ms)
+ GET /api/questions?section=python_strings 200 in 47ms (next.js: 10ms, application-code: 37ms)
+ GET /api/questions?section=python_strings 200 in 86ms (next.js: 14ms, application-code: 72ms)
+ GET /learn/strings/string-methods 200 in 114ms (next.js: 40ms, application-code: 75ms)
+ GET /api/questions?section=python_strings 200 in 78ms (next.js: 23ms, application-code: 55ms)
+ GET /api/questions?section=python_strings 200 in 67ms (next.js: 4ms, application-code: 63ms)
+ GET /learn/strings/string-basics 200 in 102ms (next.js: 43ms, application-code: 59ms)
+ GET /api/questions?section=python_strings 200 in 47ms (next.js: 8ms, application-code: 38ms)
+ GET /api/questions?section=python_strings 200 in 95ms (next.js: 22ms, application-code: 73ms)
+ GET /learn/strings/string-basics 200 in 226ms (next.js: 56ms, application-code: 169ms)
+✓ Compiled in 339ms
+ GET /api/questions?section=string_basics 200 in 141ms (next.js: 81ms, application-code: 60ms)
+ GET /learn/strings/string-basics 200 in 436ms (next.js: 40ms, application-code: 396ms)
+✓ Compiled in 457ms
+ GET /learn/strings/string-basics 200 in 291ms (next.js: 124ms, application-code: 167ms)
+ GET /api/questions?section=string_basics 200 in 83ms (next.js: 21ms, application-code: 62ms)
+ GET /api/questions?section=string_methods 200 in 30ms (next.js: 8ms, application-code: 22ms)
+ GET /api/questions?section=string_formatting 200 in 65ms (next.js: 17ms, application-code: 48ms)
+ GET /api/questions?section=python_strings 404 in 37ms (next.js: 3ms, application-code: 33ms)
+ GET /learn/strings/string-methods 200 in 368ms (next.js: 73ms, application-code: 295ms)
+ GET /api/questions?section=string_methods 200 in 555ms (next.js: 102ms, application-code: 453ms)
+ GET /api/questions?section=string_methods 200 in 140ms (next.js: 29ms, application-code: 110ms)
+ GET /learn/strings/string-methods 200 in 302ms (next.js: 59ms, application-code: 244ms)
+✓ Compiled in 586ms
+ GET /learn/strings/string-methods 200 in 319ms (next.js: 88ms, application-code: 230ms)
+✓ Compiled in 2s
+ GET /learn/strings/string-methods 200 in 341ms (next.js: 87ms, application-code: 254ms)
+ GET /api/questions?section=operator_arithmetic 200 in 69ms (next.js: 56ms, application-code: 13ms)
+ GET /api/questions?section=operator_comparison 200 in 60ms (next.js: 6ms, application-code: 54ms)
+ GET /api/questions?section=operator_logical 200 in 48ms (next.js: 4ms, application-code: 43ms)
+ GET /learn/operators/arithmetic-operators 200 in 102ms (next.js: 33ms, application-code: 69ms)
+ GET /api/questions?section=operator_arithmetic 200 in 75ms (next.js: 19ms, application-code: 56ms)
+ GET /api/questions?section=operator_arithmetic 200 in 77ms (next.js: 20ms, application-code: 57ms)
+ GET /learn/operators/comparison-operators 200 in 73ms (next.js: 30ms, application-code: 43ms)
+ GET /api/questions?section=operator_comparison 200 in 57ms (next.js: 21ms, application-code: 35ms)
+ GET /api/questions?section=operator_comparison 200 in 47ms (next.js: 6ms, application-code: 41ms)
+ GET /learn/control-flow/if-else 200 in 69ms (next.js: 28ms, application-code: 42ms)
+ GET /learn/control-flow/if-else 200 in 5.4s (next.js: 1958ms, application-code: 3.4s)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/learn/con..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <body
+                            className="min-h-screen flex flex-col bg-slate-50 antialiased"
+-                           data-new-gr-c-s-check-loaded="14.1328.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+ 
+ GET /learn/operators/comparison-operators 200 in 119ms (next.js: 48ms, application-code: 71ms)
+ GET /api/questions?section=operator_comparison 200 in 104ms (next.js: 53ms, application-code: 51ms)
+ GET /api/questions?section=operator_comparison 200 in 50ms (next.js: 9ms, application-code: 41ms)
+ GET /learn/control-flow/if-else 200 in 105ms (next.js: 31ms, application-code: 73ms)
+ GET /learn/control-flow/if-else 200 in 207ms (next.js: 47ms, application-code: 160ms)
+✓ Compiled in 945ms
+ GET /api/questions?section=control_flow_if_else 200 in 57ms (next.js: 12ms, application-code: 45ms)
+ GET /learn/control-flow/if-else 200 in 211ms (next.js: 83ms, application-code: 128ms)
+[?25h

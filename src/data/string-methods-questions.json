@@ -1,0 +1,1005 @@
+{
+  "description": "200 questions on Python string methods (coding questions, beginner to intermediate)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What does 'Hello'.upper() return?",
+      "answer": "'HELLO'"
+    },
+    {
+      "id": 2,
+      "question": "What does 'Hello'.lower() return?",
+      "answer": "'hello'"
+    },
+    {
+      "id": 3,
+      "question": "What does 'hELLO wORLD'.capitalize() return?",
+      "answer": "'Hello world'"
+    },
+    {
+      "id": 4,
+      "question": "What does 'hello world'.title() return?",
+      "answer": "'Hello World'"
+    },
+    {
+      "id": 5,
+      "question": "What does 'Hello'.swapcase() return?",
+      "answer": "'hELLO'"
+    },
+    {
+      "id": 6,
+      "question": "What does 'ß'.upper() return?",
+      "answer": "'SS'"
+    },
+    {
+      "id": 7,
+      "question": "What does 'PYTHON'.lower() return?",
+      "answer": "'python'"
+    },
+    {
+      "id": 8,
+      "question": "What does 'aBc'.swapcase() return?",
+      "answer": "'AbC'"
+    },
+    {
+      "id": 9,
+      "question": "What does 'media'.casefold() return?",
+      "answer": "'media' (lowercase)"
+    },
+    {
+      "id": 10,
+      "question": "What does '123abc'.upper() return?",
+      "answer": "'123ABC' (digits unchanged)"
+    },
+    {
+      "id": 11,
+      "question": "What does 'one two three'.title() return?",
+      "answer": "'One Two Three'"
+    },
+    {
+      "id": 12,
+      "question": "What does 'hello'.upper().lower() return?",
+      "answer": "'hello'"
+    },
+    {
+      "id": 13,
+      "question": "What does '  hi  '.capitalize() return?",
+      "answer": "'  hi  ' (spaces kept, only case changes)"
+    },
+    {
+      "id": 14,
+      "question": "What does 'a1b2'.upper() return?",
+      "answer": "'A1B2'"
+    },
+    {
+      "id": 15,
+      "question": "What does 'PYTHON'.isupper() return?",
+      "answer": "True"
+    },
+    {
+      "id": 16,
+      "question": "What does 'Python'.isupper() return?",
+      "answer": "False"
+    },
+    {
+      "id": 17,
+      "question": "What does 'python'.islower() return?",
+      "answer": "True"
+    },
+    {
+      "id": 18,
+      "question": "What does 'Hello World'.istitle() return?",
+      "answer": "True"
+    },
+    {
+      "id": 19,
+      "question": "What does 'hello world'.istitle() return?",
+      "answer": "False"
+    },
+    {
+      "id": 20,
+      "question": "What does 'country's title method do for a one-word lowercase string?",
+      "answer": "It capitalizes the first letter (titlecase)"
+    },
+    {
+      "id": 21,
+      "question": "Which method is best for case-insensitive comparisons?",
+      "answer": "casefold()"
+    },
+    {
+      "id": 22,
+      "question": "What does 'HELLO there'.swapcase() return?",
+      "answer": "'hello THERE'"
+    },
+    {
+      "id": 23,
+      "question": "What does '  hello  '.strip() return?",
+      "answer": "'hello'"
+    },
+    {
+      "id": 24,
+      "question": "What does '  hello  '.lstrip() return?",
+      "answer": "'hello  '"
+    },
+    {
+      "id": 25,
+      "question": "What does '  hello  '.rstrip() return?",
+      "answer": "'  hello'"
+    },
+    {
+      "id": 26,
+      "question": "What does '.-hello-.'.strip('.-') return?",
+      "answer": "'hello'"
+    },
+    {
+      "id": 27,
+      "question": "What does 'abcabcx'.strip('abc') return?",
+      "answer": "'x'"
+    },
+    {
+      "id": 28,
+      "question": "What does 'xabc'.strip('x') return?",
+      "answer": "'abc'"
+    },
+    {
+      "id": 29,
+      "question": "What does 'aaa'.strip('a') return?",
+      "answer": "''"
+    },
+    {
+      "id": 30,
+      "question": "What does 'hello'.strip() return?",
+      "answer": "'hello' (unchanged, no whitespace)"
+    },
+    {
+      "id": 31,
+      "question": "What does '\\t hi \\t'.strip() return?",
+      "answer": "'hi'"
+    },
+    {
+      "id": 32,
+      "question": "What does '\\nhello\\n'.strip() return?",
+      "answer": "'hello'"
+    },
+    {
+      "id": 33,
+      "question": "What does strip() remove by default?",
+      "answer": "Whitespace: spaces, tabs, and newlines"
+    },
+    {
+      "id": 34,
+      "question": "What does 'abab'.strip('ab') return?",
+      "answer": "''"
+    },
+    {
+      "id": 35,
+      "question": "What does '--==--'.strip('-=') return?",
+      "answer": "''"
+    },
+    {
+      "id": 36,
+      "question": "What does 'python'.strip('pn') return?",
+      "answer": "'ytho'"
+    },
+    {
+      "id": 37,
+      "question": "What does 'coconut'.strip('co') return?",
+      "answer": "'nut'"
+    },
+    {
+      "id": 38,
+      "question": "What does '  hello world  '.strip() return?",
+      "answer": "'hello world'"
+    },
+    {
+      "id": 39,
+      "question": "What does '###head###'.strip('#') return?",
+      "answer": "'head'"
+    },
+    {
+      "id": 40,
+      "question": "What does '0GOOD0'.strip('0') return?",
+      "answer": "'GOOD'"
+    },
+    {
+      "id": 41,
+      "question": "What does 'bat'.strip('tab') return?",
+      "answer": "''"
+    },
+    {
+      "id": 42,
+      "question": "What does '   '.strip() return?",
+      "answer": "''"
+    },
+    {
+      "id": 43,
+      "question": "What does 'a b'.rstrip('b') return?",
+      "answer": "'a ' (trailing b removed)"
+    },
+    {
+      "id": 44,
+      "question": "What does ' a'.lstrip() return?",
+      "answer": "'a'"
+    },
+    {
+      "id": 45,
+      "question": "What does 'hello'.find('l') return?",
+      "answer": "2"
+    },
+    {
+      "id": 46,
+      "question": "What does 'hello'.find('l', 3) return?",
+      "answer": "3"
+    },
+    {
+      "id": 47,
+      "question": "What does 'hello'.find('z') return?",
+      "answer": "-1"
+    },
+    {
+      "id": 48,
+      "question": "What does 'hello'.index('l') return?",
+      "answer": "2"
+    },
+    {
+      "id": 49,
+      "question": "What does 'hello'.index('z') do?",
+      "answer": "Raises a ValueError"
+    },
+    {
+      "id": 50,
+      "question": "What does 'ababa'.count('a') return?",
+      "answer": "3"
+    },
+    {
+      "id": 51,
+      "question": "What does 'ababa'.count('aba') return?",
+      "answer": "1 (non-overlapping)"
+    },
+    {
+      "id": 52,
+      "question": "What does 'aaaa'.count('aa') return?",
+      "answer": "2 (overlaps not counted)"
+    },
+    {
+      "id": 53,
+      "question": "What does 'banana'.count('na') return?",
+      "answer": "2"
+    },
+    {
+      "id": 54,
+      "question": "What does 'batman'.find('man') return?",
+      "answer": "3"
+    },
+    {
+      "id": 55,
+      "question": "What does 'hello'.rfind('l') return?",
+      "answer": "3"
+    },
+    {
+      "id": 56,
+      "question": "What does 'hello'.rindex('l') return?",
+      "answer": "3"
+    },
+    {
+      "id": 57,
+      "question": "What does 'hello'.rfind('z') return?",
+      "answer": "-1"
+    },
+    {
+      "id": 58,
+      "question": "What does 'test'.find('t', 1) return?",
+      "answer": "3"
+    },
+    {
+      "id": 59,
+      "question": "How are find() and index() different?",
+      "answer": "find returns -1; index raises ValueError"
+    },
+    {
+      "id": 60,
+      "question": "What does 'mississippi'.count('s') return?",
+      "answer": "4"
+    },
+    {
+      "id": 61,
+      "question": "What does 'mississippi'.count('iss') return?",
+      "answer": "2"
+    },
+    {
+      "id": 62,
+      "question": "What does 'mississippi'.find('ss') return?",
+      "answer": "2"
+    },
+    {
+      "id": 63,
+      "question": "What does 'mississippi'.rfind('ss') return?",
+      "answer": "5"
+    },
+    {
+      "id": 64,
+      "question": "What does 'a-b-c'.count('-') return?",
+      "answer": "2"
+    },
+    {
+      "id": 65,
+      "question": "What does 'hello world'.find(' ') return?",
+      "answer": "5"
+    },
+    {
+      "id": 66,
+      "question": "What does 'hello world'.find('o', 5) return?",
+      "answer": "7"
+    },
+    {
+      "id": 67,
+      "question": "What does 'hello'.find('o') return?",
+      "answer": "4"
+    },
+    {
+      "id": 68,
+      "question": "What does 'geeks'.rfind('e') return?",
+      "answer": "2"
+    },
+    {
+      "id": 69,
+      "question": "What does 'hello'.replace('l', 'L') return?",
+      "answer": "'heLLo'"
+    },
+    {
+      "id": 70,
+      "question": "What does 'banana'.replace('a', 'o') return?",
+      "answer": "'bonono'"
+    },
+    {
+      "id": 71,
+      "question": "What does 'aaa'.replace('a', 'b') return?",
+      "answer": "'bbb'"
+    },
+    {
+      "id": 72,
+      "question": "What does 'aaa'.replace('a', 'b', 1) return?",
+      "answer": "'baa'"
+    },
+    {
+      "id": 73,
+      "question": "What does 'aaa'.replace('a', 'b', 2) return?",
+      "answer": "'bba'"
+    },
+    {
+      "id": 74,
+      "question": "What does 'hello'.replace('x', 'y') return?",
+      "answer": "'hello' (no matches = unchanged)"
+    },
+    {
+      "id": 75,
+      "question": "What does 'hello hello'.replace('hello', 'Hi') return?",
+      "answer": "'Hi Hi'"
+    },
+    {
+      "id": 76,
+      "question": "What does 'hello hello'.replace('hello', 'Hi', 1) return?",
+      "answer": "'Hi hello'"
+    },
+    {
+      "id": 77,
+      "question": "What does 'hello'.replace('l', '') return?",
+      "answer": "'heo'"
+    },
+    {
+      "id": 78,
+      "question": "What does 'a.b.c'.replace('.', '-') return?",
+      "answer": "'a-b-c'"
+    },
+    {
+      "id": 79,
+      "question": "What does 'AAA'.replace('a', 'b') return?",
+      "answer": "'AAA' (replacement is case-sensitive)"
+    },
+    {
+      "id": 80,
+      "question": "What does ''.replace('', 'x') return?",
+      "answer": "'x'"
+    },
+    {
+      "id": 81,
+      "question": "Does replace modify the original string?",
+      "answer": "No, it returns a new string"
+    },
+    {
+      "id": 82,
+      "question": "What does 'aA'.lower().replace('a', 'b') return?",
+      "answer": "'bb'"
+    },
+    {
+      "id": 83,
+      "question": "What does 'a,b,c'.split(',') return?",
+      "answer": "['a', 'b', 'c']"
+    },
+    {
+      "id": 84,
+      "question": "What does 'hello world'.split() return?",
+      "answer": "['hello', 'world']"
+    },
+    {
+      "id": 85,
+      "question": "What does '  a  b  '.split() return?",
+      "answer": "['a', 'b'] (whitespace runs collapse)"
+    },
+    {
+      "id": 86,
+      "question": "What does 'abc'.split() return?",
+      "answer": "['abc']"
+    },
+    {
+      "id": 87,
+      "question": "What does 'a,b,,c'.split(',') return?",
+      "answer": "['a', 'b', '', 'c']"
+    },
+    {
+      "id": 88,
+      "question": "What does 'a b c'.split(' ', 1) return?",
+      "answer": "['a', 'b c']"
+    },
+    {
+      "id": 89,
+      "question": "What does 'one two three'.split(' ', 2) return?",
+      "answer": "['one', 'two', 'three']"
+    },
+    {
+      "id": 90,
+      "question": "What does 'a-b-c'.rsplit('-', 1) return?",
+      "answer": "['a-b', 'c']"
+    },
+    {
+      "id": 91,
+      "question": "What does 'a-b-c'.rsplit('-', 2) return?",
+      "answer": "['a', 'b', 'c']"
+    },
+    {
+      "id": 92,
+      "question": "What does 'a\\nb\\n'.splitlines() return?",
+      "answer": "['a', 'b']"
+    },
+    {
+      "id": 93,
+      "question": "What does 'a\\nb\\n'.splitlines(keepends=True) return?",
+      "answer": "['a\\n', 'b\\n']"
+    },
+    {
+      "id": 94,
+      "question": "What does 'hello'.split('l') return?",
+      "answer": "['he', '', 'o']"
+    },
+    {
+      "id": 95,
+      "question": "What does ''.split() return?",
+      "answer": "[]"
+    },
+    {
+      "id": 96,
+      "question": "What does ''.split(',') return?",
+      "answer": "['']"
+    },
+    {
+      "id": 97,
+      "question": "What does 'a.b.c'.split('.') return?",
+      "answer": "['a', 'b', 'c']"
+    },
+    {
+      "id": 98,
+      "question": "What does 'key=value'.partition('=') return?",
+      "answer": "('key', '=', 'value')"
+    },
+    {
+      "id": 99,
+      "question": "What does 'a-b-c'.partition('-') return?",
+      "answer": "('a', '-', 'b-c')"
+    },
+    {
+      "id": 100,
+      "question": "What does 'a-b-c'.rpartition('-') return?",
+      "answer": "('a-b', '-', 'c')"
+    },
+    {
+      "id": 101,
+      "question": "What does 'hello'.partition('x') return?",
+      "answer": "('hello', '', '')"
+    },
+    {
+      "id": 102,
+      "question": "What does 'hello'.rpartition('x') return?",
+      "answer": "('', '', 'hello')"
+    },
+    {
+      "id": 103,
+      "question": "What does 'mississippi'.split('ss') return?",
+      "answer": "['mi', 'i', 'ippi']"
+    },
+    {
+      "id": 104,
+      "question": "What does 'a=1,b=2'.split(',') return?",
+      "answer": "['a=1', 'b=2']"
+    },
+    {
+      "id": 105,
+      "question": "What does 'x, y'.split(', ') return?",
+      "answer": "['x', 'y']"
+    },
+    {
+      "id": 106,
+      "question": "What does 'bootcamp'.split('oo') return?",
+      "answer": "['b', 'tcamp']"
+    },
+    {
+      "id": 107,
+      "question": "What does '-'.join(['a', 'b', 'c']) return?",
+      "answer": "'a-b-c'"
+    },
+    {
+      "id": 108,
+      "question": "What does ''.join(['a', 'b', 'c']) return?",
+      "answer": "'abc'"
+    },
+    {
+      "id": 109,
+      "question": "What does ' '.join(['hello', 'world']) return?",
+      "answer": "'hello world'"
+    },
+    {
+      "id": 110,
+      "question": "What does ','.join(['1', '2']) return?",
+      "answer": "'1,2'"
+    },
+    {
+      "id": 111,
+      "question": "What does ''.join('abc') return?",
+      "answer": "'abc'"
+    },
+    {
+      "id": 112,
+      "question": "What does ':'.join('ab') return?",
+      "answer": "'a:b'"
+    },
+    {
+      "id": 113,
+      "question": "What does ''.join(reversed('abc')) return?",
+      "answer": "'cba'"
+    },
+    {
+      "id": 114,
+      "question": "What does ' and '.join(['a', 'b', 'c']) return?",
+      "answer": "'a and b and c'"
+    },
+    {
+      "id": 115,
+      "question": "Can join() accept non-string elements?",
+      "answer": "No, it raises a TypeError"
+    },
+    {
+      "id": 116,
+      "question": "What does ''.join([str(x) for x in [1, 2, 3]]) return?",
+      "answer": "'123'"
+    },
+    {
+      "id": 117,
+      "question": "What does ''.join(str(i) for i in range(5)) return?",
+      "answer": "'01234'"
+    },
+    {
+      "id": 118,
+      "question": "What does '-'.join([]) return?",
+      "answer": "''"
+    },
+    {
+      "id": 119,
+      "question": "What does '-'.join(['x']) return?",
+      "answer": "'x'"
+    },
+    {
+      "id": 120,
+      "question": "What does '\\n'.join(['a', 'b']) return?",
+      "answer": "'a\\nb'"
+    },
+    {
+      "id": 121,
+      "question": "What does '|'.join('py') return?",
+      "answer": "'p|y'"
+    },
+    {
+      "id": 122,
+      "question": "What does ''.join(sorted('dcba')) return?",
+      "answer": "'abcd'"
+    },
+    {
+      "id": 123,
+      "question": "What does '::'.join(['a', 'b', 'c']) return?",
+      "answer": "'a::b::c'"
+    },
+    {
+      "id": 124,
+      "question": "What does ''.join(char * 2 for char in 'ab') return?",
+      "answer": "'aabb'"
+    },
+    {
+      "id": 125,
+      "question": "What does '/'.join(['usr', 'bin', 'py']) return?",
+      "answer": "'usr/bin/py'"
+    },
+    {
+      "id": 126,
+      "question": "What does ''.join(['a'] * 3) return?",
+      "answer": "'aaa'"
+    },
+    {
+      "id": 127,
+      "question": "What does '.'.join(['10', '0', '0', '1']) return?",
+      "answer": "'10.0.0.1'"
+    },
+    {
+      "id": 128,
+      "question": "What does '5'.join('12') return?",
+      "answer": "'152'"
+    },
+    {
+      "id": 129,
+      "question": "What does 'Hello World'.startswith('Hello') return?",
+      "answer": "True"
+    },
+    {
+      "id": 130,
+      "question": "What does 'Hello World'.startswith('World') return?",
+      "answer": "False"
+    },
+    {
+      "id": 131,
+      "question": "What does 'Hello World'.endswith('World') return?",
+      "answer": "True"
+    },
+    {
+      "id": 132,
+      "question": "What does 'Hello World'.endswith('hello') return?",
+      "answer": "False"
+    },
+    {
+      "id": 133,
+      "question": "What does 'syntax'.startswith('s') return?",
+      "answer": "True"
+    },
+    {
+      "id": 134,
+      "question": "What does 'syntax'.endswith('x') return?",
+      "answer": "True"
+    },
+    {
+      "id": 135,
+      "question": "What does 'file.txt'.endswith('.txt') return?",
+      "answer": "True"
+    },
+    {
+      "id": 136,
+      "question": "What does 'file.txt'.startswith('file') return?",
+      "answer": "True"
+    },
+    {
+      "id": 137,
+      "question": "What does 'abc'.startswith(('a', 'b')) return?",
+      "answer": "True (tuple of options)"
+    },
+    {
+      "id": 138,
+      "question": "What does 'abc'.endswith(('x', 'c')) return?",
+      "answer": "True"
+    },
+    {
+      "id": 139,
+      "question": "What does 'Hello'.startswith('ell', 1) return?",
+      "answer": "True"
+    },
+    {
+      "id": 140,
+      "question": "What does 'Hello'.endswith('lo') return?",
+      "answer": "True"
+    },
+    {
+      "id": 141,
+      "question": "What does 'Python'.lower().startswith('py') return?",
+      "answer": "True"
+    },
+    {
+      "id": 142,
+      "question": "What does 'data.csv'.endswith(('.csv', '.json')) return?",
+      "answer": "True"
+    },
+    {
+      "id": 143,
+      "question": "What does 'abc'.isalpha() return?",
+      "answer": "True"
+    },
+    {
+      "id": 144,
+      "question": "What does 'abc123'.isalpha() return?",
+      "answer": "False"
+    },
+    {
+      "id": 145,
+      "question": "What does '123'.isdigit() return?",
+      "answer": "True"
+    },
+    {
+      "id": 146,
+      "question": "What does '12.5'.isdigit() return?",
+      "answer": "False (a dot is not a digit)"
+    },
+    {
+      "id": 147,
+      "question": "What does 'abc1'.isalnum() return?",
+      "answer": "True"
+    },
+    {
+      "id": 148,
+      "question": "What does 'abc-1'.isalnum() return?",
+      "answer": "False (hyphen is not alphanumeric)"
+    },
+    {
+      "id": 149,
+      "question": "What does '   '.isspace() return?",
+      "answer": "True"
+    },
+    {
+      "id": 150,
+      "question": "What does 'a b'.isspace() return?",
+      "answer": "False"
+    },
+    {
+      "id": 151,
+      "question": "What does '123abc'.isalnum() return?",
+      "answer": "True"
+    },
+    {
+      "id": 152,
+      "question": "What does ''.isalpha() return?",
+      "answer": "False (empty strings are False)"
+    },
+    {
+      "id": 153,
+      "question": "What does '-5'.isdigit()? ",
+      "answer": "False"
+    },
+    {
+      "id": 154,
+      "question": "What does '²'.isdigit() return?",
+      "answer": "True (superscript 2 is a digit)"
+    },
+    {
+      "id": 155,
+      "question": "What does '²'.isdecimal() return?",
+      "answer": "False"
+    },
+    {
+      "id": 156,
+      "question": "What does '5'.isnumeric() return?",
+      "answer": "True"
+    },
+    {
+      "id": 157,
+      "question": "What does '_var'.isidentifier() return?",
+      "answer": "True"
+    },
+    {
+      "id": 158,
+      "question": "What does '2var'.isidentifier() return?",
+      "answer": "False (starts with a digit)"
+    },
+    {
+      "id": 159,
+      "question": "What does 'my var'.isidentifier() return?",
+      "answer": "False (space is not allowed)"
+    },
+    {
+      "id": 160,
+      "question": "What does 'name_1'.isidentifier() return?",
+      "answer": "True"
+    },
+    {
+      "id": 161,
+      "question": "What does 'a\\tb'.isprintable() return?",
+      "answer": "False (tab is not printable)"
+    },
+    {
+      "id": 162,
+      "question": "What does 'hello!'.isprintable() return?",
+      "answer": "True"
+    },
+    {
+      "id": 163,
+      "question": "What does '42'.isdecimal() return?",
+      "answer": "True"
+    },
+    {
+      "id": 164,
+      "question": "What does '3'.isalpha() return?",
+      "answer": "False"
+    },
+    {
+      "id": 165,
+      "question": "What does '  1  '.isspace() return?",
+      "answer": "False"
+    },
+    {
+      "id": 166,
+      "question": "What does 'ABC123'.isupper() return?",
+      "answer": "True"
+    },
+    {
+      "id": 167,
+      "question": "What does 'abc'.islower() return?",
+      "answer": "True"
+    },
+    {
+      "id": 168,
+      "question": "What does '250'.isdigit() return?",
+      "answer": "True"
+    },
+    {
+      "id": 169,
+      "question": "What does '42'.zfill(5) return?",
+      "answer": "'00042'"
+    },
+    {
+      "id": 170,
+      "question": "What does 'abc'.zfill(2) return?",
+      "answer": "'abc' (no padding when long enough)"
+    },
+    {
+      "id": 171,
+      "question": "What does '-42'.zfill(5) return?",
+      "answer": "'-0042'"
+    },
+    {
+      "id": 172,
+      "question": "What does 'hello'.ljust(8) return?",
+      "answer": "'hello   '"
+    },
+    {
+      "id": 173,
+      "question": "What does 'hello'.rjust(8) return?",
+      "answer": "'   hello'"
+    },
+    {
+      "id": 174,
+      "question": "What does 'hi'.center(6) return?",
+      "answer": "'  hi  '"
+    },
+    {
+      "id": 175,
+      "question": "What does 'hi'.center(5) return?",
+      "answer": "'  hi '"
+    },
+    {
+      "id": 176,
+      "question": "What does '1'.rjust(3, '0') return?",
+      "answer": "'001'"
+    },
+    {
+      "id": 177,
+      "question": "What does 'hello'.ljust(7, '-') return?",
+      "answer": "'hello--'"
+    },
+    {
+      "id": 178,
+      "question": "What does 'x'.center(3, '-') return?",
+      "answer": "'-x-'"
+    },
+    {
+      "id": 179,
+      "question": "What does 'hello'.translate(str.maketrans('h', 'j')) return?",
+      "answer": "'jello'"
+    },
+    {
+      "id": 180,
+      "question": "What does str.maketrans('abc', 'xyz') create?",
+      "answer": "A translation table mapping a→x, b→y, c→z"
+    },
+    {
+      "id": 181,
+      "question": "What does 'abc'.translate(str.maketrans('abc', 'xyz')) return?",
+      "answer": "'xyz'"
+    },
+    {
+      "id": 182,
+      "question": "How do you delete characters with maketrans?",
+      "answer": "str.maketrans('', '', 'chars_to_delete')"
+    },
+    {
+      "id": 183,
+      "question": "What does 'hello'.translate(str.maketrans('', '', 'l')) return?",
+      "answer": "'heo'"
+    },
+    {
+      "id": 184,
+      "question": "What does 'a b'.translate(str.maketrans(' ', '')) return?",
+      "answer": "'ab'"
+    },
+    {
+      "id": 185,
+      "question": "What must the two maketrans strings have in common?",
+      "answer": "Equal lengths"
+    },
+    {
+      "id": 186,
+      "question": "What does 'cat'.translate(str.maketrans('cat', 'dog')) return?",
+      "answer": "'dog'"
+    },
+    {
+      "id": 187,
+      "question": "What does '111'.translate(str.maketrans('1', '2')) return?",
+      "answer": "'222'"
+    },
+    {
+      "id": 188,
+      "question": "What does 'x1y2'.translate(str.maketrans('1234', 'abcd')) return?",
+      "answer": "'xayb'"
+    },
+    {
+      "id": 189,
+      "question": "How do you convert a string to bytes?",
+      "answer": "s.encode('utf-8')"
+    },
+    {
+      "id": 190,
+      "question": "What does 'hi'.encode() return?",
+      "answer": "b'hi'"
+    },
+    {
+      "id": 191,
+      "question": "What does b'hi'.decode() return?",
+      "answer": "'hi'"
+    },
+    {
+      "id": 192,
+      "question": "What is len('é'.encode('utf-8'))?",
+      "answer": "2 (é is two bytes in UTF-8)"
+    },
+    {
+      "id": 193,
+      "question": "What does 'A'.encode('ascii') return?",
+      "answer": "b'A'"
+    },
+    {
+      "id": 194,
+      "question": "What happens encoding 'é' as ASCII?",
+      "answer": "A UnicodeEncodeError"
+    },
+    {
+      "id": 195,
+      "question": "What does 'é'.encode('utf-8') return?",
+      "answer": "b'\\xc3\\xa9'"
+    },
+    {
+      "id": 196,
+      "question": "What does b'\\xe9'.decode('latin-1') return?",
+      "answer": "'é'"
+    },
+    {
+      "id": 197,
+      "question": "What does ''.encode() return?",
+      "answer": "b''"
+    },
+    {
+      "id": 198,
+      "question": "What does '123'.encode().decode() return?",
+      "answer": "'123'"
+    },
+    {
+      "id": 199,
+      "question": "What is the type of 'hi'.encode()?",
+      "answer": "bytes"
+    },
+    {
+      "id": 200,
+      "question": "How do you ignore characters that cannot be encoded?",
+      "answer": "s.encode('ascii', errors='ignore')"
+    }
+  ]
+}

@@ -1,0 +1,1005 @@
+{
+  "description": "200 questions on Python lists basics (creation, indexing, slicing, methods, operations; beginner to intermediate)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "How do you create a list containing the integers 1, 2, and 3?",
+      "answer": "[1, 2, 3]"
+    },
+    {
+      "id": 2,
+      "question": "How do you create an empty list?",
+      "answer": "[] or list()"
+    },
+    {
+      "id": 3,
+      "question": "What does list(\"abc\") return?",
+      "answer": "['a', 'b', 'c']"
+    },
+    {
+      "id": 4,
+      "question": "What does list(range(5)) return?",
+      "answer": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "id": 5,
+      "question": "Can a list contain elements of different types?",
+      "answer": "Yes, e.g., [1, \"a\", 3.5, True, None]"
+    },
+    {
+      "id": 6,
+      "question": "Can a list contain another list?",
+      "answer": "Yes, this is called a nested list"
+    },
+    {
+      "id": 7,
+      "question": "What is a nested list? Give an example.",
+      "answer": "A list inside another list: [[1, 2], [3, 4]]"
+    },
+    {
+      "id": 8,
+      "question": "What does list((1, 2, 3)) return?",
+      "answer": "[1, 2, 3] (converts a tuple to a list)"
+    },
+    {
+      "id": 9,
+      "question": "What does [1] * 3 produce?",
+      "answer": "[1, 1, 1] (repeats the list)"
+    },
+    {
+      "id": 10,
+      "question": "What does list(range(1, 10, 2)) return?",
+      "answer": "[1, 3, 5, 7, 9]"
+    },
+    {
+      "id": 11,
+      "question": "Are lists ordered?",
+      "answer": "Yes, elements keep the order in which they were inserted"
+    },
+    {
+      "id": 12,
+      "question": "Are lists mutable in Python?",
+      "answer": "Yes, you can add, remove, or change elements"
+    },
+    {
+      "id": 13,
+      "question": "Can a list contain duplicate values?",
+      "answer": "Yes, lists allow duplicates"
+    },
+    {
+      "id": 14,
+      "question": "What does {} create?",
+      "answer": "An empty dict, not a list. Use [] or list() for an empty list."
+    },
+    {
+      "id": 15,
+      "question": "What does the list() function do?",
+      "answer": "Creates a list from an iterable (string, tuple, range, dict keys, etc.)"
+    },
+    {
+      "id": 16,
+      "question": "What is the difference between a list and a tuple?",
+      "answer": "A list is mutable; a tuple is immutable"
+    },
+    {
+      "id": 17,
+      "question": "What does list(\"hello\") return?",
+      "answer": "['h', 'e', 'l', 'l', 'o']"
+    },
+    {
+      "id": 18,
+      "question": "What does list({1, 2, 2, 3}) return?",
+      "answer": "A list of the set's elements, e.g., [1, 2, 3] (order not guaranteed, duplicates removed)"
+    },
+    {
+      "id": 19,
+      "question": "How many elements does [[1, 2], [3]] have?",
+      "answer": "2 (the two inner lists)"
+    },
+    {
+      "id": 20,
+      "question": "What does range(3) produce by itself?",
+      "answer": "A range object; wrap it with list() to get [0, 1, 2]"
+    },
+    {
+      "id": 21,
+      "question": "How do you access the first element of [10, 20, 30]?",
+      "answer": "lst[0] -> 10"
+    },
+    {
+      "id": 22,
+      "question": "How do you access the third element of a list?",
+      "answer": "list[2] (indexing starts at 0)"
+    },
+    {
+      "id": 23,
+      "question": "How do you access the last element of a list?",
+      "answer": "list[-1]"
+    },
+    {
+      "id": 24,
+      "question": "What does [5, 6, 7][-2] return?",
+      "answer": "6 (second from the end)"
+    },
+    {
+      "id": 25,
+      "question": "What happens if you access an index that is out of range?",
+      "answer": "An IndexError is raised"
+    },
+    {
+      "id": 26,
+      "question": "What does [1, 2, 3, 4][1] return?",
+      "answer": "2"
+    },
+    {
+      "id": 27,
+      "question": "What is the index of the last element of a list of length n?",
+      "answer": "n - 1 (or -1)"
+    },
+    {
+      "id": 28,
+      "question": "What does [True, False][1] return?",
+      "answer": "False"
+    },
+    {
+      "id": 29,
+      "question": "What does [[1, 2], [3, 4]][0] return?",
+      "answer": "[1, 2]"
+    },
+    {
+      "id": 30,
+      "question": "What does [[1, 2], [3, 4]][1][0] return?",
+      "answer": "3"
+    },
+    {
+      "id": 31,
+      "question": "What happens when you access a[0] on a = []?",
+      "answer": "IndexError: list index out of range (empty list has no element 0)"
+    },
+    {
+      "id": 32,
+      "question": "What does [\"hi\", 5, 3.5][1] return?",
+      "answer": "5"
+    },
+    {
+      "id": 33,
+      "question": "How do you get the second-to-last element of a list?",
+      "answer": "list[-2]"
+    },
+    {
+      "id": 34,
+      "question": "What does [[1, 2], [3, 4]][0][1] return?",
+      "answer": "2 (first row, second column)"
+    },
+    {
+      "id": 35,
+      "question": "What does print([42][0]) output?",
+      "answer": "42"
+    },
+    {
+      "id": 36,
+      "question": "Can you use a negative index beyond the list length?",
+      "answer": "No, list[-5] on a 3-element list raises IndexError"
+    },
+    {
+      "id": 37,
+      "question": "What does [\"a\", \"b\", \"c\"][-3] return?",
+      "answer": "\"a\" (the first element, reached from the end)"
+    },
+    {
+      "id": 38,
+      "question": "What type of value does lst[i] return?",
+      "answer": "The element stored at that index, of whatever type it is"
+    },
+    {
+      "id": 39,
+      "question": "What does [1, 2, 3][1] + [4, 5][0] evaluate to?",
+      "answer": "2 + 4 = 6"
+    },
+    {
+      "id": 40,
+      "question": "What does [[\"x\"], [\"y\"]][1][-1] return?",
+      "answer": "\"y\""
+    },
+    {
+      "id": 41,
+      "question": "What does [0, 1, 2, 3, 4][1:3] return?",
+      "answer": "[1, 2] (end index is exclusive)"
+    },
+    {
+      "id": 42,
+      "question": "What does [0, 1, 2, 3, 4][:2] return?",
+      "answer": "[0, 1]"
+    },
+    {
+      "id": 43,
+      "question": "What does [0, 1, 2, 3, 4][2:] return?",
+      "answer": "[2, 3, 4]"
+    },
+    {
+      "id": 44,
+      "question": "What does [0, 1, 2, 3, 4][:] return?",
+      "answer": "[0, 1, 2, 3, 4] (a full copy)"
+    },
+    {
+      "id": 45,
+      "question": "What does [0, 1, 2, 3, 4][::2] return?",
+      "answer": "[0, 2, 4]"
+    },
+    {
+      "id": 46,
+      "question": "What does [0, 1, 2, 3, 4][::-1] return?",
+      "answer": "[4, 3, 2, 1, 0] (reversed)"
+    },
+    {
+      "id": 47,
+      "question": "What does [0, 1, 2, 3, 4][1:4:2] return?",
+      "answer": "[1, 3]"
+    },
+    {
+      "id": 48,
+      "question": "Is the end index in a slice included?",
+      "answer": "No, slices go up to but do not include the end index"
+    },
+    {
+      "id": 49,
+      "question": "What does [0, 1, 2, 3, 4][-2:] return?",
+      "answer": "[3, 4]"
+    },
+    {
+      "id": 50,
+      "question": "What does [0, 1, 2, 3, 4][:-2] return?",
+      "answer": "[0, 1, 2]"
+    },
+    {
+      "id": 51,
+      "question": "What does [0, 1, 2, 3, 4][-3:-1] return?",
+      "answer": "[2, 3]"
+    },
+    {
+      "id": 52,
+      "question": "What does [1, 2, 3, 4, 5][0::2] return?",
+      "answer": "[1, 3, 5]"
+    },
+    {
+      "id": 53,
+      "question": "What is returned by a slice when the start index is beyond the end?",
+      "answer": "An empty list []"
+    },
+    {
+      "id": 54,
+      "question": "What does [1, 2, 3][5:10] return?",
+      "answer": "[] (out-of-range slice start returns an empty list, not an error)"
+    },
+    {
+      "id": 55,
+      "question": "What does [1, 2, 3][:100] return?",
+      "answer": "[1, 2, 3] (oversized slice just returns everything)"
+    },
+    {
+      "id": 56,
+      "question": "What does [1, 2, 3, 4][::-2] return?",
+      "answer": "[4, 2]"
+    },
+    {
+      "id": 57,
+      "question": "Does slicing a list create a new list?",
+      "answer": "Yes, slices always return a new list"
+    },
+    {
+      "id": 58,
+      "question": "What does [1, 2, 3, 4, 5, 6][3:] return?",
+      "answer": "[4, 5, 6]"
+    },
+    {
+      "id": 59,
+      "question": "What does [5, 10, 15, 20, 25][1:4] return?",
+      "answer": "[10, 15, 20]"
+    },
+    {
+      "id": 60,
+      "question": "What does [10, 20, 30, 40, 50][2:5] return?",
+      "answer": "[30, 40, 50]"
+    },
+    {
+      "id": 61,
+      "question": "What does nums[::] produce?",
+      "answer": "A (shallow) copy of the whole list"
+    },
+    {
+      "id": 62,
+      "question": "What does [1, 2, 3][-1::-1] return?",
+      "answer": "[3, 2, 1]"
+    },
+    {
+      "id": 63,
+      "question": "What does \"python\"[1:3] return?",
+      "answer": "\"yt\" (slicing works on strings too)"
+    },
+    {
+      "id": 64,
+      "question": "What does [1, 2, 3, 4, 5][0:5:2] return?",
+      "answer": "[1, 3, 5]"
+    },
+    {
+      "id": 65,
+      "question": "What does [1, 2, 3, 4][1:1] return?",
+      "answer": "[] (start equals end gives an empty slice)"
+    },
+    {
+      "id": 66,
+      "question": "What is the default value of the start in a slice?",
+      "answer": "0 (the beginning of the list)"
+    },
+    {
+      "id": 67,
+      "question": "What is the default value of the step in a slice?",
+      "answer": "1"
+    },
+    {
+      "id": 68,
+      "question": "What does [1, 2, 3][::2] return?",
+      "answer": "[1, 3]"
+    },
+    {
+      "id": 69,
+      "question": "What does [7, 8, 9][::-1] return?",
+      "answer": "[9, 8, 7]"
+    },
+    {
+      "id": 70,
+      "question": "How do you copy a list without affecting the original on change?",
+      "answer": "Use lst[:], lst.copy(), or list(lst)"
+    },
+    {
+      "id": 71,
+      "question": "What is the length of [1, 2, 3]?",
+      "answer": "3 (use len([1, 2, 3]))"
+    },
+    {
+      "id": 72,
+      "question": "What does \"apple\" in [\"apple\", \"banana\"] return?",
+      "answer": "True"
+    },
+    {
+      "id": 73,
+      "question": "What does \"mango\" in [\"apple\", \"banana\"] return?",
+      "answer": "False"
+    },
+    {
+      "id": 74,
+      "question": "What does min([3, 1, 2]) return?",
+      "answer": "1"
+    },
+    {
+      "id": 75,
+      "question": "What does max([3, 1, 2]) return?",
+      "answer": "3"
+    },
+    {
+      "id": 76,
+      "question": "What does sum([1, 2, 3]) return?",
+      "answer": "6"
+    },
+    {
+      "id": 77,
+      "question": "Does sorted([3, 1, 2]) modify the original list?",
+      "answer": "No, it returns a new sorted list; the original is unchanged"
+    },
+    {
+      "id": 78,
+      "question": "How do you sort a list in descending order with sorted()?",
+      "answer": "sorted(lst, reverse=True)"
+    },
+    {
+      "id": 79,
+      "question": "What does \"a\" not in [\"b\", \"a\"] return?",
+      "answer": "False (a IS in the list)"
+    },
+    {
+      "id": 80,
+      "question": "What happens if you call min() on a list with mixed types like [1, \"a\"]?",
+      "answer": "A TypeError because int and str cannot be compared"
+    },
+    {
+      "id": 81,
+      "question": "What does sum([]) return?",
+      "answer": "0"
+    },
+    {
+      "id": 82,
+      "question": "What is the difference between list.sort() and sorted(list)?",
+      "answer": "sort() sorts in place and returns None; sorted() returns a new list"
+    },
+    {
+      "id": 83,
+      "question": "What does [1, 2] + [3, 4] return?",
+      "answer": "[1, 2, 3, 4]"
+    },
+    {
+      "id": 84,
+      "question": "What does [1, 2] * 3 return?",
+      "answer": "[1, 2, 1, 2, 1, 2]"
+    },
+    {
+      "id": 85,
+      "question": "What does max([\"a\", \"b\", \"c\"]) return?",
+      "answer": "\"c\" (strings compare lexicographically)"
+    },
+    {
+      "id": 86,
+      "question": "What does min([\"apple\", \"banana\"]) return?",
+      "answer": "\"apple\" (lexicographic order)"
+    },
+    {
+      "id": 87,
+      "question": "What does sum([1.5, 2.5]) return?",
+      "answer": "4.0"
+    },
+    {
+      "id": 88,
+      "question": "What does len([]) return?",
+      "answer": "0"
+    },
+    {
+      "id": 89,
+      "question": "What does any([False, True, False]) return?",
+      "answer": "True (True if at least one element is truthy)"
+    },
+    {
+      "id": 90,
+      "question": "What does all([True, True]) return?",
+      "answer": "True (True if every element is truthy)"
+    },
+    {
+      "id": 91,
+      "question": "What does [1, 2, 3].append(4) do?",
+      "answer": "Adds 4 to the end in place; the list becomes [1, 2, 3, 4]"
+    },
+    {
+      "id": 92,
+      "question": "What does append() return?",
+      "answer": "None (it modifies the list in place)"
+    },
+    {
+      "id": 93,
+      "question": "What does [1, 2].extend([3, 4]) do?",
+      "answer": "Adds each element of [3, 4]; list becomes [1, 2, 3, 4]"
+    },
+    {
+      "id": 94,
+      "question": "What is the difference between append([3, 4]) and extend([3, 4])?",
+      "answer": "append adds the list as ONE element ([1,2,[3,4]]); extend adds its items ([1,2,3,4])"
+    },
+    {
+      "id": 95,
+      "question": "What does [1, 3].insert(1, 2) do?",
+      "answer": "Inserts 2 at index 1; the list becomes [1, 2, 3]"
+    },
+    {
+      "id": 96,
+      "question": "How do you add an element to the very beginning of a list?",
+      "answer": "lst.insert(0, value)"
+    },
+    {
+      "id": 97,
+      "question": "What happens if you insert at an index larger than the list length?",
+      "answer": "The element is appended at the end"
+    },
+    {
+      "id": 98,
+      "question": "What does [1, 2, 3].remove(2) do?",
+      "answer": "Removes the first occurrence of 2; list becomes [1, 3]"
+    },
+    {
+      "id": 99,
+      "question": "What happens if remove() can't find the value?",
+      "answer": "It raises a ValueError"
+    },
+    {
+      "id": 100,
+      "question": "If a value appears multiple times, which one does remove() delete?",
+      "answer": "Only the first occurrence"
+    },
+    {
+      "id": 101,
+      "question": "What does nums = [1, 2, 3]; print(nums.pop()) output?",
+      "answer": "3; the list becomes [1, 2] (pop removes and returns the last item)"
+    },
+    {
+      "id": 102,
+      "question": "What does [10, 20, 30].pop(1) do?",
+      "answer": "Removes and returns index 1 (20); list becomes [10, 30]"
+    },
+    {
+      "id": 103,
+      "question": "What does pop() return?",
+      "answer": "The removed element"
+    },
+    {
+      "id": 104,
+      "question": "What happens if you call pop() on an empty list?",
+      "answer": "IndexError: pop from empty list"
+    },
+    {
+      "id": 105,
+      "question": "What does del lst[1] do?",
+      "answer": "Deletes the element at index 1 in place"
+    },
+    {
+      "id": 106,
+      "question": "What does del lst[0:2] do?",
+      "answer": "Deletes the slice of elements from index 0 to 2 (exclusive)"
+    },
+    {
+      "id": 107,
+      "question": "What does del lst do?",
+      "answer": "Deletes the entire list variable"
+    },
+    {
+      "id": 108,
+      "question": "What does [1, 2].clear() do?",
+      "answer": "Removes all elements; the list becomes []"
+    },
+    {
+      "id": 109,
+      "question": "What is the difference between clear() and del lst?",
+      "answer": "clear() empties the list but keeps the variable; del lst removes the variable entirely"
+    },
+    {
+      "id": 110,
+      "question": "What does [10, 20, 30].index(20) return?",
+      "answer": "1 (the index of the first occurrence)"
+    },
+    {
+      "id": 111,
+      "question": "What happens if index() can't find the value?",
+      "answer": "It raises a ValueError"
+    },
+    {
+      "id": 112,
+      "question": "What does [1, 1, 2].count(1) return?",
+      "answer": "2"
+    },
+    {
+      "id": 113,
+      "question": "What does [1, 2, 3].count(9) return?",
+      "answer": "0"
+    },
+    {
+      "id": 114,
+      "question": "What does print([1, 2].append(3)) output?",
+      "answer": "None (append returns None)"
+    },
+    {
+      "id": 115,
+      "question": "What is the difference between remove() and pop()?",
+      "answer": "remove() deletes by value; pop() deletes by index and returns the value"
+    },
+    {
+      "id": 116,
+      "question": "What does lst = [3, 1, 2]; lst.sort(); print(lst) output?",
+      "answer": "[1, 2, 3] (sort works in place)"
+    },
+    {
+      "id": 117,
+      "question": "What does print([3, 1, 2].sort()) output?",
+      "answer": "None (sort modifies in place and returns None)"
+    },
+    {
+      "id": 118,
+      "question": "How do you sort in descending order in place?",
+      "answer": "lst.sort(reverse=True)"
+    },
+    {
+      "id": 119,
+      "question": "What does [3, 1, 2].reverse() do?",
+      "answer": "Reverses the list in place to [2, 1, 3]"
+    },
+    {
+      "id": 120,
+      "question": "What does list(reversed([1, 2, 3])) return?",
+      "answer": "[3, 2, 1]"
+    },
+    {
+      "id": 121,
+      "question": "What does reversed() return?",
+      "answer": "A reverse iterator, not a list (wrap with list() to get a list)"
+    },
+    {
+      "id": 122,
+      "question": "What does lst.copy() do?",
+      "answer": "Returns a shallow copy of the list"
+    },
+    {
+      "id": 123,
+      "question": "What does b = a do (both lists)?",
+      "answer": "b becomes another reference to the SAME list; changing one changes the other"
+    },
+    {
+      "id": 124,
+      "question": "What does sorted([\"banana\", \"apple\"]) return?",
+      "answer": "[\"apple\", \"banana\"] (alphabetical order)"
+    },
+    {
+      "id": 125,
+      "question": "How do you sort strings by length?",
+      "answer": "sorted(words, key=len)"
+    },
+    {
+      "id": 126,
+      "question": "What does sorted([\"b\", \"A\", \"C\"], key=str.lower) return?",
+      "answer": "[\"A\", \"b\", \"C\"] (case-insensitive alphabetical order)"
+    },
+    {
+      "id": 127,
+      "question": "What does [1, 2, 3].copy() return?",
+      "answer": "[1, 2, 3] (a new, equal list)"
+    },
+    {
+      "id": 128,
+      "question": "If lst2 = lst1.copy() and you append to lst2, does lst1 change?",
+      "answer": "No, because copy() creates a separate list"
+    },
+    {
+      "id": 129,
+      "question": "If lst2 = lst1 and you append to lst2, does lst1 change?",
+      "answer": "Yes, both names refer to the same list object"
+    },
+    {
+      "id": 130,
+      "question": "What happens if you call sort() on a list with mixed types?",
+      "answer": "TypeError (cannot order int and str)"
+    },
+    {
+      "id": 131,
+      "question": "How do you change the element at index 0 to 99?",
+      "answer": "lst[0] = 99"
+    },
+    {
+      "id": 132,
+      "question": "What happens if you assign to an index that doesn't exist?",
+      "answer": "IndexError: list assignment index out of range"
+    },
+    {
+      "id": 133,
+      "question": "What does lst[1:3] = [100, 200] do?",
+      "answer": "Replaces the elements at indices 1 and 2 with 100 and 200"
+    },
+    {
+      "id": 134,
+      "question": "Can slice assignment change the length of a list?",
+      "answer": "Yes, replacing a slice with a different-length list shrinks or grows the list"
+    },
+    {
+      "id": 135,
+      "question": "What is the difference between lst += [4] and lst = lst + [4]?",
+      "answer": "+= extends in place; lst = lst + [4] reassigns to a brand-new list"
+    },
+    {
+      "id": 136,
+      "question": "What does [1, 2] < [1, 3] evaluate to?",
+      "answer": "True (lists compare element by element)"
+    },
+    {
+      "id": 137,
+      "question": "What does [1, 2, 3] == [1, 2, 3] evaluate to?",
+      "answer": "True (== compares by value)"
+    },
+    {
+      "id": 138,
+      "question": "What does [1, 2] != [2, 1] evaluate to?",
+      "answer": "True"
+    },
+    {
+      "id": 139,
+      "question": "Do == and is mean the same thing for lists?",
+      "answer": "No, == checks value equality; is checks whether they are the same object"
+    },
+    {
+      "id": 140,
+      "question": "What does a, b = [1, 2] do?",
+      "answer": "Unpacks the list: a = 1 and b = 2"
+    },
+    {
+      "id": 141,
+      "question": "What does a, *b = [1, 2, 3] do?",
+      "answer": "a = 1 and b = [2, 3] (extended unpacking)"
+    },
+    {
+      "id": 142,
+      "question": "What does *a, b = [1, 2, 3] do?",
+      "answer": "a = [1, 2] and b = 3"
+    },
+    {
+      "id": 143,
+      "question": "What is extended unpacking?",
+      "answer": "Using * to capture multiple elements, e.g., first, *rest = lst"
+    },
+    {
+      "id": 144,
+      "question": "How do you convert a string to a list of characters?",
+      "answer": "list(\"hello\") -> ['h', 'e', 'l', 'l', 'o']"
+    },
+    {
+      "id": 145,
+      "question": "How do you join a list of strings into one string?",
+      "answer": "\" \".join([\"a\", \"b\"]) -> \"a b\""
+    },
+    {
+      "id": 146,
+      "question": "Can a list be used as a dictionary key?",
+      "answer": "No, lists are unhashable (mutable); use a tuple instead"
+    },
+    {
+      "id": 147,
+      "question": "How do you check if a list is empty?",
+      "answer": "if not lst:"
+    },
+    {
+      "id": 148,
+      "question": "How do you check if a list is NOT empty?",
+      "answer": "if lst: (or if len(lst) > 0:)"
+    },
+    {
+      "id": 149,
+      "question": "What does bool([]) return?",
+      "answer": "False"
+    },
+    {
+      "id": 150,
+      "question": "What does bool([0]) return?",
+      "answer": "True (the list contains an element, regardless of its value)"
+    },
+    {
+      "id": 151,
+      "question": "How do you iterate over all elements of a list?",
+      "answer": "for x in lst:"
+    },
+    {
+      "id": 152,
+      "question": "How do you get both index and element in a loop?",
+      "answer": "for i, x in enumerate(lst):"
+    },
+    {
+      "id": 153,
+      "question": "What does enumerate([\"a\", \"b\"]) produce when looped?",
+      "answer": "(0, \"a\"), (1, \"b\")"
+    },
+    {
+      "id": 154,
+      "question": "How do you start enumerate at 1?",
+      "answer": "enumerate(lst, start=1)"
+    },
+    {
+      "id": 155,
+      "question": "What does zip([1, 2], [\"a\", \"b\"]) produce when looped?",
+      "answer": "(1, \"a\"), (2, \"b\")"
+    },
+    {
+      "id": 156,
+      "question": "How do you loop over a list using indices?",
+      "answer": "for i in range(len(lst)): then lst[i]"
+    },
+    {
+      "id": 157,
+      "question": "How do you iterate a list in reverse order?",
+      "answer": "for x in reversed(lst):"
+    },
+    {
+      "id": 158,
+      "question": "What happens if you append to a list while looping over it?",
+      "answer": "It can cause an infinite loop because the list keeps growing"
+    },
+    {
+      "id": 159,
+      "question": "How do you sum all elements of a list with a loop?",
+      "answer": "total = 0\nfor x in lst:\n    total += x"
+    },
+    {
+      "id": 160,
+      "question": "How do you find the largest element without max()?",
+      "answer": "largest = lst[0]\nfor x in lst:\n    if x > largest:\n        largest = x"
+    },
+    {
+      "id": 161,
+      "question": "How do you loop over a matrix (list of lists)?",
+      "answer": "for row in matrix:\n    for item in row:"
+    },
+    {
+      "id": 162,
+      "question": "What does [10, 20, 30][-1] return?",
+      "answer": "30"
+    },
+    {
+      "id": 163,
+      "question": "How do you get every other element of a list?",
+      "answer": "lst[::2]"
+    },
+    {
+      "id": 164,
+      "question": "How do you get a reversed copy without changing the original?",
+      "answer": "lst[::-1]"
+    },
+    {
+      "id": 165,
+      "question": "How do you get the middle element of [1, 2, 3, 4, 5]?",
+      "answer": "lst[len(lst) // 2] -> 3"
+    },
+    {
+      "id": 166,
+      "question": "What does [1, 2, 3] + [4] + [5, 6] return?",
+      "answer": "[1, 2, 3, 4, 5, 6]"
+    },
+    {
+      "id": 167,
+      "question": "How do you flatten a list of pairs like [[1, 2], [3, 4]]?",
+      "answer": "Use a nested comprehension: [x for row in matrix for x in row]"
+    },
+    {
+      "id": 168,
+      "question": "What does [[0] * 3 for _ in range(3)] create?",
+      "answer": "[[0, 0, 0], [0, 0, 0], [0, 0, 0]] (a 3x3 matrix of zeros)"
+    },
+    {
+      "id": 169,
+      "question": "Why is [[0] * 3] * 3 a bad way to build a matrix?",
+      "answer": "All rows refer to the SAME inner list; changing one row changes them all"
+    },
+    {
+      "id": 170,
+      "question": "What is the difference between == and is on two equal lists?",
+      "answer": "a == b is True if values match; a is b is False if they are different objects"
+    },
+    {
+      "id": 171,
+      "question": "What does min([[1, 2], [0, 9]]) return?",
+      "answer": "[0, 9] (lists compare element-wise, so the smaller first element wins)"
+    },
+    {
+      "id": 172,
+      "question": "How do you check whether a value occurs in a list?",
+      "answer": "value in lst"
+    },
+    {
+      "id": 173,
+      "question": "What does \"z\" in [\"a\", \"b\"] return?",
+      "answer": "False"
+    },
+    {
+      "id": 174,
+      "question": "How do you create a list of the keys of a dictionary?",
+      "answer": "list(dict.keys()) or list(dict)"
+    },
+    {
+      "id": 175,
+      "question": "How do you create a list of the values of a dictionary?",
+      "answer": "list(dict.values())"
+    },
+    {
+      "id": 176,
+      "question": "What does list(sorted([3, 1, 2])) return?",
+      "answer": "[1, 2, 3]"
+    },
+    {
+      "id": 177,
+      "question": "Does reverse() return a new list?",
+      "answer": "No, it reverses in place and returns None"
+    },
+    {
+      "id": 178,
+      "question": "What is a 'list literal'?",
+      "answer": "A list written directly with square brackets, e.g., [1, 2, 3]"
+    },
+    {
+      "id": 179,
+      "question": "Can a list contain None?",
+      "answer": "Yes, e.g., [1, None, 2] is valid"
+    },
+    {
+      "id": 180,
+      "question": "What does [5] * 0 return?",
+      "answer": "[]"
+    },
+    {
+      "id": 181,
+      "question": "How do you get the number of elements in a list?",
+      "answer": "len(lst)"
+    },
+    {
+      "id": 182,
+      "question": "What does len([1, [2, 3]]) return?",
+      "answer": "2 (the nested list counts as one element)"
+    },
+    {
+      "id": 183,
+      "question": "What does samp = [1, 2, 3]; samp[1] = 99; print(samp) output?",
+      "answer": "[1, 99, 3]"
+    },
+    {
+      "id": 184,
+      "question": "How do you keep duplicates out of a list?",
+      "answer": "Convert to a set and back: list(set(lst)) (order not guaranteed)"
+    },
+    {
+      "id": 185,
+      "question": "What does list(set([1, 2, 2, 3])) return?",
+      "answer": "[1, 2, 3] in some order (duplicates removed)"
+    },
+    {
+      "id": 186,
+      "question": "How do you append multiple items with a loop?",
+      "answer": "for item in items:\n    lst.append(item)"
+    },
+    {
+      "id": 187,
+      "question": "What does [x for x in range(4)] produce?",
+      "answer": "[0, 1, 2, 3] (a list comprehension)"
+    },
+    {
+      "id": 188,
+      "question": "How do you get the first 3 elements of a list?",
+      "answer": "lst[:3]"
+    },
+    {
+      "id": 189,
+      "question": "How do you get the last 3 elements of a list?",
+      "answer": "lst[-3:]"
+    },
+    {
+      "id": 190,
+      "question": "What does [1, 2, 3, 4, 5][-3:] return?",
+      "answer": "[3, 4, 5]"
+    },
+    {
+      "id": 191,
+      "question": "What does [1, 2, 3, 4, 5][:3] return if you need the first half?",
+      "answer": "For the first half use slicing; lst[:3] gives [1, 2, 3] here"
+    },
+    {
+      "id": 192,
+      "question": "How do you swap the first and last elements of a list?",
+      "answer": "lst[0], lst[-1] = lst[-1], lst[0]"
+    },
+    {
+      "id": 193,
+      "question": "What does lst.append(1) twice followed by lst do?",
+      "answer": "1 is added twice: [..., 1, 1]"
+    },
+    {
+      "id": 194,
+      "question": "What is type([])?",
+      "answer": "list"
+    },
+    {
+      "id": 195,
+      "question": "How do you find the second largest number in [3, 8, 5, 8]?",
+      "answer": "sorted(set(lst))[-2] -> 5"
+    },
+    {
+      "id": 196,
+      "question": "What does sorted([5, 2, 9], reverse=True) return?",
+      "answer": "[9, 5, 2]"
+    },
+    {
+      "id": 197,
+      "question": "How do you find the index of the maximum value?",
+      "answer": "lst.index(max(lst))"
+    },
+    {
+      "id": 198,
+      "question": "What does [1, 2, 3].index(3) return?",
+      "answer": "2"
+    },
+    {
+      "id": 199,
+      "question": "How do you split a string into a list of words?",
+      "answer": "\"hello world\".split() -> ['hello', 'world']"
+    },
+    {
+      "id": 200,
+      "question": "How do you find the average of a list of numbers?",
+      "answer": "sum(lst) / len(lst)"
+    }
+  ]
+}

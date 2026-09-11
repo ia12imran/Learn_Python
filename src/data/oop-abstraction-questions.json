@@ -1,0 +1,505 @@
+{
+  "description": "100 deep logical questions on abstraction in Python OOP",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Predict the exact output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        ...\n\ntry:\n    Shape()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output: `Can't instantiate abstract class Shape without an implementation for abstract method 'area'`\n\nABC uses the ABCMeta metaclass; when its `__new__` finishes building a class whose `__abstractmethods__` is non-empty, the instantiation call path raises `TypeError` before an object ever exists. Every method decorated with `@abstractmethod` gets the flag `__isabstractmethod__ = True`, and the metaclass collects all such names inherited through the MRO into the class attribute `__abstractmethods__`; if that frozenset is non-empty, calling the class raises exactly this TypeError."
+    },
+    {
+      "id": 2,
+      "question": "Predict the exact output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Base(ABC):\n    @abstractmethod\n    def run(self):\n        pass\n\nclass Broken(Base):\n    pass\n\ntry:\n    Broken()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output: `Can't instantiate abstract class Broken without an implementation for abstract method 'run'`\n\nThe metaclass computes a subclass's abstract methods as the union of the abstract sets of all bases, then subtracts any name that the subclass overrides in its own `__dict__`. `Broken` overrides nothing, so `Broken.__abstractmethods__ == frozenset({'run'})`, and instantiating raises TypeError even though `Broken` is a subclass of `Base`. Note only the *missing* method is reported; implemented names are dropped from the set and never listed."
+    },
+    {
+      "id": 3,
+      "question": "Predict the output:\n```python\nfrom abc import ABC\n\nclass Marker(ABC):\n    pass\n\nm = Marker()\nprint(type(m).__name__)\n```",
+      "answer": "Output: `Marker`\n\nAn ABC with no abstract methods is perfectly instantiable. `ABC` only installs the `ABCMeta` metaclass; the metaclass's enforcement triggers solely when `__abstractmethods__` is non-empty. `Marker.__abstractmethods__` is `frozenset()`, so the class behaves like a normal class. This is why \"abstract class\" really means \"class with a non-empty `__abstractmethods__`\", not \"inherits from ABC\"."
+    },
+    {
+      "id": 4,
+      "question": "Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        ...\n\nclass Square(Shape):\n    def area(self):\n        return 4\n\ns = Square()\nprint(isinstance(s, Shape), s.area(), Square.__abstractmethods__)\n```",
+      "answer": "Output: `True 4 frozenset()`\n\nWhen `Square` defines `area`, the metaclass sees that name in `Square.__dict__` and removes it from the inherited abstract set, leaving `frozenset()`. The class is now concrete and instantiable. `isinstance(s, Shape)` is `True` because `Square` is a real subclass in the MRO — implementing the abstract methods is what makes it a legal concrete subclass. ABCs are designed to be used with `isinstance`/`issubclass` for formal interface checking."
+    },
+    {
+      "id": 5,
+      "question": "Predict the exact output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass A(ABC):\n    @abstractmethod\n    def run(self):\n        ...\n\nclass B(A):\n    pass\n\ntry:\n    B()\nexcept TypeError as e:\n    print(e, '|', B.__abstractmethods__)\n```",
+      "answer": "Output: `Can't instantiate abstract class B without an implementation for abstract method 'run' | frozenset({'run'})`\n\nAbstractness propagates automatically down the hierarchy: `B` inherits the abstract `run` from `A`, and the metaclass's union rule keeps it in `B.__abstractmethods__`. Since `B` defines nothing in its own namespace that shadows `run`, the abstract status is preserved across any number of intermediate classes. A subclass stays abstract until every name in the inherited abstract set is overridden somewhere in its MRO."
+    },
+    {
+      "id": 6,
+      "question": "Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass A(ABC):\n    @abstractmethod\n    def run(self):\n        ...\n\nclass B(A):\n    pass\n\nclass C(B):\n    def run(self):\n        return 'go'\n\nc = C()\nprint(c.run(), B.__abstractmethods__, C.__abstractmethods__)\n```",
+      "answer": "Output: `go frozenset({'run'}) frozenset()`\n\n`B` still does not override `run`, so it remains abstract with `__abstractmethods__ == frozenset({'run'})`. The grandchild `C` finally supplies an override; the metaclass finds `run` in `C.__dict__` and subtracts it from the union of `A`'s and `B`'s abstract sets, making `C` concrete. `B` and `C` each get their own freshly computed `__abstractmethods__`; concrete status is decided per-class, not per-branch."
+    },
+    {
+      "id": 7,
+      "question": "This is a subtle diamond. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Root(ABC):\n    @abstractmethod\n    def f(self):\n        ...\n\nclass Left(Root):\n    def f(self):\n        return 'left'\n\nclass Right(Root):\n    pass\n\nclass Bottom(Left, Right):\n    pass\n\ntry:\n    b = Bottom()\n    print(b.f())\nexcept TypeError as e:\n    print('TypeError:', e)\n```",
+      "answer": "Output: `left`\n\n`Bottom` instantiates successfully even though `Right` never implemented `f`. The metaclass clears the abstract set with `getattr(cls, name, None)` — attribute lookup walks the MRO `Bottom -> Left -> Right -> Root`, finds `Left.f`, sees it is concrete (`__isabstractmethod__` falsy), and removes the name from the union. Because `Left` precedes `Right` in the MRO, its implementation satisfies the interface for the whole class. This shows abstract handling is name-based through normal attribute resolution, not per-branch accounting."
+    },
+    {
+      "id": 8,
+      "question": "Predict the exact output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass M1(ABC):\n    @abstractmethod\n    def f(self):\n        ...\n\nclass M2(ABC):\n    @abstractmethod\n    def f(self):\n        ...\n\nclass Comb(M1, M2):\n    pass\n\ntry:\n    Comb()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output: `Can't instantiate abstract class Comb without an implementation for abstract method 'f'`\n\nThe two abstract declarations have the same name `f`, and `__abstractmethods__` is a set, so the union collapses them into one entry. A single implementation in the subclass satisfies both bases: `class Subst(Comb): def f(self): return 1` would instantiate fine. This is how you implement an interface that multiple ABCs agree on — one method fulfills all of them."
+    },
+    {
+      "id": 9,
+      "question": "Fill in the blanks — which decorator must be outermost (top) so that an abstract static method is created correctly? Why is the opposite order illegal?\n```python\nfrom abc import ABC, abstractmethod\n\nclass S(ABC):\n    @____        # blank 1\n    @____        # blank 2\n    def make(self):\n        ...\n```",
+      "answer": "Blank 1 (outermost/top) = `staticmethod`, blank 2 (innermost/bottom) = `abstractmethod`, i.e. `@staticmethod` above `@abstractmethod`.\n\n`@abstractmethod` sets a writable `__isabstractmethod__` flag on the function; `@staticmethod` then wraps the flagged function in a `staticmethod` object. The metaclass calls `getattr(type(...), '__isabstractmethod__', False)` on the *result* of the composed decorators, and `staticmethod` objects propagate the flag. In the reverse order `@abstractmethod` tries to write `__isabstractmethod__` onto an already-existing `staticmethod` object, whose attribute is read-only — raising `AttributeError: attribute '__isabstractmethod__' of 'staticmethod' objects is not writable`."
+    },
+    {
+      "id": 10,
+      "question": "Predict the exact output (this fails at class-creation time, not instantiation):\n```python\nfrom abc import ABC, abstractmethod\n\ntry:\n    class T(ABC):\n        @abstractmethod\n        @staticmethod\n        def m(self):\n            pass\nexcept Exception as e:\n    print(type(e).__name__ + ':', e)\n```",
+      "answer": "Output: `AttributeError: attribute '__isabstractmethod__' of 'staticmethod' objects is not writable`\n\nDecorator application is bottom-up: `@staticmethod` runs first, converting the plain function into a `staticmethod` descriptor object. The outer `@abstractmethod` then tries to set `__isabstractmethod__` on that descriptor via `setattr`, but a `staticmethod`'s attribute table is not mutable, so it raises `AttributeError`. The class is never created, proving the correct composition is `@staticmethod` on top and `@abstractmethod` underneath."
+    },
+    {
+      "id": 11,
+      "question": "Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Factory(ABC):\n    @classmethod\n    @abstractmethod\n    def create(cls):\n        ...\n\nclass Maker(Factory):\n    @classmethod\n    def create(cls):\n        return 'made'\n\nprint(Maker.create(), Maker().create())\n```",
+      "answer": "Output: `made made`\n\n`@classmethod` is outermost and `@abstractmethod` innermost, the legal order. `create` is abstract in `Factory`; `Maker` overrides it with a concrete classmethod, so `Maker.__abstractmethods__` becomes empty and the class instantiates. Accessing it via the class (`Maker.create()`) and via an instance (`Maker().create()`) both resolve to the same bound classmethod and both print `made`."
+    },
+    {
+      "id": 12,
+      "question": "Abstractness is enforced at instantiation — but what does a *classmethod call* on an abstract class do? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Factory(ABC):\n    @classmethod\n    @abstractmethod\n    def create(cls):\n        return 'abstract body'\n\nclass Stub(Factory):\n    pass\n\nprint(Stub.create())\n```",
+      "answer": "Output: `abstract body`\n\nCalling the classmethod `Stub.create()` does NOT raise TypeError — it simply calls the inherited abstract stub and returns `'abstract body'`. The abstractness guard fires only when the *class itself is instantiated* (`Stub()`), because that is where ABCMeta checks `__abstractmethods__`. A classmethod call never constructs an instance of the class object that stores `__abstractmethods__`, so the inherited abstract body is dispatched to directly. (If the stub body were just `...`, the call would return `None`.) This is a subtle trap: you can invoke abstract methods through the class object without ever triggering the abstract-interface error."
+    },
+    {
+      "id": 13,
+      "question": "Predict the exact output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Named(ABC):\n    @property\n    @abstractmethod\n    def name(self):\n        ...\n\nclass Ghost(Named):\n    pass\n\ntry:\n    Ghost()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output: `Can't instantiate abstract class Ghost without an implementation for abstract method 'name'`\n\n`@property` above `@abstractmethod` produces an abstract property object (its `fget` carries `__isabstractmethod__ = True`). `Ghost` provides nothing in its own `__dict__`, so the name `name` stays in `__abstractmethods__`. Abstract properties behave exactly like abstract methods: any class forgetting to re-define the property is non-instantiable and is listed by name in the error."
+    },
+    {
+      "id": 14,
+      "question": "An abstract property is usually re-implemented with `@property`. But what happens when the subclass overrides it with a *plain class attribute*? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Named(ABC):\n    @property\n    @abstractmethod\n    def name(self):\n        ...\n\nclass Me(Named):\n    name = 'maan'\n\nm = Me()\nprint(m.name, Me.__abstractmethods__)\n```",
+      "answer": "Output: `maan frozenset()`\n\nThe metaclass only cares that the name `name` is overridden in the subclass namespace; it never checks that the override is itself a property. `name = 'maan'` shadows the abstract property, which removes the name from `__abstractmethods__`, so instantiation succeeds and `m.name` resolves to the class attribute value `maan`. Be aware this silently destroys the getter/setter behavior — future `x.name = v` just creates an instance attribute (or fails under `__slots__`)."
+    },
+    {
+      "id": 15,
+      "question": "Can you satisfy an abstract *property* with a plain *method* (no `@property`)? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Named(ABC):\n    @property\n    @abstractmethod\n    def name(self):\n        ...\n\nclass Sly(Named):\n    def name(self):\n        return 'method'\n\ns = Sly()\nprint(s.name)\n```",
+      "answer": "Output: `<bound method Sly.name of <__main__.Sly object at 0x...>>` (the print emits a bound-method repr, not `'method'`)\n\nThere is no TypeError: the metaclass resolves the abstract sibling by name and sees `Sly.name` is overridden, so `__abstractmethods__` is empty and `Sly` instantiates. But because the override is a plain function and not a property, attribute access `s.name` calls it as a normal method, yielding a bound-method object (whose repr is printed). Accessing `s.name() is actually irrelevant here` — the unbundled call `s.name` is the bound method itself; to retrieve the string you would need `s.name()`. The abstract contract said \"property\", but Python only enforces the name, not the descriptor kind."
+    },
+    {
+      "id": 16,
+      "question": "Now the reverse order on a property. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\ntry:\n    class Bad(ABC):\n        @abstractmethod\n        @property\n        def x(self):\n            pass\nexcept Exception as e:\n    print(type(e).__name__ + ':', e)\n```",
+      "answer": "Output: `AttributeError: attribute '__isabstractmethod__' of 'property' objects is not writable`\n\nBottom-up decoration: `@property` first wraps the function into a `property` descriptor, then the outer `@abstractmethod` tries to `setattr` `__isabstractmethod__` on that property object. `property` instances use an immutable attribute layout, so the write fails immediately with `AttributeError` during class-body execution. Therefore for properties the only valid order is `@property` outermost and `@abstractmethod` innermost."
+    },
+    {
+      "id": 17,
+      "question": "Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Display(ABC):\n    @abstractmethod\n    def __str__(self):\n        return 'stub-str'\n\nclass Done(Display):\n    def __str__(self):\n        return 'D!'\n\nclass Empty(Display):\n    pass\n\nprint(str(Done()))\n\ntry:\n    Empty()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output:\n```\nD!\nCan't instantiate abstract class Empty without an implementation for abstract method '__str__'\n```\n\nSpecial/dunder methods can be abstract just like any other method. `Done` overrides `__str__` concretely, so `Done.__abstractmethods__` is empty and `str(Done())` returns `D!`. `Empty` inherits the abstract `__str__` untouched, keeping `'__str__'` in its abstract set, so constructing it raises the standard TypeError. The abstract body `return 'stub-str'` in the ABC is only a placeholder and never runs through normal dispatch."
+    },
+    {
+      "id": 18,
+      "question": "Constructors can be abstract too. Predict the output lines in order:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Base(ABC):\n    @abstractmethod\n    def __init__(self):\n        print('base ctor')\n\nclass Impl(Base):\n    def __init__(self):\n        print('impl ctor')\n        super().__init__()\n\nImpl()\n```",
+      "answer": "Output:\n```\nimpl ctor\nbase ctor\n```\n\n`Impl` overrides the abstract `__init__`, clearing it from `__abstractmethods__`, so `Impl()` instantiates. Inside the concrete constructor `super().__init__()` finds `Base.__init__` through the MRO and invokes it, executing the body. This works because `@abstractmethod` is only a flag; it does not destroy the underlying function. The bodies of abstract methods remain callable via `super()` from concrete implementations."
+    },
+    {
+      "id": 19,
+      "question": "Template method pattern: a concrete method in the ABC calls an abstract method. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Report(ABC):\n    @abstractmethod\n    def title(self):\n        ...\n\n    def render(self):\n        return '[' + self.title() + ']'\n\nclass News(Report):\n    def title(self):\n        return 'BREAKING'\n\nprint(News().render())\n```",
+      "answer": "Output: `[BREAKING]`\n\nThe abstract `title` has no runnable body of its own (just `...`), yet `render()` calls `self.title()` and works perfectly because of dynamic dispatch: at runtime `self` is a `News` instance, so the call resolves to the concrete override, which returns `'BREAKING'`. This is the template method pattern — the ABC fixes the algorithm's skeleton (`render`) while subclasses plug in the variable steps (`title`). The abstract step could never run as-is anyway, since the ABC cannot be instantiated."
+    },
+    {
+      "id": 20,
+      "question": "What happens if an abstract class's own `__init__` calls the abstract method before the subclass has finished? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Boot(ABC):\n    @abstractmethod\n    def pre(self):\n        ...\n\n    def __init__(self):\n        print('boot:')\n        self.pre()\n\nclass Impl(Boot):\n    def pre(self):\n        print('ready')\n\nImpl()\n```",
+      "answer": "Output:\n```\nboot:\nready\n```\n\n`Boot.__init__` already executes *after* `Impl` was created, and by then `self` is a fully realized `Impl` whose `pre` is concrete, so the call dispatches to it and prints `ready`. There is no abstractness at call time; the TypeError guard only fires while a class with a non-empty `__abstractmethods__` is being instantiated. This makes template/pyramid initialization safe: subclass hooks are usable inside the base constructor."
+    },
+    {
+      "id": 21,
+      "question": "Abstract methods normally have empty bodies. But if you *do* give one a body, can a concrete subclass reach it through `super()`? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass A(ABC):\n    @abstractmethod\n    def greet(self):\n        return 'base-stub'\n\nclass B(A):\n    def greet(self):\n        return super().greet() + '!'\n\nprint(B().greet())\n```",
+      "answer": "Output: `base-stub!`\n\n`@abstractmethod` is a pure flag (`__isabstractmethod__ = True`); the function body is untouched. `B` overrides `greet` (clearing the flag for `B`), and inside it `super().greet()` walks the MRO to `A.greet`, calling the stub body which returns `'base-stub'`. The result is concatenated with `'!'`. Only the *abstractness marker* is consumed by the override — the decorated function remains perfectly callable through superclass lookup."
+    },
+    {
+      "id": 22,
+      "question": "Why is raising `NotImplementedError` inside a plain method NOT the same as `@abstractmethod`? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Soft(ABC):\n    def process(self):\n        raise NotImplementedError\n\nclass SoftSub(Soft):\n    pass\n\ns = SoftSub()\nprint('instantiated OK')\ntry:\n    s.process()\nexcept NotImplementedError:\n    print('runtime NotImplementedError')\n\nclass Hard(ABC):\n    @abstractmethod\n    def process(self):\n        raise NotImplementedError\n\nclass HardSub(Hard):\n    pass\n\ntry:\n    HardSub()\nexcept TypeError as e:\n    print(type(e).__name__ + ':', e)\n```",
+      "answer": "Output:\n```\ninstantiated OK\nruntime NotImplementedError\nTypeError: Can't instantiate abstract class HardSub without an implementation for abstract method 'process'\n```\n\n`NotImplementedError`-in-a-method is a *runtime* contract: nothing checks it until the method is actually called, and the class instantiates freely (`SoftSub` succeeded). `@abstractmethod` is a *class-construction-time* contract enforced by the metaclass: `HardSub` is rejected the moment you try to instantiate it, before any method call. They also differ in intent — `NotImplementedError` is documentation-by-exception for optional/partial behavior, whereas abstract methods force subclasses to provide a real implementation."
+    },
+    {
+      "id": 23,
+      "question": "What does `@abstractmethod` do when the class does NOT use `ABC`/`ABCMeta`? Predict the output:\n```python\nfrom abc import abstractmethod\n\nclass Loose:\n    @abstractmethod\n    def work(self):\n        return 'loose work'\n\nl = Loose()\nprint(l.work())\nprint(getattr(Loose, '__abstractmethods__', 'missing'))\n```",
+      "answer": "Output:\n```\nloose work\nmissing\n```\n\n`@abstractmethod` is just a marker that stores `__isabstractmethod__ = True` on the function; nothing enforces it unless the class is built by `ABCMeta`. `Loose` has the default `type` metaclass, so the flag is inert: the class instantiates, the method runs, and there is no `__abstractmethods__` attribute at all. This is why it is a bug to sprinkle `@abstractmethod` on a class that does not inherit from `ABC` — you silently get zero enforcement."
+    },
+    {
+      "id": 24,
+      "question": "The same enforcement is available without `ABC`, by setting the metaclass directly. Predict the output:\n```python\nimport abc\n\nclass Manual(metaclass=abc.ABCMeta):\n    @abc.abstractmethod\n    def go(self):\n        ...\n\ntry:\n    Manual()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output: `Can't instantiate abstract class Manual without an implementation for abstract method 'go'`\n\n`ABC` is literally a convenience subclass whose only job is to add `metaclass=abc.ABCMeta`; using the metaclass directly is equivalent. `Manual` gets its `__abstractmethods__` computed by the same metaclass machinery, so instantiation raises the identical TypeError. Everything that applies to `class X(ABC)` applies here — dtype: abstract methods, abstract properties, and inheritance propagation all behave the same way."
+    },
+    {
+      "id": 25,
+      "question": "ABCs can sit alongside normal base classes. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Plain:\n    def plain(self):\n        return 'p'\n\nclass Hybrid(Plain, ABC):\n    @abstractmethod\n    def extra(self):\n        ...\n\nclass Impl(Hybrid):\n    def extra(self):\n        return 'e'\n\nh = Impl()\nprint(h.plain(), h.extra())\n```",
+      "answer": "Output: `p e`\n\n`Hybrid` merges a normal concrete base `Plain` with the ABC mixin: concrete methods from `Plain` are inherited normally, and `Hybrid` itself remains abstract because of `extra`. `Impl` implements `extra`, clearing the abstract set, so it instantiates and has both methods available. The metaclass follows the full MRO when computing abstractness, so mixing styles costs nothing as long as every abstract name gets an override reachable through the MRO."
+    },
+    {
+      "id": 26,
+      "question": "`register()` creates a *virtual* subclass — no inheritance involved. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        ...\n\nclass Defacto:\n    def area(self):\n        return 9\n\nShape.register(Defacto)\n\nprint(isinstance(Defacto(), Shape))\nprint(issubclass(Defacto, Shape))\nprint([c.__name__ for c in Shape.__subclasses__()])\n```",
+      "answer": "Output:\n```\nTrue\nTrue\n[]\n```\n\n`Shape.register(Defacto)` enters `Defacto` into ABCMeta's internal virtual-subclass registry (a set tied to the ABC's cache token), so both `isinstance` and `issubclass` return `True`. But `Defacto` is not a real child: it does not appear in `Shape.__subclasses__()`, it is not in `Shape`'s MRO, and it is not granted any attributes. Registration is also unchecked — `Shape.register` would accept a class with no `area` at all."
+    },
+    {
+      "id": 27,
+      "question": "Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        ...\n\nclass Circle:\n    def area(self):\n        return 3.14\n\nprint(isinstance(Circle(), Shape))\n\nShape.register(Circle)\nprint(isinstance(Circle(), Shape))\n```",
+      "answer": "Output:\n```\nFalse\nTrue\n```\n\nEven though `Circle` structurally has an `area` method, `isinstance` against an ABC is based on real inheritance or explicit registration — duck typing alone does not count. The first check is `False`. After `Shape.register(Circle)`, the class is a virtual subclass, so the same `isinstance` becomes `True`. This is the key contrast between *structural* duck typing and *formal* interfaces: ABCs let you opt specific classes in explicitly rather than guessing from method presence."
+    },
+    {
+      "id": 28,
+      "question": "`__subclasshook__` makes an ABC behave like a *structural* interface. Predict the output:\n```python\nfrom abc import ABC\n\nclass Duckish(ABC):\n    @classmethod\n    def __subclasshook__(cls, C):\n        if cls is Duckish:\n            return any('quack' in B.__dict__ for B in C.__mro__)\n        return NotImplemented\n\nclass RealDuck:\n    def quack(self):\n        return 'quack'\n\nclass Dog:\n    def bark(self):\n        return 'woof'\n\nprint(issubclass(RealDuck, Duckish), issubclass(Dog, Duckish))\nprint(isinstance(RealDuck(), Duckish))\nprint(type(Duckish()).__name__)\n```",
+      "answer": "Output:\n```\nTrue False\nTrue\nDuckish\n```\n\n`__subclasshook__` replaces inheritance: when `ABCMeta.__subclasshook__` is called (as it is by every `issubclass`/`isinstance`), your method inspects the candidate's MRO and returns `True` for a structural match. `RealDuck` has `quack`, so it is treated as a subclass without ever inheriting; `Dog` lacks it and gets `False`. The `if cls is Duckish` guard plus `return NotImplemented` defers subclasses of the ABC to default checks. `Duckish` itself has no abstract methods, so `Duckish()` instantiates."
+    },
+    {
+      "id": 29,
+      "question": "Setters with abstract properties: the class must re-define the *property object*. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass RW(ABC):\n    @property\n    @abstractmethod\n    def val(self):\n        ...\n\nclass Impl(RW):\n    @property\n    def val(self):\n        return self._v\n\n    @val.setter\n    def val(self, v):\n        self._v = v\n\nr = Impl()\nr.val = 9\nprint(r.val)\n```",
+      "answer": "Output: `9`\n\n`Impl` supplies a complete property object with fget and fset, so `'val'` is dropped from `Impl.__abstractmethods__` and instantiation succeeds. Assignment `r.val = 9` routes through the setter and the getter returns the stored value. The abstract contract only demanded a `val` attribute implemented in the subclass; whether that implementation is a property with one or both accessors (or anything else) is left to the implementer."
+    },
+    {
+      "id": 30,
+      "question": "When multiple abstract methods are missing, how does the error message order them? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass M(ABC):\n    @abstractmethod\n    def zeta(self):\n        ...\n\n    @abstractmethod\n    def alpha(self):\n        ...\n\ntry:\n    M()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output: `Can't instantiate abstract class M without an implementation for abstract methods 'alpha', 'zeta'`\n\nThe metaclass stores abstract names in a frozenset and the error routine joins them in *sorted* (alphabetical) order — `alpha` comes before `zeta` regardless of declaration order. Note the message switches from `abstract method '<name>'` (singular) to `abstract methods '<a>', '<b>'` (plural) when more than one name is missing. Parsing this message for test assertions is fragile; prefer checking `__abstractmethods__` directly."
+    },
+    {
+      "id": 31,
+      "question": "Partial implementation: an abstract class may implement some and re-abstract others. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass T(ABC):\n    @abstractmethod\n    def x(self):\n        ...\n\nclass U(T):\n    def x(self):\n        return 1\n\n    @abstractmethod\n    def y(self):\n        ...\n\ntry:\n    U()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output: `Can't instantiate abstract class U without an implementation for abstract method 'y'`\n\n`U` removes `x` from its abstract set by implementing it, then *adds* a new abstract method `y` with its own `@abstractmethod` decoration. The final `__abstractmethods__` is `frozenset({'y'})`, and only that one missing name is reported. This layering — resolve some obligations, impose new ones — is how abstract intermediate classes carve out design steps while leaving the remaining work to their children."
+    },
+    {
+      "id": 32,
+      "question": "Spot the bug. The author tries to cheat the interpreter with a class-level assignment. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass T(ABC):\n    @abstractmethod\n    def f(self):\n        ...\n\nclass U(T):\n    __abstractmethods__ = frozenset()\n\nprint('U.__abstractmethods__ =', U.__abstractmethods__)\ntry:\n    U()\nexcept TypeError as e:\n    print('TypeError:', e)\n```",
+      "answer": "Output:\n```\nU.__abstractmethods__ = frozenset({'f'})\nTypeError: Can't instantiate abstract class U without an implementation for abstract method 'f'\n```\n\nThe cheat fails: `ABCMeta.__new__` *recomputes and overwrites* `__abstractmethods__` after the class body runs, discarding the manually assigned empty frozenset. It evaluates `getattr(U, 'f')` through the MRO, sees the abstract stub, and builds `frozenset({'f'})`. `__abstractmethods__` is computed metadata, not idle state you can seed. The legit way to make a class concrete is to actually override the method."
+    },
+    {
+      "id": 33,
+      "question": "But the *same* overwriting happens after class creation. Can you cheat at runtime by assigning afterwards? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass A(ABC):\n    @abstractmethod\n    def m(self):\n        ...\n\nclass B(A):\n    pass\n\nB.__abstractmethods__ = frozenset()\nb = B()\nprint('instantiated:', b)\nprint('m() returns:', b.m())\n```",
+      "answer": "Output:\n```\ninstantiated: <__main__.B object at 0x...>\nm() returns: None\n```\n\nAssigning `B.__abstractmethods__ = frozenset()` *after* the metaclass ran does take effect, because the instantiation-time guard reads the attribute from the class. So `B()` works and prints the object repr. The fraud shows its teeth on the call: `B.m` is still the original abstract stub (whose body is just `...`), so `b.m()` returns `None`. Abstractness is checked once at construction, not baked into the method's callability — hacks of this kind are fragile and should never ship."
+    },
+    {
+      "id": 34,
+      "question": "Does ABC machinery interact safely with `__slots__`? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass S(ABC):\n    __slots__ = ()\n\n    @abstractmethod\n    def f(self):\n        ...\n\nclass Impl(S):\n    __slots__ = ('x',)\n\n    def f(self):\n        return 'f'\n\ni = Impl()\ni.x = 7\nprint(i.f(), i.x)\n```",
+      "answer": "Output: `f 7`\n\nThere is no conflict: the abstractness logic operates purely on class attributes and the metaclass, never on instance `__dict__` layout. The ABC declares the abstract `f`; `Impl` supplies it and adds its own slot `x`. Because `f` is a real method (a descriptor in class `__dict__`), not an instance attribute, `__slots__` restrictions do not interfere. Both the method call and slot assignment work exactly as in a plain class."
+    },
+    {
+      "id": 35,
+      "question": "Can a staticmethod satisfy an abstract *instance* method? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass InstAbs(ABC):\n    @abstractmethod\n    def do(self):\n        ...\n\nclass StatImpl(InstAbs):\n    @staticmethod\n    def do():\n        return 'static'\n\ns = StatImpl()\nprint(s.do(), StatImpl.do())\n```",
+      "answer": "Output: `static static`\n\nYes. The metaclass only checks that the name `do` is overridden in the subclass namespace; it does not require the same descriptor kind. Replacing an instance method with a staticmethod clears `__abstractmethods__`, so `StatImpl()` works. Both access paths — through the instance `s.do()` and through the class `StatImpl.do()` — resolve to the same static function and print `static`. You can mix descriptor kinds between interface and implementation freely."
+    },
+    {
+      "id": 36,
+      "question": "Are method signatures part of the abstract contract? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass DefSig(ABC):\n    @abstractmethod\n    def echo(self, msg, loud=False):\n        ...\n\nclass Short(DefSig):\n    def echo(self, msg):\n        return msg\n\ns = Short()\nprint(s.echo('hi'))\nprint(DefSig.__abstractmethods__)\n```",
+      "answer": "Output:\n```\nhi\nfrozenset()\n```\n\nAbstractness is purely name-based: overriding `echo` at all clears it, whatever its parameter signature. `Short.echo(msg)` accepts only one argument while the interface advertised two, and Python raises no error — a genuine `TypeError` would only appear at call time if someone passed `loud=`. This means ABCs document *what* must exist, not *how* it must be called; signature enforcement (e.g. via static analysis) is outside the language's reach here."
+    },
+    {
+      "id": 37,
+      "question": "Tracking `__abstractmethods__` at each layer. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Root(ABC):\n    @abstractmethod\n    def r(self):\n        ...\n\nclass Mid(Root):\n    def r(self):\n        return 'mid'\n\n    @abstractmethod\n    def m(self):\n        ...\n\nclass Leaf(Mid):\n    def m(self):\n        return 'leaf'\n\nl = Leaf()\nprint(l.r(), l.m())\nprint(Root.__abstractmethods__)\nprint(Mid.__abstractmethods__)\nprint(Leaf.__abstractmethods__)\n```",
+      "answer": "Output:\n```\nmid leaf\nfrozenset({'r'})\nfrozenset({'m'})\nfrozenset()\n```\n\nEach class's frozen set is computed independently from its own MRO: `Root` still shows `{'r'}` (it never implements anything), `Mid` implements `r` but adds abstract `m`, so it shows `{'m'}`, and `Leaf` implements everything, so it is empty. The per-class snapshots let you inspect a class's remaining obligations at any level — useful for plugin frameworks that want to report \"what is still missing on this abstract layer\"."
+    },
+    {
+      "id": 38,
+      "question": "Abstract inheritance via `isinstance` across layers. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass A(ABC):\n    @abstractmethod\n    def a(self):\n        ...\n\nclass B(A):\n    def a(self):\n        return 1\n\nclass C(B):\n    pass\n\nc = C()\nprint(isinstance(c, A), isinstance(c, B), isinstance(c, C))\nprint(B.__abstractmethods__, C.__abstractmethods__)\n```",
+      "answer": "Output:\n```\nTrue True True\nfrozenset() frozenset()\n```\n\nBecause `B` implemented `a`, both `B` and `C` have empty `__abstractmethods__` and are concrete. `isinstance` on an ABC checks real subclass membership (or registration), so `C` is reported as an instance of every ancestor, including the abstract root `A`. 'Abstract' never affects identity checks after the implementation exists — the ABC stays a bona-fide supertype of all its concrete descendants."
+    },
+    {
+      "id": 39,
+      "question": "The `__isabstractmethod__` flag lives on the *function objects* retrieved from each class. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass S2(ABC):\n    @abstractmethod\n    def area(self):\n        ...\n\nclass Impl(S2):\n    def area(self):\n        return 1\n\nprint(getattr(S2.area, '__isabstractmethod__', False))\nprint(getattr(Impl.area, '__isabstractmethod__', False))\n```",
+      "answer": "Output:\n```\nTrue\nFalse\n```\n\n`S2.area` is still the original stub function created by `@abstractmethod`, so its flag is `True`. `Impl.area` is a fresh, plain function the subclass wrote, so the flag is `False`. The metaclass uses exactly this attribute when computing new classes' abstract sets: it walks each class's names and checks `getattr(value, '__isabstractmethod__', False)`. You can likewise read the flag manually to test whether a method is still considered abstract."
+    },
+    {
+      "id": 40,
+      "question": "Duck-typing versus formal interfaces. In pure duck typing arrow vs ABC arrow. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Service(ABC):\n    @abstractmethod\n    def run(self):\n        ...\n\nclass Fake:\n    def run(self):\n        return 'fake-run'\n\nclass Real(Service):\n    def run(self):\n        return 'real-run'\n\nprint(isinstance(Fake(), Service))\nprint(isinstance(Real(), Service))\nprint(issubclass(Fake, Service))\n```",
+      "answer": "Output:\n```\nFalse\nTrue\nFalse\n```\n\n`Fake` is a perfect duck — it has `run` — yet the ABC refuses to see it: formal checks ignore method presence and rely on inheritance or explicit registration. `Real`, which genuinely inherits and implements, passes both checks. That is the practical difference: duck typing accepts whatever quacks at call time, while ABCs give you an explicit, auditable contract you can test with `isinstance`/`issubclass`. Neither approach stops a wrong object at runtime unless you add the check yourself."
+    },
+    {
+      "id": 41,
+      "question": "You cannot instantiate an abstract class, but you *can* obtain its abstract function object and call it statically. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        print('stub body ran')\n        return 0\n\nfn = Shape.area\nprint(type(fn).__name__)\nfn(object())\n```",
+      "answer": "Output:\n```\nfunction\nstub body ran\n```\n\n`Shape.area` is fetched from the class object — a plain function — and calling it is legal; the class never has to be instantiated for this. `abstractmethod` does not make the function uncallable, it only marks it. The stub body runs and returns 0 (which the call ignores). This is the mechanism behind `super().abstract_method()` working from concrete subclasses: the decorated body stays a normal, callable function."
+    },
+    {
+      "id": 42,
+      "question": "A virtual subclass is NOT inherited by *subclasses of the ABC*. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass A(ABC):\n    @abstractmethod\n    def f(self):\n        ...\n\nclass X:\n    def f(self):\n        return 'x'\n\nA.register(X)\n\nclass B(A):\n    pass\n\nprint(isinstance(X(), A), issubclass(X, A), isinstance(X(), B), issubclass(X, B))\n```",
+      "answer": "Output: `True True False False`\n\nRegistration is bound to exactly the ABC it was called on: `X` becomes a virtual subclass of `A` only. When checking against `B`, ABCMeta consults `B`'s own virtual-subclass table and its `__subclasshook__`, walking `B`'s MRO but not treating `A`'s registry as `B`'s. So `isinstance(X(), B)` and `issubclass(X, B)` are both `False`. Unlike real inheritance, virtual subclassing does NOT propagate down the ABC family tree — each ABC keeps its own isolated registry."
+    },
+    {
+      "id": 43,
+      "question": "An abstract method that returns a value vs one that raises — both are legal, but which is *enforced* at instantiation? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass WithBody(ABC):\n    @abstractmethod\n    def act(self):\n        return 'stub-result'\n\n    @abstractmethod\n    def risky(self):\n        raise NotImplementedError('stub')\n\nclass Impl(WithBody):\n    def act(self):\n        return 'real'\n\n    def risky(self):\n        return 'safe'\n\nprint(Impl().act(), Impl().risky())\n```",
+      "answer": "Output: `real safe`\n\nBoth abstract stubs are legal; neither body matters — `WithBody` is non-instantiable due to the non-empty `__abstractmethods__`, and the enforcement point is class instantiation, not the bodies. Once `Impl` overrides both names, its abstract set is empty and both calls dispatch to the concrete implementations, printing `real safe`. Returning a value from an abstract stub (`'stub-result'`) and raising from another are both fine; the flag alone is what drives the metaclass's rejection."
+    },
+    {
+      "id": 44,
+      "question": "Spot the bug — two plugins share an abstract base; only one implements the interface. Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Plugin(ABC):\n    @abstractmethod\n    def load(self):\n        ...\n\nclass CsvLoader(Plugin):\n    def load(self):\n        return 'csv loaded'\n\nclass JsonLoader(Plugin):\n    pass\n\nprint(CsvLoader().load())\nprint(plugin := type('JsonLoader', (Plugin,), {}))\ntry:\n    JsonLoader()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output:\n```\ncsv loaded\n<class 'abc.JsonLoader'>\nCan't instantiate abstract class JsonLoader without an implementation for abstract method 'load'\n```\n\nThe bug: `JsonLoader` declares no body and overrides nothing, so it silently inherits the abstract `load`. The intermediate `print(plugin := ...)` creates an equivalent dynamic subclass with the same problem (printing its repr is fine). The moment anyone tries `JsonLoader()`, the metaclass refuses with the standard TypeError naming `load`. Because nothing failed at *definition* time, an abstract class can ship unnoticed until it is used — always grep `__abstractmethods__` when a plugin class misbehaves at construction."
+    },
+    {
+      "id": 45,
+      "question": "Fill the blanks to fix this broken abstract static factory. The current code raises `AttributeError: attribute '__isabstractmethod__' of 'staticmethod' objects is not writable`.\n```python\nfrom abc import ABC, abstractmethod\n\nclass Make(ABC):\n    @staticmethod      # currently on top - WRONG? Actually check: is it wrong?\n    @abstractmethod\n    def build(x):\n        return 'built:' + x\n\nprint(Make.__dict__['build'].__isabstractmethod__)\n```",
+      "answer": "Output: `True`\n\nThis composition is already correct and there is no error here: `@staticmethod` outermost, `@abstractmethod` innermost is the only legal order. `abstractmethod` first flags the function in its `__isabstractmethod__`, then `staticmethod` wraps the flagged function into a descriptor that Python's tools treat as abstract (modern ABCMeta reads the attribute through the wrapper). The snippet in the prompt fails only when the orders are swapped. `Make` cannot be instantiated as-is; a subclass must override `build` (concretely, with its own staticmethod) to become concrete."
+    },
+    {
+      "id": 46,
+      "question": "Multiple inheritance where one abstract method is implemented in the *second* base but not the first: does the resulting class stay abstract? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass I1(ABC):\n    @abstractmethod\n    def f(self):\n        ...\n\nclass I2(ABC):\n    def f(self):\n        return 'from I2'\n\nclass C(I1, I2):\n    pass\n\ntry:\n    c = C()\n    print(c.f())\nexcept TypeError as e:\n    print('TypeError:', e)\n```",
+      "answer": "Output: `from I2`\n\n`C` is concrete and instantiates. The metaclass resolves `f` from `C` via its MRO — `C -> I1 -> I2` — using `getattr`, finds `I2.f` which is concrete, and clears the name from the abstract set contributed by `I1`. This is the same MRO-collapsing behavior seen in diamonds: any implementation reachable through attribute lookup satisfies the contract for the whole class. `I1` itself remains abstract; abstractness is always decided per-class based on the full MRO."
+    },
+    {
+      "id": 47,
+      "question": "What does `__abstractmethods__` report for a *virtual* subclass and is it even touched by registration? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        ...\n\nclass Client:\n    def area(self):\n        return 12\n\nShape.register(Client)\nprint(Client.__abstractmethods__)\nprint(Shape.__abstractmethods__)\n```",
+      "answer": "Output:\n```\nAttributeError: 'Client' object has no attribute '__abstractmethods__'\n```\n\nCareful: classes built by a normal metaclass (like `type`) do not define `__abstractmethods__` at all, and `register()` does not add it. `Client.__abstractmethods__` raises `AttributeError`. Had the line been printed as `Client.__dict__.get('__abstractmethods__', 'absent')` you would see `'absent'`. Registration only affects `isinstance`/`issubclass` outcomes; it grants neither the attribute nor any abstractness semantics. ABC-aware introspection of registered classes requires `getattr(cls, '__abstractmethods__', frozenset())`."
+    },
+    {
+      "id": 48,
+      "question": "A subclass that implements the abstract method via a *class attribute* (not a function). Is the class concrete? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Holder(ABC):\n    @abstractmethod\n    def data(self):\n        ...\n\nclass Var:\n    data = 'class-attr'\n\nprint(Var.__dict__['data'])\ntry:\n    v = Var()\n    print(v.data, Var.__abstractmethods__)\nexcept TypeError as e:\n    print('TypeError:', e)\n```",
+      "answer": "Output:\n```\nclass-attr\nclass-attr frozenset()\n```\n\nThe abstract check only looks for a name override in the class namespace; a data attribute `data = 'class-attr'` is enough to clear it, so `Var()` works and prints `class-attr`. This confirms interfaces in Python are satisfied by *attributes* of any kind — methods, properties, class attributes, even plain data. It is a footgun if the interface intended callable behavior, since callers doing `v.data()` would crash with `TypeError: 'str' object is not callable`."
+    },
+    {
+      "id": 49,
+      "question": "Can an abstract method's name collide with an inherited application method and accidentally satisfy the interface? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Utility:\n    def save(self):\n        return 'utility save'\n\nclass App(ABC):\n    @abstractmethod\n    def save(self):\n        ...\n\nclass RealApp(Utility, App):\n    pass\n\nprint(RealApp.__abstractmethods__)\ntry:\n    r = RealApp()\n    print(r.save())\nexcept TypeError as e:\n    print('TypeError:', e)\n```",
+      "answer": "Output:\n```\nfrozenset()\nutility save\n```\n\n`Utility.save` sits earlier in the MRO than `App`'s abstract stub, so `RealApp`'s namespace lookup for `save` resolves to the concrete utility method. The metaclass sees a concrete `save` and clears the abstract set, and `RealApp` instantiates with `save` bound to `Utility.save`, printing `utility save`. This is exactly how mixins satisfy abstract interfaces: any class in the MRO that happens to carry the name counts, even if it was never designed as the ABC's implementation."
+    },
+    {
+      "id": 50,
+      "question": "Summing up the true contract. Given this setup, which two `isinstance` checks pass and which class can be instantiated? Predict the output:\n```python\nfrom abc import ABC, abstractmethod\n\nclass Service(ABC):\n    @abstractmethod\n    def run(self):\n        ...\n\nclass Fake:\n    def run(self):\n        ...\n\nclass Real(Service):\n    def run(self):\n        return 'real'\n\nService.register(Fake)\n\nprint(isinstance(Fake(), Service), isinstance(Real(), Service))\nprint([c.__name__ for c in Service.__subclasses__()])\ntry:\n    Service()\nexcept TypeError as e:\n    print(e)\n```",
+      "answer": "Output:\n```\nTrue True\n['Real']\nCan't instantiate abstract class Service without an implementation for abstract method 'run'\n```\n\n`Fake` passes `isinstance` purely because of `register` (virtual subclass), while `Real` passes as a genuine subclass — both are `True`. Only `Real` appears in `__subclasses__()`, showing registration forgery to type checks without touching the real hierarchy. The ABC itself shows its teeth last: no matter how many classes register or subclass it, `Service()` raises the familiar TypeError because its own `__abstractmethods__` still holds `'run'`. Formal checks see through the facade; instantiation does not."
+    },
+    {
+      "id": 51,
+      "question": "Predict the output:\nfrom abc import ABCMeta, abstractmethod\nclass A(metaclass=ABCMeta):\n    @abstractmethod\n    def foo(self): pass\nprint(A.__abstractmethods__)\nA()",
+      "answer": "Output: frozenset({'foo'}) followed by TypeError: Can't instantiate abstract class A without an implementation for abstract method 'foo'. WHY: ABCMeta.__new__ scans the finished class namespace for descriptors whose __isabstractmethod__ is True and stores them in a frozenset assigned to the class attribute __abstractmethods__ AFTER the class object already exists (that is why you can print it on the class). A non-empty __abstractmethods__ marks the type as abstract, and the guard lives inside object.__new__, which raises TypeError at instantiation."
+    },
+    {
+      "id": 52,
+      "question": "Predict the output:\nfrom abc import abstractmethod\nclass A:\n    @abstractmethod\n    def foo(self):\n        raise NotImplementedError('no foo')\na = A()\ntry:\n    a.foo()\nexcept NotImplementedError:\n    print('raise on call')\nprint(A.__abstractmethods__)",
+      "answer": "Output: 'raise on call' then AttributeError: __abstractmethods__. WHY: abstractmethod is only a function decorator that sets a marker attribute; a class using the default metaclass type ignores that marker, so A is never known to be abstract and instantiates normally. The failure happens only when you actually CALL foo, and __abstractmethods__ exists only if the metaclass is ABCMeta, hence the AttributeError here."
+    },
+    {
+      "id": 53,
+      "question": "Predict the output:\nfrom abc import ABCMeta, abstractmethod\nclass A(metaclass=ABCMeta):\n    @abstractmethod\n    def foo(self): pass\nclass B:\n    def foo(self): return 'hi'\nA.register(B)\nprint(isinstance(B(), A))\nprint(issubclass(B, A))\nprint(B in A.__subclasses__())",
+      "answer": "Output: True / True / False. WHY: SomeABC.register(B) adds B to A's private virtual-subclass registry (a WeakSet) which ABCMeta.__instancecheck__ and __subclasscheck__ consult, so isinstance/issubclass become True WITHOUT any inheritance. The Python class graph is untouched, so A.__subclasses__() still lists only real subclasses, and B's __mro__ and __abstractmethods__ are unaffected."
+    },
+    {
+      "id": 54,
+      "question": "What error does this raise, and how do you fix it?\nfrom abc import ABCMeta, abstractmethod\nclass A(metaclass=ABCMeta):\n    @abstractmethod\n    def foo(self): pass\n    @A.register\n    class B:\n        pass",
+      "answer": "Error: NameError: name 'A' is not defined. WHY: the class body executes while A is still being built, so the name A is not yet bound to the class object when @A.register runs. Fix: move the registration outside the class statement: A.register(B) (or the decorator form @A.register) after A exists."
+    },
+    {
+      "id": 55,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\n@A.register\nclass B:\n    def foo(self): return 'virt'\nprint(B)\nprint(isinstance(B(), A))",
+      "answer": "Output: <class '__main__.B'> and True. WHY: register is a classmethod that returns the class it was given, so using it as a decorator is valid and leaves B unchanged. Registering marks B as a virtual subclass, making B() an instance of A from the isinstance point of view even though B does not inherit from A."
+    },
+    {
+      "id": 56,
+      "question": "Predict the output and the exception:\nfrom abc import ABC\nclass A(ABC):\n    pass\ntry:\n    A.register(3)\nexcept TypeError as e:\n    print(e)\ntry:\n    A.register('str')\nexcept TypeError as e:\n    print(e)",
+      "answer": "Output: TypeError: Can only register classes (twice, once for 3 and once for 'str'). WHY: register validates that its argument is a class because it must insert the argument into the ABC's weak-registry and be usable in issubclass/isinstance logic. Passing a non-class like an int or str is rejected up front with the same message."
+    },
+    {
+      "id": 57,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\nclass B:\n    def foo(self): return 1\nb = B()\nprint(isinstance(b, A))\nA.register(B)\nprint(isinstance(b, A))",
+      "answer": "Output: False then True. WHY: isinstance is evaluated at call time: ABCMeta.__instancecheck__ looks at type(b) and consults that class's registration status when you ask, not when the instance was created. The same b object becomes 'an A' only after B is registered, and its own __class__ never changes."
+    },
+    {
+      "id": 58,
+      "question": "Predict the output:\nfrom abc import ABC\nclass A(ABC):\n    @classmethod\n    def __subclasshook__(cls, subclass):\n        return False\nclass B:\n    pass\nA.register(B)\nprint(issubclass(B, A))",
+      "answer": "Output: False. WHY: for ABCMeta.__subclasscheck__, the __subclasshook__ result is checked FIRST and, if it is anything other than NotImplemented, that boolean is authoritative. Returning False from the hook therefore vetoes even classes that were explicitly registered with SomeABC.register — the registry is only consulted when the hook gives up with NotImplemented."
+    },
+    {
+      "id": 59,
+      "question": "Predict the output:\nfrom abc import ABC\nclass A(ABC):\n    @classmethod\n    def __subclasshook__(cls, subclass):\n        return True\nclass B:\n    pass\nprint(issubclass(B, A), isinstance(B(), A), B in A.__subclasses__())",
+      "answer": "Output: True True False. WHY: a __subclasshook__ that returns True makes issubclass/isinstance succeed structurally, without registration and without real inheritance. __subclasses__() still reports only real derived classes, because the hook only affects the ABC's check protocol, not the class hierarchy."
+    },
+    {
+      "id": 60,
+      "question": "Predict the output:\nfrom abc import ABC\nclass MySeq(ABC):\n    @classmethod\n    def __subclasshook__(cls, subclass):\n        methods = ('__getitem__', '__len__')\n        if all(hasattr(subclass, m) for m in methods):\n            return True\n        return NotImplemented\nclass S:\n    def __getitem__(self, i): return i\n    def __len__(self): return 10\nprint(issubclass(S, MySeq), isinstance(S(), MySeq))",
+      "answer": "Output: True True. WHY: this is a structural (duck-typed) check: the hook inspects the candidate class's attributes with hasattr and returns True when it looks like a sequence. Returning True short-circuits the check to True; returning NotImplemented lets normal inheritance rules decide for everything else."
+    },
+    {
+      "id": 61,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\n    @classmethod\n    def __subclasshook__(cls, subclass):\n        return NotImplemented\nclass Real(A):\n    def foo(self): pass\nclass Unrelated:\n    pass\nprint(issubclass(Real, A), issubclass(Unrelated, A))",
+      "answer": "Output: True False. WHY: NotImplemented returned from a hook means 'I cannot decide, use the default rules'. The default rule for Real succeeds because it really inherits from A, while Unrelated has no connection to A, so the check correctly fails."
+    },
+    {
+      "id": 62,
+      "question": "Why does this raise an exception, and what is it?\nfrom abc import ABC\nclass A(ABC):\n    def __subclasshook__(cls, subclass):\n        return True\nclass B:\n    pass\nprint(issubclass(B, A))",
+      "answer": "Output: TypeError: A.__subclasshook__() missing 1 required positional argument: 'subclass'. WHY: ABCMeta invokes the hook as cls.__subclasshook__(subclass), treating it as a plain attribute call. Without @classmethod, the plain function is retrieved unbound and called with only subclass, leaving cls missing. __subclasshook__ must always be declared as a classmethod."
+    },
+    {
+      "id": 63,
+      "question": "Predict the output:\nfrom abc import ABC\nclass A(ABC):\n    @classmethod\n    def __subclasshook__(cls, subclass):\n        return hasattr(subclass, 'foo')\nclass D:\n    pass\nprint(issubclass(D, A))\nD.foo = 1\nprint(issubclass(D, A))",
+      "answer": "Output: False then False. WHY: ABCMeta caches subclass-check results; the first negative answer for class D is stored in the ABC's negative cache, so the second call never re-runs the hook even though D was mutated to have foo afterwards. The stale cached result wins."
+    },
+    {
+      "id": 64,
+      "question": "Predict the output:\nfrom abc import ABC\nclass A(ABC):\n    @classmethod\n    def __subclasshook__(cls, subclass):\n        return hasattr(subclass, 'foo')\nclass E:\n    pass\nE.foo = 1\nprint(issubclass(E, A))\nE.foo = 2\nprint(issubclass(E, A))",
+      "answer": "Output: True then True. WHY: the first positive result is cached in the positive cache, so the second call skips the hook entirely and reuses the cached True. This shows ABCMeta treats the result as stable per (class, subclass) pair until the caches are explicitly cleared."
+    },
+    {
+      "id": 65,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\nother = object()\ndef new(cls):\n    return other\nA.__new__ = staticmethod(new)\nr = A()\nprint(r is other)\nprint(type(r))",
+      "answer": "Output: True and <class 'object'>; NO TypeError is raised. WHY: the 'Can't instantiate abstract class' guard is implemented inside object.__new__ (the tp_new slot), not in type.__call__. By replacing __new__ with a function that never calls object.__new__, the abstract check is never reached. Because the returned object is not an instance of A, A.__init__ is also skipped."
+    },
+    {
+      "id": 66,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\n    def __new__(cls):\n        print('inside __new__')\n        return object.__new__(cls)\ntry:\n    A()\nexcept TypeError as e:\n    print(e)",
+      "answer": "Output: 'inside __new__' then TypeError: Can't instantiate abstract class A without an implementation for abstract method 'foo'. WHY: the abstract guard fires from within object.__new__, so a custom __new__ that delegates back to object.__new__(cls) still hits the guard. Note the difference from overriding __new__ entirely: the check happens at exactly the object.__new__ call."
+    },
+    {
+      "id": 67,
+      "question": "Predict the output:\nfrom abc import ABCMeta, abstractmethod\nclass A(metaclass=ABCMeta):\n    @classmethod\n    @abstractmethod\n    def foo(cls): pass\nclass B(A):\n    @classmethod\n    def foo(cls):\n        return 'B.foo'\nprint(B.foo())\nprint(B().foo())\nprint(type(B))",
+      "answer": "Output: B.foo / B.foo / <class 'abc.ABCMeta'>. WHY: @classmethod outermost followed by @abstractmethod is the legal stacking order for abstract classmethods; the abstract marker is propagated to the classmethod descriptor so ABCMeta records it. B overrides the abstract classmethod with a concrete one, and it can be called via the class or an instance. type(B) is ABCMeta because the class uses metaclass=ABCMeta."
+    },
+    {
+      "id": 68,
+      "question": "Predict the error:\nfrom abc import ABCMeta, abstractmethod\nclass A(metaclass=ABCMeta):\n    @abstractmethod\n    @classmethod\n    def foo(cls): pass",
+      "answer": "Output: AttributeError: attribute '__isabstractmethod__' of 'classmethod' objects is not writable, raised at class-definition time. WHY: abstractmethod tries to set its marker on the descriptor it wraps. A classmethod object does not expose a writable __isabstractmethod__ slot, so abstractmethod outermost cannot mark it. The correct order is @classmethod on the OUTSIDE and @abstractmethod on the inside."
+    },
+    {
+      "id": 69,
+      "question": "Predict the output:\nfrom abc import ABCMeta, abstractmethod\nclass A(metaclass=ABCMeta):\n    @staticmethod\n    @abstractmethod\n    def foo(x): return x\nclass B(A):\n    @staticmethod\n    def foo(x): return x * 2\nprint(B.foo(21))\nprint(B().foo(10))\nprint(A.__abstractmethods__)",
+      "answer": "Output: 42 / 20 / frozenset({'foo'}). WHY: @staticmethod outermost works the same way as classmethod: the abstract marker is recorded and the staticmethod callable is later overridden in B. A remains abstract (its foo is still marked), while B fully satisfies the contract and can be called through both the class and an instance."
+    },
+    {
+      "id": 70,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @property\n    @abstractmethod\n    def x(self): pass\nclass B(A):\n    @property\n    def x(self):\n        return 42\nprint(B.__abstractmethods__)\nprint(B().x)",
+      "answer": "Output: frozenset() then 42. WHY: @property outermost is the legal stacking order for abstract properties; the abstract flag from the inner wrapped getter is transferred to the property descriptor so ABCMeta picks it up. When B redefines x with a plain (non-abstract) @property, the abstract set is emptied and the property works normally on the instance."
+    },
+    {
+      "id": 71,
+      "question": "Predict the error:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    @property\n    def x(self): pass",
+      "answer": "Output: AttributeError: attribute '__isabstractmethod__' of 'property' objects is not writable at class-definition time. WHY: with @abstractmethod outermost, abstractmethod receives a property object and tries to set its own marker attribute, but property descriptors have no writable __isabstractmethod__ slot. Only the OUTER decorator may be the descriptor, so the stacking must be @property outermost and @abstractmethod innermost."
+    },
+    {
+      "id": 72,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass Person(ABC):\n    @property\n    @abstractmethod\n    def name(self): pass\n    def greet(self):\n        return 'hi ' + self.name\nclass Bob(Person):\n    @property\n    def name(self):\n        return 'Bob'\nprint(Bob().greet())",
+      "answer": "Output: hi Bob. WHY: this is the template-method pattern: greet is a concrete method in the ABC that delegates to the abstract getter self.name. On a Bob instance the concrete override resolves, so the template can run its full logic even though Person itself can never be instantiated."
+    },
+    {
+      "id": 73,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass Person(ABC):\n    @property\n    @abstractmethod\n    def name(self): pass\n    def greet(self):\n        return 'hi ' + self.name\nclass Carol(Person):\n    name = 'Carol'\nprint(Carol().greet())",
+      "answer": "Output: hi Carol. WHY: an abstract property can be satisfied by a plain class attribute: name = 'Carol' carries no abstract marker, so ABCMeta clears 'name' from __abstractmethods__ and Carol becomes concrete. Attribute resolution then finds the plain string, so the template method greet still works."
+    },
+    {
+      "id": 74,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass Pay(ABC):\n    @abstractmethod\n    def amount(self): pass\n    @abstractmethod\n    def currency(self): pass\n    def total(self):\n        return '{} {}'.format(self.amount(), self.currency())\nclass USD(Pay):\n    def amount(self): return 100\n    def currency(self): return 'USD'\nprint(USD().total())",
+      "answer": "Output: 100 USD. WHY: total() is a non-abstract method that is parameterised by two abstract methods (template-method pattern with several abstract getters). Subclasses only supply the abstract pieces, and the ABC's concrete method assembles them uniformly."
+    },
+    {
+      "id": 75,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def factor(self): pass\n    def __init__(self):\n        print('init running')\n        self.x = self.factor() * 2\nclass B(A):\n    def factor(self): return 5\nb = B()\nprint(b.x)",
+      "answer": "Output: 'init running' then 10. WHY: instantiation proceeds as __new__ first (the abstract guard passes because B implements factor), then __init__ runs. Calling the abstract method self.factor() from __init__ works because by the time __init__ executes, the object's class is the concrete B with a real implementation."
+    },
+    {
+      "id": 76,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def __init__(self): pass\nclass C(A):\n    def foo(self): pass\ntry:\n    C()\nexcept TypeError as e:\n    print(e)",
+      "answer": "Output: TypeError: Can't instantiate abstract class C without an implementation for abstract method '__init__'. WHY: __init__ is just another name as far as ABCMeta is concerned; marking it abstract means every concrete descendant must provide its own __init__. Providing an unrelated foo does not satisfy it, so C is still abstract and blocked at object.__new__."
+    },
+    {
+      "id": 77,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\n    @abstractmethod\n    def bar(self): pass\nclass B(A):\n    def foo(self): return 'f'\nprint(B.__abstractmethods__)\ntry:\n    B()\nexcept TypeError as e:\n    print(e)\nclass C(B):\n    def bar(self): return 'b'\nc = C()\nprint(c.foo(), c.bar(), C.__abstractmethods__)",
+      "answer": "Output: frozenset({'bar'}) then TypeError: Can't instantiate abstract class B without an implementation for abstract method 'bar' then 'f b frozenset()'. WHY: ABCMeta recomputes __abstractmethods__ for every class by taking the union of its bases' abstract sets and removing any name implemented in the class's own namespace. A partial subclass B implements only foo, so bar keeps B abstract; the grandchild C completes the contract and becomes concrete."
+    },
+    {
+      "id": 78,
+      "question": "Predict the output:\nfrom abc import ABC\nclass A(ABC):\n    def foo(self): return 1\nprint(type(A()))\nA.__abstractmethods__ = frozenset({'foo'})\ntry:\n    A()\nexcept TypeError as e:\n    print(e)\nA.__abstractmethods__ = frozenset()\nprint(type(A()))",
+      "answer": "Output: <class '__main__.A'> then TypeError: Can't instantiate abstract class A without an implementation for abstract method 'foo' then <class '__main__.A'>. WHY: __abstractmethods__ is a plain class attribute consulted by object.__new__ at instantiation time, so you can toggle abstractness at runtime by mutating it. A non-empty set makes the class uninstantiable; restoring an empty set makes it concrete again, all without any inheritance change."
+    },
+    {
+      "id": 79,
+      "question": "Predict the output:\nfrom abc import ABC\nclass A(ABC):\n    pass\nprint(A.__abstractmethods__)\nprint(type(A()))",
+      "answer": "Output: frozenset() then <class '__main__.A'>. WHY: an ABC with no abstract methods has an empty __abstractmethods__, so ABCMeta does not consider it abstract and instantiation works normally. This is the common base-class style used purely as a namespace or interface marker."
+    },
+    {
+      "id": 80,
+      "question": "Predict the output:\nfrom abc import ABC\nclass A:\n    def foo(self):\n        raise NotImplementedError('foo()')\na = A()\nprint('instantiated', type(a).__name__)\ntry:\n    a.foo()\nexcept NotImplementedError as e:\n    print('call failed:', e)",
+      "answer": "Output: 'instantiated A' then 'call failed: foo()'. WHY: raising NotImplementedError from a method body is only a runtime convention; nothing about the class announces that foo is abstract, so the class instantiates without error. The failure is deferred to the call, unlike a real ABC which refuses construction up front."
+    },
+    {
+      "id": 81,
+      "question": "What is wrong here, and how do you fix it?\nfrom abc import ABCMeta, ABC\nclass CustomMeta(type):\n    pass\nclass Base(metaclass=CustomMeta):\n    x = 1\nclass Bad(Base, ABC):\n    pass",
+      "answer": "Output: TypeError: metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclasses of all its bases. WHY: Bad would need one metaclass that is a subtype of BOTH CustomMeta and ABCMeta, and neither of those is a subclass of the other. Fix: derive one from the other, e.g. class JointMeta(ABCMeta, CustomMeta): pass and use metaclass=JointMeta, whose MRO (JointMeta -> ABCMeta -> CustomMeta -> type) unifies both behaviors."
+    },
+    {
+      "id": 82,
+      "question": "Predict the output:\nfrom abc import ABCMeta, abstractmethod\nclass MyMeta(ABCMeta):\n    pass\nclass A(metaclass=MyMeta):\n    @abstractmethod\n    def foo(self): pass\nprint(issubclass(MyMeta, ABCMeta))\nprint(A.__abstractmethods__)\ntry:\n    A()\nexcept TypeError as e:\n    print(e)",
+      "answer": "Output: True / frozenset({'foo'}) / TypeError: Can't instantiate abstract class A without an implementation for abstract method 'foo'. WHY: any metaclass whose mro contains ABCMeta inherits the entire ABC machinery, so subclassing ABCMeta is the correct way to give a custom metaclass abstract support. Abstract methods are collected and enforced exactly as with ABCMeta directly."
+    },
+    {
+      "id": 83,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass Plugin(ABC):\n    _registry = {}\n    def __init_subclass__(cls, **kwargs):\n        super().__init_subclass__(**kwargs)\n        if getattr(cls, 'slug', None):\n            Plugin._registry[cls.slug] = cls\n    @classmethod\n    def create(cls, slug):\n        return cls._registry[slug]()\n    @abstractmethod\n    def label(self): pass\nclass One(Plugin):\n    slug = 'one'\n    def label(self): return 'One'\nclass Two(Plugin):\n    slug = 'two'\n    def label(self): return 'Two'\nprint(Plugin.create('one').label())\nprint(Plugin.create('two').label())\nprint(sorted(Plugin._registry))",
+      "answer": "Output: One / Two / ['one', 'two']. WHY: __init_subclass__ fires for every subclass during class creation (triggered by ABCMeta/type __new__), so each implementation registers itself by slug before anything is instantiated. The abstract factory create() dispatches by slug with no if/elif cascade, and abstractmethods still force each implementation to define label() or remain uninstantiable."
+    },
+    {
+      "id": 84,
+      "question": "Predict the six outputs:\nfrom collections.abc import Sequence, Mapping, Set, Hashable, Iterable\nprint(isinstance([], Sequence))\nprint(isinstance({}, Mapping))\nprint(isinstance(range(3), Sequence))\nprint(isinstance({1: 2}.keys(), Set))\nprint(isinstance(set(), Hashable))\nprint(isinstance('abc', Iterable))",
+      "answer": "Output: True True True True False True. WHY: most of these pass through REAL inheritance (list is an actual Sequence, range a Sequence, dict keys a Set view, str an Iterable, dict a Mapping). set() returns False for Hashable because the builtin set type is neither a registered nor a real subclass of Hashable, and ABCMeta's default checks find no connection."
+    },
+    {
+      "id": 85,
+      "question": "Predict the output:\nfrom collections.abc import Sequence\nclass DuckSeq:\n    def __getitem__(self, i): return i\n    def __len__(self): return 0\n    def __iter__(self): return iter(())\nprint(isinstance(DuckSeq(), Sequence))",
+      "answer": "Output: False. WHY: unlike custom ABCs, the standard collections.abc classes no longer define structural __subclasshook__ checks, so duck typing alone does not make an unrelated class a Sequence. To satisfy isinstance you must either register the class or make it actually inherit; this is why implementing the protocol is not enough."
+    },
+    {
+      "id": 86,
+      "question": "Predict the two outputs:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\nclass B:\n    def foo(self): return 1\nA.register(B)\nprint(isinstance(B(), (A, int)))\nprint(isinstance(B(), (int, A)))",
+      "answer": "Output: True True. WHY: the tuple form of isinstance returns True if ANY element's check succeeds. Since B was registered as a virtual subclass of A, both orderings succeed because the int check is irrelevant — the A branch is already True. Tuple membership is order-independent here."
+    },
+    {
+      "id": 87,
+      "question": "Predict the outputs:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\nclass B:\n    def foo(self): return 1\nA.register(B)\nclass A2(A):\n    pass\nprint(issubclass(B, A2))\nprint(isinstance(B(), A2))",
+      "answer": "Output: False False. WHY: registration is tied to the exact ABC you register with, and ABCMeta's check consults only the registry of the class being asked about (plus real-inheritance rules), not the registries of ancestor ABCs. So B being virtual for A gives no virtual status against A2, a DESCENDANT of A."
+    },
+    {
+      "id": 88,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def name(self):\n        return 'base-'\nclass B(A):\n    def name(self):\n        return super().name() + 'b'\nclass C(A):\n    def name(self):\n        return 'c-' + super().name()\nprint(B().name())\nprint(C().name())",
+      "answer": "Output: base-b / c-base-. WHY: abstractmethod only marks the method as abstract; the default body remains executable through super(). Subclasses can intentionally call super().name() to layer their own logic on top of the ABC's default, a cooperative variant of the template-method pattern."
+    },
+    {
+      "id": 89,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def __str__(self): pass\ntry:\n    A()\nexcept TypeError as e:\n    print(e)\nclass B(A):\n    def __str__(self):\n        return 'B-to-string'\nb = B()\nprint(str(b))",
+      "answer": "Output: TypeError: Can't instantiate abstract class A without an implementation for abstract method '__str__' then B-to-string. WHY: special methods are not special to ABCMeta — marking __str__ abstract records it in __abstractmethods__ and blocks instantiation until a subclass supplies it. Once overridden, the dunder works exactly as usual, which is why str(b) prints the custom text."
+    },
+    {
+      "id": 90,
+      "question": "Predict the outputs:\nfrom abc import ABC, abstractmethod\nclass Mixin(ABC):\n    @abstractmethod\n    def greet(self): pass\nclass Greeter(ABC):\n    def greet(self): return 'world'\nclass App(Mixin, Greeter):\n    pass\nprint(App.__abstractmethods__)\ntry:\n    App()\nexcept TypeError as e:\n    print(e)\nclass Fixed(Mixin, Greeter):\n    def greet(self): return 'ok'\nprint(Fixed().greet())",
+      "answer": "Output: frozenset({'greet'}) / TypeError: Can't instantiate abstract class App without an implementation for abstract method 'greet' / ok. WHY: ABCMeta builds __abstractmethods__ from the union over all bases and removes only names redefined in the class's OWN namespace. A concrete greet sitting in the sibling base Greeter does not erase the abstract mark declared by Mixin, even though attribute lookup would resolve it, so App() fails and Fixed (redefining it) succeeds."
+    },
+    {
+      "id": 91,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\ntry:\n    object.__new__(A)\nexcept TypeError as e:\n    print(e)",
+      "answer": "Output: TypeError: Can't instantiate abstract class A without an implementation for abstract method 'foo'. WHY: this proves the abstract guard lives INSIDE object.__new__ itself, so even calling the low-level allocator directly on an abstract class fails. There is no way to smuggle an A into existence without first clearing __abstractmethods__ or overriding __new__ to avoid object.__new__."
+    },
+    {
+      "id": 92,
+      "question": "Predict the outputs:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\nclass A2(A):\n    @abstractmethod\n    def bar(self): pass\nclass B:\n    pass\nA2.register(B)\nprint(issubclass(B, A2))\nprint(issubclass(B, A))\nprint(isinstance(B(), A))",
+      "answer": "Output: True True True. WHY: registering on the child ABC A2 makes B virtual for A2 and, because A2 is a REAL subclass of A, the relationship is also visible when asking about the ancestor A. This is the mirror image of the descendant case: virtual-ness registered on a CHILD propagates UP the mro to ancestors, not down."
+    },
+    {
+      "id": 93,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass Bag(ABC):\n    @abstractmethod\n    def __len__(self): pass\n    @abstractmethod\n    def __getitem__(self, i): pass\n    def peek(self):\n        return self[0]\nclass CBag(Bag):\n    def __init__(self, items): self.items = items\n    def __len__(self): return len(self.items)\n    def __getitem__(self, i): return self.items[i]\nb = CBag(['a', 'b', 'c'])\nprint(len(b), b.peek(), b[2])",
+      "answer": "Output: 3 a c. WHY: abstract dunders __len__ and __getitem__ form an abstract container contract; the concrete peek() is the template that consumes them. len(b) and b[2] dispatch to the abstract dunders through the normal protocol, then the concrete implementations do the real work."
+    },
+    {
+      "id": 94,
+      "question": "Predict the outputs:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\nA.register(list)\nprint(issubclass(list, A))\nprint(isinstance([1, 2], A))\nprint(isinstance((1,), A))\nprint(A.__abstractmethods__)",
+      "answer": "Output: True / True / False / frozenset({'foo'}). WHY: registering a builtin type like list is perfectly legal, so every list object becomes an A from the isinstance point of view. The registration does not touch A's own abstractness (its __abstractmethods__ still contains foo), and tuples remain unrelated because only list was registered."
+    },
+    {
+      "id": 95,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass A(ABC):\n    @abstractmethod\n    def foo(self): pass\n    def __getattr__(self, name):\n        return 'missing:' + name\nclass B(A):\n    def foo(self): return 'foo'\nb = B()\nprint(b.nope)\nprint(b.foo)",
+      "answer": "Output: missing:nope then <bound method B.foo of <__main__.B object at 0x...>>. WHY: __getattr__ fires only when normal lookup FAILS, so b.nope (absent) is synthesized while b.foo is found on the class as a normal method and binds to the instance. Abstractness is about enforcement, not attribute interception; once implemented, foo is an ordinary method."
+    },
+    {
+      "id": 96,
+      "question": "This metaclass should make every method whose name starts with must_ abstract. It enforces Worker correctly but wrongly keeps RealWorker abstract. Fix the bug.\nfrom abc import ABCMeta\nclass NameMeta(ABCMeta):\n    def __new__(mcls, name, bases, ns):\n        cls = super().__new__(mcls, name, bases, ns)\n        abstract = set()\n        for key, value in ns.items():\n            if key.startswith('must_'):\n                abstract.add(key)\n        cls.__abstractmethods__ = frozenset(abstract)\n        return cls\nclass Worker(metaclass=NameMeta):\n    def must_work(self): pass\nclass RealWorker(Worker):\n    def must_work(self): return 'done'",
+      "answer": "Buggy output when running RealWorker(): TypeError: Can't instantiate abstract class RealWorker without an implementation for abstract method 'must_work'. WHY: the loop re-adds must_work for RealWorker too, even though RealWorker's own definition is exactly what should satisfy it. Fix: seed abstract from the bases' already-computed __abstractmethods__ (dropping members overridden in this namespace's non-must_ names), and add a must_* name only if it is NEW here, i.e. not already present in any base's dict: abstract = union of getattr(base, '__abstractmethods__', ()) for bases; then for key in ns: if key in abstract and not callable(ns[key])... the practical fix is: for key, value in ns.items(): if key in abstract: abstract.remove(key); elif key.startswith('must_'): abstract.add(key). With that, Worker keeps {'must_work'} while RealWorker's redefinition clears it, and RealWorker().must_work() prints 'done'."
+    },
+    {
+      "id": 97,
+      "question": "Predict the error:\nfrom abc import ABC, abstractmethod\nclass Left(ABC):\n    @abstractmethod\n    def go(self): pass\nclass Right(Left):\n    def go(self): return 'right'\nclass Child(Left, Right):\n    pass",
+      "answer": "Output: TypeError: Cannot create a consistent method resolution order (MRO) for bases Left, Right, raised at the Child definition. WHY: Child lists Left before Right, but Right already inherits from Left, which would force both orders simultaneously and make the C3 linearization impossible. This MRO conflict is orthogonal to abstractness; the identical error appears for two plain classes."
+    },
+    {
+      "id": 98,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass Ctx(ABC):\n    @abstractmethod\n    def __enter__(self): pass\n    @abstractmethod\n    def __exit__(self, *exc): pass\nclass Resource(Ctx):\n    def __enter__(self):\n        print('enter')\n        return self\n    def __exit__(self, *exc):\n        print('exit')\nwith Resource(): \n    print('inside')",
+      "answer": "Output: enter / inside / exit. WHY: the with statement drives __enter__ and __exit__ via the context-manager protocol, and ABCMeta forces every concrete subclass to implement them both. A bare Ctx() can never be built, guaranteeing that whatever enters the with block will be properly closed afterwards."
+    },
+    {
+      "id": 99,
+      "question": "Predict the output:\nfrom abc import ABC, abstractmethod\nclass TopList(list, ABC):\n    @abstractmethod\n    def rank(self): pass\ntry:\n    TopList()\nexcept TypeError as e:\n    print(e)\nclass Ranked(TopList):\n    def rank(self): return 'R'\nr = Ranked([3, 1, 2])\nr.append(0)\nprint(r.rank(), sorted(r))",
+      "answer": "Output: TypeError: Can't instantiate abstract class TopList without an implementation for abstract method 'rank' then R [0, 1, 2, 3]. WHY: ABCMeta works fine when mixed with a builtin base, so the abstract rank() forbids TopList but not Ranked. Once the contract is met, the resulting object keeps all the real list behaviors (append, sorted iteration) on top of the custom abstract method."
+    },
+    {
+      "id": 100,
+      "question": "Predict the outputs:\nfrom abc import ABC, abstractmethod\nclass Behavior(ABC):\n    @classmethod\n    def __subclasshook__(cls, subclass):\n        if getattr(subclass, 'legacy', False):\n            return True\n        return NotImplemented\n    @abstractmethod\n    def run(self): pass\nclass Old:\n    legacy = True\n    def run(self): return 'old-run'\nclass New(Behavior):\n    def run(self): return 'new-run'\nprint(isinstance(Old(), Behavior))\nprint(issubclass(New, Behavior))\nBehavior.register(int)\nprint(isinstance(5, Behavior))\nprint(New.__abstractmethods__)",
+      "answer": "Output: True / True / True / frozenset(). WHY: Old passes purely structurally because its hook sees legacy=True and returns True (no registration needed); New passes through real inheritance while its run() satisfies the abstract method; int gets a True via its explicit registration because the hook returns NotImplemented for it and the registry is checked next. New.__abstractmethods__ is empty, confirming that once run() is implemented the class is fully concrete."
+    }
+  ]
+}

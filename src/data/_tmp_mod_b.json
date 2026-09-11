@@ -1,0 +1,255 @@
+{
+  "description": "part b",
+  "questions": [
+    {
+      "id": 51,
+      "question": "Predict what gets bound in the caller's namespace after:\nimport sumpkg.utilities\nprint('utilities' in globals())      # line A\nprint(hasattr(sumpkg, 'utilities'))  # line B",
+      "answer": "False\nTrue. 'import pkg.sub' binds ONLY the top-level package name sumpkg in the globals, so 'utilities' in globals() is False at line A. But the import machinery then attaches the submodule to its parent with setattr(sumpkg, 'utilities', module), so hasattr(sumpkg, 'utilities') is True at line B. To bind the submodule name you must write 'from sumpkg import utilities' or 'import sumpkg.utilities as u'."
+    },
+    {
+      "id": 52,
+      "question": "Fresh interpreter. The package has:\npkg/__init__.py    ->  print('pkg init')\npkg/mod.py         ->  print('mod body')\nPredict the printed output of:\nimport pkg.mod",
+      "answer": "pkg init\nmod body. Importing a submodule first imports (and thus executes) the parent package's __init__.py, and only afterwards does it execute the submodule file. That ordering is why __init__.py is the right place for package-level setup shared by every submodule. Executing mod.py directly would NOT print 'pkg init', because a script run never imports its own parent package."
+    },
+    {
+      "id": 53,
+      "question": "pkg/__init__.py contains:\nMIN_VERSION = (3, 11)\ndef enabled(): return True\nPredict the output of:\nfrom pkg import MIN_VERSION, enabled\nprint(MIN_VERSION[1], enabled())",
+      "answer": "11 True. 'from pkg import name' looks the name up as an ATTRIBUTE of the already-imported package object, and MIN_VERSION plus enabled live in pkg's namespace because they were defined in __init__.py's body. No submodule exists or is searched here; the import system just does getattr. With a FROZEN package name (no init) both names would fail, because a namespace package has no attributes of its own."
+    },
+    {
+      "id": 54,
+      "question": "Files:\npkg/__init__.py ->  print('init')\npkg/mod.py      ->  print('mod body'); X = 7\nPredict the output and what 'mod' names:\nfrom pkg import mod\nprint(X, mod.X)",
+      "answer": "init\nmod body\nNameError. 'from pkg import mod' first imports pkg (print 'init'), then, since pkg has no attribute 'mod' yet, the machinery imports the submodule pkg.mod which prints 'mod body'. Only the name mod is bound in the caller (a module object), so print(X, mod.X) raises NameError on X; mod.X = 7 works. This differs from 'from pkg.mod import X', which binds the int 7 directly."
+    },
+    {
+      "id": 55,
+      "question": "After:\nimport g.gp.gc.deep as d\nprint(type(d).__name__, d.Q)\nprint('g' in globals(), 'deep' in globals())",
+      "answer": "module 1\nFalse False. But every parent in the chain must exist (g.gp.gc deep in sys.modules hierarchy). 'import a.b.c as x' imports the full dotted path but binds ONLY the alias x to the final submodule; the leftmost names are NOT bound, unlike plain 'import a.b.c' which binds only 'a'. Internally all four names a, a.b, a.b.c, a.b.c.deep end up as keys in sys.modules, but only x appears in the caller's globals."
+    },
+    {
+      "id": 56,
+      "question": "pkg/__init__.py does:\nfrom . import helper\nhelper.py contains:\nF = 42\nPredict the output of:\nfrom pkg import helper\nprint(helper.F)",
+      "answer": "42. The relative 'from . import helper' inside __init__.py imports the sibling submodule and attaches it as an attribute of pkg, so that by the time the __init__ body finishes, pkg.helper is a real module. The later 'from pkg import helper' is then just an attribute lookup returning that cached module. This re-export idiom lets code write 'from pkg import helper' instead of the longer dotted import."
+    },
+    {
+      "id": 57,
+      "question": "pkg/__init__.py contains:\nfrom . import helper\nCONST = 99\n_hidden = 'w'\n__all__ = ['CONST', 'helper', 'extra_NAME']\nextra_NAME = 'in-all'\nAfter:\nfrom pkg import *\nwhich of CONST, helper, extra_NAME, _hidden are bound?",
+      "answer": "CONST, helper and extra_NAME are bound; _hidden is NOT (and it would print False). When __all__ is present, 'from pkg import *' copies exactly the names __all__ lists, ignoring everything else. _hidden would also be excluded even without __all__, because star-import always skips names starting with an underscore. helper is importable because __init__ already attached the submodule to the package."
+    },
+    {
+      "id": 58,
+      "question": "Directory 'nsp' exists but has NO __init__.py, and contains helper.py. Predict:\nimport nsp\nprint(nsp.__file__)\nprint(hasattr(nsp, '__path__'))\nimport nsp.helper",
+      "answer": "None\nTrue\n(imports fine, no error). In Python 3 any directory on sys.path with no __init__.py is a namespace package: the import system finds the directory, builds a module with loader=None, and sets __path__ to a list of the matching directories. Because nothing is loaded from a file, __file__ is None. Submodules inside it are regular SourceFileLoader modules and import normally."
+    },
+    {
+      "id": 59,
+      "question": "sys.path = ['/p/pa', '/p/pb'] (pa before pb). Both /p/pa/shared/ and /p/pb/shared/ exist WITHOUT __init__.py; only pa/shared/aa/m.py and pb/shared/bb/m.py exist. Predict:\nimport shared\nprint(list(shared.__path__))\nimport shared.aa, shared.bb",
+      "answer": "['/p/pa/shared', '/p/pb/shared']\n(and both imports succeed). Because there is no __init__.py anywhere, the import machinery collects EVERY matching directory across all sys.path entries into one search list (a _NamespacePath) which becomes the package __path__, in sys.path order. Submodule searching then walks that combined path, so aa and bb, living under different path segments, are both reachable. A regular package later would have overridden both segments (see next question)."
+    },
+    {
+      "id": 60,
+      "question": "sys.path = ['/p/e1', '/p/e2', '/p/e3']. Both e1/dupe/ and e3/dupe/ exist WITHOUT __init__.py (e1/dupe/mark.py only there); e2/dupe/ HAS __init__.py with 'print(\"REGULAR dupe init\")'. Predict:\nimport dupe\nprint(list(dupe.__path__))\nimport dupe.mark",
+      "answer": "REGULAR dupe init\n['/p/e2/dupe']\nModuleNotFoundError. Namespace ports are only used if NO directory with __init__.py is found anywhere: the regular package beats even namespace dirs that appear earlier in sys.path. Because the regular package won, dupe.__path__ is just its own directory, so e1/dupe/mark.py is unreachable and 'import dupe.mark' fails with ModuleNotFoundError: No module named 'dupe.mark'."
+    },
+    {
+      "id": 61,
+      "question": "Predict the value printed by:\npython3 -c \"import sys; print(repr(sys.path[0]))\"",
+      "answer": "'' (an empty string). For -c and for the interactive interpreter, the first sys.path entry is the CURRENT working directory represented as the empty string, which the import system resolves as the cwd. A script run in contrast puts the script's own directory first. This '' entry is why modules sitting in the cwd are importable without any sys.path surgery."
+    },
+    {
+      "id": 62,
+      "question": "mod.py in the current directory sets WHERE = 'cwd'; /x/pp/mod.py (reachable only via PYTHONPATH) sets WHERE = 'PYTHONPATH'. Run from the cwd:\nPYTHONPATH=/x/pp python3 go.py\nwhere go.py does 'import mod; print(mod.WHERE)'. What prints?",
+      "answer": "cwd. For a script run, sys.path[0] is the directory containing the script (the cwd here), and PYTHONPATH entries are APPENDED after it, so the effective order is ['<cwd>', '/x/pp', ...standard library, ...site-packages]. The finder walks the path in order and takes the first hit, so the cwd copy of mod.py wins and the PYTHONPATH copy is never even considered. Reverse sys.path order by moving the PYTHONPATH entry earlier if you need the opposite."
+    },
+    {
+      "id": 63,
+      "question": "You create math.py ('print(\"shadow\"); X = 1') in the script directory and run:\nimport math\nprint('shadowed' if hasattr(math, 'X') else 'builtin')\nprint(type(math.__loader__).__name__)\nPredict the output.",
+      "answer": "builtin\nBuiltinImporter\n(and NOTHING prints 'shadow', the local file never runs). math is a built-in module compiled into the interpreter, and builtin modules are resolved by BuiltinImporter BEFORE sys.path is consulted, so a same-named file can never shadow it. math also has no __file__ attribute, because it is not loaded from a file. The common 'my math.py shadowed the stdlib' story only applies to pure-Python stdlib modules like random."
+    },
+    {
+      "id": 64,
+      "question": "In the script directory you create random.py containing:\nprint('shadow random imported')\nMYRANDOM = True\nThen run:\nimport random\nprint(hasattr(random, 'randint'), hasattr(random, 'MYRANDOM'))\nprint(random.__file__)",
+      "answer": "shadow random imported\nFalse True\n.../random.py (your file's path). random is a pure-Python stdlib module delivered as a .py file on sys.path, unlike math, so a same-named file earlier in sys.path (the script directory) wins the first-match search and completely replaces it: randint is gone, MYRANDOM is present. This is the classic shadowing footgun: it silently breaks every module that does 'from random import ...' at import time in the same interpreter."
+    },
+    {
+      "id": 65,
+      "question": "top/pk/b.py begins with:\nfrom . import a\nPredict the traceback when you run:\npython3 top/pk/b.py",
+      "answer": "ImportError: attempted relative import with no known parent package (raised at the 'from . import a' line, in File 'top/pk/b.py'). When executed as a script, __name__ becomes '__main__' and __package__ is None, so the import system cannot determine what the '.' refers to. Relative imports only work for modules that are part of an importable package; they need __package__ to be set, which happens when the module is imported normally or run with 'python -m top.pk.b'."
+    },
+    {
+      "id": 66,
+      "question": "From the directory containing 'top', run:\npython3 -m top.pk.b\nwhere top/__init__.py prints 'top init', top/pk/__init__.py prints 'pk init', and pk/b.py does 'from . import a' then 'from .. import out' then prints a.A_MARK and out.MAIN. Predict the output.",
+      "answer": "top init\npk init\nb imported; a.A_MARK = a out.MAIN = 1. With '-m', sys.path[0] is the current directory and the target module's __package__ is set to 'top.pk', so '.' resolves to top.pk and '..' to top. The parent packages' __init__.py files execute first in outermost-to-innermost order (top, then pk) before b.py's body runs. Running the same file directly instead raises 'attempted relative import with no known parent package'."
+    },
+    {
+      "id": 67,
+      "question": "Package tree: g/__init__.py (empty), g/rootname.py, g/gp/__init__.py (empty), g/gp/gc/__init__.py (empty), and g/gp/gc/deep.py containing:\nfrom ... import rootname\nprint('got TOP =', rootname.TOP)\n(rootname.TOP == 'root'). Predict the output of:\nimport g.gp.gc.deep",
+      "answer": "got TOP = root. In g.gp.gc.deep the leading dots count how many levels to climb: one '.' is the current package (g.gp.gc), '..' is g.gp, '...' is g. With '...' the import climbs to g and imports the sibling-of-gp module rootname from within it. The import runs fine as long as g is importable (its parent dir is on sys.path); this is a pure-Python example of multi-level relative imports with no __init__ code."
+    },
+    {
+      "id": 68,
+      "question": "Compare attributes of toolbox/entry.py printed by the two invocations:\npython3 toolbox/entry.py   vs   python3 -m toolbox.entry\nUse __name__, __package__, __file__ and __loader__.",
+      "answer": "Script run: __name__='__main__', __package__=None, __file__='/abs/path/toolbox/entry.py', __loader__=SourceFileLoader, sys.path[0]=the toolbox directory.\n-m run: __name__='__main__', __package__='toolbox', __file__='/abs/path/toolbox/entry.py', __loader__=SourceFileLoader, sys.path[0]=the current directory (plus toolbox/__init__.py runs first). The critical difference is __package__: -m sets it, so relative imports like 'from .. import x' work, whereas the script run has None and any relative import raises ImportError. The -m form also requires you to be in the parent dir of toolbox."
+    },
+    {
+      "id": 69,
+      "question": "The package pkg has __init__.py but NO __main__.py. Predict what happens with:\npython3 -m pkg",
+      "answer": "No module named pkg.__main__; 'pkg' is a package and cannot be directly executed. In 3.4+ '-m pkg' looks for a __main__.py INSIDE the package and executes it after running __init__.py. If no __main__.py exists the run aborts with SystemExit(1) and the message above. The same -m form works on a plain module file or on any package that does ship a __main__.py."
+    },
+    {
+      "id": 70,
+      "question": "pkg/__init__.py prints 'pkg __init__ ran'. pkg/__main__.py prints:\nprint(\"main body, name =\", __name__, \"package =\", __package__)\nPredict the output of:\npython3 -m pkg",
+      "answer": "pkg __init__ ran\nmain body, name = __main__ package = pkg. '-m pkg' first imports pkg, so __init__.py executes, then runs pkg/__main__.py as the __main__ module. Despite __name__ being '__main__', __package__ is 'pkg', which is exactly why relative imports inside __main__.py keep working under -m. This is the standard way to make a package runnable as a program while preserving package semantics."
+    },
+    {
+      "id": 71,
+      "question": "shared.py: count = 0; def bump(): global count; count += 1; return count. a.py: 'import shared; print(shared.bump())'. b.py: 'import shared; print(shared.count)'. A main script imports shared, then a, then b. Predict the two printed values.",
+      "answer": "1\n1. Modules are imported ONCE per interpreter and cached in sys.modules, so a.py, b.py and the main script all hold the SAME module object for 'shared'. The global count incremented by a.py's bump() is directly visible to b.py because they share one namespace object. There is no per-import copy of module state; any module is a single shared instance within one process."
+    },
+    {
+      "id": 72,
+      "question": "m.py contains: print('body running'); MARK = 'set'. A program runs:\nimport m\nimport m\nfrom m import MARK\nimport m\nPredict how many times 'body running' prints.",
+      "answer": "Once. The first 'import m' executes the file and stores the module under the key 'm' in sys.modules; every subsequent import statement (including 'from m import MARK') checks sys.modules first and finds an existing entry, so the body is never re-run. Re-importing in the same interpreter is essentially free and returns the cached object. Only deleting the sys.modules entry, reloading, or a fresh interpreter re-executes the code."
+    },
+    {
+      "id": 73,
+      "question": "thing.py prints 'thing body ran' and sets TOKEN. A program does:\nimport thing   # first import\ndel sys.modules['thing']\nimport thing   # second import\nHow often does 'thing body ran' print, and is the second 'thing' the same object as the first?",
+      "answer": "It prints twice, and the second import is a DIFFERENT module object than the first. sys.modules is the import cache: deleting the entry erases the cached module, so the next 'import thing' re-executes the file from scratch and builds a brand-new module object, which the name 'thing' now points to. Any earlier reference to the first module object keeps working but is now stale and sees the old state."
+    },
+    {
+      "id": 74,
+      "question": "After 'import thing', you run:\nold = thing\nimportlib.reload(thing)\nprint(old is thing)\nthing.py prints 'thing body ran' at top level. What prints?",
+      "answer": "thing body ran (a second time)\nTrue. reload() re-executes the module's source but reuses the EXISTING module object, so old is thing is True. This contrasts with del sys.modules + import, which creates a fresh object. Note reload also leaves stale references: any name brought in earlier with 'from thing import X' still points at the pre-reload value."
+    },
+    {
+      "id": 75,
+      "question": "A program inserts a fake object into the import cache:\nclass Fake: pass\nf = Fake(); f.marker = 'fake'\nsys.modules['fake'] = f\nimport fake\nprint(type(fake).__name__, fake.marker)\nPredict the output.",
+      "answer": "Fake fake. 'import' is a lookup in sys.modules first: the entry already exists, so no file search happens at all and the existing object is bound to the name 'fake'. Because the cache sidesteps the whole finder/loader pipeline, anything stored under a sys.modules key becomes importable, including non-module objects. A second 'import fake' returns the same Fake object unchanged."
+    },
+    {
+      "id": 76,
+      "question": "conf.py:\ndef debug(msg): print('DBG:', msg)\nuser.py imports it via BOTH styles, then a patch runs:\nimport conf; from conf import debug\nconf.debug = lambda m: print('patched:', m)\nuser.py then calls conf.debug('via module ref') AND debug('via imported name'). Predict the two lines.",
+      "answer": "patched: via module ref\nDBG: via imported name. The name conf.debug is read through the module object at call time, so it sees the freshly patched lambda. But 'from conf import debug' copied the ORIGINAL function into user.py's namespace at import time; rebinding conf.debug afterwards does not update that copy. This is why the from-import style freezes references and survives monkey-patching, while the module-attribute style does not."
+    },
+    {
+      "id": 77,
+      "question": "Ordertrivia (monkey-patching BEFORE importing the consumer). patch.py runs first and sets conf.debug = lambda m: print('patched!', m). Only afterwards is user_mod.py imported, and user_mod.py does 'from conf import debug' when running. user_mod then calls debug('x') and conf.debug('y'). What prints for each call?",
+      "answer": "patched! x\npatched! y. The from-import snapshot happens when user_mod.py is EXECUTED, not when the library is written; since the patch already ran, user_mod's 'from conf import debug' captured the new lambda. Both the module attribute and the imported name therefore see the patched function. The ordering of imports in relation to the patch determines which function a from-import name grabs."
+    },
+    {
+      "id": 78,
+      "question": "lv.py imports as:\nimport lv\nfrom lv import func, add_one\nlv.py defines func = lambda: 'v1' and def add_one(x): return x + 1. Later lv is patched:\nlv.func = lambda: 'v2'\nlv.add_one = lambda x: x + 100\nThe prints: print(lv.func(), func(), add_one(1)). Predict the output.",
+      "answer": "v2 v1 2. lv.func() goes through the module object so it returns the new 'v2'; the imported name func() is the ORIGINAL lambda still referenced by your namespace, so 'v1'; add_one similarly: the imported wrapper returns x+1 (2), while lv.add_one would return 101. Each 'from lv import name' created one immutable reference at import time; rebinding lv.name later never touches those local copies."
+    },
+    {
+      "id": 79,
+      "question": "target.py prints 'target ran; set T = 1' and has T = 1. wa.py does:\nimport target\ntarget = 'shadowed as a string'\nA driver imports target, then wa, then imports target again and prints type(target).__name__ and target.T. Predict the printed lines.",
+      "answer": "target ran; set T = 1 (once)\n(wa.py itself prints nothing)\nmodule 1. Rebinding the name 'target' inside wa.py only changes wa's OWN module namespace; it does not touch the sys.modules['target'] entry or what other modules hold. The driver's later 'import target' rebinds the driver's local name to the cached module, so type is module and target.T == 1. Reassigning an imported name merely shadows it locally and never affects the shared module object."
+    },
+    {
+      "id": 80,
+      "question": "After:\nimport g.gp.gc.deep as d\nprint(type(d).__name__, d.Q)\nprint('deep' in globals(), 'g' in globals())\nwith deep.py containing Q = 1, predict the output. If you instead wrote 'import g.gp.gc.deep' (no alias), which names would change?",
+      "answer": "module 1\nFalse False. With the alias only d is bound (the final submodule), while with plain 'import g.gp.gc.deep' the name 'g' WOULD be bound (and 'deep' still not). The two forms differ only in what is bound: plain dotted import binds the leftmost package; 'import a.b.c as x' binds x to the rightmost module. In both cases all parent packages are executed/cached along the way, and the parent attributes g.gp, g.gp.gc, g.gp.gc.deep are set as you descend."
+    },
+    {
+      "id": 81,
+      "question": "pkg/__init__.py contains:\nhelper = 'a string I define'\nprint('init ran')\npkg/helper.py exists too. A driver does:\nimport pkg\nprint('before:', type(pkg.helper).__name__)\nimport pkg.helper\nprint('after:', type(pkg.helper).__name__)\nPredict the output.",
+      "answer": "init ran\nbefore: str\nafter: module. __init__ set pkg.helper to a string, so before the submodule import the attribute is str. Importing pkg.helper then runs helper.py and the import system performs its usual parent attribute set, OVERWRITING the string with the real module object. From that point pkg.helper dereferences as the submodule everywhere. This shows that re-importing a submodule explicitly can repair a name that __init__ accidentally shadowed."
+    },
+    {
+      "id": 82,
+      "question": "pkg/__init__.py prints 'init'; pkg/helper.py prints 'sub run'. Driver does:\nimport pkg.helper\nprint(type(pkg.helper).__name__)\ndel pkg.helper\nfrom pkg import helper\nprint(type(helper).__name__)\nPredict all output.",
+      "answer": "init\nsub run\nmodule\nmodule\n(four lines, no second 'sub run'). 'from pkg import helper' after the attribute was deleted finds no attribute, falls back to importing pkg.helper as a submodule, which is already cached in sys.modules, so the SAME module object is returned and re-attached as pkg.helper. Nothing is re-executed: the submodule body ran only when first created. The del effectively only removed a reference, not the module or its cache entry."
+    },
+    {
+      "id": 83,
+      "question": "pkg/__init__.py prints 'init starts' then raises RuntimeError('boom'). Driver:\ntry:\n    import pkg\nexcept RuntimeError as e:\n    print('caught:', e)\nprint('pkg' in sys.modules)\nimport pkg\nWhat prints, including on the second import?",
+      "answer": "init starts\ncaught: boom\nFalse\ninit starts\n(then it raises RuntimeError('boom') again). When a package top-level import fails, CPython removes the freshly created module from sys.modules, so the failing entry does not linger. Therefore a later 'import pkg' retries from scratch and re-runs __init__.py, failing identically. If the broken module were left cached, subsequent imports would silently succeed while handing out a partially-initialized package."
+    },
+    {
+      "id": 84,
+      "question": "Same broken package as above (pkg/__init__.py raises RuntimeError('boom')) and pkg/s.py exists. Predict:\ntry:\n    import pkg.s\n    print('pkg.s imported')\nexcept RuntimeError as e:\n    print('import pkg.s failed with:', e)",
+      "answer": "init starts\nimport pkg.s failed with: boom. Importing any submodule first imports the parent package, and the parent's __init__.py raises before pkg/s.py is ever considered. The RuntimeError propagates out of the whole import. Fixing pkg/__init__.py fixes every submodule import at once; a broken __init__ poisons the entire package."
+    },
+    {
+      "id": 85,
+      "question": "a.py: print('a.py top'); import b; X = 9; print('a.py bottom'). b.py: print('b.py top'); import a; print('b.py accesses a.X ->', a.X). Driver: import a. Trace the execution and predict the exception.",
+      "answer": "a.py top\nb.py top\nAttributeError: module 'a' has no attribute 'X'. When a.py runs, the import system puts the STILL-PARTIAL module a into sys.modules BEFORE executing its body. b.py's 'import a' then gets that partial object, at which point a.X does not yet exist. AttributeError is raised inside b.py and unrolls the whole import. Ordering matters: had a.py defined X before 'import b', b would have seen it."
+    },
+    {
+      "id": 86,
+      "question": "a.py: import b; def get_b(): return b.NAME (defining the function but using b only inside it). b.py: import a; NAME = 'from-b'. Driver: import a; print(a.get_b()). Predict the output and why no circular error appears.",
+      "answer": "from-b. The cycle itself is legal; the problem only arises when one module uses the other's attributes AT IMPORT TIME. a.py's reference to b happens inside get_b(), which is called later, by which time b is fully initialized (b's 'import a' also succeeded because a was already in sys.modules). Deferring attribute access to function bodies is the standard way to break circular-import blowups while keeping the cycle."
+    },
+    {
+      "id": 87,
+      "question": "a.py: import b; print('a after importing b'); raise ValueError('a exploded'). b.py: import a; print('a' in sys.modules, end=' '); [it sets nothing else]. Driver:\ntry:\n    import a\nexcept ValueError:\n    print('caught')\nprint('a' in sys.modules)\nprint('b' in sys.modules)\nPredict the printed booleans.",
+      "answer": "True (printed from b.py, while importing)\ncaught (a's ValueError)\nFalse\nTrue. During the circular import, b.py provably sees 'a' already in sys.modules (True) because CPython pre-registers the module under construction. When a.py later crashes, a is removed from sys.modules (False), but b, having completed, is kept (True). So a cycle can leave healthy siblings cached even when the outer import fails."
+    },
+    {
+      "id": 88,
+      "question": "tok.py first contains marker = 'OLD'. Program run #1 prints color.tok.marker which reads OLD and writes __pycache__. Then someone edits the source to marker = 'NEW' but, deliberately, keeps the file EXACTLY the same length AND restores the original mtime. Run #2 runs the same program again. What does run #2 print?",
+      "answer": "OLD (both runs print OLD; the edited source is never executed). Python validates a source .pyc by comparing the cached bytecode header (source mtime AND size) against the file on disk. Same length plus restored mtime makes the stale bytecode look perfectly fresh, so the new source is silently ignored. Deleting __pycache__/tok.*.pyc, changing the mtime, or using python -B forces the update."
+    },
+    {
+      "id": 89,
+      "question": "Predict, for both statements below, the exception type and message:\nimport definitely_not_a_module_xyz\nfrom definitely_not_a_module_xyz import foo\nAlso: is ModuleNotFoundError a subclass of ImportError?",
+      "answer": "True (issubclass(ModuleNotFoundError, ImportError) is True, and both statements raise ModuleNotFoundError: No module named 'definitely_not_a_module_xyz'). When no finder on sys.meta_path can locate the module, the machinery raises ModuleNotFoundError, a subclass introduced in 3.6 that keeps ImportError catch @ except ImportError compatible. The from-import form raises the SAME ModuleNotFoundError because the failure is module discovery, not attribute lookup."
+    },
+    {
+      "id": 90,
+      "question": "pkg/__init__.py prints 'p init' and defines nothing else. Predict the exception for:\nfrom pkg import nothere\nIs it ModuleNotFoundError or plain ImportError?",
+      "answer": "p init\nImportError: cannot import name 'nothere' from 'pkg' (.../pkg/__init__.py). The MODULE pkg was found and imported successfully; the failure is the second step, resolving the name 'nothere' (neither an attribute nor an existing submodule). That is a different failure mode than discovery, so it raises a plain ImportError, NOT ModuleNotFoundError. Since ModuleNotFoundError is a subclass of ImportError, it also masquerades fine under 'except ImportError'."
+    },
+    {
+      "id": 91,
+      "question": "pkg/__init__.py prints 'p init'. pkg/sub.py prints 'p.sub running' and sets K = 11. Driver:\nfrom pkg import sub\nprint(sub.K)\nprint('pkg' in globals())\nPredict the output.",
+      "answer": "p init\np.sub running\n11\nFalse. A from-import can trigger a submodule import: since pkg had no attribute 'sub', the machinery fell back to importing pkg.sub, which first imports pkg (its init) then runs sub.py. Only the name sub is bound in the caller; 'pkg' itself is NOT added to globals with this syntax. The final 'from pkg import sub' then simply read the attribute the submodule import had attached to pkg."
+    },
+    {
+      "id": 92,
+      "question": "Files: p/__init__.py prints 'p init'; p/a/__init__.py prints 'pa init'; p/a/deep.py prints 'deep body'. Fresh interpreter. Predict the output of:\nimport p.a.deep",
+      "answer": "p init\npa init\ndeep body. Importing a deeply nested submodule executes every ancestor's __init__.py first, outermost-to-innermost, then the target file last. Each 'p', 'p.a' becomes a full module in sys.modules and is attached as an attribute of its parent before descent continues. The ordering is guaranteed, which is why people put package-wide 'import X in advance of the codepath that needs it' setup at the top of __init__."
+    },
+    {
+      "id": 93,
+      "question": "In directory D: c.py does:\nfrom b import A_MARK\nwhere b.py's FIRST line is 'from . import a'. Running python3 c.py from directory D (so sys.path[0] is D and b is imported as a top-level module). Predict the traceback's final exception.",
+      "answer": "ImportError: attempted relative import with no known parent package (line 1 of b.py). Although D is sys.path[0], b is being imported there as a TOP-LEVEL module whose __package__ is empty/None, so b.py's own relative import has no parent to anchor '.' to, raising ImportError inside the from ... import in c.py, which then propagates. The fix is running as part of a real package with '-m', or making b.py use an absolute import: 'from . import a' only works when b itself is imported as pkg.b."
+    },
+    {
+      "id": 94,
+      "question": "pkg/__init__.py is EMPTY (defines nothing). Yet after 'import pkg.sub', hasattr(pkg, 'sub') is True. Why? Does importing pkg by itself also create the attribute?",
+      "answer": "Because the import system, after successfully importing the submodule, attaches it to its parent with setattr(pkg, 'sub', submodule), regardless of what __init__.py contains — even if it's empty. No: 'import pkg' alone does NOT create the attribute; the binding happens as a side effect of importing pkg.sub specifically. This is why 'import pkg' then 'pkg.sub' fails with AttributeError until 'import pkg.sub' or 'from pkg import sub' has run."
+    },
+    {
+      "id": 95,
+      "question": "toolbox/entry.py prints repr(sys.path[0]). Compare the two runs from the parent directory:\npython3 toolbox/entry.py\npython3 -m toolbox.entry\nWhat two values print, and what is the practical consequence?",
+      "answer": "python3 toolbox/entry.py -> '/abs/parent/toolbox' (script's own directory)\npython3 -m toolbox.entry -> '/abs/parent' (current directory). With a script run, sys.path[0] is the file's directory; with -m, it is the CWD. Consequence: 'python -m toolbox.entry' only works when invoked from the parent of toolbox, but it guarantees the parent tree is importable (sibling packages like toolkit resolve), while the script run prefers the folder holding the script. Editors/IDEs kicking off files directly can therefore see different module resolution than -m."
+    },
+    {
+      "id": 96,
+      "question": "Layout: toolbox/entry.py does 'from toolkit import HELP; print(HELP)'; toolkit/__init__.py defines HELP = 'external'. Both are siblings. From the parent directory, compare:\npython3 toolbox/entry.py\npython3 -m toolbox.entry\nPredict both outcomes.",
+      "answer": "First: ModuleNotFoundError: No module named 'toolkit' (entry.py:1). Second: external (prints 'external'). As a script, sys.path[0] is toolbox/, which contains no toolkit, so the absolute import fails. With -m, sys.path[0] is the parent CWD, so toolkit is importable and HELP is found. The -m form is thus the reliable way to run a module when it needs to import siblings/parents via absolute names."
+    },
+    {
+      "id": 97,
+      "question": "pkg/__init__.py has the body:\nprint('init line 1')\nfrom . import helper\nprint('init line 2')\npkg/helper.py prints 'helper body'. Driver:\nimport pkg\nimport pkg.helper\nfrom pkg import helper\nHow many times does 'init line 1' print in total?",
+      "answer": "Once. The first 'import pkg' executes __init__.py, which itself imports and executes helper.py. Every subsequent reference (import pkg.helper, from pkg import helper) hits the sys.modules cache for both 'pkg' and 'pkg.helper', so neither file runs again. count guess 'three init prints' would be wrong for exactly this caching. The total one-time trace is: init line 1, helper body, init line 2."
+    },
+    {
+      "id": 98,
+      "question": "A namespace package 'shared' exists (no __init__.py anywhere) but has not been imported yet. What does importlib.util.find_spec('shared') return in terms of loader and submodule_search_locations?",
+      "answer": "A ModuleSpec whose loader is None and whose submodule_search_locations is a _NamespacePath listing the matching directories (in sys.path order), e.g. ModuleSpec(name='shared', loader=None, submodule_search_locations=_NamespacePath(['.../e3/shared', '.../e1/shared'])). loader=None is the signature of a namespace package: there is no __init__ to execute. submodule_search_locations is precisely the combined __path__ that a later import of submodules will traverse."
+    },
+    {
+      "id": 99,
+      "question": "mod.py prints 'mod body'. usermod.py defines:\ndef needs_mod():\n    import mod\n    print('id', id(mod))\nDriver imports mod, then calls usermod.needs_mod() twice. Predict the output.",
+      "answer": "mod body\nid 140200000000000\nid 140200000000000 (the two printed ids are equal; exact number depends on the interpreter). The import inside a function is legal syntax and still consults the sys.modules cache; the first call finds mod already imported (by the driver) and the second finds it cached again, so the body prints once and both calls hand back the SAME module object. Function-scoped imports affect only WHERE the name is bound, not how the module machinery caches."
+    },
+    {
+      "id": 100,
+      "question": "Predict the complete trace. Driver prints 'MAIN line' first. pkg/__init__.py:\nprint('init line 1')\nfrom . import helper\nprint('init line 2')\npkg/helper.py prints 'helper body'. Driver continues: import pkg; print('AFTER import pkg'); import pkg.helper; print('AFTER import pkg.helper (cached)').",
+      "answer": "MAIN line\ninit line 1\nhelper body\ninit line 2\nAFTER import pkg\nAFTER import pkg.helper (cached)\n(no extra body/init prints after). The driver starts, then 'import pkg' runs __init__.py, whose first action is the relative 'from . import helper', so 'helper body' prints BETWEEN init line 1 and init line 2. After __init__ returns, the submodule is already attached and cached, so the later 'import pkg.helper' executes nothing new, and its expected one-time trace coincides with the init's nested import — the classic sign of __init__ eagerly importing its own children."
+    }
+  ]
+}

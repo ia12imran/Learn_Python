@@ -1,0 +1,505 @@
+{
+  "description": "100 mid-level logical questions on Python error handling (try/except/else/finally, raising, exceptions)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Predict the output:\ntry:\n    print('A')\nexcept Exception:\n    print('B')\nelse:\n    print('C')\nfinally:\n    print('D')",
+      "answer": "A\nC\nD. No exception is raised, so the except clause is skipped; the else clause (which runs only when the try block completes without an exception) executes; finally always runs last, regardless of what happened."
+    },
+    {
+      "id": 2,
+      "question": "Predict the output:\ntry:\n    print('A')\n    x = 5 // 0\n    print('B')\nexcept ZeroDivisionError:\n    print('C')\nelse:\n    print('D')\nfinally:\n    print('E')",
+      "answer": "A\nC\nE. The line x = 5 // 0 raises ZeroDivisionError, so 'B' is never printed; the matching except clause prints 'C'; the else clause is skipped because an exception occurred in the try block; finally still prints 'E'."
+    },
+    {
+      "id": 3,
+      "question": "Predict the output, and say what happens next:\ntry:\n    x = 1 / 0\nfinally:\n    print('cleanup')",
+      "answer": "cleanup, then the program crashes with an uncaught ZeroDivisionError. A bare try/finally with no except clause cannot stop the exception; finally just guarantees 'cleanup' is printed before the exception propagates out of the statement."
+    },
+    {
+      "id": 4,
+      "question": "Predict the output:\ntry:\n    v = {}['missing']\n    y = [1, 2][5]\nexcept KeyError:\n    print('key')\nexcept IndexError:\n    print('index')",
+      "answer": "key. The dict lookup {}['missing'] raises KeyError on the first line of the try block, so the IndexError-producing line never executes; Python uses the first except clause whose type matches."
+    },
+    {
+      "id": 5,
+      "question": "Predict the output:\ntry:\n    n = int('abc')\nexcept TypeError:\n    print('type')\nexcept ValueError:\n    print('value')",
+      "answer": "value. int('abc') cannot parse a non-numeric string and raises ValueError, not TypeError; the clauses are checked top-down and the second one matches."
+    },
+    {
+      "id": 6,
+      "question": "Predict the output — and explain the subtle bug:\ntry:\n    n = int('abc')\nexcept Exception:\n    print('general')\nexcept ValueError:\n    print('specific')",
+      "answer": "general. Because except clauses are matched top-down and ValueError is a subclass of Exception, the first clause catches it; the except ValueError clause beneath it is dead code. Swap the order (ValueError first, Exception second) to make 'specific' reachable."
+    },
+    {
+      "id": 7,
+      "question": "Predict the output:\ntry:\n    print({}['x'])\nexcept (KeyError, IndexError):\n    print('missing')",
+      "answer": "missing. The tuple (KeyError, IndexError) is one clause that matches any single listed exception type; a missing dict key raises KeyError, which is a member of the tuple."
+    },
+    {
+      "id": 8,
+      "question": "Predict the output:\ntry:\n    raise KeyboardInterrupt\nexcept:\n    print('caught everything')\nprint('still alive')",
+      "answer": "caught everything\nstill alive. A bare except: clause catches every subclass of BaseException, including KeyboardInterrupt and SystemExit, which `except Exception` would NOT catch — that is why careful code prefers `except Exception`."
+    },
+    {
+      "id": 9,
+      "question": "Predict what prints and what the program does next:\ntry:\n    raise SystemExit(3)\nexcept Exception:\n    print('sys caught')\nfinally:\n    print('sys finally')",
+      "answer": "sys finally, then the process exits with status code 3. 'sys caught' never prints because SystemExit inherits from BaseException, not Exception, so `except Exception` does not match; finally still runs, then Python terminates."
+    },
+    {
+      "id": 10,
+      "question": "Predict the output:\ntry:\n    raise ValueError('bad', 'worse')\nexcept ValueError as e:\n    print(e.args)",
+      "answer": "('bad', 'worse'). The as e binds the exception object; e.args is the tuple of arguments given to the constructor. Note that str(e) of a multi-argument exception is the str of that very tuple, not just the first element."
+    },
+    {
+      "id": 11,
+      "question": "Predict the output:\ntry:\n    raise ValueError('too hot')\nexcept ValueError as e:\n    print(e.args)\n    print(e)",
+      "answer": "('too hot',)\ntoo hot. With a single constructor argument, e.args is a one-element tuple with the trailing comma, but str(e) (what print(e) shows) is just that argument — 'too hot' — because single-argument built-in exceptions stringify to e.args[0]."
+    },
+    {
+      "id": 12,
+      "question": "Predict the output:\ndef parse(s):\n    try:\n        return int(s)\n    except ValueError:\n        return -1\n\ndef outer(s):\n    return parse(s) * parse(s)\n\nfor s in ['9', 'abc']:\n    print(outer(s))",
+      "answer": "81\n1. For '9', parse returns 9 and 9*9 = 81. For 'abc', int() raises ValueError, parse catches it and returns -1, so outer computes (-1) * (-1) = 1. No exception escapes because parse handles its own conversion failures."
+    },
+    {
+      "id": 13,
+      "question": "While inspecting a failing exception, you see this pattern:\ndef load():\n    try:\n        return int('nope')\n    except ValueError:\n        raise        # bare raise\n\nWhich re-raise preserves the original traceback — the bare `raise` above, or writing `raise ValueError('failed')` instead? Why?",
+      "answer": "Bare `raise`. Inside an except block it re-raises the exact same exception with its full traceback chain intact (its current line is appended). `raise ValueError('failed')` creates a brand-new exception, so the original exception and traceback are lost, and the old one appears only indirectly through implicit exception chaining."
+    },
+    {
+      "id": 14,
+      "question": "Predict the output:\ntry:\n    try:\n        raise ValueError('original')\n    except ValueError:\n        raise TypeError('new')\nexcept TypeError as e:\n    print(e.__cause__)\n    print(type(e.__context__).__name__)",
+      "answer": "None\nValueError. When you raise inside an except block WITHOUT the `from` keyword, the new exception's __cause__ stays None, while __context__ is automatically filled with the exception being handled (the ValueError) — that is what powers the 'During handling of the above exception...' traceback section."
+    },
+    {
+      "id": 15,
+      "question": "Predict the output:\ntry:\n    try:\n        raise ValueError('original')\n    except ValueError as e:\n        raise TypeError('new') from e\nexcept TypeError as e:\n    print(e.__cause__ is not None)\n    print(type(e.__context__).__name__)",
+      "answer": "True\nValueError. `raise ... from e` explicitly sets __cause__ to the ValueError (hence True), and the interpreter still records the currently-handled exception as __context__. The from form prints the 'The above exception was the direct cause...' chain in the traceback."
+    },
+    {
+      "id": 16,
+      "question": "Predict the output:\ntry:\n    try:\n        raise ValueError('original')\n    except ValueError:\n        raise TypeError('new') from None\nexcept TypeError as e:\n    print(e.__cause__)",
+      "answer": "None. `raise ... from None` explicitly sets __cause__ to None, which is what print shows, and suppresses the automatic 'During handling...' chaining message. The original ValueError still exists as __context__, but Python shows no chain for it."
+    },
+    {
+      "id": 17,
+      "question": "Predict the output:\nclass OutOfStock(Exception):\n    pass\n\ntry:\n    raise OutOfStock('milk')\nexcept OutOfStock as e:\n    print(e)",
+      "answer": "milk. OutOfStock is a custom exception subclassing Exception, raised with one message argument. For a single-argument exception, print(e) / str(e) yields that argument, so the handler displays the message."
+    },
+    {
+      "id": 18,
+      "question": "Predict the output:\ntry:\n    assert 5 > 10, 'too small'\nexcept AssertionError as e:\n    print(e)",
+      "answer": "too small. The assertion's condition 5 > 10 is False, so Python raises AssertionError carrying the custom message string; str(e) prints 'too small' for this single-argument exception."
+    },
+    {
+      "id": 19,
+      "question": "Predict the output:\ntry:\n    assert 5 > 10\nexcept AssertionError as e:\n    print(e.args)",
+      "answer": "(). When an assert has no custom message, the raised AssertionError is constructed with no arguments, so its args tuple is empty; the bare 'AssertionError' you see only appears in the traceback heading, not in the object."
+    },
+    {
+      "id": 20,
+      "question": "script.py contains:\nassert False, 'boom'\nprint('reached')\n\nWhat prints when run with `python3 script.py`, and what prints under `python3 -O script.py`?",
+      "answer": "Normal run: nothing — AssertionError: boom crashes the program before print('reached'). With -O: 'reached'. The -O (optimize) flag compiles assert statements out entirely, so the false assertion vanishes and the program keeps running."
+    },
+    {
+      "id": 21,
+      "question": "Predict the output:\ndef f():\n    try:\n        return 'try'\n    finally:\n        return 'finally'\n\nprint(f())",
+      "answer": "finally. A return inside a finally block overrides a pending return from the try block, abandoning the 'try' value; the finally return value is what the function actually returns. (Modern Pythons also emit a SyntaxWarning about returning from finally.)"
+    },
+    {
+      "id": 22,
+      "question": "Predict the output:\ndef f():\n    try:\n        return 'result'\n    finally:\n        print('cleanup')\n\nprint(f())",
+      "answer": "cleanup\nresult. When the try block executes `return 'result'`, the finally block runs first, so 'cleanup' prints; only then does the function return, letting the outer print output 'result'."
+    },
+    {
+      "id": 23,
+      "question": "Predict the output:\nfor i in range(3):\n    try:\n        print('body', i)\n        break\n    finally:\n        print('finally', i)",
+      "answer": "body 0\nfinally 0. The break exits the loop after the first iteration, but the finally clause still runs before the break takes effect, so only the pair for i=0 prints; iterations 1 and 2 are never reached because the loop is over."
+    },
+    {
+      "id": 24,
+      "question": "Predict the output:\nfor i in range(3):\n    try:\n        print('body', i)\n        continue\n    finally:\n        print('finally', i)",
+      "answer": "body 0\nfinally 0\nbody 1\nfinally 1\nbody 2\nfinally 2. continue jumps straight to the next iteration, but the finally clause executes on the way out of each try block, so every iteration still prints its own 'finally' line."
+    },
+    {
+      "id": 25,
+      "question": "Predict the output:\ndef f():\n    try:\n        x = 1 / 0\n    except ZeroDivisionError:\n        return 'handled'\n    finally:\n        print('clean')\n    return 'unreached'\n\nprint(f())",
+      "answer": "clean\nhandled. The return inside the except clause does not skip finally: 'clean' prints during the function's unwinding, then the value 'handled' is returned and printed. The final `return 'unreached'` is never reached."
+    },
+    {
+      "id": 26,
+      "question": "Predict the output:\ntry:\n    n = int('abc')\nexcept ValueError:\n    try:\n        n = int('def')\n    except ValueError:\n        print('double')",
+      "answer": "double. The outer handler itself runs int('def'), which raises a SECOND ValueError; the inner nested try/except catches it and prints. An exception raised inside a handler is not automatically handled by the outer clause — you need the inner try."
+    },
+    {
+      "id": 27,
+      "question": "Predict the output:\ndef divide(a, b):\n    return a // b\n\ntry:\n    print(divide(10, 0))\nexcept ZeroDivisionError:\n    print('no division')",
+      "answer": "no division. The ZeroDivisionError is raised inside divide, where no handler exists, so it propagates up the call stack to the calling try statement, whose except clause catches it."
+    },
+    {
+      "id": 28,
+      "question": "Predict the output:\nd = {}\ntry:\n    d['missing']\nexcept KeyError as e:\n    print(repr(e))\n    print(e.args[0])",
+      "answer": "KeyError('missing')\nmissing. repr(e) shows the exception class name plus its args with quotes; e.args[0] is the raw missing-key string without quotes. KeyError is a subclass of LookupError."
+    },
+    {
+      "id": 29,
+      "question": "Predict the output:\na = [10, 20]\ntry:\n    print(a[99])\nexcept IndexError:\n    print('index out of range')",
+      "answer": "index out of range. Indexing a length-2 list at index 99 is out of bounds and raises IndexError (which, like KeyError, subclasses LookupError)."
+    },
+    {
+      "id": 30,
+      "question": "Predict the output:\ns = 'hello'\ntry:\n    s.shout()\nexcept AttributeError:\n    print('no such method')",
+      "answer": "no such method. str objects have no shout method; accessing or calling a nonexistent attribute raises AttributeError."
+    },
+    {
+      "id": 31,
+      "question": "Predict the output:\ntry:\n    x = '5' + 5\nexcept TypeError:\n    print('cannot add str and int')",
+      "answer": "cannot add str and int. The + operator is not defined between str and int, and Python raises TypeError rather than guessing an implicit conversion."
+    },
+    {
+      "id": 32,
+      "question": "Predict the output:\ntry:\n    f = open('no_such_file_here.txt')\nexcept FileNotFoundError:\n    print('file missing')",
+      "answer": "file missing. open() raises FileNotFoundError (a subclass of OSError) when the path does not exist on disk, and the handler catches it."
+    },
+    {
+      "id": 33,
+      "question": "Predict the output:\nraw = b'\\xff\\xfe'\ntry:\n    text = raw.decode('ascii')\nexcept UnicodeDecodeError:\n    print('cannot decode')",
+      "answer": "cannot decode. The bytes 0xff and 0xfe are not valid ASCII, so decode() raises UnicodeDecodeError (a subclass of UnicodeError, which itself subclasses ValueError)."
+    },
+    {
+      "id": 34,
+      "question": "Predict the output:\nimport math\ntry:\n    x = math.exp(1000)\nexcept OverflowError:\n    print('too big')",
+      "answer": "too big. math.exp(1000) exceeds the largest representable float, so the C library reports an overflow and Python surfaces it as OverflowError."
+    },
+    {
+      "id": 35,
+      "question": "Predict the output:\nit = iter([])\ntry:\n    item = next(it)\nexcept StopIteration:\n    print('stopped')",
+      "answer": "stopped. next() on an exhausted, empty iterator raises StopIteration. for-loops internally catch this same exception to know when to stop iterating."
+    },
+    {
+      "id": 36,
+      "question": "Predict the output:\ndef recurse():\n    return recurse()\n\ntry:\n    recurse()\nexcept RecursionError:\n    print('too deep')",
+      "answer": "too deep. recurse() calls itself with no base case until Python's recursion limit is hit, raising RecursionError — which is a subclass of RuntimeError, so an `except RuntimeError` clause would have caught it too."
+    },
+    {
+      "id": 37,
+      "question": "A learner wrote this and expected 'specific', but sees 'general'. Fix the bug:\ntry:\n    n = int('42')\n    n = int('abc')\nexcept Exception:\n    print('general')\nexcept ValueError:\n    print('specific')",
+      "answer": "Swap the clauses so the more specific type comes first; correct output is then 'specific':\ntry:\n    n = int('42')\n    n = int('abc')\nexcept ValueError:\n    print('specific')\nexcept Exception:\n    print('general')\n\nWhy: except clauses are tried in order and ValueError is a subclass of Exception, so the first clause matched and the ValueError clause was dead code. List specific exception types before general ones."
+    },
+    {
+      "id": 38,
+      "question": "Predict the output:\nd = {'a': 1}\nprint(d.get('b', 'default'))",
+      "answer": "default. dict.get(key, default) returns the default when the key is absent, so no KeyError is raised and no try/except is needed. If the default were omitted the result would be None."
+    },
+    {
+      "id": 39,
+      "question": "Predict the output:\nd = {'red': 1, 'blue': 2}\nif 'green' in d:\n    v = d['green']\nelse:\n    v = 0\nprint(v)",
+      "answer": "0. The membership check 'green' in d is False, so the else branch runs and v is set to 0; this 'look before you leap' style avoids a KeyError entirely."
+    },
+    {
+      "id": 40,
+      "question": "A beginner wrote a.get(1) on a list. Predict the output:\na = [1, 2, 3]\ntry:\n    a.get(1)\nexcept AttributeError:\n    print('lists have no get')",
+      "answer": "lists have no get. .get() is a dict method; lists are indexed positionally with a[i] or searched with a.index(value). Calling a nonexistent method on a list raises AttributeError — a real bug, not a convention."
+    },
+    {
+      "id": 41,
+      "question": "Predict the output:\nclass Ignore:\n    def __enter__(self):\n        print('enter')\n        return self\n    def __exit__(self, exc_type, exc, tb):\n        print('exit', exc_type.__name__)\n        return True\n\nwith Ignore():\n    print('body')\n    raise ValueError('boom')\nprint('after')",
+      "answer": "enter\nbody\nexit ValueError\nafter. When the with-block raises ValueError, __exit__ is called with the exception's type; because __exit__ returns True (truthy), it suppresses the exception, so execution resumes normally and 'after' prints."
+    },
+    {
+      "id": 42,
+      "question": "Predict the output:\ntry:\n    raise\nexcept RuntimeError as e:\n    print(e)",
+      "answer": "No active exception to reraise. A bare raise outside of any except block has no active exception to re-raise, so Python itself raises RuntimeError with exactly that message; the except clause then prints it."
+    },
+    {
+      "id": 43,
+      "question": "Predict the output:\nfor i in range(3):\n    try:\n        if i == 1:\n            raise KeyError('skip')\n        print(i)\n    except KeyError:\n        continue",
+      "answer": "0\n2. For i=1 the KeyError is caught and `continue` immediately starts the next iteration, so print(1) is skipped; iterations 0 and 2 print normally."
+    },
+    {
+      "id": 44,
+      "question": "Predict the output:\ndef f():\n    try:\n        return 'try'\n    finally:\n        raise ValueError('boom from finally')\n\ntry:\n    print(f())\nexcept ValueError as e:\n    print('caught:', e)",
+      "answer": "caught: boom from finally. Raising inside the finally block discards the pending return 'try' (and any in-flight exception too); the ValueError is all that emerges from f(), and the call-site except catches it."
+    },
+    {
+      "id": 45,
+      "question": "Predict the output:\ntry:\n    try:\n        raise KeyError('k')\n    except KeyError:\n        print('inner')\n    print('mid')\nexcept Exception:\n    print('outer')\nelse:\n    print('else')\nfinally:\n    print('finally')",
+      "answer": "inner\nmid\nelse\nfinally. The inner except handles the KeyError, so the outer try block finishes without an exception: its except clause is skipped, its else clause runs, and its finally clause runs last."
+    },
+    {
+      "id": 46,
+      "question": "Predict the output:\nclass InvalidAge(ValueError):\n    pass\n\ndef check_age(a):\n    if a < 0:\n        raise InvalidAge('negative')\n    return a\n\ntry:\n    check_age(-5)\nexcept ValueError as e:\n    print(type(e).__name__, e)",
+      "answer": "InvalidAge negative. InvalidAge subclasses ValueError, so `except ValueError` catches it; type(e).__name__ still reveals the real class, proving that catching a base type also catches its derived custom exceptions."
+    },
+    {
+      "id": 47,
+      "question": "Predict the output:\ntry:\n    x = '3' * int('three')\nexcept (TypeError, ValueError) as e:\n    print(type(e).__name__, e)",
+      "answer": "ValueError invalid literal for int() with base 10: 'three'. int('three') is what fails and raises ValueError (a member of the tuple, so the clause matches); the multiplication is never reached. verbatim message includes the quotes around the offending literal."
+    },
+    {
+      "id": 48,
+      "question": "Predict the output:\ndef f():\n    try:\n        return 'early'\n    except Exception:\n        pass\n    else:\n        print('else ran')\n    finally:\n        print('finally ran')\n\nprint(f())",
+      "answer": "finally ran\nearly. The often-missed detail: the else clause does NOT run when the try block exits via return (else only runs on straight-line completion with no exception); finally still runs first, then the function returns 'early'."
+    },
+    {
+      "id": 49,
+      "question": "Predict what prints, and what else happens:\ntry:\n    n = 10\nexcept ValueError:\n    print('handled')\nelse:\n    raise RuntimeError('else exploded')\nfinally:\n    print('finally')",
+      "answer": "finally, then the program terminates with an uncaught RuntimeError: else exploded. Exceptions raised inside the else clause are NOT caught by the except of the same try statement — they propagate — but finally still executes before the error exits the statement."
+    },
+    {
+      "id": 50,
+      "question": "Fill in the blank so this program prints 'missing' and an erroneous key never crashes it:\nd = {'a': 1}\ntry:\n    v = d['missing']\n[blank]:\n    print('missing')\n    v = 0\nprint(v)",
+      "answer": "`except KeyError:` is the fill-in. It catches only the missing-key lookup, so v defaults to 0 and the output is:\nmissing\n0\n\nWhy: KeyError is the exact exception that raised, which is more precise (and safer) than `except Exception` or a bare `except:`. Lightly: prefer d.get('missing', 0) for read-only defaults."
+    },
+    {
+      "id": 51,
+      "question": "What prints when the outer handler inspects __cause__?\ntry:\n    try:\n        1/0\n    except ZeroDivisionError as e:\n        raise ValueError('bad input') from e\nexcept ValueError as e:\n    print(e.__cause__)",
+      "answer": "Print: division by zero. The explicit `raise ValueError(...) from e` stores the original ZeroDivisionError instance as the __cause__ attribute of the new ValueError (explicit chaining). Because __cause__ was set, str(e.__cause__) is 'division by zero'. A traceback would label this link 'The above exception was the direct cause of the following exception'."
+    },
+    {
+      "id": 52,
+      "question": "What prints after the exception propagates out of the nested handler?\ntry:\n    try:\n        1/0\n    except ZeroDivisionError:\n        raise ValueError('oops')\nexcept ValueError as e:\n    print(type(e.__context__).__name__, e.__context__)",
+      "answer": "Print: ZeroDivisionError division by zero. When a new exception is raised while another one is still being handled, Python records the active exception as __context__ automatically (implicit chaining). Here __context__ is the ZeroDivisionError instance from the inner handler. A printed traceback would label this link 'During handling of the above exception, another exception occurred'."
+    },
+    {
+      "id": 53,
+      "question": "Why does __cause__ print as it does when the result is caught as RuntimeError e?\ndef inner():\n    raise KeyError('missing')\n\ndef outer():\n    try:\n        inner()\n    except KeyError as exc:\n        raise RuntimeError('wrapped').with_traceback(exc.__traceback__)\n\ntry:\n    outer()\nexcept RuntimeError as e:\n    print(e.__cause__)",
+      "answer": "Print: None. `.with_traceback(tb)` only attaches a traceback object to an already-created exception; it creates no chaining relationship, so __cause__ stays None. The reused KeyError traceback merely makes the RuntimeError appear to originate at the inner raise site. (Note: __context__ is still filled implicitly because the raise happens while handling the KeyError, so the traceback still shows a 'During handling...' section.)"
+    },
+    {
+      "id": 54,
+      "question": "What prints?\ndef connect():\n    raise OSError('no network')\n\ndef get_data(url):\n    try:\n        return connect() + '!'\n    finally:\n        print('closing handled')\n\ntry:\n    get_data('http://x')\nexcept OSError as e:\n    print('caught:', e)",
+      "answer": "Print:\nclosing handled\ncaught: no network\nThe finally block runs before the exception leaves get_data, so the cleanup print appears even though the try body failed. finally does not swallow exceptions: the OSError keeps propagating to the caller's except handler. This is the canonical place to release resources regardless of success."
+    },
+    {
+      "id": 55,
+      "question": "What prints?\ndef step(n):\n    if n % 2 == 0:\n        raise RuntimeError('even')\n    return n\n\nfor i in range(4):\n    try:\n        value = step(i)\n        print('got', value)\n    except RuntimeError:\n        print('skip', i)\n    finally:\n        print('cleanup')",
+      "answer": "Print:\nskip 0\ncleanup\ngot 1\ncleanup\nskip 2\ncleanup\ngot 3\ncleanup\nBecause the except clause is inside the for loop, each failure is contained and the next iteration proceeds. The finally fires on every iteration whether try succeeded or except ran, giving a per-iteration cleanup point. Without the except, the first RuntimeError would abort the whole loop."
+    },
+    {
+      "id": 56,
+      "question": "What prints, and why can fh not be read afterwards?\nimport json\npath = '/tmp/invalid.json'\nwith open(path, 'w') as f:\n    f.write('{not valid json')\ntry:\n    with open(path) as fh:\n        data = json.load(fh)\nexcept json.JSONDecodeError:\n    print('JSONDecodeError caught')\ntry:\n    fh.read()\nexcept ValueError as e:\n    print('closed file ->', e)",
+      "answer": "Print:\nJSONDecodeError caught\nclosed file -> I/O operation on closed file.\nThe `with open(path) as fh` context manager calls __exit__ (which closes fh) even when json.load raises JSONDecodeError mid-body. The handle is therefore already closed, so the later fh.read() raises ValueError. This shows why with-blocks are preferred over manual close()-in-finally bookkeeping for files."
+    },
+    {
+      "id": 57,
+      "question": "What prints?\nclass DB:\n    def __init__(self):\n        self._open = False\n    def connect(self):\n        self._open = True\n        print('connected')\n    def close(self):\n        self._open = False\n        print('closed')\n    def execute(self, sql):\n        raise RuntimeError('query plan failed')\n\ndb = DB()\ntry:\n    db.connect()\n    print(db.execute('SELECT 1'))\nexcept RuntimeError:\n    print('caught failure')\nfinally:\n    db.close()",
+      "answer": "Print:\nconnected\ncaught failure\nclosed\nThe RuntimeError from execute jumps straight to the except clause, so 'SELECT 1' never prints. The finally then runs regardless and guarantees db.close() is called on both the success and failure paths. This mirrors the try/except/finally pattern used around real database transactions and connections."
+    },
+    {
+      "id": 58,
+      "question": "What does read_config print?\ndef read_config(path):\n    try:\n        f = open(path)\n    except FileNotFoundError:\n        return 'defaults'\n    try:\n        return f.read()\n    finally:\n        f.close()\n\nprint(read_config('/no/such/file.cfg'))",
+      "answer": "Print: defaults. The first try only guards the open() call: when the file is absent, FileNotFoundError (an OSError subclass) fires there and the function returns 'defaults' without ever holding a handle. The second try/finally guarantees f.close() runs if f.read() raises. Keeping the two concerns in separate try blocks is the correct way to distinguish 'cannot open' from 'failed while reading'."
+    },
+    {
+      "id": 59,
+      "question": "What three exception types are printed?\nd = {'k': 1}\nL = [1, 2, 3]\nfor expr in [lambda: d['z'], lambda: L[7], lambda: None.strip()]:\n    try:\n        expr()\n        print('ok')\n    except Exception as e:\n        print(type(e).__name__)",
+      "answer": "Print:\nKeyError\nIndexError\nAttributeError\nA missing dict key raises KeyError while out-of-range list indexing raises IndexError: both are container lookup errors but distinct classes. Calling strip() on None raises AttributeError because None has no such method. The generic `except Exception` catches all three, and type(e).__name__ tells them apart."
+    },
+    {
+      "id": 60,
+      "question": "What two exception types are printed?\nfor expr in [lambda: 10 / 0, lambda: '10' / 0]:\n    try:\n        expr()\n        print('ok')\n    except Exception as e:\n        print(type(e).__name__)",
+      "answer": "Print:\nZeroDivisionError\nTypeError\nDividing a real number by zero raises ZeroDivisionError. But '10' / 0 tries to divide a string by an int - unsupported operand types - so it raises TypeError instead. The same 0 operand produces different classes purely because the operand types differ."
+    },
+    {
+      "id": 61,
+      "question": "What prints?\ndef to_int(x):\n    try:\n        return int(x)\n    except (TypeError, ValueError) as e:\n        return type(e).__name__\n\nprint(to_int('12.5'))\nprint(to_int(None))",
+      "answer": "Print:\nValueError\nTypeError\nint('12.5') receives a string of the right type whose content cannot parse as an integer, hence ValueError. int(None) is handed an object of the wrong type entirely, hence TypeError. Catching the (TypeError, ValueError) tuple handles both failure modes in one clause."
+    },
+    {
+      "id": 62,
+      "question": "What prints?\nclass AppError(Exception):\n    pass\n\nclass DbError(AppError):\n    pass\n\nclass ParseError(AppError):\n    pass\n\ntry:\n    raise DbError('timeout after 5s')\nexcept AppError as e:\n    print(type(e).__name__, e)",
+      "answer": "Print: DbError timeout after 5s. Catching the base class AppError still matches the raised DbError because DbError inherits from AppError. The except clause binds to the actual runtime type of the raised object, so type(e).__name__ is 'DbError', not 'AppError'. One base handler thus covers the entire custom hierarchy while the message carries the detail."
+    },
+    {
+      "id": 63,
+      "question": "What prints?\nclass ValidationError(Exception):\n    pass\n\nclass NameTakenError(ValidationError):\n    pass\n\ndef register(username):\n    if username in {'alice', 'bob'}:\n        raise NameTakenError(f'{username} is taken')\n    return 'ok'\n\ntry:\n    register('bob')\nexcept ValidationError as e:\n    print(type(e).__name__, '-', e)",
+      "answer": "Print: NameTakenError - bob is taken. The helper raises only the specific subclass, and the caller catches the common base ValidationError, which matches NameTakenError via inheritance. Catching the base is the idiomatic way to handle 'any validation failure' uniformly while still being able to inspect the instance. Future subclasses are caught with zero caller changes."
+    },
+    {
+      "id": 64,
+      "question": "What prints?\nclass PaymentError(Exception):\n    pass\n\ndef charge(card, amount):\n    if not card.startswith('4'):\n        raise PaymentError('card not accepted')\n    if amount <= 0:\n        raise ValueError('amount must be positive')\n    return f'charged {amount}'\n\ndef checkout(card, amount):\n    try:\n        return charge(card, amount)\n    except PaymentError as e:\n        return f'declined: {e}'\n\nprint(checkout('4111', 50))\nprint(checkout('5111', 50))",
+      "answer": "Print:\ncharged 50\ndeclined: card not accepted\ncheckout only registers an except for PaymentError, so the domain error is translated into a friendly 'declined' string. The ValueError path (amount <= 0) is NOT caught here and would propagate to checkout's caller. This separation - helper raises precise exceptions, caller decides what to handle - is why custom exception types exist."
+    },
+    {
+      "id": 65,
+      "question": "What prints?\nimport sys\ntry:\n    1 / 0\nexcept:\n    exc_type, exc_val, exc_tb = sys.exc_info()\n    print(exc_type.__name__, exc_val)\n    print('traceback?', exc_tb is not None)",
+      "answer": "Print:\nZeroDivisionError division by zero\ntraceback? True\nsys.exc_info() returns (type, value, traceback) describing the exception currently being handled. Inside the except block the type is the ZeroDivisionError class and the value is the instance, while the third element is a traceback object (here truthy). These values are only meaningful while a handler is active."
+    },
+    {
+      "id": 66,
+      "question": "What prints?\nimport sys\ntry:\n    1 / 0\nexcept ZeroDivisionError:\n    print('in except:', sys.exc_info()[0].__name__)\nfinally:\n    info = sys.exc_info()[0]\n    print('in finally:', info)\nprint('after:', sys.exc_info()[0])",
+      "answer": "Print:\nin except: ZeroDivisionError\nin finally: None\nafter: None\nInside the except block sys.exc_info() is live. But once the exception has been handled, the interpreter clears it from the thread state, so both the finally block and the code after it see None. A common misconception is that finally can still inspect the handled exception; it cannot unless you explicitly re-raise it."
+    },
+    {
+      "id": 67,
+      "question": "What prints?\ndef divide(a, b):\n    try:\n        result = a / b\n    except ZeroDivisionError:\n        print('cannot divide by zero')\n    else:\n        print(f'result is {result}')\n    finally:\n        print('cleanup done')\n\ndivide(10, 2)\ndivide(10, 0)",
+      "answer": "Print:\nresult is 5.0\ncleanup done\ncannot divide by zero\ncleanup done\nThe else block runs only when the try body succeeded - after result has a value - so 'result is 5.0' prints for the first call. On a ZeroDivisionError the except runs instead and else is skipped. finally prints on both calls, proving it is tied to neither success nor failure."
+    },
+    {
+      "id": 68,
+      "question": "What prints?\ndef deposit(balance, amount):\n    try:\n        balance += amount\n    except TypeError:\n        print('bad amount type')\n    else:\n        if balance > 10000:\n            raise ValueError('limit exceeded')\n    finally:\n        print('ledger updated')\n    return balance\n\nprint(deposit(100, 50))\ndeposit(100, 'x')\ntry:\n    deposit(100, 20000)\nexcept ValueError as e:\n    print('outer caught:', e)",
+      "answer": "Print:\nledger updated\n150\nbad amount type\nledger updated\nledger updated\nouter caught: limit exceeded\nThe except TypeError clause does not protect the else block: a ValueError raised inside else is invisible to that except, so finally still runs and the ValueError propagates to the outer handler. In the four-block layout, else is part of the try's success path, not a second handler."
+    },
+    {
+      "id": 69,
+      "question": "What prints?\ntry:\n    for i in range(5):\n        print(i, end=' ')\n        if i == 2:\n            raise RuntimeError('boom')\n    print('loop done')\nexcept RuntimeError:\n    print('CAUGHT')\nprint('after')",
+      "answer": "Print:\n0 1 2 CAUGHT\nafter\nThe raise inside the loop body aborts the remaining iterations immediately: 3 and 4 never print and 'loop done' is skipped. Control jumps straight to the except that wraps the whole loop. A raise inside a loop body interrupts iteration unless the try/except lives inside the loop itself."
+    },
+    {
+      "id": 70,
+      "question": "What prints?\ndef div(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return None\n\nvals = [10, 20, 30]\ndenoms = [2, 0, 4]\nout = []\nfor v, d in zip(vals, denoms):\n    r = div(v, d)\n    if r is None:\n        print(f'skipping {v}/{d}')\n        continue\n    out.append(r)\nprint(out)",
+      "answer": "Print:\nskipping 20/0\n[5.0, 7.5]\nEvery ZeroDivisionError is contained inside div(), which reports failure by returning None instead of letting the exception escape. The caller's continue then skips the failing pair while the loop keeps processing the remaining items. Converting edge-case exceptions into a sentinel value is a common robust-loop pattern."
+    },
+    {
+      "id": 71,
+      "question": "What prints?\ntries = 0\nwhile True:\n    try:\n        tries += 1\n        print(f'attempt {tries}')\n        if tries < 3:\n            raise ConnectionResetError('transient')\n        print('success on', tries)\n        break\n    except ConnectionResetError:\n        print('caught, retry')",
+      "answer": "Print:\nattempt 1\ncaught, retry\nattempt 2\ncaught, retry\nattempt 3\nsuccess on 3\nThe raise in the try body sends control to the except, which only logs and lets the while loop begin the next attempt. On the third round the condition is false, the success branch prints and break exits the loop. This retry-until-success idiom turns transient errors into retries instead of crashes."
+    },
+    {
+      "id": 72,
+      "question": "What prints (unbuffered output)?\nattempts = 0\nwhile True:\n    try:\n        attempts += 1\n        print(f'attempt {attempts}', flush=True)\n        raise ConnectionError('refused')\n    except ConnectionError:\n        if attempts >= 3:\n            print('giving up', flush=True)\n            raise\n        print('retrying...', flush=True)",
+      "answer": "Print:\nattempt 1\nretrying...\nattempt 2\nretrying...\nattempt 3\ngiving up\nfollowed by an uncaught ConnectionError: refused\nThe bare `raise` re-raises the exact same ConnectionError instance once attempts reaches 3, so the loop gives up instead of retrying forever. Re-raising preserves the original traceback, which still points at the first `raise ConnectionError` line inside the try. This caps an otherwise infinite retry loop with a containing handler."
+    },
+    {
+      "id": 73,
+      "question": "What type and message print for each call?\nfor call in [lambda: len(42), lambda: sum('abc')]:\n    try:\n        call()\n    except Exception as e:\n        print(type(e).__name__, e)",
+      "answer": "Print:\nTypeError object of type 'int' has no len()\nTypeError unsupported operand type(s) for +: 'int' and 'str'\nlen() expects a sized object, so an int is a pure type mismatch -> TypeError. sum() begins with int 0 and tries int + str, also a type mismatch -> TypeError. Neither is a bad-but-right-type value, so Python raises TypeError, not ValueError."
+    },
+    {
+      "id": 74,
+      "question": "What prints?\nprint(int('42', 5))\ntry:\n    int('5', 5)\nexcept Exception as e:\n    print(type(e).__name__, e)",
+      "answer": "Print:\n22\nValueError invalid literal for int() with base 5: '5'\nint('42', 5) parses '42' as a base-5 numeral giving 4*5 + 2 = 22; the digit 4 is legal in base 5, so no error. But '5' is not a valid base-5 digit, so the parse fails with ValueError - the argument has the right type, only the content is bad. A common trap is assuming every digit string converts in any base."
+    },
+    {
+      "id": 75,
+      "question": "What prints?\ndef check(age):\n    assert age >= 0, 'age must be non-negative'\n    return age * 2\n\ntry:\n    check(-1)\nexcept AssertionError as e:\n    print('caught:', e)\nprint('done')",
+      "answer": "Print:\ncaught: age must be non-negative\ndone\nThe assert statement evaluates age >= 0; when that is False it raises AssertionError carrying the given message. Since check() does not catch it, the exception propagates to the caller's except. Assertions document invariants for debugging and should not be used for user-facing validation, because they vanish under python -O."
+    },
+    {
+      "id": 76,
+      "question": "Why does check(-5) print 'ok' when run as `python3 -O script.py`?\ndef check(x):\n    assert x > 0, 'must be positive'\n    return 'ok'\n\nprint(check(-5))",
+      "answer": "Print: ok. The -O flag strips all assert statements from the bytecode, so the check disappears and the function simply returns 'ok'. This is exactly why assert is unsuitable for validating untrusted input in production. Use an explicit `if x <= 0: raise ValueError(...)` when the check must survive -O."
+    },
+    {
+      "id": 77,
+      "question": "What prints?\ndef gen():\n    yield 10\n    return 42\n\ng = gen()\nprint(next(g))\ntry:\n    print('result:', next(g) * 2)\nexcept StopIteration as e:\n    print('stopped, return value:', e.value)",
+      "answer": "Print:\n10\nstopped, return value: 42\nFinishing a generator raises StopIteration, and a return inside the generator stores its argument in e.value - the only way to retrieve a generator's return value. The second next(g) would otherwise crash on the StopIteration, so catching it here is deliberate. A for loop, by contrast, swallows StopIteration silently and never exposes the value."
+    },
+    {
+      "id": 78,
+      "question": "What prints?\ndef gen():\n    yield 1\n    yield 2\n    return 'done'\n\ntotal = 0\nfor x in gen():\n    total += x\nprint('total:', total)",
+      "answer": "Print: total: 3\nThe for loop pulls 1 then 2, and when the generator raises StopIteration the loop just ends, swallowing that exception internally. The generator's return value 'done' lives only inside that StopIteration, which for never exposes. Generators can carry a result value out, but ordinary for loops discard it."
+    },
+    {
+      "id": 79,
+      "question": "What prints?\ndef countdown(n):\n    while n > 0:\n        yield n\n        n -= 1\n\nc = countdown(3)\nprint(next(c), next(c), next(c))\nprint('fallback:', next(c, 'none left'))",
+      "answer": "Print:\n3 2 1\nfallback: none left\nThe first three next() calls drain the generator normally. The fourth call would raise StopIteration, but next(iterator, default) intercepts it and returns the default instead. Supplying a default is the clean way to avoid catching StopIteration when polling a possibly-exhausted generator."
+    },
+    {
+      "id": 80,
+      "question": "What prints?\ndef gen():\n    yield 1\n    raise RuntimeError('mid-gen')\n    yield 2\n\ntry:\n    g = gen()\n    print(next(g))\n    print(next(g))\nexcept RuntimeError as e:\n    print('caught:', e)",
+      "answer": "Print:\n1\ncaught: mid-gen\nThe first next(g) yields 1; the second resumes the generator at the raise, which terminates the generator frame and propagates the RuntimeError to the driving call site. The trailing yield 2 is dead code because an exception permanently ends the generator. Handling the error where the generator is driven is the standard pattern."
+    },
+    {
+      "id": 81,
+      "question": "What prints?\ndef gen():\n    yield 1\n    raise StopIteration\n    yield 2\n\ntry:\n    for x in gen():\n        print(x)\nexcept RuntimeError as e:\n    print('got RuntimeError:', e)\nexcept StopIteration:\n    print('got StopIteration')",
+      "answer": "Print:\n1\ngot RuntimeError: generator raised StopIteration\nSince PEP 479, a StopIteration that escapes a generator is converted into RuntimeError, preventing a generator's internal StopIteration from silently halting an outer for loop. The first yield still produces 1. The bare `except StopIteration` branch never fires in this snippet."
+    },
+    {
+      "id": 82,
+      "question": "What prints?\nclass Suppressor:\n    def __enter__(self):\n        print('entering')\n        return self\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print('exiting', exc_type.__name__ if exc_type else None)\n        return True\n\nwith Suppressor():\n    raise ValueError('hidden')\nprint('survived!')",
+      "answer": "Print:\nentering\nexiting ValueError\nsurvived!\nWhen the with body raises ValueError, that exception is passed to __exit__ as exc_type/exc_val. Because __exit__ returns True, Python treats the exception as handled and suppresses it, so execution resumes right after the with block. Returning any truthy value from __exit__ is the documented way to swallow the body's exception."
+    },
+    {
+      "id": 83,
+      "question": "What prints?\nclass NoSuppress:\n    def __enter__(self):\n        return self\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print('exit called')\n        return False\n\ntry:\n    with NoSuppress():\n        raise ValueError('visible')\nexcept ValueError as e:\n    print('caught outside:', e)",
+      "answer": "Print:\nexit called\ncaught outside: visible\n__exit__ still receives the ValueError, but returning False signals the exception must not be suppressed, so it propagates after the with-block exits. An __exit__ that returns None or any falsy value behaves the same way. Suppression only happens when __exit__ returns a truthy value."
+    },
+    {
+      "id": 84,
+      "question": "Which prints never appear and what exception escapes?\nclass Conn:\n    def __enter__(self):\n        raise OSError('cannot open')\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print('never called')\n        return True\n\nwith Conn():\n    print('body')",
+      "answer": "An uncaught OSError: cannot open escapes; neither 'body' nor 'never called' is printed. When __enter__ itself raises, the with-suite never runs and, crucially, __exit__ is never called, so the return True suppression never happens. Context-manager suppressors can only neutralize errors raised inside the with body, not in __enter__."
+    },
+    {
+      "id": 85,
+      "question": "Fill the blank so the program prints 'no crash' and still lets every OTHER exception type propagate:\nfrom contextlib import suppress\n\nwith __________________:\n    open('/no/such/file')\nprint('no crash')",
+      "answer": "Fill: suppress(FileNotFoundError). contextlib.suppress is the stdlib context manager whose __exit__ returns True only for the listed exception types, suppressing exactly those. Any other exception type still propagates because the suppression is type-filtered, not blanket. It is the compact idiom for `try: open(...) except FileNotFoundError: pass`."
+    },
+    {
+      "id": 86,
+      "question": "What prints?\ndef connect():\n    raise OSError('db down')\n\ndef query():\n    try:\n        connect()\n    except OSError:\n        raise RuntimeError('query failed') from None\n\ntry:\n    query()\nexcept RuntimeError as e:\n    print('cause:', e.__cause__)\n    print('suppressed context:', e.__suppress_context__)",
+      "answer": "Print:\ncause: None\nsuppressed context: True\n`raise ... from None` explicitly breaks the chain: __cause__ is None and __suppress_context__ is set to True, so the traceback shows no 'During handling of...' fallback section. Use it when the original OSError is deliberately hidden behind a sanitized message. The now-hidden context is still reachable via __context__, but it is not displayed."
+    },
+    {
+      "id": 87,
+      "question": "What prints?\ntry:\n    try:\n        raise ValueError('inner boom')\n    finally:\n        print('inner finally')\nexcept ValueError as e:\n    print('outer caught:', e)",
+      "answer": "Print:\ninner finally\nouter caught: inner boom\nThe inner block has only a finally, so the ValueError is not handled there: finally runs, then the exception keeps propagating outward. The outer `except ValueError` then receives the same instance, so its message stays 'inner boom'. A nested finally always runs before any outer handler sees the exception."
+    },
+    {
+      "id": 88,
+      "question": "What happens at the final print(e), and why?\ntry:\n    1 / 0\nexcept Exception as e:\n    print('inside:', e)\nprint(e)",
+      "answer": "Print:\ninside: division by zero\nfollowed by NameError: name 'e' is not defined\nIn Python 3 the exception variable is automatically deleted at the end of its except block, and sys.exc_info() is cleared with it. So referencing e afterwards raises NameError instead of leaking the handled exception object. This cleanup was introduced to prevent the stale-exception bugs Python 2 allowed."
+    },
+    {
+      "id": 89,
+      "question": "Why is `except Exception` generally preferred over a bare `except:` for broad error handling?",
+      "answer": "Because a bare `except:` also catches BaseException subclasses such as KeyboardInterrupt, SystemExit, and GeneratorExit, not just ordinary program errors. A bare clause can silently swallow the user's Ctrl-C (KeyboardInterrupt) or a graceful SystemExit request. Limiting yourself to `except Exception` keeps those control-flow exits propagating while still trapping normal errors."
+    },
+    {
+      "id": 90,
+      "question": "What prints?\ndef f(x):\n    try:\n        return 10 // x\n    except ZeroDivisionError:\n        return 'zero'\n    except Exception:\n        return 'generic'\n\nprint(f(0))\nprint(f('a'))",
+      "answer": "Print:\nzero\ngeneric\nexcept clauses are matched top-down, so the more specific ZeroDivisionError is tested first and wins for x = 0. When f('a') raises TypeError, ZeroDivisionError does not match, so the generic Exception branch handles it. Reversing the order would make the specific branch unreachable - specific handlers belong before generic ones."
+    },
+    {
+      "id": 91,
+      "question": "What prints?\ndef convert(x):\n    try:\n        return int(x)\n    except (TypeError, ValueError) as e:\n        print(f'bad: {x!r} -> {type(e).__name__}')\n        return None\n\ndata = ['1', 'two', 3.7, None, '5']\nresult = [convert(d) for d in data]\nprint('final:', result)",
+      "answer": "Print:\nbad: 'two' -> ValueError\nbad: None -> TypeError\nfinal: [1, None, 3, None, 5]\nint('two') fails on content (ValueError) and int(None) fails on type (TypeError), so one (TypeError, ValueError) clause covers both. Each bad item is logged and converted into None, letting the loop complete with a one-to-one mapping. int(3.7) truncates to 3 without error."
+    },
+    {
+      "id": 92,
+      "question": "What prints?\nfor exc in [ConnectionError('refused'), FileNotFoundError('no file'), KeyError('k')]:\n    try:\n        raise exc\n    except OSError as e:\n        print(type(e).__name__, e)\n    except BaseException as e:\n        print('other:', type(e).__name__)",
+      "answer": "Print:\nConnectionError refused\nFileNotFoundError no file\nother: KeyError\nBoth ConnectionError and FileNotFoundError are subclasses of OSError, so the `except OSError` clause catches them both; the KeyError, unrelated to OSError, falls through to `except BaseException`. This is why network and file code commonly consolidate I/O failures under one OSError handler. The distinct types are still preserved on the instance."
+    },
+    {
+      "id": 93,
+      "question": "What prints?\ndef f():\n    try:\n        return 'try-value'\n    finally:\n        print('finally runs')\n\nresult = f()\nprint('result:', result)",
+      "answer": "Print:\nfinally runs\nresult: try-value\nfinally executes before the return value is handed back to the caller, so its print appears first. The return expression is evaluated, then finally runs, and only then does the value actually leave the function. This ordering makes try/finally safe for freeing resources right before a return."
+    },
+    {
+      "id": 94,
+      "question": "What prints, and why is this code buggy?\ndef f():\n    try:\n        return 1 // 0\n    finally:\n        return 'cleanup return'\n\nprint(f())",
+      "answer": "Print (with a SyntaxWarning about return-in-finally in Python 3.13+):\ncleanup return\nA `return` inside finally overrides whatever the try body was doing, including discarding the in-flight ZeroDivisionError, so the caller sees success instead of the failure. The result is that a real bug (division by zero) is silently hidden. Cleanup belongs in finally, but never a return that shadows the exception; drop the finally return, or use raise to preserve the error."
+    },
+    {
+      "id": 95,
+      "question": "What prints?\ntry:\n    out = [1 / x for x in [1, 0, 1]]\n    print('built list:', out)\nexcept ZeroDivisionError:\n    print('comprehension aborted; out never assigned')",
+      "answer": "Print: comprehension aborted; out never assigned\nThe comprehension raises ZeroDivisionError on its second element (x = 0), aborting the entire expression, so 'built list' never prints. Because the raise kills the whole build, the variable out is never bound at all. Comprehension bodies are not exception-tolerant: one bad element destroys the full result."
+    },
+    {
+      "id": 96,
+      "question": "Which frames appear in the traceback when the KeyError is caught?\nimport sys\n\ndef a():\n    raise KeyError('k')\n\ndef b():\n    a()\n\ntry:\n    b()\nexcept KeyError:\n    tb = sys.exc_info()[2]\n    names = []\n    while tb:\n        names.append(tb.tb_frame.f_code.co_name)\n        tb = tb.tb_next\n    print('frames:', names)",
+      "answer": "Print: frames: ['<module>', 'b', 'a']\nThe traceback walks the call stack from the outermost frame (module) down to the frame that raised, so a - the frame containing the raise - is innermost. Every uncaught exception preserves the accumulated frames of its propagation path. sys.exc_info()[2] hands you exactly this traceback object for inspection."
+    },
+    {
+      "id": 97,
+      "question": "What prints?\ndef handle():\n    try:\n        d = {}\n        d['missing']\n    except KeyError:\n        raise\n\ntry:\n    handle()\nexcept KeyError as e:\n    print('re-raised KeyError:', e)",
+      "answer": "Print: re-raised KeyError: 'missing'\nA bare `raise` inside an except clause re-raises the exact exception currently being handled, with its original traceback intact. Here that is the KeyError('missing') raised by the dict lookup, and its message survives to the outer handler. Bare raise never constructs a new exception, so the chain is preserved."
+    },
+    {
+      "id": 98,
+      "question": "Which phrase does each version's printed traceback use?\n# version A: exception raised then, inside the handler: raise ValueError('wrapped')\n# version B: except ... as e: raise ValueError('wrapped') from e",
+      "answer": "A: 'During handling of the above exception, another exception occurred:'\nB: 'The above exception was the direct cause of the following exception:'\nA plain raise inside a handler relies on the implicit __context__ link, so the traceback uses the 'During handling' wording. `raise X from e` sets __cause__ explicitly, so the traceback switches to the 'direct cause' wording. __cause__ is only ever populated by an explicit `from` clause."
+    },
+    {
+      "id": 99,
+      "question": "What does sys.exc_info() return at the two marked positions?\nimport sys\ntry:\n    1 / 0\nexcept ZeroDivisionError:\n    print('A:', sys.exc_info()[0])\nprint('B:', sys.exc_info()[0])",
+      "answer": "Print:\nA: <class 'ZeroDivisionError'>\nB: None\nInside the handler, sys.exc_info()[0] is the active exception type (the ZeroDivisionError class). Once the except block completes, the interpreter clears the exception state, so the later call returns None (the tuple is (None, None, None)). Unless you bind it during the handler, the info is gone by the time you'd want it."
+    },
+    {
+      "id": 100,
+      "question": "What prints?\ndef c():\n    raise ValueError('bottom')\n\ndef b():\n    try:\n        c()\n    except ValueError as e:\n        raise RuntimeError('middle') from e\n\ndef a():\n    try:\n        b()\n    except RuntimeError as e:\n        raise TypeError('top') from e\n\ntry:\n    a()\nexcept TypeError as top:\n    print(type(top).__name__, top)\n    print(type(top.__cause__).__name__, top.__cause__)\n    print(type(top.__cause__.__cause__).__name__, top.__cause__.__cause__)\n    print('end:', top.__cause__.__cause__.__cause__)",
+      "answer": "Print:\nTypeError top\nRuntimeError middle\nValueError bottom\nend: None\nEach `raise X from e` nests one more __cause__, so walking __cause__.__cause__ reveals the whole chain bottom-up. The third hop returns None because the bottom ValueError has no cause of its own. A printed traceback shows exactly the reverse order: TypeError first, then RuntimeError ('direct cause'), then ValueError. Multiple from-clauses build arbitrarily deep chains."
+    }
+  ]
+}

@@ -1,0 +1,505 @@
+{
+  "description": "100 questions on OOP classes and objects (coding and logic based, intermediate level)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What keyword is used to define a class in Python?",
+      "answer": "class (e.g., class Dog:)"
+    },
+    {
+      "id": 2,
+      "question": "What does `class Dog: pass` create?",
+      "answer": "An empty class named Dog that can be instantiated"
+    },
+    {
+      "id": 3,
+      "question": "How do you create an object from the class Dog?",
+      "answer": "obj = Dog() (calling the class with parentheses)"
+    },
+    {
+      "id": 4,
+      "question": "What does print(type(Dog())) output?",
+      "answer": "<class '__main__.Dog'>"
+    },
+    {
+      "id": 5,
+      "question": "What does isinstance(Dog(), Dog) return?",
+      "answer": "True"
+    },
+    {
+      "id": 6,
+      "question": "What does type(Dog()) == Dog return?",
+      "answer": "True (type gives the exact class)"
+    },
+    {
+      "id": 7,
+      "question": "What does id(Dog()) == id(Dog()) return?",
+      "answer": "Usually False because the two instances are separate objects"
+    },
+    {
+      "id": 8,
+      "question": "What does (lambda a, b: a is b)(Dog(), Dog()) return?",
+      "answer": "False (two calls create two distinct objects)"
+    },
+    {
+      "id": 9,
+      "question": "What does a = Dog(); b = a; print(a is b) output?",
+      "answer": "True (b is a reference to the same object)"
+    },
+    {
+      "id": 10,
+      "question": "What does a = Dog(); b = Dog(); print(a == b) output by default?",
+      "answer": "False (default equality is identity-based)"
+    },
+    {
+      "id": 11,
+      "question": "When does __init__ get called?",
+      "answer": "Automatically, once, each time the class is instantiated"
+    },
+    {
+      "id": 12,
+      "question": "class P: def __init__(self, name): self.name = name. What does P() do?",
+      "answer": "Raises TypeError: __init__() missing 1 required positional argument: 'name'"
+    },
+    {
+      "id": 13,
+      "question": "class P: def __init__(self, x=5): self.x = x. What does P().x return?",
+      "answer": "5 (default used)"
+    },
+    {
+      "id": 14,
+      "question": "class P: def __init__(self, x, y): self.x=x; self.y=y. How do you create it with keyword args?",
+      "answer": "P(x=1, y=2)"
+    },
+    {
+      "id": 15,
+      "question": "class P: def __init__(self): self.x = 1. What does P().x return?",
+      "answer": "1"
+    },
+    {
+      "id": 16,
+      "question": "class P: pass. Can you create P() without defining __init__?",
+      "answer": "Yes; a default object.__init__ is used"
+    },
+    {
+      "id": 17,
+      "question": "class P: def __init__(self): self.x = 1. Is self.x set for every instance?",
+      "answer": "Yes, __init__ runs for every instance and sets self.x"
+    },
+    {
+      "id": 18,
+      "question": "class P: def set(self, v): self.v = v. What does p.v raise before set() is called?",
+      "answer": "AttributeError: 'P' object has no attribute 'v'"
+    },
+    {
+      "id": 19,
+      "question": "class P: def set(self, v): self.v = v. p = P(); p.set(10); print(p.v) outputs?",
+      "answer": "10 (attributes can be created in any method)"
+    },
+    {
+      "id": 20,
+      "question": "Can you add a brand-new attribute to an object after creation, like p.color = 'red'?",
+      "answer": "Yes, Python objects allow dynamic attribute assignment"
+    },
+    {
+      "id": 21,
+      "question": "What does p.missing raise when accessing an attribute that doesn't exist?",
+      "answer": "AttributeError"
+    },
+    {
+      "id": 22,
+      "question": "What does getattr(p, 'x', 'nope') return when p has no x?",
+      "answer": "'nope' (the default)"
+    },
+    {
+      "id": 23,
+      "question": "What does hasattr(p, 'x') return when p has an x attribute?",
+      "answer": "True"
+    },
+    {
+      "id": 24,
+      "question": "class A: def hi(self): return 'hi'. What does A().hi() return?",
+      "answer": "'hi'"
+    },
+    {
+      "id": 25,
+      "question": "class A: def hi(self): return 'hi'. What does A.hi(A()) return?",
+      "answer": "'hi' (explicitly passing the instance as self)"
+    },
+    {
+      "id": 26,
+      "question": "class A: def hi(self): return 'hi'. What does A.hi() raise?",
+      "answer": "TypeError: hi() missing 1 required positional argument: 'self'"
+    },
+    {
+      "id": 27,
+      "question": "inside an instance method, what does self refer to?",
+      "answer": "The exact object on which the method was called"
+    },
+    {
+      "id": 28,
+      "question": "class A: def m(self): return self is A(). Is `self` bound when called as obj.m()` yes or no?",
+      "answer": "Yes, obj is passed automatically as self"
+    },
+    {
+      "id": 29,
+      "question": "class A: def m(self): return 42. What does A().m() return (no print)?",
+      "answer": "42"
+    },
+    {
+      "id": 30,
+      "question": "class A: def m(self): pass. What does A().m() return?",
+      "answer": "None (no return statement)"
+    },
+    {
+      "id": 31,
+      "question": "class A: x = 10. What does A.x return?",
+      "answer": "10 (class attribute read via the class)"
+    },
+    {
+      "id": 32,
+      "question": "class A: x = 10. What does A().x return?",
+      "answer": "10 (instance can read the class attribute)"
+    },
+    {
+      "id": 33,
+      "question": "class A: x = []. a=A(); b=A(); a.x.append(1); print(b.x) outputs?",
+      "answer": "[1] (mutable class attribute is shared)"
+    },
+    {
+      "id": 34,
+      "question": "class A: x = 10. a=A(); a.x = 5; print(A().x) outputs?",
+      "answer": "10 (assigning on the instance only shadows it)"
+    },
+    {
+      "id": 35,
+      "question": "class A: x = 10. a=A(); a.x = 5; print(a.x) outputs?",
+      "answer": "5 (instance attribute shadows the class attribute)"
+    },
+    {
+      "id": 36,
+      "question": "class A: x = 10. a=A(); a.x = 5; del a.x; print(a.x) outputs?",
+      "answer": "10 (deleting the instance attribute re-exposes the class one)"
+    },
+    {
+      "id": 37,
+      "question": "What does every instance's `__dict__` contain?",
+      "answer": "A dict of only its instance attributes, e.g., {'x': 5}"
+    },
+    {
+      "id": 38,
+      "question": "class A: def __init__(self): self.x = 1. print(A().__dict__) outputs?",
+      "answer": "{'x': 1}"
+    },
+    {
+      "id": 39,
+      "question": "class A: pass. a=A(); a.x=1. print(a.__dict__) outputs?",
+      "answer": "{'x': 1}"
+    },
+    {
+      "id": 40,
+      "question": "Do methods appear in the instance's __dict__?",
+      "answer": "No, methods live on the class; the instance __dict__ holds only data"
+    },
+    {
+      "id": 41,
+      "question": "What does dir(obj) return?",
+      "answer": "A sorted list of attribute/method names, including dunder methods"
+    },
+    {
+      "id": 42,
+      "question": "class A: pass. print(len([1 for m in dir(A()) if m == 'bark'])) outputs?",
+      "answer": "0 (no such method)"
+    },
+    {
+      "id": 43,
+      "question": "What does object() create?",
+      "answer": "The simplest Python object with no instance attributes"
+    },
+    {
+      "id": 44,
+      "question": "What does isinstance(Dog(), object) return?",
+      "answer": "True (every class ultimately inherits from object)"
+    },
+    {
+      "id": 45,
+      "question": "class A: pass. What does bool(A()) return by default?",
+      "answer": "True (objects are truthy unless __bool__/__len__ says otherwise)"
+    },
+    {
+      "id": 46,
+      "question": "What does print(A()) output when A has no __str__ or __repr__?",
+      "answer": "<__main__.A object at 0x...> (default object representation)"
+    },
+    {
+      "id": 47,
+      "question": "class A: def __str__(self): return 'hello'. print(A()) outputs?",
+      "answer": "hello"
+    },
+    {
+      "id": 48,
+      "question": "class A: def __repr__(self): return 'A()'. print(A()) outputs?",
+      "answer": "A() (repr used when __str__ is absent)"
+    },
+    {
+      "id": 49,
+      "question": "What does type(A())() do for class A with no required args?",
+      "answer": "Creates a brand-new A instance via the class object itself"
+    },
+    {
+      "id": 50,
+      "question": "class A: def hi(self): return 'hi'. print(type(A().hi)) outputs?",
+      "answer": "<class 'method'> (a bound method)"
+    },
+    {
+      "id": 51,
+      "question": "class A: def hi(self): return 'hi'. print(A().hi is A().hi) outputs?",
+      "answer": "False (each access creates a new bound method object)"
+    },
+    {
+      "id": 52,
+      "question": "What does callable(A().hi) return?",
+      "answer": "True (bound methods are callable)"
+    },
+    {
+      "id": 53,
+      "question": "class A: def hi(self): return 'hi'. What does callable(A.hi) return?",
+      "answer": "True (functions are callable)"
+    },
+    {
+      "id": 54,
+      "question": "How many times does __init__ run for `[A() for _ in range(3)]`?",
+      "answer": "Three times, once per object"
+    },
+    {
+      "id": 55,
+      "question": "class A: count = 0; def __init__(self): A.count += 1. After [A() for _ in range(5)], what is A.count?",
+      "answer": "5"
+    },
+    {
+      "id": 56,
+      "question": "class A: def __init__(self): self.n = 0. a=A(); a.n += 5; print(A().n) outputs?",
+      "answer": "0 (instances are independent)"
+    },
+    {
+      "id": 57,
+      "question": "class A: def __init__(self, v): self.v = v. a=A(1); b=A(1); print(a.v == b.v) outputs?",
+      "answer": "True (values equal, though objects differ)"
+    },
+    {
+      "id": 58,
+      "question": "What does `A is A` return for any class A?",
+      "answer": "True (the class object is a singleton in memory)"
+    },
+    {
+      "id": 59,
+      "question": "What does A.__name__ return for class A?",
+      "answer": "'A' (the class's name as a string)"
+    },
+    {
+      "id": 60,
+      "question": "What does type(A()).__name__ return for class A?",
+      "answer": "'A'"
+    },
+    {
+      "id": 61,
+      "question": "Can a class method have any name as the first parameter instead of self?",
+      "answer": "Yes, but self is the strong convention"
+    },
+    {
+      "id": 62,
+      "question": "class A: def m(this): return this. What does A().m() return?",
+      "answer": "The instance itself (first param name is arbitrary)"
+    },
+    {
+      "id": 63,
+      "question": "What happens if a class method raises an exception during instantiation?",
+      "answer": "The exception propagates; no object is returned"
+    },
+    {
+      "id": 64,
+      "question": "class A: def __init__(self): raise ValueError('bad'). What does A() do?",
+      "answer": "Raises ValueError('bad'); construction fails"
+    },
+    {
+      "id": 65,
+      "question": "What distinguishes one instance from another internally?",
+      "answer": "Different memory addresses/identity, reflected by different id()"
+    },
+    {
+      "id": 66,
+      "question": "class A: x = 1. print(A.x is A().x) outputs?",
+      "answer": "True (read-only access returns the same class object value)"
+    },
+    {
+      "id": 67,
+      "question": "What does hash(obj) return by default for a user object?",
+      "answer": "An identity-derived integer, stable while the object lives"
+    },
+    {
+      "id": 68,
+      "question": "class A: pass. a=A(); b=a; print(id(a) == id(b)) outputs?",
+      "answer": "True (b aliases a)"
+    },
+    {
+      "id": 69,
+      "question": "class A: pass. a=A(); print(id(a) == id(A())) outputs?",
+      "answer": "False (distinct objects) unless the first is already garbage collected"
+    },
+    {
+      "id": 70,
+      "question": "class A: def m(self): return self. Can you call A.m(a) where a is an instance?",
+      "answer": "Yes, it works exactly like a.m()"
+    },
+    {
+      "id": 71,
+      "question": "class A: def m(self): return self.m() causes what?",
+      "answer": "Infinite recursion (RecursionError) since m keeps calling itself"
+    },
+    {
+      "id": 72,
+      "question": "Can two different classes define methods with the same name?",
+      "answer": "Yes; methods belong to their own class"
+    },
+    {
+      "id": 73,
+      "question": "class A: def m(self): return 1. class B: def m(self): return 2. print(A().m(), B().m()) outputs?",
+      "answer": "1 2"
+    },
+    {
+      "id": 74,
+      "question": "How do you detect the runtime class of an object in code?",
+      "answer": "type(obj) for the exact class, or isinstance(obj, Class) for matching"
+    },
+    {
+      "id": 75,
+      "question": "class A: def f(self, x, y=10): return x + y. print(A().f(5)) outputs?",
+      "answer": "15"
+    },
+    {
+      "id": 76,
+      "question": "class A: def f(self, *a): return sum(a). print(A().f(1,2,3)) outputs?",
+      "answer": "6"
+    },
+    {
+      "id": 77,
+      "question": "What happens when you instantiate with too many args, e.g. P(1,2) when __init__ takes one?",
+      "answer": "TypeError: __init__() takes ... positional arguments but ... were given"
+    },
+    {
+      "id": 78,
+      "question": "class A: def __init__(self, *args): print(len(args)). What does A(1,2,3) print inside __init__?",
+      "answer": "3"
+    },
+    {
+      "id": 79,
+      "question": "What does `A` (without parentheses) refer to?",
+      "answer": "The class object itself, not an instance"
+    },
+    {
+      "id": 80,
+      "question": "Does defining a class execute its body?",
+      "answer": "Yes, the class body runs when the class statement executes, defining members"
+    },
+    {
+      "id": 81,
+      "question": "class A: print('ran') ; When does 'ran' print?",
+      "answer": "Once, when the class definition itself is executed"
+    },
+    {
+      "id": 82,
+      "question": "class A: x = 1 + 1. What is A.x?",
+      "answer": "2"
+    },
+    {
+      "id": 83,
+      "question": "How are instances stored: by value or by reference?",
+      "answer": "By reference; variables hold a reference to the same object"
+    },
+    {
+      "id": 84,
+      "question": "What does [-1] do on p = P() when P has no __getitem__?",
+      "answer": "TypeError: 'P' object is not subscriptable"
+    },
+    {
+      "id": 85,
+      "question": "class A: def __getitem__(self, i): return i * 2. What does A()[5] return?",
+      "answer": "10"
+    },
+    {
+      "id": 86,
+      "question": "class A: def __len__(self): return 7. print(len(A())) outputs?",
+      "answer": "7"
+    },
+    {
+      "id": 87,
+      "question": "class A: def __eq__(self, o): return True. print(A() == A()) outputs?",
+      "answer": "True (custom equality)"
+    },
+    {
+      "id": 88,
+      "question": "class A: pass. print(A() == A()) outputs by default?",
+      "answer": "False (identity comparison)"
+    },
+    {
+      "id": 89,
+      "question": "class A: def __init__(self, v): self.v = v. How do you compare two A instances by v?",
+      "answer": "Compare attributes: a.v == b.v, or implement __eq__"
+    },
+    {
+      "id": 90,
+      "question": "Is a class mutable at runtime?",
+      "answer": "Yes, you can add attributes/methods to a class after definition"
+    },
+    {
+      "id": 91,
+      "question": "class A: pass; A.new_method = lambda self: 1. What does A().new_method() return?",
+      "answer": "1 (methods can be attached at runtime)"
+    },
+    {
+      "id": 92,
+      "question": "What does object.__new__ do during instantiation?",
+      "answer": "Allocates and returns the new instance before __init__ runs"
+    },
+    {
+      "id": 93,
+      "question": "What order do __new__ and __init__ run when creating an object?",
+      "answer": "__new__ first (creates instance), then __init__ (initializes it)"
+    },
+    {
+      "id": 94,
+      "question": "class A: def __init__(self): self.x = 10. print(sorted(A().__dict__.keys())) outputs?",
+      "answer": "['x']"
+    },
+    {
+      "id": 95,
+      "question": "class A: def __init__(self): self.a = 1; self.b = 2. print(len(A().__dict__)) outputs?",
+      "answer": "2"
+    },
+    {
+      "id": 96,
+      "question": "What does print(type)(A()) or `type(A()) is A` evaluate to?",
+      "answer": "True (type of an instance is its class)"
+    },
+    {
+      "id": 97,
+      "question": "class A: def m(self): return 'm'. What does 'm' in dir(A()) return?",
+      "answer": "True"
+    },
+    {
+      "id": 98,
+      "question": "class A: x = 5. What does 'x' in A.__dict__ return?",
+      "answer": "True"
+    },
+    {
+      "id": 99,
+      "question": "What does 'x' in A().__dict__ return when x is only a class attribute?",
+      "answer": "False (instance dict does not copy class attributes)"
+    },
+    {
+      "id": 100,
+      "question": "class A: pass; a=A(); a.x=1. After del a.x, what does 'x' in a.__dict__ return?",
+      "answer": "False (attribute deleted)"
+    }
+  ]
+}

@@ -1,0 +1,505 @@
+{
+  "description": "100 questions on OOP inheritance (coding and logic based, intermediate/advanced level)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "How do you define a class Dog that inherits from Animal?",
+      "answer": "class Dog(Animal):"
+    },
+    {
+      "id": 2,
+      "question": "What does a child class inherit from its parent?",
+      "answer": "All methods and class/instance attribute access (attributes themselves live on the instance)"
+    },
+    {
+      "id": 3,
+      "question": "class Animal: def speak(self): return '...'; class Dog(Animal): pass. What does Dog().speak() return?",
+      "answer": "'...' (inherited from Animal)"
+    },
+    {
+      "id": 4,
+      "question": "class Animal: x = 5; class Dog(Animal): pass. What does Dog.x return?",
+      "answer": "5 (inherited class attribute)"
+    },
+    {
+      "id": 5,
+      "question": "What does isinstance(Dog(), Animal) return for class Dog(Animal)?",
+      "answer": "True (a child instance is an instance of the parent)"
+    },
+    {
+      "id": 6,
+      "question": "class Dog(Animal): pass. What does isinstance(Dog(), Dog) return?",
+      "answer": "True"
+    },
+    {
+      "id": 7,
+      "question": "a = Animal(); what does isinstance(a, Dog) return?",
+      "answer": "False (a parent object is not an instance of the child)"
+    },
+    {
+      "id": 8,
+      "question": "What does type(Dog()) == Animal return?",
+      "answer": "False (type checks the exact class, not parents)"
+    },
+    {
+      "id": 9,
+      "question": "What does issubclass(Dog, Animal) return for class Dog(Animal)?",
+      "answer": "True"
+    },
+    {
+      "id": 10,
+      "question": "What does issubclass(Animal, Dog) return?",
+      "answer": "False"
+    },
+    {
+      "id": 11,
+      "question": "What does issubclass(Dog, Dog) return?",
+      "answer": "True (a class is a subclass of itself)"
+    },
+    {
+      "id": 12,
+      "question": "class A: pass; class B(A): pass; class C(B): pass. What does issubclass(C, A) return?",
+      "answer": "True (transitive)"
+    },
+    {
+      "id": 13,
+      "question": "What does isinstance(C(), A) return for class C(B) and B(A)?",
+      "answer": "True (isinstance walks every ancestor)"
+    },
+    {
+      "id": 14,
+      "question": "class A: pass; class B(A): pass. What is B.__mro__?",
+      "answer": "(B, A, object)"
+    },
+    {
+      "id": 15,
+      "question": "class Base: pass; class Child(Base): pass. What does Child.__bases__ return?",
+      "answer": "(Base,)"
+    },
+    {
+      "id": 16,
+      "question": "class A: def m(self): return 'A'. class B(A): pass. What does B().m() return?",
+      "answer": "'A'"
+    },
+    {
+      "id": 17,
+      "question": "class A: def m(self): return 'A'. class B(A): def m(self): return 'B'. What does B().m() return?",
+      "answer": "'B' (override wins)"
+    },
+    {
+      "id": 18,
+      "question": "class A: def m(self): return 'A'. class B(A): def m(self): return super().m() + 'B'. What does B().m() return?",
+      "answer": "'AB'"
+    },
+    {
+      "id": 19,
+      "question": "What does super() allow a child method to do?",
+      "answer": "Call the parent version of a method (or the next class in the MRO)"
+    },
+    {
+      "id": 20,
+      "question": "class A: def __init__(self): self.x = 1. class B(A): pass. What does B().x return?",
+      "answer": "1 (parent __init__ is inherited and called)"
+    },
+    {
+      "id": 21,
+      "question": "class A: def __init__(self): self.x = 1. class B(A): def __init__(self): self.x = 2. What does B().x return?",
+      "answer": "2 (child __init__ fully replaced the parent's)"
+    },
+    {
+      "id": 22,
+      "question": "class A: def __init__(self): self.x = 1. class B(A): def __init__(self): super().__init__(); self.x += 10. What does B().x return?",
+      "answer": "11"
+    },
+    {
+      "id": 23,
+      "question": "class A: def __init__(self, n): self.n = n. class B(A): def __init__(self, n, m): super().__init__(n); self.m = m. What does B(1, 2).m return?",
+      "answer": "2"
+    },
+    {
+      "id": 24,
+      "question": "class A: def __init__(self): self.n = 0. class B(A): def __init__(self): pass. What does B().n raise?",
+      "answer": "AttributeError (the parent initializer was never called)"
+    },
+    {
+      "id": 25,
+      "question": "Does a child inherit the parent's __str__ if it defines none?",
+      "answer": "Yes, special methods are inherited too"
+    },
+    {
+      "id": 26,
+      "question": "class A: def __str__(self): return 'A'. class B(A): pass. What does str(B()) return?",
+      "answer": "'A'"
+    },
+    {
+      "id": 27,
+      "question": "class A: def m(self): return 'parent'; def call(self): return self.m(). class B(A): def m(self): return 'child'. What does B().call() return?",
+      "answer": "'child' (parent code dispatches to the child's override)"
+    },
+    {
+      "id": 28,
+      "question": "What name describes the behavior where a base-class method calls an overridden method?",
+      "answer": "Polymorphism / dynamic dispatch through self"
+    },
+    {
+      "id": 29,
+      "question": "class A: def __init__(self): self.x = 1. class B(A): def __init__(self): super().__init__(); self.y = 2. What does B().__dict__ contain?",
+      "answer": "{'x': 1, 'y': 2}"
+    },
+    {
+      "id": 30,
+      "question": "class A: x = 1. class B(A): pass. b = B(); print(b.x) outputs?",
+      "answer": "1"
+    },
+    {
+      "id": 31,
+      "question": "class A: x = 1. class B(A): x = 2. What does B.x return?",
+      "answer": "2; A.x stays 1"
+    },
+    {
+      "id": 32,
+      "question": "class A: x = 1. class B(A): x = 100. print(A().x, B().x) outputs?",
+      "answer": "1 100 (child shadowing)"
+    },
+    {
+      "id": 33,
+      "question": "What lookup order is used for obj.attr on a child instance?",
+      "answer": "Instance dict, then the MRO: child, parents, grandparents, ..., object"
+    },
+    {
+      "id": 34,
+      "question": "class A: def __init__(self): self.v = 'A'. class B(A): def __init__(self): super().__init__(); self.v = 'B'. What does B().v return?",
+      "answer": "B"
+    },
+    {
+      "id": 35,
+      "question": "Can you call a grandparent method with super().super()?",
+      "answer": "No, super() only goes to the next class in the MRO; chain it via each class or use the MRO"
+    },
+    {
+      "id": 36,
+      "question": "class A: pass. class B(A): pass. What does A.__subclasses__() return?",
+      "answer": "A list of direct subclasses, e.g., [<class 'B'>]"
+    },
+    {
+      "id": 37,
+      "question": "What does isinstance(obj, (A, B)) return if obj is an instance of B and B extends A?",
+      "answer": "True (isinstance accepts a tuple of classes)"
+    },
+    {
+      "id": 38,
+      "question": "What does issubclass(B, (A, C)) do?",
+      "answer": "True if B is a subclass of any class in the tuple"
+    },
+    {
+      "id": 39,
+      "question": "class A: def m(self): return 'A'. class B: def m(self): return 'B'. class C(A, B): pass. What does C().m() return?",
+      "answer": "'A' (leftmost base wins)"
+    },
+    {
+      "id": 40,
+      "question": "class A: pass. class B: pass. class C(A, B): pass. What is C.__mro__?",
+      "answer": "(C, A, B, object)"
+    },
+    {
+      "id": 41,
+      "question": "class A: pass; class B(A): pass; class C(A): pass; class D(B, C): pass. Is this inheritance valid?",
+      "answer": "Yes, it is the classic diamond and works via C3 linearization"
+    },
+    {
+      "id": 42,
+      "question": "In a diamond D(B, C) with both B and C extending A, how many times does A.__init__ run via super()?",
+      "answer": "Once (the cooperative MRO calls each initializer exactly once)"
+    },
+    {
+      "id": 43,
+      "question": "class A: pass. class B(A): pass. class C(A): pass. class D(B, C): pass. What is super().somemethod() able to find in D?",
+      "answer": "The next class in D's MRO after the class defining the call"
+    },
+    {
+      "id": 44,
+      "question": "Can a child class use a method the parents don't define?",
+      "answer": "No, calling it raises AttributeError unless some ancestor defines it"
+    },
+    {
+      "id": 45,
+      "question": "class A: def __init__(self): self._x = 1. class B(A): def get(self): return self._x. What does B().get() return?",
+      "answer": "1 (single-underscore attributes pass through inheritance normally)"
+    },
+    {
+      "id": 46,
+      "question": "class A: def __init__(self): self.__x = 1. class B(A): def get(self): return self.__x. What does B().get() raise?",
+      "answer": "AttributeError: '__x' is mangled to '_B__x' in B, but the parent stored '_A__x'"
+    },
+    {
+      "id": 47,
+      "question": "class A: def __init__(self): self.__x = 1. def get(self): return self.__x. What does A().get() return?",
+      "answer": "1 (inside A, __x is mangled to _A__x which exists)"
+    },
+    {
+      "id": 48,
+      "question": "class A: def __init__(self): self.__x = 1. class B(A): def __init__(self): super().__init__(); self.__x = 2. How many private slots does a B instance have?",
+      "answer": "Two distinct ones: _A__x = 1 and _B__x = 2"
+    },
+    {
+      "id": 49,
+      "question": "What does b._A__x return for a B instance from the previous setup?",
+      "answer": "1 (name-mangled private slot created by A)"
+    },
+    {
+      "id": 50,
+      "question": "Can a child access a parent's name-mangled attribute directly like b.__x?",
+      "answer": "No, b.__x is looked up as _B__x and not found"
+    },
+    {
+      "id": 51,
+      "question": "class A: def hi(self): return 'hi'. class B(A): pass. print(hasattr(B(), 'hi')) outputs?",
+      "answer": "True"
+    },
+    {
+      "id": 52,
+      "question": "What does getattr(Dog(), 'sound', 'none') return when Animal has sound?",
+      "answer": "The inherited sound value"
+    },
+    {
+      "id": 53,
+      "question": "class A: pass. class B(A): pass. How do you test whether B is a subclass of A at runtime?",
+      "answer": "issubclass(B, A)"
+    },
+    {
+      "id": 54,
+      "question": "How do you list all classes B inherits from?",
+      "answer": "B.__mro__ (the method resolution order tuple)"
+    },
+    {
+      "id": 55,
+      "question": "class A: def f(self): return 1. class B(A): def f(self): return super().f() + 1. class C(B): def f(self): return super().f() + 1. What does C().f() return?",
+      "answer": "3 (chain: 1 from A, +1 in B, +1 in C)"
+    },
+    {
+      "id": 56,
+      "question": "class A: def f(self): return 1. class B(A): def f(self): return super().f() + 1. What does B().f() return?",
+      "answer": "2"
+    },
+    {
+      "id": 57,
+      "question": "What does super() return in Python 3 inside a class method?",
+      "answer": "A proxy object that delegates calls to the next class in the MRO"
+    },
+    {
+      "id": 58,
+      "question": "Can super() be used inside a classmethod with cls?",
+      "answer": "Yes, super().classmethod(...) works, forwarding to the next class"
+    },
+    {
+      "id": 59,
+      "question": "class A: n = 0; @classmethod def bump(cls): cls.n += 1. class B(A): pass. What does B.bump() increment?",
+      "answer": "B.n, not A.n (cls is B)"
+    },
+    {
+      "id": 60,
+      "question": "class A: n = 0; @classmethod def bump(cls): cls.n += 1. class B(A): pass. B.bump(); B.bump(); print(A.n) outputs?",
+      "answer": "0 (only B.n was incremented)"
+    },
+    {
+      "id": 61,
+      "question": "class A: n = 0; @classmethod def bump(cls): cls.n += 1. class B(A): pass. B.bump(); print(B.n, A.n) outputs?",
+      "answer": "1 0"
+    },
+    {
+      "id": 62,
+      "question": "class A: def m(self): return 'A'. class B(A): def m(self): return 'B'. b = B(). What does type(b).m(b) return?",
+      "answer": "'B' (calling via the exact runtime type)"
+    },
+    {
+      "id": 63,
+      "question": "class A: def __init__(self): self.x = 'A'. class B(A): def __init__(self): self.x = 'B'; super().__init__(). What does B().x return?",
+      "answer": "'A' (super().__init__() ran after and overwrote x)"
+    },
+    {
+      "id": 64,
+      "question": "class Animal: def speak(self): return '...'. class Dog(Animal): def speak(self): return 'woof'. items = [Dog(), Animal()]. What does [i.speak() for i in items] return?",
+      "answer": "['woof', '...'] (polymorphic calls)"
+    },
+    {
+      "id": 65,
+      "question": "class Animal: def describe(self): return self.speak(). class Dog(Animal): def speak(self): return 'bark'. What does Dog().describe() return?",
+      "answer": "'bark' (template-method style dynamic dispatch)"
+    },
+    {
+      "id": 66,
+      "question": "Can a child class inherit from two unrelated classes simultaneously?",
+      "answer": "Yes, Python supports multiple inheritance"
+    },
+    {
+      "id": 67,
+      "question": "class A: x = 1. class B: x = 2. class C(A, B): pass. What does C.x return?",
+      "answer": "1 (first base wins)"
+    },
+    {
+      "id": 68,
+      "question": "class A: x = 1. class B: x = 2. class C(B, A): pass. What does C.x return?",
+      "answer": "2 (order matters)"
+    },
+    {
+      "id": 69,
+      "question": "What is C3 linearization used for?",
+      "answer": "Computing the MRO that respects base order and avoids inconsistent hierarchies"
+    },
+    {
+      "id": 70,
+      "question": "class A: pass. class B(A, A): pass. What does it do?",
+      "answer": "Raises TypeError (a base class cannot appear twice in the same class definition)"
+    },
+    {
+      "id": 71,
+      "question": "How do you call the parent constructor when the parent needs arguments?",
+      "answer": "super().__init__(args) inside the child's __init__"
+    },
+    {
+      "id": 72,
+      "question": "class Parent: def __init__(self, name): self.name = name. class Child(Parent): def __init__(self, name, age): super().__init__(name); self.age = age. What does Child('A', 3).name return?",
+      "answer": "'A'"
+    },
+    {
+      "id": 73,
+      "question": "What does Child.__dict__ contain that Parent.__dict__ doesn't (for the setup above)?",
+      "answer": "Child's own __init__ (and its docstring entry), while Parent keeps its own __init__"
+    },
+    {
+      "id": 74,
+      "question": "class A: def __init__(self, *args, **kw): print('A'). class B(A): def __init__(self): print('B'); super().__init__(). What gets printed by B()?",
+      "answer": "B then A"
+    },
+    {
+      "id": 75,
+      "question": "class A: def __repr__(self): return 'A()'. class B(A): pass. print(repr(B())) outputs?",
+      "answer": "A() (inherited __repr__)"
+    },
+    {
+      "id": 76,
+      "question": "What happens if neither the child nor parent defines a method you call?",
+      "answer": "AttributeError propagates, then object base is checked and fails"
+    },
+    {
+      "id": 77,
+      "question": "class A: def m(self): return 1. class B(A): pass. class C(B): def m(self): return super().m() * 10. What does C().m() return?",
+      "answer": "10 (A.m = 1, times 10)"
+    },
+    {
+      "id": 78,
+      "question": "What does isinstance(C(), A) return in that setup?",
+      "answer": "True"
+    },
+    {
+      "id": 79,
+      "question": "How do you make a class MY class a subclass of list, dict, etc.?",
+      "answer": "class MyList(list): ... (inherit from the builtin)"
+    },
+    {
+      "id": 80,
+      "question": "class L(list): pass. l = L([1,2]); l.append(3); print(len(l)) outputs?",
+      "answer": "3 (inherits all list behavior)"
+    },
+    {
+      "id": 81,
+      "question": "class D(dict): def keys(self): return list(super().keys()) + ['extra']. What does D(a=1).keys() return?",
+      "answer": "['a', 'extra']"
+    },
+    {
+      "id": 82,
+      "question": "class A: def __len__(self): return 3. class B(A): pass. print(len(B())) outputs?",
+      "answer": "3"
+    },
+    {
+      "id": 83,
+      "question": "class A: def __iter__(self): return iter([1, 2]). class B(A): pass. print(list(B())) outputs?",
+      "answer": "[1, 2]"
+    },
+    {
+      "id": 84,
+      "question": "What is the benefit of inheritance over copying parent code?",
+      "answer": "Code reuse, consistent interface, and polymorphic behavior"
+    },
+    {
+      "id": 85,
+      "question": "class A: def m(self): return 'A'. class B(A): def m(self): return super().m(). What does B().m() return?",
+      "answer": "'A'"
+    },
+    {
+      "id": 86,
+      "question": "What does `object` mean at the top of every MRO?",
+      "answer": "It's the ultimate base class all Python classes inherit from"
+    },
+    {
+      "id": 87,
+      "question": "Is issubclass(A, object) true for any class A?",
+      "answer": "Yes, object is the root of the class hierarchy"
+    },
+    {
+      "id": 88,
+      "question": "class A: pass. class B(A): pass. class C(A): pass. class D(B, C): pass. Is D an instance-compatible parent of B?",
+      "answer": "No, D is a child of B, not a parent"
+    },
+    {
+      "id": 89,
+      "question": "What does isinstance(D(), B) return in that diamond?",
+      "answer": "True (D inherits from B)"
+    },
+    {
+      "id": 90,
+      "question": "class A: pass. class B(A): pass. What does issubclass(A, B) return?",
+      "answer": "False (only the child is a subclass of the parent)"
+    },
+    {
+      "id": 91,
+      "question": "Can a base class use an attribute only defined by the child?",
+      "answer": "Yes, if accessed via self during a child instance's method call (dynamic dispatch); otherwise it may AttributeError"
+    },
+    {
+      "id": 92,
+      "question": "class A: def info(self): return self.species. class B(A): species = 'dog'. What does B().info() return?",
+      "answer": "'dog' (self.species resolves to B's attribute)"
+    },
+    {
+      "id": 93,
+      "question": "class A: def info(self): return self.species. What does A().info() raise?",
+      "answer": "AttributeError: 'A' object has no attribute 'species'"
+    },
+    {
+      "id": 94,
+      "question": "class A: def f(self): return 'A'. class B(A): def f(self): return 'B'. class C(B): def f(self): return super().f() + 'C'. What does C().f() return?",
+      "answer": "'BC'"
+    },
+    {
+      "id": 95,
+      "question": "What is the purpose of super().__init__() with no extra arguments?",
+      "answer": "To run the parent's initialization (setting inherited attributes) in cooperative inheritance"
+    },
+    {
+      "id": 96,
+      "question": "class A: def __init__(self, **kw): self.a = kw.get('a', 1). class B(A): def __init__(self, **kw): super().__init__(**kw). What does B(a=99).a return?",
+      "answer": "99"
+    },
+    {
+      "id": 97,
+      "question": "Does inheritance copy methods into the child's __dict__?",
+      "answer": "No, inherited methods are found via the MRO, not copied"
+    },
+    {
+      "id": 98,
+      "question": "class A: def m(self): return 'A'. class B(A): pass. print('m' in B.__dict__) outputs?",
+      "answer": "False (m lives in A.__dict__)"
+    },
+    {
+      "id": 99,
+      "question": "class A: def m(self): return 'A'. class B(A): pass. print('m' in dir(B())) outputs?",
+      "answer": "True (dir includes inherited names)"
+    },
+    {
+      "id": 100,
+      "question": "class Animal: def speak(self): return 'generic'. class Dog(Animal): def speak(self): return 'woof'. def call(a): return a.speak(). What does call(Dog()) return?",
+      "answer": "'woof' (works because the interface matches)"
+    }
+  ]
+}

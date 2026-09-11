@@ -1,0 +1,1767 @@
+{
+  "basic_syntax": {
+    "description": "100 questions on Python basic syntax",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the correct file extension for Python files?",
+        "answer": ".py"
+      },
+      {
+        "id": 2,
+        "question": "How do you write a single-line comment in Python?",
+        "answer": "Use the # symbol, e.g., # This is a comment"
+      },
+      {
+        "id": 3,
+        "question": "How do you write a multi-line comment in Python?",
+        "answer": "Use triple quotes ''' or \"\"\" around the text"
+      },
+      {
+        "id": 4,
+        "question": "What function is used to display output in Python?",
+        "answer": "print()"
+      },
+      {
+        "id": 5,
+        "question": "What function is used to get user input in Python?",
+        "answer": "input()"
+      },
+      {
+        "id": 6,
+        "question": "What is the correct syntax for an if statement?",
+        "answer": "if condition: followed by an indented block"
+      },
+      {
+        "id": 7,
+        "question": "How do you write an else statement?",
+        "answer": "else: followed by an indented block"
+      },
+      {
+        "id": 8,
+        "question": "How do you write an elif statement?",
+        "answer": "elif condition: followed by an indented block"
+      },
+      {
+        "id": 9,
+        "question": "What is the syntax for a for loop?",
+        "answer": "for item in iterable: followed by an indented block"
+      },
+      {
+        "id": 10,
+        "question": "What is the syntax for a while loop?",
+        "answer": "while condition: followed by an indented block"
+      },
+      {
+        "id": 11,
+        "question": "How do you define a function in Python?",
+        "answer": "def function_name(parameters): followed by an indented block"
+      },
+      {
+        "id": 12,
+        "question": "What keyword is used to return a value from a function?",
+        "answer": "return"
+      },
+      {
+        "id": 13,
+        "question": "How do you import a module in Python?",
+        "answer": "import module_name"
+      },
+      {
+        "id": 14,
+        "question": "How do you import a specific function from a module?",
+        "answer": "from module_name import function_name"
+      },
+      {
+        "id": 15,
+        "question": "What is the correct way to handle exceptions?",
+        "answer": "try: ... except ExceptionType: ..."
+      },
+      {
+        "id": 16,
+        "question": "What keyword is used to define a class?",
+        "answer": "class"
+      },
+      {
+        "id": 17,
+        "question": "What is the syntax for creating an object from a class?",
+        "answer": "object_name = ClassName()"
+      },
+      {
+        "id": 18,
+        "question": "How do you access a method of an object?",
+        "answer": "object_name.method_name()"
+      },
+      {
+        "id": 19,
+        "question": "What is the purpose of the __init__ method?",
+        "answer": "It is the constructor that initializes object attributes when an instance is created"
+      },
+      {
+        "id": 20,
+        "question": "What does the pass statement do?",
+        "answer": "It does nothing; it's a placeholder for code that will be added later"
+      },
+      {
+        "id": 21,
+        "question": "What is indentation used for in Python?",
+        "answer": "To define blocks of code (scope), replacing braces used in other languages"
+      },
+      {
+        "id": 22,
+        "question": "How many spaces are recommended for indentation in Python?",
+        "answer": "4 spaces"
+      },
+      {
+        "id": 23,
+        "question": "What is the purpose of the break statement?",
+        "answer": "To exit a loop prematurely"
+      },
+      {
+        "id": 24,
+        "question": "What is the purpose of the continue statement?",
+        "answer": "To skip the rest of the current iteration and move to the next"
+      },
+      {
+        "id": 25,
+        "question": "What does the range() function do?",
+        "answer": "Generates a sequence of numbers, commonly used in for loops"
+      },
+      {
+        "id": 26,
+        "question": "What is the syntax for a lambda function?",
+        "answer": "lambda arguments: expression"
+      },
+      {
+        "id": 27,
+        "question": "How do you write a conditional expression (ternary operator)?",
+        "answer": "value_if_true if condition else value_if_false"
+      },
+      {
+        "id": 28,
+        "question": "What is the purpose of the global keyword?",
+        "answer": "To declare that a variable inside a function refers to a global variable"
+      },
+      {
+        "id": 29,
+        "question": "What is the purpose of the nonlocal keyword?",
+        "answer": "To declare a variable in a nested function that refers to a variable in the enclosing function"
+      },
+      {
+        "id": 30,
+        "question": "How do you create a docstring?",
+        "answer": "Using triple quotes as the first statement in a module, function, class, or method"
+      },
+      {
+        "id": 31,
+        "question": "What is the correct way to check if a value is None?",
+        "answer": "if value is None:"
+      },
+      {
+        "id": 32,
+        "question": "What is the difference between == and is?",
+        "answer": "== checks equality of values, is checks identity (same object in memory)"
+      },
+      {
+        "id": 33,
+        "question": "How do you write a while loop with an else clause?",
+        "answer": "while condition: ... else: ..."
+      },
+      {
+        "id": 34,
+        "question": "How do you write a for loop with an else clause?",
+        "answer": "for item in iterable: ... else: ..."
+      },
+      {
+        "id": 35,
+        "question": "What is the purpose of the assert statement?",
+        "answer": "To check a condition and raise an AssertionError if it's False"
+      },
+      {
+        "id": 36,
+        "question": "How do you raise an exception?",
+        "answer": "raise ExceptionType('message')"
+      },
+      {
+        "id": 37,
+        "question": "What is the purpose of the finally clause?",
+        "answer": "Code in finally always executes, whether an exception occurs or not"
+      },
+      {
+        "id": 38,
+        "question": "How do you create a generator function?",
+        "answer": "Use yield instead of return in a function"
+      },
+      {
+        "id": 39,
+        "question": "What is the syntax for a decorator?",
+        "answer": "@decorator_name above a function definition"
+      },
+      {
+        "id": 40,
+        "question": "How do you write a list comprehension?",
+        "answer": "[expression for item in iterable if condition]"
+      },
+      {
+        "id": 41,
+        "question": "How do you write a dictionary comprehension?",
+        "answer": "{key: value for item in iterable if condition}"
+      },
+      {
+        "id": 42,
+        "question": "How do you write a set comprehension?",
+        "answer": "{expression for item in iterable if condition}"
+      },
+      {
+        "id": 43,
+        "question": "What is the purpose of the with statement?",
+        "answer": "To ensure proper acquisition and release of resources (context manager)"
+      },
+      {
+        "id": 44,
+        "question": "What is PEP 8?",
+        "answer": "The official style guide for Python code"
+      },
+      {
+        "id": 45,
+        "question": "How do you write a multi-line statement in Python?",
+        "answer": "Use parentheses, brackets, braces, or backslash continuation"
+      },
+      {
+        "id": 46,
+        "question": "What is the purpose of the __name__ variable?",
+        "answer": "It holds the name of the module; if run as script, it's '__main__'"
+      },
+      {
+        "id": 47,
+        "question": "What does if __name__ == '__main__': do?",
+        "answer": "Checks if the script is being run directly (not imported)"
+      },
+      {
+        "id": 48,
+        "question": "How do you concatenate strings in Python?",
+        "answer": "Using + operator or join() method"
+      },
+      {
+        "id": 49,
+        "question": "What is an f-string?",
+        "answer": "A formatted string literal prefixed with f, allowing embedded expressions"
+      },
+      {
+        "id": 50,
+        "question": "How do you write an f-string?",
+        "answer": "f\"text {variable} text\""
+      },
+      {
+        "id": 51,
+        "question": "What is the purpose of the del statement?",
+        "answer": "To delete a variable, item from a collection, or attribute"
+      },
+      {
+        "id": 52,
+        "question": "How do you check the type of an object?",
+        "answer": "type(object) or isinstance(object, type)"
+      },
+      {
+        "id": 53,
+        "question": "What is the purpose of the help() function?",
+        "answer": "To display documentation for modules, functions, classes, etc."
+      },
+      {
+        "id": 54,
+        "question": "What is the purpose of the dir() function?",
+        "answer": "To list the attributes and methods of an object"
+      },
+      {
+        "id": 55,
+        "question": "How do you create an infinite loop?",
+        "answer": "while True: ..."
+      },
+      {
+        "id": 56,
+        "question": "What is the purpose of the __str__ method?",
+        "answer": "Defines the string representation of an object for print() and str()"
+      },
+      {
+        "id": 57,
+        "question": "What is the purpose of the __repr__ method?",
+        "answer": "Defines the official string representation of an object for debugging"
+      },
+      {
+        "id": 58,
+        "question": "What is the difference between print() and return?",
+        "answer": "print() displays output; return sends a value back from a function"
+      },
+      {
+        "id": 59,
+        "question": "How do you define a variable with multiple assignments?",
+        "answer": "a, b, c = 1, 2, 3"
+      },
+      {
+        "id": 60,
+        "question": "How do you swap two variables in Python?",
+        "answer": "a, b = b, a"
+      },
+      {
+        "id": 61,
+        "question": "What is the purpose of the *args parameter?",
+        "answer": "To accept any number of positional arguments as a tuple"
+      },
+      {
+        "id": 62,
+        "question": "What is the purpose of the **kwargs parameter?",
+        "answer": "To accept any number of keyword arguments as a dictionary"
+      },
+      {
+        "id": 63,
+        "question": "How do you call a function with keyword arguments?",
+        "answer": "function_name(param1=value1, param2=value2)"
+      },
+      {
+        "id": 64,
+        "question": "What is a default parameter value?",
+        "answer": "A value assigned to a parameter that's used if no argument is provided"
+      },
+      {
+        "id": 65,
+        "question": "How do you define a default parameter?",
+        "answer": "def func(param=default_value):"
+      },
+      {
+        "id": 66,
+        "question": "What is the purpose of the __doc__ attribute?",
+        "answer": "Contains the docstring of a module, class, function, or method"
+      },
+      {
+        "id": 67,
+        "question": "What is the correct way to write a boolean expression?",
+        "answer": "Using and, or, not operators"
+      },
+      {
+        "id": 68,
+        "question": "What is short-circuit evaluation?",
+        "answer": "and stops at first False; or stops at first True"
+      },
+      {
+        "id": 69,
+        "question": "How do you write an inline if statement?",
+        "answer": "x = 1 if condition else 0"
+      },
+      {
+        "id": 70,
+        "question": "What is the purpose of the __init__.py file?",
+        "answer": "Marks a directory as a Python package"
+      },
+      {
+        "id": 71,
+        "question": "How do you import all names from a module?",
+        "answer": "from module_name import *"
+      },
+      {
+        "id": 72,
+        "question": "What is the purpose of the __all__ variable?",
+        "answer": "Defines what names are imported when using from module import *"
+      },
+      {
+        "id": 73,
+        "question": "How do you create an alias for an import?",
+        "answer": "import module_name as alias"
+      },
+      {
+        "id": 74,
+        "question": "What is the purpose of the __init__ method's self parameter?",
+        "answer": "Refers to the instance being created"
+      },
+      {
+        "id": 75,
+        "question": "What is a class variable?",
+        "answer": "A variable defined in the class body, shared by all instances"
+      },
+      {
+        "id": 76,
+        "question": "What is an instance variable?",
+        "answer": "A variable defined in __init__ using self, unique to each instance"
+      },
+      {
+        "id": 77,
+        "question": "What is inheritance?",
+        "answer": "A class (child) derives attributes and methods from another class (parent)"
+      },
+      {
+        "id": 78,
+        "question": "How do you define inheritance in Python?",
+        "answer": "class ChildClass(ParentClass):"
+      },
+      {
+        "id": 79,
+        "question": "How do you call a parent class method from a child class?",
+        "answer": "super().method_name()"
+      },
+      {
+        "id": 80,
+        "question": "What is the purpose of the __del__ method?",
+        "answer": "It's the destructor, called when an object is about to be destroyed"
+      },
+      {
+        "id": 81,
+        "question": "What is method overriding?",
+        "answer": "Defining a method in a child class with the same name as in the parent class"
+      },
+      {
+        "id": 82,
+        "question": "What is the purpose of the isinstance() function?",
+        "answer": "Checks if an object is an instance of a class or its subclass"
+      },
+      {
+        "id": 83,
+        "question": "What is the purpose of the issubclass() function?",
+        "answer": "Checks if a class is a subclass of another class"
+      },
+      {
+        "id": 84,
+        "question": "What is multiple inheritance?",
+        "answer": "A class inherits from more than one parent class"
+      },
+      {
+        "id": 85,
+        "question": "What is the MRO (Method Resolution Order)?",
+        "answer": "The order in which Python looks for methods in multiple inheritance"
+      },
+      {
+        "id": 86,
+        "question": "What is a static method?",
+        "answer": "A method that doesn't receive self or cls; defined with @staticmethod"
+      },
+      {
+        "id": 87,
+        "question": "What is a class method?",
+        "answer": "A method that receives cls as first argument; defined with @classmethod"
+      },
+      {
+        "id": 88,
+        "question": "What is the purpose of the @property decorator?",
+        "answer": "Allows a method to be accessed like an attribute"
+      },
+      {
+        "id": 89,
+        "question": "What is a setter property?",
+        "answer": "A method that sets the value of a property, defined with @property_name.setter"
+      },
+      {
+        "id": 90,
+        "question": "How do you write a nested function?",
+        "answer": "Define a function inside another function"
+      },
+      {
+        "id": 91,
+        "question": "What is a closure?",
+        "answer": "A nested function that captures variables from its enclosing scope"
+      },
+      {
+        "id": 92,
+        "question": "What is a decorator?",
+        "answer": "A function that takes a function and returns a modified function"
+      },
+      {
+        "id": 93,
+        "question": "How do you write a decorator?",
+        "answer": "def decorator(func): def wrapper(): ... return wrapper"
+      },
+      {
+        "id": 94,
+        "question": "What is the purpose of functools.wraps?",
+        "answer": "Preserves the metadata of the original function in a decorator"
+      },
+      {
+        "id": 95,
+        "question": "What is a generator expression?",
+        "answer": "(expression for item in iterable) - creates a generator"
+      },
+      {
+        "id": 96,
+        "question": "What is the difference between a list and a generator?",
+        "answer": "List stores all values in memory; generator yields values on demand"
+      },
+      {
+        "id": 97,
+        "question": "How do you use the yield statement?",
+        "answer": "In a function to produce a value and pause execution"
+      },
+      {
+        "id": 98,
+        "question": "What is the purpose of the next() function?",
+        "answer": "Retrieves the next item from an iterator"
+      },
+      {
+        "id": 99,
+        "question": "What is an iterator?",
+        "answer": "An object with __iter__ and __next__ methods for sequential access"
+      },
+      {
+        "id": 100,
+        "question": "What is the difference between iterable and iterator?",
+        "answer": "Iterable can return an iterator; iterator tracks position and returns next value"
+      }
+    ]
+  },
+  "variables": {
+    "description": "100 questions on Python variables",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is a variable in Python?",
+        "answer": "A named reference to a value stored in memory"
+      },
+      {
+        "id": 2,
+        "question": "How do you assign a value to a variable?",
+        "answer": "variable_name = value"
+      },
+      {
+        "id": 3,
+        "question": "What are the rules for naming variables in Python?",
+        "answer": "Must start with letter or underscore, contain only alphanumeric and underscores, case-sensitive"
+      },
+      {
+        "id": 4,
+        "question": "Can a variable name start with a number?",
+        "answer": "No, variable names cannot start with a digit"
+      },
+      {
+        "id": 5,
+        "question": "Are variable names case-sensitive in Python?",
+        "answer": "Yes, 'name' and 'Name' are different variables"
+      },
+      {
+        "id": 6,
+        "question": "What is the naming convention for variables in Python?",
+        "answer": "snake_case (lowercase with underscores)"
+      },
+      {
+        "id": 7,
+        "question": "How do you create a constant in Python?",
+        "answer": "By convention, use all uppercase: CONSTANT_NAME = value"
+      },
+      {
+        "id": 8,
+        "question": "Does Python have true constants?",
+        "answer": "No, constants are just conventions; values can still be changed"
+      },
+      {
+        "id": 9,
+        "question": "How do you assign multiple variables in one line?",
+        "answer": "a, b, c = 1, 2, 3"
+      },
+      {
+        "id": 10,
+        "question": "How do you assign the same value to multiple variables?",
+        "answer": "a = b = c = 0"
+      },
+      {
+        "id": 11,
+        "question": "How do you swap two variables?",
+        "answer": "a, b = b, a"
+      },
+      {
+        "id": 12,
+        "question": "What is a global variable?",
+        "answer": "A variable defined at the module level, accessible throughout the module"
+      },
+      {
+        "id": 13,
+        "question": "What is a local variable?",
+        "answer": "A variable defined inside a function, accessible only within that function"
+      },
+      {
+        "id": 14,
+        "question": "How do you access a global variable inside a function?",
+        "answer": "Use the global keyword: global var_name"
+      },
+      {
+        "id": 15,
+        "question": "What happens if you assign to a global variable inside a function without global keyword?",
+        "answer": "It creates a new local variable instead of modifying the global"
+      },
+      {
+        "id": 16,
+        "question": "What is variable scope?",
+        "answer": "The region of code where a variable is accessible"
+      },
+      {
+        "id": 17,
+        "question": "What are the types of variable scope in Python?",
+        "answer": "Local, Enclosing, Global, Built-in (LEGB)"
+      },
+      {
+        "id": 18,
+        "question": "What is the LEGB rule?",
+        "answer": "Python looks up variables in order: Local, Enclosing, Global, Built-in"
+      },
+      {
+        "id": 19,
+        "question": "How do you delete a variable?",
+        "answer": "del variable_name"
+      },
+      {
+        "id": 20,
+        "question": "What happens when you delete a variable?",
+        "answer": "The reference is removed; if no other references exist, memory is freed"
+      },
+      {
+        "id": 21,
+        "question": "Can you use a variable before assigning it?",
+        "answer": "No, you'll get a NameError"
+      },
+      {
+        "id": 22,
+        "question": "What is a NameError?",
+        "answer": "Error raised when a variable name is not defined"
+      },
+      {
+        "id": 23,
+        "question": "How do you check if a variable exists?",
+        "answer": "Use 'var_name' in locals() or globals(), or try/except NameError"
+      },
+      {
+        "id": 24,
+        "question": "What is a dynamically typed language?",
+        "answer": "Variables can hold values of any type, and types are checked at runtime"
+      },
+      {
+        "id": 25,
+        "question": "Is Python statically or dynamically typed?",
+        "answer": "Dynamically typed"
+      },
+      {
+        "id": 26,
+        "question": "Can a variable change type in Python?",
+        "answer": "Yes, e.g., x = 5; x = 'hello' is valid"
+      },
+      {
+        "id": 27,
+        "question": "What is type hinting?",
+        "answer": "Optional annotations that indicate expected types: x: int = 5"
+      },
+      {
+        "id": 28,
+        "question": "Does Python enforce type hints?",
+        "answer": "No, they're for documentation and tools like mypy"
+      },
+      {
+        "id": 29,
+        "question": "How do you write a type hint for a variable?",
+        "answer": "variable_name: type = value"
+      },
+      {
+        "id": 30,
+        "question": "What is a tuple unpacking assignment?",
+        "answer": "a, b = (1, 2) assigns 1 to a and 2 to b"
+      },
+      {
+        "id": 31,
+        "question": "What is extended unpacking?",
+        "answer": "a, *b = [1, 2, 3, 4] gives a=1, b=[2,3,4]"
+      },
+      {
+        "id": 32,
+        "question": "What is the underscore _ variable convention?",
+        "answer": "Used for throwaway variables or as a placeholder"
+      },
+      {
+        "id": 33,
+        "question": "How do you create a variable with no value?",
+        "answer": "Assign None: x = None"
+      },
+      {
+        "id": 34,
+        "question": "What is None in Python?",
+        "answer": "A special constant representing the absence of a value"
+      },
+      {
+        "id": 35,
+        "question": "Is None the same as 0 or empty string?",
+        "answer": "No, None is a distinct object"
+      },
+      {
+        "id": 36,
+        "question": "How do you check if a variable is None?",
+        "answer": "if variable is None:"
+      },
+      {
+        "id": 37,
+        "question": "What is the difference between del and setting to None?",
+        "answer": "del removes the reference; None keeps the reference but changes its value"
+      },
+      {
+        "id": 38,
+        "question": "What is variable shadowing?",
+        "answer": "When a local variable has the same name as a global variable"
+      },
+      {
+        "id": 39,
+        "question": "How do you access a global variable that's shadowed?",
+        "answer": "Use globals()['variable_name']"
+      },
+      {
+        "id": 40,
+        "question": "What is a nonlocal variable?",
+        "answer": "A variable in an enclosing function scope, accessed with nonlocal keyword"
+      },
+      {
+        "id": 41,
+        "question": "How do you declare a nonlocal variable?",
+        "answer": "nonlocal variable_name inside a nested function"
+      },
+      {
+        "id": 42,
+        "question": "Can you have a variable and function with the same name?",
+        "answer": "Yes, but the later definition overwrites the earlier one"
+      },
+      {
+        "id": 43,
+        "question": "What is the __name__ variable?",
+        "answer": "A built-in variable holding the name of the current module"
+      },
+      {
+        "id": 44,
+        "question": "What is the value of __name__ when a script is run directly?",
+        "answer": "'__main__'"
+      },
+      {
+        "id": 45,
+        "question": "What is the value of __name__ when a module is imported?",
+        "answer": "The module's name"
+      },
+      {
+        "id": 46,
+        "question": "What is a class variable?",
+        "answer": "A variable defined in the class body, shared by all instances"
+      },
+      {
+        "id": 47,
+        "question": "How do you access a class variable?",
+        "answer": "ClassName.variable_name or instance.variable_name"
+      },
+      {
+        "id": 48,
+        "question": "What is an instance variable?",
+        "answer": "A variable unique to each instance, defined in __init__ with self"
+      },
+      {
+        "id": 49,
+        "question": "How do you create an instance variable?",
+        "answer": "self.variable_name = value in __init__ or any method"
+      },
+      {
+        "id": 50,
+        "question": "What is the difference between class and instance variables?",
+        "answer": "Class variables are shared; instance variables are per-instance"
+      },
+      {
+        "id": 51,
+        "question": "What is a mutable variable?",
+        "answer": "A variable whose value can be changed after creation (e.g., list, dict)"
+      },
+      {
+        "id": 52,
+        "question": "What is an immutable variable?",
+        "answer": "A variable whose value cannot be changed (e.g., int, str, tuple)"
+      },
+      {
+        "id": 53,
+        "question": "How do you make a variable read-only?",
+        "answer": "Python doesn't enforce read-only; use properties or conventions"
+      },
+      {
+        "id": 54,
+        "question": "What is a property in Python?",
+        "answer": "A method accessed like an attribute, defined with @property"
+      },
+      {
+        "id": 55,
+        "question": "How do you create a settable property?",
+        "answer": "Use @property_name.setter decorator"
+      },
+      {
+        "id": 56,
+        "question": "What is a descriptor?",
+        "answer": "An object that defines __get__, __set__, or __delete__ for attribute access"
+      },
+      {
+        "id": 57,
+        "question": "What is __slots__?",
+        "answer": "A class attribute that restricts instance attributes to a predefined set"
+      },
+      {
+        "id": 58,
+        "question": "How does __slots__ affect variables?",
+        "answer": "Prevents creation of __dict__, saving memory and restricting attributes"
+      },
+      {
+        "id": 59,
+        "question": "What is a weak reference?",
+        "answer": "A reference that doesn't prevent garbage collection (weakref module)"
+      },
+      {
+        "id": 60,
+        "question": "What is garbage collection?",
+        "answer": "Automatic memory management that frees unreferenced objects"
+      },
+      {
+        "id": 61,
+        "question": "How does Python decide to garbage collect?",
+        "answer": "Reference counting plus cyclic garbage collector"
+      },
+      {
+        "id": 62,
+        "question": "What is reference counting?",
+        "answer": "Tracking how many references point to an object"
+      },
+      {
+        "id": 63,
+        "question": "What is a memory leak in Python?",
+        "answer": "When objects are no longer needed but still referenced, preventing collection"
+      },
+      {
+        "id": 64,
+        "question": "How can you create a memory leak in Python?",
+        "answer": "Circular references, global caches, unclosed resources"
+      },
+      {
+        "id": 65,
+        "question": "What is the id() function?",
+        "answer": "Returns the unique identifier (memory address) of an object"
+      },
+      {
+        "id": 66,
+        "question": "Do two equal variables have the same id?",
+        "answer": "Not necessarily; equal values may be different objects"
+      },
+      {
+        "id": 67,
+        "question": "What is interning?",
+        "answer": "Reusing small immutable objects like small integers and strings"
+      },
+      {
+        "id": 68,
+        "question": "Are small integers interned in Python?",
+        "answer": "Yes, integers from -5 to 256 are cached"
+      },
+      {
+        "id": 69,
+        "question": "What is the difference between copy and deepcopy?",
+        "answer": "copy creates shallow copy; deepcopy recursively copies nested objects"
+      },
+      {
+        "id": 70,
+        "question": "How do you import the copy module?",
+        "answer": "import copy"
+      },
+      {
+        "id": 71,
+        "question": "How do you make a shallow copy of a list?",
+        "answer": "list.copy(), list[:], or copy.copy(list)"
+      },
+      {
+        "id": 72,
+        "question": "How do you make a deep copy of a list?",
+        "answer": "copy.deepcopy(list)"
+      },
+      {
+        "id": 73,
+        "question": "What is variable annotation?",
+        "answer": "Syntax for type hints: variable: type"
+      },
+      {
+        "id": 74,
+        "question": "What is the __annotations__ attribute?",
+        "answer": "A dictionary containing variable and function annotations"
+      },
+      {
+        "id": 75,
+        "question": "How do you get the type of a variable?",
+        "answer": "type(variable)"
+      },
+      {
+        "id": 76,
+        "question": "How do you check if a variable is an integer?",
+        "answer": "isinstance(variable, int)"
+      },
+      {
+        "id": 77,
+        "question": "What is duck typing?",
+        "answer": "If it walks like a duck and quacks like a duck, it's a duck - focusing on behavior"
+      },
+      {
+        "id": 78,
+        "question": "What is EAFP?",
+        "answer": "Easier to Ask Forgiveness than Permission - try/except style"
+      },
+      {
+        "id": 79,
+        "question": "What is LBYL?",
+        "answer": "Look Before You Leap - check conditions before acting"
+      },
+      {
+        "id": 80,
+        "question": "How do you create a variable in a loop?",
+        "answer": "Variables created in loops persist after the loop ends"
+      },
+      {
+        "id": 81,
+        "question": "What is the scope of a loop variable?",
+        "answer": "Same as the enclosing scope (function or module)"
+      },
+      {
+        "id": 82,
+        "question": "How do you create a variable conditionally?",
+        "answer": "Use if/else or conditional expressions"
+      },
+      {
+        "id": 83,
+        "question": "What is a sentinel value?",
+        "answer": "A special value indicating the end of data or a special condition"
+      },
+      {
+        "id": 84,
+        "question": "What is a flag variable?",
+        "answer": "A boolean variable used to track state"
+      },
+      {
+        "id": 85,
+        "question": "What is a temporary variable?",
+        "answer": "A variable used briefly for intermediate calculations"
+      },
+      {
+        "id": 86,
+        "question": "What is a loop variable?",
+        "answer": "The variable that takes each value in an iteration"
+      },
+      {
+        "id": 87,
+        "question": "What is an accumulator variable?",
+        "answer": "A variable that accumulates results across iterations"
+      },
+      {
+        "id": 88,
+        "question": "What is a counter variable?",
+        "answer": "A variable that counts occurrences or iterations"
+      },
+      {
+        "id": 89,
+        "question": "How do you increment a variable?",
+        "answer": "variable += 1"
+      },
+      {
+        "id": 90,
+        "question": "How do you decrement a variable?",
+        "answer": "variable -= 1"
+      },
+      {
+        "id": 91,
+        "question": "What are augmented assignment operators?",
+        "answer": "+=, -=, *=, /=, //=, %=, **=, etc."
+      },
+      {
+        "id": 92,
+        "question": "What is the walrus operator?",
+        "answer": ":= assigns and returns a value in an expression"
+      },
+      {
+        "id": 93,
+        "question": "How do you use the walrus operator?",
+        "answer": "if (n := len(data)) > 10:"
+      },
+      {
+        "id": 94,
+        "question": "What is a global statement?",
+        "answer": "Declares that assignments in a function refer to global variables"
+      },
+      {
+        "id": 95,
+        "question": "What is a nonlocal statement?",
+        "answer": "Declares that assignments refer to variables in the enclosing scope"
+      },
+      {
+        "id": 96,
+        "question": "Can you have nested functions modify outer variables?",
+        "answer": "Only with nonlocal keyword"
+      },
+      {
+        "id": 97,
+        "question": "What is a closure variable?",
+        "answer": "A variable from an enclosing function captured by a nested function"
+      },
+      {
+        "id": 98,
+        "question": "How do you create a closure?",
+        "answer": "Define a nested function that references an outer variable and return it"
+      },
+      {
+        "id": 99,
+        "question": "What is a free variable?",
+        "answer": "A variable referenced in a function but not defined there"
+      },
+      {
+        "id": 100,
+        "question": "How do you inspect closure variables?",
+        "answer": "function.__closure__ and function.__code__.co_freevars"
+      }
+    ]
+  },
+  "data_types": {
+    "description": "150 questions on Python data types",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What are the main data types in Python?",
+        "answer": "int, float, complex, str, bool, list, tuple, set, dict, NoneType"
+      },
+      {
+        "id": 2,
+        "question": "What is an integer in Python?",
+        "answer": "A whole number without a decimal point, of unlimited precision"
+      },
+      {
+        "id": 3,
+        "question": "How do you create an integer?",
+        "answer": "x = 42 or x = int('42')"
+      },
+      {
+        "id": 4,
+        "question": "What is the maximum integer value in Python?",
+        "answer": "There is no maximum; integers have unlimited precision"
+      },
+      {
+        "id": 5,
+        "question": "What is a float in Python?",
+        "answer": "A floating-point number with a decimal point"
+      },
+      {
+        "id": 6,
+        "question": "How do you create a float?",
+        "answer": "x = 3.14 or x = float('3.14')"
+      },
+      {
+        "id": 7,
+        "question": "What is floating-point precision?",
+        "answer": "Floats use binary representation, causing rounding errors"
+      },
+      {
+        "id": 8,
+        "question": "What is the result of 0.1 + 0.2?",
+        "answer": "0.30000000000000004 (due to floating-point representation)"
+      },
+      {
+        "id": 9,
+        "question": "How do you handle decimal precision?",
+        "answer": "Use the decimal module: from decimal import Decimal"
+      },
+      {
+        "id": 10,
+        "question": "What is a complex number?",
+        "answer": "A number with real and imaginary parts: 3+4j"
+      },
+      {
+        "id": 11,
+        "question": "How do you create a complex number?",
+        "answer": "z = 3+4j or complex(3, 4)"
+      },
+      {
+        "id": 12,
+        "question": "How do you get the real part of a complex number?",
+        "answer": "z.real"
+      },
+      {
+        "id": 13,
+        "question": "How do you get the imaginary part of a complex number?",
+        "answer": "z.imag"
+      },
+      {
+        "id": 14,
+        "question": "What is a boolean in Python?",
+        "answer": "True or False"
+      },
+      {
+        "id": 15,
+        "question": "Is bool a subclass of int?",
+        "answer": "Yes, True == 1 and False == 0"
+      },
+      {
+        "id": 16,
+        "question": "What are falsy values in Python?",
+        "answer": "False, 0, 0.0, '', [], {}, (), set(), None"
+      },
+      {
+        "id": 17,
+        "question": "What are truthy values?",
+        "answer": "Any value not considered falsy"
+      },
+      {
+        "id": 18,
+        "question": "What is a string in Python?",
+        "answer": "An immutable sequence of Unicode characters"
+      },
+      {
+        "id": 19,
+        "question": "How do you create a string?",
+        "answer": "'hello', \"hello\", '''hello''', or str(123)"
+      },
+      {
+        "id": 20,
+        "question": "Are strings mutable in Python?",
+        "answer": "No, strings are immutable"
+      },
+      {
+        "id": 21,
+        "question": "How do you concatenate strings?",
+        "answer": "'a' + 'b' or ''.join(['a', 'b'])"
+      },
+      {
+        "id": 22,
+        "question": "How do you repeat a string?",
+        "answer": "'ab' * 3 gives 'ababab'"
+      },
+      {
+        "id": 23,
+        "question": "How do you get the length of a string?",
+        "answer": "len(string)"
+      },
+      {
+        "id": 24,
+        "question": "How do you access a character in a string?",
+        "answer": "string[index]"
+      },
+      {
+        "id": 25,
+        "question": "How do you slice a string?",
+        "answer": "string[start:end:step]"
+      },
+      {
+        "id": 26,
+        "question": "What is string formatting?",
+        "answer": "Inserting values into strings using f-strings, format(), or %"
+      },
+      {
+        "id": 27,
+        "question": "What is an f-string?",
+        "answer": "Formatted string literal: f'Hello {name}'"
+      },
+      {
+        "id": 28,
+        "question": "How do you convert a string to uppercase?",
+        "answer": "string.upper()"
+      },
+      {
+        "id": 29,
+        "question": "How do you convert a string to lowercase?",
+        "answer": "string.lower()"
+      },
+      {
+        "id": 30,
+        "question": "How do you remove whitespace from a string?",
+        "answer": "string.strip(), lstrip(), or rstrip()"
+      },
+      {
+        "id": 31,
+        "question": "How do you split a string?",
+        "answer": "string.split(separator)"
+      },
+      {
+        "id": 32,
+        "question": "How do you replace text in a string?",
+        "answer": "string.replace(old, new)"
+      },
+      {
+        "id": 33,
+        "question": "How do you check if a string contains a substring?",
+        "answer": "'sub' in string"
+      },
+      {
+        "id": 34,
+        "question": "How do you find the index of a substring?",
+        "answer": "string.find(sub) or string.index(sub)"
+      },
+      {
+        "id": 35,
+        "question": "What is a raw string?",
+        "answer": "A string prefixed with r that ignores escape sequences"
+      },
+      {
+        "id": 36,
+        "question": "How do you write a multi-line string?",
+        "answer": "Using triple quotes ''' or \"\"\""
+      },
+      {
+        "id": 37,
+        "question": "What are escape characters?",
+        "answer": "Special sequences like \\n, \\t, \\\\, \\\""
+      },
+      {
+        "id": 38,
+        "question": "What is a bytes object?",
+        "answer": "An immutable sequence of bytes (0-255)"
+      },
+      {
+        "id": 39,
+        "question": "How do you create bytes?",
+        "answer": "b'hello' or bytes([104, 101, 108, 108, 111])"
+      },
+      {
+        "id": 40,
+        "question": "What is a bytearray?",
+        "answer": "A mutable sequence of bytes"
+      },
+      {
+        "id": 41,
+        "question": "How do you convert string to bytes?",
+        "answer": "string.encode('utf-8')"
+      },
+      {
+        "id": 42,
+        "question": "How do you convert bytes to string?",
+        "answer": "bytes.decode('utf-8')"
+      },
+      {
+        "id": 43,
+        "question": "What is a list in Python?",
+        "answer": "A mutable ordered sequence of elements"
+      },
+      {
+        "id": 44,
+        "question": "How do you create a list?",
+        "answer": "[1, 2, 3] or list(range(3))"
+      },
+      {
+        "id": 45,
+        "question": "Are lists mutable?",
+        "answer": "Yes, you can add, remove, or change elements"
+      },
+      {
+        "id": 46,
+        "question": "How do you add an element to a list?",
+        "answer": "list.append(item) or list.insert(index, item)"
+      },
+      {
+        "id": 47,
+        "question": "How do you remove an element from a list?",
+        "answer": "list.remove(item), list.pop(index), or del list[index]"
+      },
+      {
+        "id": 48,
+        "question": "How do you find the length of a list?",
+        "answer": "len(list)"
+      },
+      {
+        "id": 49,
+        "question": "How do you access list elements?",
+        "answer": "list[index]"
+      },
+      {
+        "id": 50,
+        "question": "How do you slice a list?",
+        "answer": "list[start:end:step]"
+      },
+      {
+        "id": 51,
+        "question": "How do you reverse a list?",
+        "answer": "list.reverse() or list[::-1]"
+      },
+      {
+        "id": 52,
+        "question": "How do you sort a list?",
+        "answer": "list.sort() or sorted(list)"
+      },
+      {
+        "id": 53,
+        "question": "How do you sort in descending order?",
+        "answer": "list.sort(reverse=True)"
+      },
+      {
+        "id": 54,
+        "question": "How do you sort with a custom key?",
+        "answer": "list.sort(key=function)"
+      },
+      {
+        "id": 55,
+        "question": "What is list comprehension?",
+        "answer": "[expression for item in iterable if condition]"
+      },
+      {
+        "id": 56,
+        "question": "How do you concatenate lists?",
+        "answer": "list1 + list2 or list1.extend(list2)"
+      },
+      {
+        "id": 57,
+        "question": "How do you check if an item is in a list?",
+        "answer": "item in list"
+      },
+      {
+        "id": 58,
+        "question": "How do you count occurrences in a list?",
+        "answer": "list.count(item)"
+      },
+      {
+        "id": 59,
+        "question": "How do you find the index of an item?",
+        "answer": "list.index(item)"
+      },
+      {
+        "id": 60,
+        "question": "How do you copy a list?",
+        "answer": "list.copy(), list[:], or copy.copy(list)"
+      },
+      {
+        "id": 61,
+        "question": "What is the difference between copy and deepcopy for lists?",
+        "answer": "copy is shallow (nested objects shared); deepcopy is recursive"
+      },
+      {
+        "id": 62,
+        "question": "How do you create a 2D list?",
+        "answer": "[[1, 2], [3, 4]] or [[0]*cols for _ in range(rows)]"
+      },
+      {
+        "id": 63,
+        "question": "What is a tuple in Python?",
+        "answer": "An immutable ordered sequence"
+      },
+      {
+        "id": 64,
+        "question": "How do you create a tuple?",
+        "answer": "(1, 2, 3) or tuple([1, 2, 3])"
+      },
+      {
+        "id": 65,
+        "question": "How do you create a single-element tuple?",
+        "answer": "(1,) - note the comma"
+      },
+      {
+        "id": 66,
+        "question": "Are tuples mutable?",
+        "answer": "No, tuples are immutable"
+      },
+      {
+        "id": 67,
+        "question": "How do you access tuple elements?",
+        "answer": "tuple[index]"
+      },
+      {
+        "id": 68,
+        "question": "How do you unpack a tuple?",
+        "answer": "a, b, c = (1, 2, 3)"
+      },
+      {
+        "id": 69,
+        "question": "Why use tuples over lists?",
+        "answer": "Immutability, hashability, performance, and use as dict keys"
+      },
+      {
+        "id": 70,
+        "question": "Can tuples contain mutable objects?",
+        "answer": "Yes, but the tuple itself remains immutable"
+      },
+      {
+        "id": 71,
+        "question": "What is a named tuple?",
+        "answer": "A tuple subclass with named fields from collections.namedtuple"
+      },
+      {
+        "id": 72,
+        "question": "How do you create a named tuple?",
+        "answer": "Point = namedtuple('Point', ['x', 'y'])"
+      },
+      {
+        "id": 73,
+        "question": "What is a set in Python?",
+        "answer": "An unordered collection of unique elements"
+      },
+      {
+        "id": 74,
+        "question": "How do you create a set?",
+        "answer": "{1, 2, 3} or set([1, 2, 3])"
+      },
+      {
+        "id": 75,
+        "question": "How do you create an empty set?",
+        "answer": "set() - {} creates an empty dict"
+      },
+      {
+        "id": 76,
+        "question": "Are sets mutable?",
+        "answer": "Yes, sets are mutable"
+      },
+      {
+        "id": 77,
+        "question": "Are set elements unique?",
+        "answer": "Yes, sets automatically remove duplicates"
+      },
+      {
+        "id": 78,
+        "question": "Are sets ordered?",
+        "answer": "No, sets are unordered"
+      },
+      {
+        "id": 79,
+        "question": "How do you add an element to a set?",
+        "answer": "set.add(item)"
+      },
+      {
+        "id": 80,
+        "question": "How do you remove an element from a set?",
+        "answer": "set.remove(item) or set.discard(item)"
+      },
+      {
+        "id": 81,
+        "question": "What is the difference between remove and discard?",
+        "answer": "remove raises KeyError if missing; discard doesn't"
+      },
+      {
+        "id": 82,
+        "question": "How do you find the union of sets?",
+        "answer": "set1 | set2 or set1.union(set2)"
+      },
+      {
+        "id": 83,
+        "question": "How do you find the intersection of sets?",
+        "answer": "set1 & set2 or set1.intersection(set2)"
+      },
+      {
+        "id": 84,
+        "question": "How do you find the difference of sets?",
+        "answer": "set1 - set2 or set1.difference(set2)"
+      },
+      {
+        "id": 85,
+        "question": "How do you find the symmetric difference?",
+        "answer": "set1 ^ set2 or set1.symmetric_difference(set2)"
+      },
+      {
+        "id": 86,
+        "question": "What is a frozenset?",
+        "answer": "An immutable set that can be used as a dict key"
+      },
+      {
+        "id": 87,
+        "question": "How do you create a frozenset?",
+        "answer": "frozenset([1, 2, 3])"
+      },
+      {
+        "id": 88,
+        "question": "What is a set comprehension?",
+        "answer": "{expression for item in iterable if condition}"
+      },
+      {
+        "id": 89,
+        "question": "What is a dictionary in Python?",
+        "answer": "A mutable mapping of keys to values"
+      },
+      {
+        "id": 90,
+        "question": "How do you create a dictionary?",
+        "answer": "{'a': 1, 'b': 2} or dict(a=1, b=2)"
+      },
+      {
+        "id": 91,
+        "question": "Are dictionary keys unique?",
+        "answer": "Yes, keys must be unique and hashable"
+      },
+      {
+        "id": 92,
+        "question": "Can dictionary keys be mutable?",
+        "answer": "No, keys must be hashable (immutable)"
+      },
+      {
+        "id": 93,
+        "question": "Can dictionary values be mutable?",
+        "answer": "Yes, values can be any type"
+      },
+      {
+        "id": 94,
+        "question": "How do you access a dictionary value?",
+        "answer": "dict[key] or dict.get(key)"
+      },
+      {
+        "id": 95,
+        "question": "What is the difference between dict[key] and dict.get(key)?",
+        "answer": "get returns None (or default) if key missing; [] raises KeyError"
+      },
+      {
+        "id": 96,
+        "question": "How do you add or update a dictionary item?",
+        "answer": "dict[key] = value"
+      },
+      {
+        "id": 97,
+        "question": "How do you remove a dictionary item?",
+        "answer": "del dict[key] or dict.pop(key)"
+      },
+      {
+        "id": 98,
+        "question": "How do you get all keys from a dictionary?",
+        "answer": "dict.keys()"
+      },
+      {
+        "id": 99,
+        "question": "How do you get all values from a dictionary?",
+        "answer": "dict.values()"
+      },
+      {
+        "id": 100,
+        "question": "How do you get all items from a dictionary?",
+        "answer": "dict.items()"
+      },
+      {
+        "id": 101,
+        "question": "How do you iterate over a dictionary?",
+        "answer": "for key in dict: or for key, value in dict.items():"
+      },
+      {
+        "id": 102,
+        "question": "How do you check if a key exists?",
+        "answer": "key in dict"
+      },
+      {
+        "id": 103,
+        "question": "How do you merge dictionaries?",
+        "answer": "{**dict1, **dict2} or dict1.update(dict2)"
+      },
+      {
+        "id": 104,
+        "question": "What is a dictionary comprehension?",
+        "answer": "{key: value for item in iterable if condition}"
+      },
+      {
+        "id": 105,
+        "question": "What is a defaultdict?",
+        "answer": "A dict that provides default values for missing keys"
+      },
+      {
+        "id": 106,
+        "question": "How do you create a defaultdict?",
+        "answer": "from collections import defaultdict; dd = defaultdict(list)"
+      },
+      {
+        "id": 107,
+        "question": "What is an OrderedDict?",
+        "answer": "A dict that remembers insertion order (not needed in Python 3.7+)"
+      },
+      {
+        "id": 108,
+        "question": "What is a Counter?",
+        "answer": "A dict subclass for counting hashable objects"
+      },
+      {
+        "id": 109,
+        "question": "How do you create a Counter?",
+        "answer": "from collections import Counter; c = Counter('hello')"
+      },
+      {
+        "id": 110,
+        "question": "What is None in Python?",
+        "answer": "A special constant representing the absence of a value"
+      },
+      {
+        "id": 111,
+        "question": "What is the type of None?",
+        "answer": "NoneType"
+      },
+      {
+        "id": 112,
+        "question": "Is None equal to False?",
+        "answer": "No, but bool(None) is False"
+      },
+      {
+        "id": 113,
+        "question": "How do you check for None?",
+        "answer": "if x is None:"
+      },
+      {
+        "id": 114,
+        "question": "What is the difference between None and not defined?",
+        "answer": "None is a value; undefined means NameError"
+      },
+      {
+        "id": 115,
+        "question": "What is type conversion?",
+        "answer": "Changing a value from one type to another"
+      },
+      {
+        "id": 116,
+        "question": "How do you convert to integer?",
+        "answer": "int(value)"
+      },
+      {
+        "id": 117,
+        "question": "How do you convert to float?",
+        "answer": "float(value)"
+      },
+      {
+        "id": 118,
+        "question": "How do you convert to string?",
+        "answer": "str(value)"
+      },
+      {
+        "id": 119,
+        "question": "How do you convert to list?",
+        "answer": "list(iterable)"
+      },
+      {
+        "id": 120,
+        "question": "How do you convert to tuple?",
+        "answer": "tuple(iterable)"
+      },
+      {
+        "id": 121,
+        "question": "How do you convert to set?",
+        "answer": "set(iterable)"
+      },
+      {
+        "id": 122,
+        "question": "How do you convert to dictionary?",
+        "answer": "dict(iterable_of_pairs)"
+      },
+      {
+        "id": 123,
+        "question": "How do you convert to boolean?",
+        "answer": "bool(value)"
+      },
+      {
+        "id": 124,
+        "question": "What is implicit type conversion?",
+        "answer": "Python automatically converts types in operations (e.g., int + float = float)"
+      },
+      {
+        "id": 125,
+        "question": "What is explicit type conversion?",
+        "answer": "Using functions like int(), float(), str()"
+      },
+      {
+        "id": 126,
+        "question": "What is type coercion?",
+        "answer": "Another term for implicit type conversion"
+      },
+      {
+        "id": 127,
+        "question": "What is the type() function?",
+        "answer": "Returns the type of an object"
+      },
+      {
+        "id": 128,
+        "question": "What is the isinstance() function?",
+        "answer": "Checks if an object is an instance of a class or tuple of classes"
+      },
+      {
+        "id": 129,
+        "question": "What is the issubclass() function?",
+        "answer": "Checks if a class is a subclass of another class"
+      },
+      {
+        "id": 130,
+        "question": "What are mutable data types?",
+        "answer": "list, dict, set, bytearray"
+      },
+      {
+        "id": 131,
+        "question": "What are immutable data types?",
+        "answer": "int, float, complex, str, tuple, frozenset, bytes, bool, NoneType"
+      },
+      {
+        "id": 132,
+        "question": "Why does mutability matter?",
+        "answer": "Affects hashability, dict keys, function argument behavior, and memory"
+      },
+      {
+        "id": 133,
+        "question": "What is hashability?",
+        "answer": "The ability to be used as a dict key or set member"
+      },
+      {
+        "id": 134,
+        "question": "Which types are hashable?",
+        "answer": "Immutable types are hashable (except tuple containing mutable objects)"
+      },
+      {
+        "id": 135,
+        "question": "What is the __hash__ method?",
+        "answer": "Returns the hash value of an object"
+      },
+      {
+        "id": 136,
+        "question": "What is the __eq__ method?",
+        "answer": "Defines equality comparison between objects"
+      },
+      {
+        "id": 137,
+        "question": "What is the relationship between __hash__ and __eq__?",
+        "answer": "Equal objects must have equal hashes"
+      },
+      {
+        "id": 138,
+        "question": "What is the __str__ method?",
+        "answer": "Returns a human-readable string representation"
+      },
+      {
+        "id": 139,
+        "question": "What is the __repr__ method?",
+        "answer": "Returns an unambiguous string representation for debugging"
+      },
+      {
+        "id": 140,
+        "question": "What is the __len__ method?",
+        "answer": "Returns the length of an object for len()"
+      },
+      {
+        "id": 141,
+        "question": "What is the __getitem__ method?",
+        "answer": "Enables indexing with []"
+      },
+      {
+        "id": 142,
+        "question": "What is the __setitem__ method?",
+        "answer": "Enables assignment with []"
+      },
+      {
+        "id": 143,
+        "question": "What is the __contains__ method?",
+        "answer": "Enables the 'in' operator"
+      },
+      {
+        "id": 144,
+        "question": "What is the __iter__ method?",
+        "answer": "Returns an iterator for the object"
+      },
+      {
+        "id": 145,
+        "question": "What is the __next__ method?",
+        "answer": "Returns the next item from an iterator"
+      },
+      {
+        "id": 146,
+        "question": "What is the __call__ method?",
+        "answer": "Makes an instance callable like a function"
+      },
+      {
+        "id": 147,
+        "question": "What is the __bool__ method?",
+        "answer": "Defines truthiness of an object"
+      },
+      {
+        "id": 148,
+        "question": "What is the array module?",
+        "answer": "Provides efficient arrays of numeric values"
+      },
+      {
+        "id": 149,
+        "question": "What is the difference between array and list?",
+        "answer": "array stores homogeneous numeric data more efficiently"
+      },
+      {
+        "id": 150,
+        "question": "What is the memoryview type?",
+        "answer": "Allows direct access to an object's internal buffer without copying"
+      }
+    ]
+  }
+}

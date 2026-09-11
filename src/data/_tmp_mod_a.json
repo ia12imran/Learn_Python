@@ -1,0 +1,255 @@
+{
+  "description": "part a",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Predict the output:\nimport math\nprint(math.sqrt(16))",
+      "answer": "4.0\n`import math` finds or creates the module object, runs its top-level code once, and binds the name `math` in the current namespace to that module object. On the next line `math.sqrt` is an attribute lookup on the module, which returns the built-in square-root function, and calling it on `16` yields `4.0`."
+    },
+    {
+      "id": 2,
+      "question": "Predict the error:\nimport math\nprint(sqrt(9))",
+      "answer": "NameError: name 'sqrt' is not defined\n`import math` only binds the name `math`; it does not introduce `sqrt` into the namespace. The names inside a module are attributes of the module and are only reachable through the module name (e.g. `math.sqrt`), so a bare `sqrt` triggers a NameError because that name was never assigned in the local/global scope."
+    },
+    {
+      "id": 3,
+      "question": "Predict the output:\nfrom math import sqrt\nprint(sqrt(16))",
+      "answer": "4.0\n`from math import sqrt` looks the attribute `sqrt` up inside the imported `math` module and binds that object directly to the name `sqrt` in the current namespace. The call `sqrt(16)` therefore works without any module qualifier, and prints `4.0`."
+    },
+    {
+      "id": 4,
+      "question": "Predict the error:\nfrom math import sqrt\nprint(sqrt(4))\nprint(math)",       
+      "answer": "2.0, then NameError: name 'math' is not defined\n`from math import sqrt` binds only the name `sqrt`; the module object itself is not bound under `math`. So `sqrt(4)` works and prints `2.0`, but the bare name `math` does not exist in the namespace, and referencing it raises a NameError."
+    },
+    {
+      "id": 5,
+      "question": "Predict the output:\nimport math as m\nprint(m.pi)",
+      "answer": "3.141592653589793\nThe `as m` clause binds the imported module object to the alias `m` instead of `math`, so `m.pi` is the module attribute `pi`. Note that the name `math` itself is NOT bound by this statement; referencing `math` later would raise a NameError. Only the alias `m` points at the module."
+    },
+    {
+      "id": 6,
+      "question": "Predict the output and the error:\nfrom math import pi as p\nprint(p)\nprint(pi)",
+      "answer": "3.141592653589793 then NameError: name 'pi' is not defined\n`pi as p` binds the value (`3.141592653589793`) to the alias `p`, so the first print works. The original name `pi` is not bound anywhere in the current namespace, so the second line raises a NameError. Aliasing replaces the name that would otherwise be bound."
+    },
+    {
+      "id": 7,
+      "question": "Predict the output:\nfrom math import pi\npi = 3\nprint(pi)",
+      "answer": "3\nThe `from` import first binds the name `pi` to `3.141592653589793`, but the very next line rebinds `pi` in the module/global namespace to the integer `3`. A name is just a reference: after reassignment, `print(pi)` sees the new value `3`; the imported float is no longer reachable through this name."
+    },
+    {
+      "id": 8,
+      "question": "File noisy.py contains:\nprint('noisy loaded')\nvalue = 5\n\nPredict the output of:\nimport noisy\nimport noisy\nimport noisy",
+      "answer": "noisy loaded\nThe first `import noisy` executes the file's top-level code and stores the finished module object in `sys.modules['noisy']`. The second and third imports find the module already cached in `sys.modules`, so they do NOT re-execute the file. Importing the same module twice only runs its code once; that is why the print appears exactly once."
+    },
+    {
+      "id": 9,
+      "question": "Predict the output:\nimport noisy\nimport noisy as alias\nprint(noisy is alias)",
+      "answer": "True\n(plus the one-time side-effect print 'noisy loaded' from the file). Both `import` statements resolve through `sys.modules['noisy']` and receive the very same module object. The `as` clause only changes which name refers to it, so `noisy is alias` is True."
+    },
+    {
+      "id": 10,
+      "question": "File noisy.py contains:\nprint('noisy loaded')\nvalue = 5\n\nPredict the output:\nimport sys, noisy\nimport noisy\ndel sys.modules['noisy']\nimport noisy",
+      "answer": "noisy loaded\nnoisy loaded\nThe first import executes the file once and caches the module; the second import is a cache hit, so nothing prints. `del sys.modules['noisy']` removes the cached entry, so the third import cannot find it and re-runs the file from disk, printing 'noisy loaded' a second time."
+    },
+    {
+      "id": 11,
+      "question": "File noisy.py contains:\nprint('noisy loaded')\n\nPredict the output:\nimport importlib\nimport noisy\nimportlib.reload(noisy)",
+      "answer": "noisy loaded\nnoisy loaded\nThe first import executes the module once. Unlike a plain second import, `importlib.reload(noisy)` explicitly re-executes the module's top-level code in-place (inside the existing module object), so its print side-effect runs again."
+    },
+    {
+      "id": 12,
+      "question": "File mutable_mod.py starts as:\nvalue = 'v1'\n\nBackground process rewrites the file to value = 'v2' between the two reloads... \n\nPredict the output:\nimport importlib\nimport mutable_mod\nfrom mutable_mod import value as old\nprint(old)\nimportlib.reload(mutable_mod)\nprint(old)\nprint(mutable_mod.value)",
+      "answer": "v1\nv1\nv2\nThe `from` import takes a snapshot: `old` points at whatever object `value` held at import time ('v1'), and reloading rebuilds the module's attributes without touching `old`. `mutable_mod.value` is an attribute of the module object, so after the reload it reflects the freshly-executed file and prints 'v2'. A name brought in with `from ... import ...` never updates when the source module is reloaded."
+    },
+    {
+      "id": 13,
+      "question": "File snapmod.py:\nvalue = 10\ndef update():\n    global value\n    value = 20\n\nPredict the output:\nimport snapmod\nfrom snapmod import value\nprint(value)\nsnapmod.update()\nprint(value)\nprint(snapmod.value)",
+      "answer": "10\n10\n20\n`from snapmod import value` copies the reference to `10` into the importer's namespace. `snapmod.update()` reassigns the name `value` INSIDE the module, which changes `snapmod.value` to 20 but does not touch the importer's separate `value` name. A `from`-imported name is a one-time snapshot; re-binding the source attribute later is invisible to it."
+    },
+    {
+      "id": 14,
+      "question": "File list_mod.py:\nmylist = []\ndef add():\n    mylist.append(1)\n\nPredict the output:\nimport list_mod\nfrom list_mod import mylist\nmylist.append(99)\nprint(list_mod.mylist)\nlist_mod.add()\nprint(mylist)",
+      "answer": "[99]\n[99, 1]\n`from` imports copy the REFERENCE, not the object. `mylist` and `list_mod.mylist` are two names for the very same list, so appending through either is visible through the other: the module list shows [99] after the local append, and the local name shows [99, 1] after the module's function appends. Only REBINDING (assignment) would diverge the two names."
+    },
+    {
+      "id": 15,
+      "question": "File noall.py:\nx = 1\n_y = 2\nz = 3\n\nPredict which names exist after:\nfrom noall import *\nprint('x' in locals(), '_y' in locals(), 'z' in locals())",
+      "answer": "True False True\nWith no `__all__`, `from noall import *` copies every name defined in the module that does NOT start with an underscore. `x` and `z` come across; `_y` is treated as private and is skipped. So `locals()` contains `x` and `z` but not `_y`."
+    },
+    {
+      "id": 16,
+      "question": "File star_mod.py:\npublic_a = 1\nprivate_b = 2\ndef func_c():\n    return 3\n__all__ = ['public_a', 'func_c']\n\nPredict the output:\nfrom star_mod import *\nprint('public_a' in locals(), 'func_c' in locals(), 'private_b' in locals())",
+      "answer": "True True False\nWhen `__all__` is present, `from star_mod import *` imports ONLY the names listed in it: `public_a` and `func_c`. The omission of `private_b` from `__all__` excludes it even though it is public-looking, so it is not bound by the star import."
+    },
+    {
+      "id": 17,
+      "question": "File star_mod.py is:\npublic_a = 1\nprivate_b = 2\ndef func_c():\n    return 3\n__all__ = ['public_a', 'func_c']\n\nPredict the output:\nfrom star_mod import public_a, private_b\nprint(public_a, private_b)",
+      "answer": "1 2\n`__all__` and the underscore convention only affect `from star_mod import *`. An explicit `from star_mod import private_b` reads the attribute straight out of the module's namespace regardless of `__all__`, so `private_b` is importable and prints `2`."
+    },
+    {
+      "id": 18,
+      "question": "File badall.py:\n__all__ = ['exists', 'missing_name']\nexists = 5\n\nPredict the error:\nfrom badall import *",
+      "answer": "AttributeError: module 'badall' has no attribute 'missing_name'\nA star import iterates over `__all__` and fetches each listed name. `exists` is fine, but `missing_name` does not exist on the module, so the import raises AttributeError. (Note how this is an AttributeError, not an ImportError, because the module itself was found but the listed attribute is absent.)"
+    },
+    {
+      "id": 19,
+      "question": "Predict the error:\ndef f():\n    from math import *\n    return pi",
+      "answer": "SyntaxError: import * only allowed at module level\n`from module import *` is a compile-time construct that injects names into the enclosing namespace, and CPython forbids it inside functions because that would mutate the function's local namespace unpredictably. The SyntaxError is raised at compile time, before the function is ever called."
+    },
+    {
+      "id": 20,
+      "question": "File shade_mod.py:\nitems = ['module items']\ndef go():\n    return 'module go'\n\nPredict the output:\nitems = ['my local list']\ndef go():\n    return 'my local go'\nfrom shade_mod import *\nprint(items)\nprint(go())",
+      "answer": "['module items']\nmodule go\nA star import copies every public name into the current namespace, overwriting same-named names that already existed. Both `items` and `go` were defined locally first, so the module's versions silently shadow them. Star imports can therefore clobber your own names without any warning."
+    },
+    {
+      "id": 21,
+      "question": "File sz.py:\nprint('SZ top level')\nif __name__ == '__main__':\n    print('SZ main block')\n\nYou run: python3 sz.py\n\nPredict the output.",
+      "answer": "SZ top level\nSZ main block\nWhen a file is executed directly, Python sets its special variable `__name__` to the string '__main__' before running it, so the guard condition is True and the block runs. Both prints appear in file order."
+    },
+    {
+      "id": 22,
+      "question": "File sz.py is:\nprint('SZ top level')\nif __name__ == '__main__':\n    print('SZ main block')\n\nPredict the output:\nimport sz\nprint('after import')",
+      "answer": "SZ top level\nafter import\nWhen `sz` is imported, its `__name__` is 'sz', not '__main__', so the guarded block is skipped. The unguarded top-level print still runs at import time, which is why 'SZ top level' appears, but 'SZ main block' does not. The guard exists precisely to make import-time execution (and its side effects) less surprising."
+    },
+    {
+      "id": 23,
+      "question": "File lazy_heavy.py:\nprint('lazy_heavy loaded')\nHEAVY = 2 ** 100\n\nPredict the output:\ndef play():\n    import lazy_heavy\n    return 'playing'\nprint('starting')\nprint(play())",
+      "answer": "starting\nlazy_heavy loaded\nplaying\nAn import executed inside a function happens at CALL time, not at import/definition time. 'starting' prints first; `lazy_heavy` is only loaded when `play()` runs for the first time. Deferring imports like this delays the module's side effects (and its execution cost) until the code actually needs it."
+    },
+    {
+      "id": 24,
+      "question": "File lazy_heavy.py:\nprint('lazy_heavy loaded')\n\nPredict the output:\ndef play():\n    import lazy_heavy\n    return 'playing'\nprint(play())\nprint(play())",
+      "answer": "lazy_heavy loaded\nplaying\nplaying\nImporting inside a function still consults `sys.modules` first. The first call loads and executes the module (one print), but the second call finds the module already cached and skips execution entirely. The function merely re-binds the local name; the module's top-level code still runs only once per process."
+    },
+    {
+      "id": 25,
+      "question": "Predict the output:\nimport os.path\nprint('os' in dir(), 'path' in dir())",
+      "answer": "True False\n`import os.path` imports the submodule but binds ONLY the top-level package name `os` in the namespace. The name `path` is not bound globally, even though `os.path` is a valid attribute expression — importing a dotted path never binds the last component. Use `import os.path as path` or `from os import path` if you want that name."
+    },
+    {
+      "id": 26,
+      "question": "package pk/ with __init__.py containing:\nprint('pk init')\nand pk/util.py containing:\nprint('pk util executing')\n\nPredict the error:\nimport pk.util as pu\nprint(pk is pu)",
+      "answer": "pk init\npk util executing\nNameError: name 'pk' is not defined\nWith `import a.b as name`, the alias refers to the SUBMODULE, so `pu` is the `pk.util` module. Crucially `import a.b as ...` does not bind `a` in this form, so the bare name `pk` does not exist and `pk is pu` raises NameError. (The two prints are the package init and the submodule's top-level code running during import.)"
+    },
+    {
+      "id": 27,
+      "question": "package pk/ with __init__.py printing 'pk init' and pk/util.py printing 'pk util executing'.\n\nPredict which names exist after:\nfrom pk import util\nprint('util' in dir(), 'pk' in dir())",
+      "answer": "True False\n(pk init and pk util executing print during the import.) `from pk import util` imports the SUBMODULE `pk.util` and binds it under the bare name `util` in the current namespace. The package name `pk` is not bound by this statement, so it is absent from `dir()`."
+    },
+    {
+      "id": 28,
+      "question": "Predict the output:\nfrom os.path import join\nprint(join('a', 'b'))",
+      "answer": "a/b\n`from os.path import join` traverses the module path `os.path` (binding nothing along the way) and pulls the attribute `join` into the current namespace. `join` is `os.path.join`, which on Linux joins path components with '/', producing the string 'a/b'. Only the final name `join` is bound."
+    },
+    {
+      "id": 29,
+      "question": "Predict the error:\nimport math\nprint(sqrt(16))",
+      "answer": "NameError: name 'sqrt' is not defined\n`import math` binds only the name `math`, not `sqrt` — `sqrt` is an attribute reachable through `math.sqrt`, not a top-level name. Using a bare `sqrt` therefore raises NameError because no such name was ever assigned in the current scope. (Swapping the line to `print(math.sqrt(16))` would print 4.0, while `math.nope` would instead raise AttributeError: module 'math' has no attribute 'nope'.)"
+    },
+    {
+      "id": 30,
+      "question": "Predict the two errors:\nimport totally_fake_module\nfrom os import totally_fake_name",
+      "answer": "ModuleNotFoundError: No module named 'totally_fake_module'\nImportError: cannot import name 'totally_fake_name' from 'os'\nThe first fails because no module with that name exists anywhere on `sys.path` — that is a ModuleNotFoundError. The second finds `os` fine but the attribute `totally_fake_name` is absent, which is an ImportError (the trailing location text varies by environment/version). Note ModuleNotFoundError is a SUBCLASS of ImportError, so `except ImportError` also catches a missing module."
+    },
+    {
+      "id": 31,
+      "question": "Predict the output:\nimport importlib\nm1 = __import__('os.path')\nm2 = importlib.import_module('os.path')\nprint(m1 is importlib.import_module('os'))\nprint(type(m2).__name__)",
+      "answer": "True\nmodule\nThe built-in `__import__('os.path')` always returns the TOP-LEVEL package `os`, even for a dotted string. `importlib.import_module('os.path')` returns the actual submodule (here `posixpath` represented as a module object). So `m1` is the `os` package (True), while `m2` is the bottom-most dotted module."
+    },
+    {
+      "id": 32,
+      "question": "File partial_mod.py:\na = 1\n\nPredict the error and the bindings afterwards:\nfrom partial_mod import a, b\nprint('a' in locals(), 'b' in locals())",
+      "answer": "ImportError: cannot import name 'b' from 'partial_mod'\nnone of the print statement below ever runs, but had it executed the state is: a is bound, b is not\nCPython processes the names in a `from module import a, b` one at a time: it binds `a`, then tries to fetch `b`, which does not exist, so it raises ImportError mid-statement. The import aborts, but the already-fetched name `a` remains bound in the namespace while `b` is absent."
+    },
+    {
+      "id": 33,
+      "question": "package pk/ with __init__.py:\nprint('pk init')\nand pk/broken.py:\nraise RuntimeError('boom')\n\nPredict the behavior:\ntry:\n    import pk.broken\nexcept RuntimeError:\n    print('caught')\nprint('pk' in locals())\nimport pk\nprint(type(pk).__name__)",
+      "answer": "pk init\ncaught\nFalse\nmodule\nAn import statement is atomic with respect to name binding: the submodule raises while executing, so the whole `import pk.broken` statement fails and the top-level name `pk` is never bound — hence False. However, `pk`'s `__init__.py` had already been executed and `pk` inserted into `sys.modules` before the failure, so the later `import pk` is served from the cache and succeeds, printing 'pk init' exactly once (the broken submodule is not cached)."
+    },
+    {
+      "id": 34,
+      "question": "package pk/ with __init__.py:\nprint('pk init')\nand pk/util.py:\nprint('pk util executing')\n\nPredict the output:\nimport pk.util\nimport pk.util",
+      "answer": "pk init\npk util executing\nImporting a submodule first executes the package's `__init__.py`, then the submodule's body — and only the first time each. The second `import pk.util` is served from `sys.modules` for both the package and the submodule, so nothing prints again."
+    },
+    {
+      "id": 35,
+      "question": "Package pk/ (pk/__init__.py prints 'pk init'; pk/util.py prints 'pk util executing').\n\nPredict the output:\nimport pk.util\nimport pk\nimport pk.util",
+      "answer": "pk init\npk util executing\nThe first statement triggers `__init__.py` (prints 'pk init') then executes `util.py` (prints 'pk util executing'). `import pk` and the repeated `import pk.util` are both cache hits in `sys.modules`, so no further output. The package is initialized exactly once regardless of how many submodules or aliases you import."
+    },
+    {
+      "id": 36,
+      "question": "File circ1.py:\nprint('circ1 start')\ndef get_b_value():\n    import circ2\n    return circ2.val_b\nx = 'circ1_x'\nprint('circ1 done')\n\nFile circ2.py:\nprint('circ2 start')\nimport circ1\nprint('circ2 reads', circ1.x)\nval_b = 'V'\nprint('circ2 done')\n\nPredict the output of importing circ2 FIRST:\nimport circ2",
+      "answer": "circ2 start\ncirc1 start\ncirc1 done\ncirc2 reads circ1_x\ncirc2 done\n`circ2` starts and its top-level `import circ1` suspends it mid-execution. `circ1` runs to completion WITHOUT importing `circ2` at the top level (circ2 is only imported lazily inside `get_b_value`), so `circ1.x` exists by the time control returns to `circ2`. `circ2` then reads the fully-initialized `circ1` and finishes. The deferred import breaks the cycle, which is why the reverse import order succeeds."
+    },
+    {
+      "id": 37,
+      "question": "File a.py:\nprint('a start')\nimport b\nprint('a after b', b.x)\nx = 'A'\n\nFile b.py:\nprint('b start')\nimport a\nprint('b after a', a.x)\nx = 'B'\n\nPredict the output and error of:\nimport a",
+      "answer": "a start\nb start\nAttributeError: module 'a' has no attribute 'x'\n`a` starts, prints, and imports `b`. `b` prints, imports `a` (still mid-execution — only 'a start' has run), and immediately tries to read `a.x`, which has not been assigned yet, so it raises AttributeError. The module object exists in `sys.modules` but is only partially initialized; attributes defined later in the file are not yet present."
+    },
+    {
+      "id": 38,
+      "question": "File order_a.py:\nprint('A start')\nimport order_b\nprint('A after import')\nvalue = 'AV'\n\nFile order_b.py:\nprint('B executing')\n\nPredict the output:\nimport order_a\nprint(order_a.value)",
+      "answer": "A start\nB executing\nA after import\nAV\nThe top-level code of `order_a` runs top-to-bottom: it prints 'A start', then the `import order_b` line suspends it while `order_b` executes fully (printing 'B executing'), then control returns and 'A after import' prints. This is an order-of-execution trace: an import is a function call in the middle of the importing file's code, not a pre-pass."
+    },
+    {
+      "id": 39,
+      "question": "File shrink_mod.py starts as:\nkeep_name = 1\ntemp_name = 2\n\nBetween imports the file is rewritten to contain ONLY:\nkeep_name = 1\n\nPredict the output:\nimport importlib\nimport shrink_mod\nprint(shrink_mod.temp_name)\nimportlib.reload(shrink_mod)\nprint(shrink_mod.temp_name)",
+      "answer": "2\n2\n(importlib.reload may print nothing itself; the files were already loaded.) A reload re-executes the module's code but does NOT delete names that the new version no longer defines. Since the new body only rebinds `keep_name`, the stale `temp_name` survives from the previous execution and still prints `2` both before and after the reload. This 'stale name' behavior is a well-known reload gotcha: removed attributes are not purged."
+    },
+    {
+      "id": 40,
+      "question": "Bug to fix — this raises NameError:\nimport math\nprint(round(sqrt(2)))\n\nWhich of the following fixes makes it print 1, and why does the original fail?\nA) import math then print(round(math.sqrt(2)))\nB) import math as m then print(round(m.sqrt(2)))\nC) from math import sqrt then print(round(sqrt(2)))",
+      "answer": "All three options fix it and print 1 (A, B, C); the original fails because `import math` binds only `math`, so the bare name `sqrt` is undefined. Fix A qualifies the lookup through the module, B aliases the module first, and C binds `sqrt` directly into the namespace. `round(1.4142135623730951)` is 1. The lesson: after `import math`, always use `math.<name>` or add an alias/from import."
+    },
+    {
+      "id": 41,
+      "question": "Predict the output:\nimport math\nprint(type(math).__name__)\nimport sys\nprint(sys.modules['math'] is math)",
+      "answer": "module\nTrue\nA module is just an object of type `module`, so `type(math).__name__` is 'module'. `sys.modules` is the dictionary that maps fully-qualified module names to their module objects, and `import math` stores/fetches exactly that object, hence the identity check is True."
+    },
+    {
+      "id": 42,
+      "question": "Compare the two snippets. After (1) `import math` vs (2) `from math import sqrt`, which names are bound in the current namespace in each case?\nSnippet 1:\nimport math\nprint('math' in dir(), 'sqrt' in dir())\nSnippet 2:\nfrom math import sqrt\nprint('math' in dir(), 'sqrt' in dir())",
+      "answer": "Snippet 1 prints True False; Snippet 2 prints False True\nSnippet 1 binds the module object under `math`; `sqrt` remains only an attribute of that object. Snippet 2 copies the callable `sqrt` directly into the namespace while leaving no name referring to the module. Both executed `math`'s top-level code exactly once; the difference is purely about which REFERENCES survive in the importing scope, and `from` form is a snapshot, not a live alias."
+    },
+    {
+      "id": 43,
+      "question": "Predict the error:\nimport math\nmath = 5\nprint(math.sqrt(4))",
+      "answer": "AttributeError: 'int' object has no attribute 'sqrt'\nThe first line binds the name `math` to the module; the second line REBINDS it to the integer 5, destroying the only reference to the module through that name. `5.sqrt(4)` is an attribute lookup on an int, which has no `sqrt`, so an AttributeError is raised even though the math module was imported."
+    },
+    {
+      "id": 44,
+      "question": "Predict the output:\ndef f():\n    from math import pi\n    return pi\nprint(f())\nprint(pi)",
+      "answer": "3.141592653589793\nNameError: name 'pi' is not defined\nThe `from` import inside `f` binds `pi` only in `f`'s local namespace, so `f()` returns the value and the first print works. When the function returns, its locals vanish; the top-level `print(pi)` finds no global `pi` and raises NameError. Imports executed inside a function do not leak their names into the surrounding scope."
+    },
+    {
+      "id": 45,
+      "question": "Predict the output:\nfrom os import path\nprint(type(path).__name__)\nprint(path.join('x', 'y'))",
+      "answer": "module\nx/y\n`from os import path` binds the SUBMODULE object (`posixpath`) under the name `path` — a from-import can bind a module just as easily as a function. `type(path).__name__` is therefore 'module', and `path.join` is the os.path.join function, yielding 'x/y'. The declared name in `from <pkg> import <name>` may itself be a module."
+    },
+    {
+      "id": 46,
+      "question": "Predict the output:\nimport xml.dom\nprint(hasattr(xml, 'dom'))\nprint(hasattr(xml, 'sax'))\nimport xml.sax\nprint(hasattr(xml, 'sax'))",
+      "answer": "True\nFalse\nTrue\nImporting `xml.dom` executed `xml.__init__` (if any) and loaded the `dom` submodule, and the import system attaches each imported submodule as an attribute on its parent package — so `xml.dom` exists. Nothing loaded `xml.sax` yet, so that attribute is absent (False); only after the explicit `import xml.sax` does `xml.sax` become an attribute. At that point hasattr returns True."
+    },
+    {
+      "id": 47,
+      "question": "File trans_c.py:\nleaked = 'from trans_c'\n_hidden = 'secret'\n\nFile trans_d.py:\nfrom trans_c import *\n\nPredict which names exist after:\nfrom trans_d import *\nprint('leaked' in dir(), '_hidden' in dir())",
+      "answer": "True False\nThe star import in `trans_d` copies every public name of `trans_c` (here `leaked`) into `trans_d`'s namespace, skipping `_hidden`. A second `from trans_d import *` then re-exports whatever is now public in `trans_d` — so `leaked` leaks through the chain, but `_hidden` is filtered out at the first hop and never appears. Star imports can thus act as re-export mechanisms."
+    },
+    {
+      "id": 48,
+      "question": "Predict the output:\nimport math\nprint(getattr(math, 'not_there', 'DEFAULT'))\ntry:\n    math.not_there\nexcept AttributeError as e:\n    print(type(e).__name__)",
+      "answer": "DEFAULT\nAttributeError\nThe three-argument `getattr` returns the supplied default when the attribute is missing, so it prints 'DEFAULT' without raising. Direct attribute access `math.not_there` has no default and raises AttributeError, which is caught here. The difference matters whenever you want a fallback value instead of an exception."
+    },
+    {
+      "id": 49,
+      "question": "File first_a.py:\nprint('first_a start')\nimport second_b\nprint('first_a after', second_b.answer)\nlate_name = 'defined late'\n\nFile second_b.py:\nprint('second_b start')\nimport first_a\nprint('second_b sees', first_a.late_name)\nanswer = 42\n\nPredict the output and error of:\nimport first_a",
+      "answer": "first_a start\nsecond_b start\nAttributeError: module 'first_a' has no attribute 'late_name'\n`second_b` imports `first_a` while `first_a` is still executing: only 'first_a start' has run, and the assignment `late_name = 'defined late'` (which sits BELOW the import line) has not executed yet. Reading `first_a.late_name` therefore fails with AttributeError because the partially-initialized module lacks that attribute. Order matters in circular imports: names defined after the import point do not exist yet."
+    },
+    {
+      "id": 50,
+      "question": "Predict the output:\nimport math\nfrom math import sqrt\nfrom math import sqrt as s\nprint(sqrt is s, sqrt is math.sqrt)",
+      "answer": "True True\nAll three forms obtain the SAME object from `sys.modules['math']`: the `from` import reads the attribute `sqrt` off the cached module, and `import math` binds the module itself. Attribute lookup on the module for `sqrt` always returns the identical built-in function object, so all identity comparisons are True. Importing twice or under two names never creates a second copy."
+    }
+  ]
+}

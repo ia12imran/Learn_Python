@@ -1,0 +1,505 @@
+{
+  "description": "100 questions on Python if/elif/else (control flow, beginner to intermediate)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What does this print?\nif True:\n    print(\"A\")",
+      "answer": "A"
+    },
+    {
+      "id": 2,
+      "question": "What does this print?\nx = 10\nif x > 5:\n    print(\"big\")",
+      "answer": "big"
+    },
+    {
+      "id": 3,
+      "question": "What does this print?\nx = 3\nif x > 5:\n    print(\"big\")\nelse:\n    print(\"small\")",
+      "answer": "small"
+    },
+    {
+      "id": 4,
+      "question": "How many elif blocks can an if statement have?",
+      "answer": "Unlimited"
+    },
+    {
+      "id": 5,
+      "question": "What does this print?\nscore = 85\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelif score >= 70:\n    print(\"C\")",
+      "answer": "B"
+    },
+    {
+      "id": 6,
+      "question": "What does this print?\nx = 5\nif x:\n    print(\"truthy\")\nelse:\n    print(\"falsy\")",
+      "answer": "truthy (5 is truthy)"
+    },
+    {
+      "id": 7,
+      "question": "What does this print?\nx = 0\nif x:\n    print(\"truthy\")\nelse:\n    print(\"falsy\")",
+      "answer": "falsy (0 is falsy)"
+    },
+    {
+      "id": 8,
+      "question": "What does this print?\nname = \"\"\nif name:\n    print(\"has name\")\nelse:\n    print(\"no name\")",
+      "answer": "no name (empty string is falsy)"
+    },
+    {
+      "id": 9,
+      "question": "What does this print?\nitems = []\nif items:\n    print(\"not empty\")\nelse:\n    print(\"empty\")",
+      "answer": "empty (empty list is falsy)"
+    },
+    {
+      "id": 10,
+      "question": "What does this print?\nitems = [1]\nif items:\n    print(\"not empty\")\nelse:\n    print(\"empty\")",
+      "answer": "not empty"
+    },
+    {
+      "id": 11,
+      "question": "What does this print?\nx = None\nif x:\n    print(\"set\")\nelse:\n    print(\"unset\")",
+      "answer": "unset (None is falsy)"
+    },
+    {
+      "id": 12,
+      "question": "Which is the correct syntax for a conditional check?",
+      "answer": "if condition: followed by an indented block"
+    },
+    {
+      "id": 13,
+      "question": "What does this print?\nage = 17\nif age >= 18:\n    print(\"adult\")\nelse:\n    print(\"minor\")",
+      "answer": "minor"
+    },
+    {
+      "id": 14,
+      "question": "What does this print?\nresult = \"even\" if 10 % 2 == 0 else \"odd\"\nprint(result)",
+      "answer": "even"
+    },
+    {
+      "id": 15,
+      "question": "What does this print?\nresult = \"even\" if 7 % 2 == 0 else \"odd\"\nprint(result)",
+      "answer": "odd"
+    },
+    {
+      "id": 16,
+      "question": "What is the ternary operator syntax?",
+      "answer": "value_if_true if condition else value_if_false"
+    },
+    {
+      "id": 17,
+      "question": "What does this print?\nnum = 0\nif num > 0:\n    print(\"positive\")\nelif num < 0:\n    print(\"negative\")\nelse:\n    print(\"zero\")",
+      "answer": "zero"
+    },
+    {
+      "id": 18,
+      "question": "What does this print?\nnum = -5\nif num > 0:\n    print(\"positive\")\nelif num < 0:\n    print(\"negative\")\nelse:\n    print(\"zero\")",
+      "answer": "negative"
+    },
+    {
+      "id": 19,
+      "question": "What does this print?\na, b = 5, 10\nif a < b:\n    print(\"a is smaller\")",
+      "answer": "a is smaller"
+    },
+    {
+      "id": 20,
+      "question": "What does this print?\npassword = \"secret123\"\nuser_input = \"secret123\"\nif user_input == password:\n    print(\"access granted\")\nelse:\n    print(\"access denied\")",
+      "answer": "access granted"
+    },
+    {
+      "id": 21,
+      "question": "What does this print?\nif 5 > 3 and 10 > 7:\n    print(\"both true\")\nelse:\n    print(\"some false\")",
+      "answer": "both true"
+    },
+    {
+      "id": 22,
+      "question": "What does this print?\nif 5 > 3 and 10 > 20:\n    print(\"both true\")\nelse:\n    print(\"some false\")",
+      "answer": "some false"
+    },
+    {
+      "id": 23,
+      "question": "What does this print?\nif 5 > 3 or 10 > 20:\n    print(\"one true\")\nelse:\n    print(\"none true\")",
+      "answer": "one true"
+    },
+    {
+      "id": 24,
+      "question": "What does this print?\nif not False:\n    print(\"yep\")\nelse:\n    print(\"nope\")",
+      "answer": "yep"
+    },
+    {
+      "id": 25,
+      "question": "What does this print?\nis_active = True\nhas_permission = False\nif is_active and has_permission:\n    print(\"allowed\")\nelse:\n    print(\"blocked\")",
+      "answer": "blocked"
+    },
+    {
+      "id": 26,
+      "question": "Which keyword checks 'or equal to' conditions like age >= 18?",
+      "answer": "There is no 'or' keyword for that; use >= (greater than or equal)"
+    },
+    {
+      "id": 27,
+      "question": "What does this print?\nitem = \"apple\"\nfruits = [\"apple\", \"banana\"]\nif item in fruits:\n    print(\"found\")\nelse:\n    print(\"not found\")",
+      "answer": "found"
+    },
+    {
+      "id": 28,
+      "question": "What does this print?\nitem = \"mango\"\nfruits = [\"apple\", \"banana\"]\nif item in fruits:\n    print(\"found\")\nelse:\n    print(\"not found\")",
+      "answer": "not found"
+    },
+    {
+      "id": 29,
+      "question": "What does this print?\ntax_rate = 0.05\npayment = \"card\"\nif payment == \"cash\":\n    print(\"cash discount\")\nelse:\n    print(\"standard price\")",
+      "answer": "standard price"
+    },
+    {
+      "id": 30,
+      "question": "What does this print?\nkey = \"name\"\nd = {\"name\": \"Alice\"}\nif key in d:\n    print(d[key])\nelse:\n    print(\"missing\")",
+      "answer": "Alice"
+    },
+    {
+      "id": 31,
+      "question": "What does this print?\nkey = \"age\"\nd = {\"name\": \"Alice\"}\nif key in d:\n    print(d[key])\nelse:\n    print(\"missing\")",
+      "answer": "missing"
+    },
+    {
+      "id": 32,
+      "question": "What is wrong with this code?\nx = 5\nif x = 10:\n    print(\"yes\")",
+      "answer": "Must use == for comparison, not = (which is assignment). It causes a SyntaxError."
+    },
+    {
+      "id": 33,
+      "question": "What does this print?\na = [1, 2, 3]\nb = [1, 2, 3]\nif a == b:\n    print(\"equal\")\nelse:\n    print(\"different\")",
+      "answer": "equal (lists compare by value)"
+    },
+    {
+      "id": 34,
+      "question": "What does this print?\na = [1, 2, 3]\nb = [1, 2, 3]\nif a is b:\n    print(\"same object\")\nelse:\n    print(\"different objects\")",
+      "answer": "different objects (== checks value, is checks identity)"
+    },
+    {
+      "id": 35,
+      "question": "What does this print?\nx = 5.0\nif x == 5:\n    print(\"equal\")\nelse:\n    print(\"not equal\")",
+      "answer": "equal (5.0 == 5 is True)"
+    },
+    {
+      "id": 36,
+      "question": "What does this print?\ntext = \"HELLO\"\nif text.isupper():\n    print(\"all caps\")\nelse:\n    print(\"mixed\")",
+      "answer": "all caps"
+    },
+    {
+      "id": 37,
+      "question": "What does this print?\ntext = \"Hello\"\nif text.islower():\n    print(\"lowercase\")\nelse:\n    print(\"not lowercase\")",
+      "answer": "not lowercase"
+    },
+    {
+      "id": 38,
+      "question": "What does this print?\nnum = 15\nif num % 2 == 0:\n    print(\"even\")\nelse:\n    print(\"odd\")",
+      "answer": "odd"
+    },
+    {
+      "id": 39,
+      "question": "What does this print?\nnum = 16\nif num % 2 == 0:\n    print(\"even\")\nelse:\n    print(\"odd\")",
+      "answer": "even"
+    },
+    {
+      "id": 40,
+      "question": "How do you check if a number is divisible by 3?",
+      "answer": "if num % 3 == 0:"
+    },
+    {
+      "id": 41,
+      "question": "What does this print?\nnum = 9\nif num % 3 == 0 and num % 2 != 0:\n    print(\"odd multiple of 3\")\nelse:\n    print(\"other\")",
+      "answer": "odd multiple of 3"
+    },
+    {
+      "id": 42,
+      "question": "What does this print?\nnum = 6\nif num % 3 == 0 and num % 2 != 0:\n    print(\"odd multiple of 3\")\nelse:\n    print(\"other\")",
+      "answer": "other (6 is divisible by 2)"
+    },
+    {
+      "id": 43,
+      "question": "What does this print?\nyear = 2024\nif year % 4 == 0:\n    print(\"likely leap\")\nelse:\n    print(\"not leap\")",
+      "answer": "likely leap"
+    },
+    {
+      "id": 44,
+      "question": "What does this print?\nx, y = 10, 20\nif x > y:\n    print(x)\nelse:\n    print(y)",
+      "answer": "20"
+    },
+    {
+      "id": 45,
+      "question": "What does this print?\ntemperature = 30\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")",
+      "answer": "hot"
+    },
+    {
+      "id": 46,
+      "question": "What does this print?\ntemperature = 18\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")",
+      "answer": "warm"
+    },
+    {
+      "id": 47,
+      "question": "What does this print?\ntemperature = 10\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")",
+      "answer": "cold"
+    },
+    {
+      "id": 48,
+      "question": "What happens if no condition is True and there is no else block?",
+      "answer": "Nothing runs; the program continues after the if statement"
+    },
+    {
+      "id": 49,
+      "question": "What does this print?\ns = \"Hello World\"\nif \"World\" in s:\n    print(\"contains World\")\nelse:\n    print(\"does not contain\")",
+      "answer": "contains World"
+    },
+    {
+      "id": 50,
+      "question": "Wrap this into one conditional expression: if x > 0: r = \"pos\" else: r = \"neg\"",
+      "answer": "r = \"pos\" if x > 0 else \"neg\""
+    },
+    {
+      "id": 51,
+      "question": "What does this print?\nrole = \"admin\"\nif role == \"admin\":\n    print(\"full access\")\nelif role == \"editor\":\n    print(\"edit access\")\nelse:\n    print(\"read only\")",
+      "answer": "full access"
+    },
+    {
+      "id": 52,
+      "question": "What does this print?\nrole = \"guest\"\nif role == \"admin\":\n    print(\"full access\")\nelif role == \"editor\":\n    print(\"edit access\")\nelse:\n    print(\"read only\")",
+      "answer": "read only"
+    },
+    {
+      "id": 53,
+      "question": "What does this print?\nprice = 100\nquantity = 3\nif quantity >= 5:\n    total = price * 0.8 * quantity\nelse:\n    total = price * quantity\nprint(total)",
+      "answer": "300 (no discount for quantity 3)"
+    },
+    {
+      "id": 54,
+      "question": "What does this print?\nprice = 100\nquantity = 6\nif quantity >= 5:\n    total = price * 0.8 * quantity\nelse:\n    total = price * quantity\nprint(total)",
+      "answer": "480.0 (quantity 6 gets 20% off)"
+    },
+    {
+      "id": 55,
+      "question": "What does this print?\nval = \"\"\nresult = \"empty\" if not val else \"filled\"\nprint(result)",
+      "answer": "empty"
+    },
+    {
+      "id": 56,
+      "question": "What does this print?\nspeed = 120\nlimit = 100\nif speed > limit:\n    print(\"over limit\")\nelif speed == limit:\n    print(\"at limit\")\nelse:\n    print(\"under limit\")",
+      "answer": "over limit"
+    },
+    {
+      "id": 57,
+      "question": "What does this print?\nspeed = 100\nif speed > limit:\n    print(\"over limit\")\nelif speed == limit:\n    print(\"at limit\")\nelse:\n    print(\"under limit\")",
+      "answer": "at limit (when limit = 100)"
+    },
+    {
+      "id": 58,
+      "question": "What does this print?\nfor i in range(3):\n    if i == 1:\n        print(\"middle\")",
+      "answer": "middle"
+    },
+    {
+      "id": 59,
+      "question": "What does this print?\nfor i in range(4):\n    if i % 2 == 0:\n        print(i, end=\" \")",
+      "answer": "0 2 "
+    },
+    {
+      "id": 60,
+      "question": "What does this print?\ndef grade(score):\n    if score >= 90: return \"A\"\n    if score >= 80: return \"B\"\n    return \"C\"\nprint(grade(95), grade(85), grade(75))",
+      "answer": "A B C"
+    },
+    {
+      "id": 61,
+      "question": "What does this print?\ndef grade(score):\n    if score >= 90: return \"A\"\n    if score >= 80: return \"B\"\n    return \"C\"\nprint(grade(99), grade(70))",
+      "answer": "A C"
+    },
+    {
+      "id": 62,
+      "question": "What does this print?\nif (n := 5) > 3:\n    print(\"n is\", n)\nelse:\n    print(\"too small\")",
+      "answer": "n is 5 (walrus operator assigns n=5 and the condition checks 5 > 3)"
+    },
+    {
+      "id": 63,
+      "question": "What does this print?\nn = 5\ncount = 0\nif n > 0:\n    count += 1\nprint(count)",
+      "answer": "1"
+    },
+    {
+      "id": 64,
+      "question": "What does this print?\nx = \"5\"\nif x.isdigit():\n    print(int(x) + 1)\nelse:\n    print(\"not a number\")",
+      "answer": "6"
+    },
+    {
+      "id": 65,
+      "question": "What does this print?\nx = \"five\"\nif x.isdigit():\n    print(int(x) + 1)\nelse:\n    print(\"not a number\")",
+      "answer": "not a number"
+    },
+    {
+      "id": 66,
+      "question": "What does this print?\nemail = \"user@example.com\"\nif \"@\" in email and email.endswith(\".com\"):\n    print(\"valid\")\nelse:\n    print(\"invalid\")",
+      "answer": "valid"
+    },
+    {
+      "id": 67,
+      "question": "What does this print?\nemail = \"userexample.com\"\nif \"@\" in email and email.endswith(\".com\"):\n    print(\"valid\")\nelse:\n    print(\"invalid\")",
+      "answer": "invalid"
+    },
+    {
+      "id": 68,
+      "question": "What does this print?\na = 5\nb = 10\noutput = a if a > b else b\nprint(output)",
+      "answer": "10"
+    },
+    {
+      "id": 69,
+      "question": "What does this print?\na = 5\nb = 10\nc = 3\nm = a if a > b else b\nm = m if m > c else c\nprint(m)",
+      "answer": "10"
+    },
+    {
+      "id": 70,
+      "question": "How do you write a nested if to check age >= 18 AND has_ticket True?",
+      "answer": "if age >= 18:\n    if has_ticket:\n        print(\"welcome\")"
+    },
+    {
+      "id": 71,
+      "question": "What does this print?\nage = 20\nhas_ticket = False\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\nelse:\n    print(\"too young\")",
+      "answer": "no ticket"
+    },
+    {
+      "id": 72,
+      "question": "What does this print?\nage = 15\nhas_ticket = True\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\nelse:\n    print(\"too young\")",
+      "answer": "too young"
+    },
+    {
+      "id": 73,
+      "question": "What does this print?\nvalue = [1, 2]\nif len(value):\n    print(\"has items\")\nelse:\n    print(\"empty\")",
+      "answer": "has items"
+    },
+    {
+      "id": 74,
+      "question": "What does this print?\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(3, 3))",
+      "answer": "equal"
+    },
+    {
+      "id": 75,
+      "question": "What does this print?\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(4, 3))",
+      "answer": "a"
+    },
+    {
+      "id": 76,
+      "question": "What does this print?\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(2, 3))",
+      "answer": "b"
+    },
+    {
+      "id": 77,
+      "question": "True or False: an if statement can be followed by multiple else blocks.",
+      "answer": "False - only one else block is allowed"
+    },
+    {
+      "id": 78,
+      "question": "What does this print?\nx = 100\nif x == 100:\n    print(\"hundred\")\nif x % 2 == 0:\n    print(\"even\")",
+      "answer": "hundred\neven (two separate if statements can both run)"
+    },
+    {
+      "id": 79,
+      "question": "What does this print?\nx = 100\nif x == 100:\n    print(\"hundred\")\nelif x % 2 == 0:\n    print(\"even\")",
+      "answer": "hundred (elif skips because the first matched)"
+    },
+    {
+      "id": 80,
+      "question": "What does this print?\nstatus = \"pending\"\nif status == \"paid\":\n    print(\"ship it\")\nelif status == \"pending\":\n    print(\"waiting\")\nelif status == \"cancelled\":\n    print(\"refund\")\nelse:\n    print(\"unknown\")",
+      "answer": "waiting"
+    },
+    {
+      "id": 81,
+      "question": "What does this print?\nday = \"Saturday\"\nif day in (\"Saturday\", \"Sunday\"):\n    print(\"weekend\")\nelse:\n    print(\"weekday\")",
+      "answer": "weekend"
+    },
+    {
+      "id": 82,
+      "question": "What does this print?\nday = \"Monday\"\nif day in (\"Saturday\", \"Sunday\"):\n    print(\"weekend\")\nelse:\n    print(\"weekday\")",
+      "answer": "weekday"
+    },
+    {
+      "id": 83,
+      "question": "What does this print?\nsalary = 50000\nbonus = 5000\nif salary >= 60000:\n    tax = 0.3\nelif salary >= 40000:\n    tax = 0.2\nelse:\n    tax = 0.1\nprint(salary * tax)",
+      "answer": "10000.0"
+    },
+    {
+      "id": 84,
+      "question": "Match this to Python:\nswitch(choice) {\n  case 1: print(\"one\"); break;\n  case 2: print(\"two\"); break;\n  default: print(\"other\");\n}",
+      "answer": "Use if/elif/else, or Python 3.10+ 'match' statement: match choice: case 1: ... case 2: ... case _: ..."
+    },
+    {
+      "id": 85,
+      "question": "What does this print?\nmoney = 0\nhas_card = True\nif money or has_card:\n    print(\"can pay\")\nelse:\n    print(\"cannot pay\")",
+      "answer": "can pay"
+    },
+    {
+      "id": 86,
+      "question": "What does this print?\nmoney = 0\nhas_card = False\nif money or has_card:\n    print(\"can pay\")\nelse:\n    print(\"cannot pay\")",
+      "answer": "cannot pay"
+    },
+    {
+      "id": 87,
+      "question": "What does this print?\ncount = 3\nif count:\n    print(\"count:\", count)\nelse:\n    print(\"no count\")",
+      "answer": "count: 3"
+    },
+    {
+      "id": 88,
+      "question": "What does this print?\ncount = 0\nif count:\n    print(\"count:\", count)\nelse:\n    print(\"no count\")",
+      "answer": "no count"
+    },
+    {
+      "id": 89,
+      "question": "What does this print?\nx = \"123\"\nif x.isdigit():\n    print(\"a number\")\nelse:\n    print(\"not a number\")",
+      "answer": "a number"
+    },
+    {
+      "id": 90,
+      "question": "What does this print?\nx = \"12.5\"\nif x.isdigit():\n    print(\"a number\")\nelse:\n    print(\"not a number\")",
+      "answer": "not a number ('.' is not a digit)"
+    },
+    {
+      "id": 91,
+      "question": "What does this print?\npoints = 95\nif points >= 90:\n    grade = \"A\"\n    honor = True\nif points >= 90 and points >= 95:\n    print(\"highest honors\")",
+      "answer": "highest honors"
+    },
+    {
+      "id": 92,
+      "question": "What does this print?\nuser = {\"age\": 25}\nif user.get(\"age\", 0) >= 21:\n    print(\"welcome\")\nelse:\n    print(\"blocked\")",
+      "answer": "welcome"
+    },
+    {
+      "id": 93,
+      "question": "What does this print?\nuser = {}\nif user.get(\"age\", 0) >= 21:\n    print(\"welcome\")\nelse:\n    print(\"blocked\")",
+      "answer": "blocked (default 0 used for missing key)"
+    },
+    {
+      "id": 94,
+      "question": "What does this print?\nweight = 50\nheight = 2.5\nif 18.5 <= weight / height**2 <= 24.9:\n    print(\"healthy range\")\nelse:\n    print(\"outside range\")",
+      "answer": "outside range (BMI = 50/6.25 = 8.0, which is below 18.5)"
+    },
+    {
+      "id": 95,
+      "question": "What does this print?\nloan = 1000\ncredit = 750\nif loan < 2000 and credit >= 700:\n    print(\"approved\")\nelse:\n    print(\"declined\")",
+      "answer": "approved"
+    },
+    {
+      "id": 96,
+      "question": "What does this print?\nloan = 3000\ncredit = 750\nif loan < 2000 and credit >= 700:\n    print(\"approved\")\nelse:\n    print(\"declined\")",
+      "answer": "declined"
+    },
+    {
+      "id": 97,
+      "question": "What does this print?\ns = \"racecar\"\nif s == s[::-1]:\n    print(\"palindrome\")\nelse:\n    print(\"not palindrome\")",
+      "answer": "palindrome"
+    },
+    {
+      "id": 98,
+      "question": "What does this print?\ns = \"hello\"\nif s == s[::-1]:\n    print(\"palindrome\")\nelse:\n    print(\"not palindrome\")",
+      "answer": "not palindrome"
+    },
+    {
+      "id": 99,
+      "question": "What does this print?\nnum = 28\nif num % 7 == 0:\n    print(\"lucky 7\")\nif num // 4 == 7:\n    print(\"quotient is 7\")",
+      "answer": "lucky 7\nquotient is 7"
+    },
+    {
+      "id": 100,
+      "question": "What does this print?\nhour = 14\nif hour < 12:\n    print(\"morning\")\nelif hour < 18:\n    print(\"afternoon\")\nelse:\n    print(\"evening\")",
+      "answer": "afternoon"
+    }
+  ]
+}

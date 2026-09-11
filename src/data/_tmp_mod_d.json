@@ -1,0 +1,255 @@
+{
+  "description": "part d",
+  "questions": [
+    {
+      "id": 151,
+      "question": "On Linux, what does `print(os.sep, os.name)` output?",
+      "answer": "Output: `/ posix`\n\n`os.sep` is the native path-component separator: '/' on POSIX and '\\\\' on Windows. `os.name` is the module-name string for the underlying OS family: 'posix' on Linux/macOS, 'nt' on Windows. Both are strings, and `os.path.join` relies on `os.sep` internally, which is why you should never hard-code '/'."
+    },
+    {
+      "id": 152,
+      "question": "Predict the two results of `os.path.join('/a', 'b', 'c')` and `os.path.join('/a', '/b')`.",
+      "answer": "Outputs: `/a/b/c` and `/b`\n\n`os.path.join` concatenates components with `os.sep`, producing the portable path `/a/b/c`. When any later argument is an absolute path, everything before it is discarded — so joining '/a' with '/b' yields just '/b'. This 'absolute wins' rule is the same as the one in `posixpath.join` and `ntpath.join`."
+    },
+    {
+      "id": 153,
+      "question": "What do `os.environ.get('__NOPE_MISSING_9')` and `os.environ.get('__NOPE_MISSING_9', 'fallback')` return?",
+      "answer": "Outputs: `None` then `fallback`\n\n`os.environ` behaves like a dict of environment variables, so `.get(key)` returns the default (None) for a missing key instead of raising. Accessing `os.environ['__NOPE_MISSING_9']` directly would instead raise a `KeyError`. The two-argument form returns the supplied default `fallback`."
+    },
+    {
+      "id": 154,
+      "question": "With `K` already set to `'aaa'`, what do `os.environ.setdefault('K', 'bbb')` and `os.environ['K']` print?",
+      "answer": "Output: `aaa` followed by `aaa`\n\n`setdefault` inserts the given value only if the key is absent; since 'K' already exists it returns the existing value 'aaa' and leaves the environment untouched. Later calling `os.environ.setdefault('MISSING', 'fresh')` would store and return 'fresh'. This mirrors plain-dict `setdefault` semantics."
+    },
+    {
+      "id": 155,
+      "question": "What exception does `os.chdir('/definitely/not/a/real/dir_9')` raise?",
+      "answer": "Exception: `FileNotFoundError`\n\n`FileNotFoundError` is a subclass of `OSError`; `os.chdir` raises it when the target directory does not exist. On success the current working directory is changed, so a later `os.getcwd()` reports the new directory. When the path exists but is not a directory, `NotADirectoryError` (another OSError subclass) would be raised instead."
+    },
+    {
+      "id": 156,
+      "question": "Does `os.listdir(td)` (a temp dir) return entries in alphabetical order? And what is the portable fix to guarantee sorted output?",
+      "answer": "Answer: No — the order is arbitrary/filesystem-dependent; use `sorted(os.listdir(td))`.\n\n`os.listdir` returns entries in an arbitrary, often directory-storage-order (e.g. creation order) sequence; nothing in the docs guarantees sorting. Sorting explicitly with `sorted()` makes the output deterministic and portable across machines. `os.scandir()` shares the same non-sorted behavior."
+    },
+    {
+      "id": 157,
+      "question": "Given a real file `f1.txt` and a real directory `d1`, which combination prints `True True False`, and which prints `False`?",
+      "answer": "Answer: `os.path.exists('f1.txt')`, `os.path.isfile('f1.txt')`, `os.path.isdir('f1.txt')` → `True True False`; and `os.path.exists('missing')` → `False`.\n\n`os.path.exists` is true for both files and directories, `os.path.isfile` is true only for regular files, and `os.path.isdir` only for directories — so for `d1` you get `True False True`. All three return `False` for a path that does not exist at all."
+    },
+    {
+      "id": 158,
+      "question": "What do `os.path.basename('/a/b/file.tar.gz')` and `os.path.splitext('file.tar.gz')` return?",
+      "answer": "Outputs: `file.tar.gz` and `('file.tar', '.gz')`\n\n`basename` returns the final path component, dropping every directory. `splitext` splits only at the LAST dot: `'file.tar.gz'` becomes the stem `'file.tar'` and extension `'.gz'`. This is why renaming `'file.tar.gz'` to a `.tar` backup via `splitext` produces `'file.tar.bak'`, not `'file.tar.gz.bak'`."
+    },
+    {
+      "id": 159,
+      "question": "This code is buggy on Windows: `path = dir_ + '/' + filename`. Which single call fixes it, and why?",
+      "answer": "Answer: `os.path.join(dir_, filename)`\n\nHard-coded '/' breaks on Windows, whose native separator is '\\\\'. `os.path.join` inserts the correct `os.sep` automatically and also handles corner cases like empty strings and absolute later components. `os.path.join` is the idiomatic, portable replacement."
+    },
+    {
+      "id": 160,
+      "question": "What type does `os.getpid()` return, and what does `os.getcwd()` return?",
+      "answer": "Answer: `os.getpid()` returns an `int`; `os.getcwd()` returns a `str`.\n\n`os.getpid()` gives the integer process ID of the running interpreter, so it is always an `int`. `os.getcwd()` returns the absolute path of the current working directory as a plain string (e.g. `/home/maan`). Both return fresh values each call — chdir changes what `os.getcwd()` reports but never affects the PID."
+    },
+    {
+      "id": 161,
+      "question": "What is the Python value, and its type, of `json.loads('null')`?",
+      "answer": "Output: `None` of type `NoneType`\n\nJSON `null` maps directly to Python's `None`. `json.loads` parses a JSON string into a Python object following the standard mapping: null→None, true/false→True/False, objects→dicts, arrays→lists. There is no ambiguity, since JSON has no other 'nothing' value."
+    },
+    {
+      "id": 162,
+      "question": "Match these one-to-one and give the exact outputs: `json.dumps(True)`, `json.dumps(None)`, `json.loads('true')`, `json.loads('null')`.",
+      "answer": "Outputs: `'true'`, `'null'`, `True`, `None`\n\nSerialization converts Python `bool`/`None` to their lowercase JSON tokens 'true'/'false'/'null', and deserialization maps those tokens back. Also remember a byte-string argument is allowed in Python 3.6+ (valid UTF-8) for `json.loads`. These are the only JSON 'keywords' beside object/array brackets."
+    },
+    {
+      "id": 163,
+      "question": "What does `json.loads(json.dumps({1: 'a', 2: 'b'}))` return?",
+      "answer": "Output: `{'1': 'a', '2': 'b'}`\n\nJSON object keys are always strings, so `json.dumps` converts the int keys 1 and 2 to the strings '1' and '2'. On the round-trip back through `json.loads` they stay strings — the original integer keys are not recovered. Only the VALUES and the top-level type are preserved faithfully; key types are not."
+    },
+    {
+      "id": 164,
+      "question": "What does `json.loads(json.dumps([1, (2, 3), 4]))` return?",
+      "answer": "Output: `[1, [2, 3], 4]`\n\nJSON has no tuple type, so `json.dumps` serializes the inner tuple as an array. `json.loads` therefore rebuilds it as a list. If you need exact round-tripping (preserving the tuple), you must pass a custom `default` hook to `dumps` or re-convert after loading."
+    },
+    {
+      "id": 165,
+      "question": "What does `json.loads('{\"a\": 1, \"a\": 2}')` return?",
+      "answer": "Output: `{'a': 2}`\n\nDuplicate keys in a JSON object are legal JSON but yield last-wins behavior: the earlier 'a' key is silently overwritten, no exception is raised. This mirrors Python's `dict` construction with duplicate literal keys. If you need to detect duplicates, you must parse with a custom `object_pairs_hook`."
+    },
+    {
+      "id": 166,
+      "question": "What exception do `json.loads('{\"a\": 1,}')` and `json.loads('')` raise?",
+      "answer": "Exception: `json.JSONDecodeError` (a subclass of `ValueError`)\n\nA trailing comma after the last member is invalid JSON, and an empty string contains no JSON value at all, so both raise `JSONDecodeError`. Note that a JSON array like `[1, 2]` with leading/trailing whitespace is fine — only malformed structure or empty input fails. The error message includes the exact position (line and column) of the failure."
+    },
+    {
+      "id": 167,
+      "question": "What is the exact output of `json.dumps('é')` (with default settings), and what does adding `ensure_ascii=False` change?",
+      "answer": "Output: `'\"\\\\u00e9\"'` (repr shows `'\"\\\\u00e9\"'`), and with `ensure_ascii=False` it becomes `'\"é\"'`\n\n`ensure_ascii` defaults to True, so non-ASCII characters are escaped to `\\uXXXX` sequences during serialization. Setting it False emits the literal Unicode character instead. Both produce valid JSON — `\\u00e9` is legal inside a string. Notably whitespace and control characters are still escaped the same way regardless."
+    },
+    {
+      "id": 168,
+      "question": "Predict `json.dumps({'b': 1, 'a': 2})` and `json.dumps({'b': 1, 'a': 2}, sort_keys=True)`.",
+      "answer": "Outputs: `'{\"b\": 1, \"a\": 2}'` and `'{\"a\": 2, \"b\": 1}'`\n\nWithout `sort_keys` the output preserves dict insertion order (b before a here). With `sort_keys=True` the keys are emitted in sorted order, giving deterministic output ideal for hashing or diffing. If integers are present as keys and `sort_keys=True`, they sort numerically as ints before being serialized to strings."
+    },
+    {
+      "id": 169,
+      "question": "Give the exact output of `json.dumps({'a': 1, 'b': 2}, indent=1)` and of `json.dumps({'a': 1}, separators=(',', ':'))`.",
+      "answer": "Output for indent: `'{\\n \"a\": 1,\\n \"b\": 2\\n}'`, and for separators: `'{\"a\":1}'`\n\n`indent=N` pretty-prints by adding newlines and N-space indentation between levels. `separators=(item_sep, key_sep)` controls the delimiters: the default is `(', ', ': ')`; passing `(',', ':')` strips all spaces for a compact minified payload. You can't meaningfully combine a non-None `indent` with custom compact separators — `indent` takes precedence for the multiline layout."
+    },
+    {
+      "id": 170,
+      "question": "What does `json.loads('   {\"a\": 1}   ')` return?",
+      "answer": "Output: `{'a': 1}`\n\nLeading and trailing whitespace around the whole JSON document is ignored by the parser, so the padded object loads fine. Whitespace INSIDE the document (between tokens) is also allowed and ignored. Only malformed structure, stray commas, or a completely empty input raise `JSONDecodeError`."
+    },
+    {
+      "id": 171,
+      "question": "After `json.dump({'k': [True, None, 3.5]}, f)` writes to a file and `json.load(f)` reads it back, what value comes back?",
+      "answer": "Output: `{'k': [True, None, 3.5]}`\n\n`json.dump`/`json.load` are the file-oriented twins of `dumps`/`loads`: same mappings, but to/from a text stream. `True`, `None`, and `3.5` round-trip exactly. Note `json.dump` writes text (a `str`), so the file must be opened in text mode with UTF-8 encoding."
+    },
+    {
+      "id": 172,
+      "question": "What does `json.loads('123456789012345678901234567890')` return, and why does it not lose precision?",
+      "answer": "Output: the same giant integer `123456789012345678901234567890` (type `int`)\n\nPython ints are arbitrary precision, so there is no overflow and no precision loss for huge integers, and `json.dumps(10**50)` serializes them exactly. Be careful: floats are IEEE-754 doubles — e.g. `json.loads('0.1') + json.loads('0.2')` is `0.30000000000000004`. So big ints round-trip exactly, floats do not."
+    },
+    {
+      "id": 173,
+      "question": "What does `json.dumps(float('nan'))` produce, and does `json.loads('NaN')` succeed?",
+      "answer": "Outputs: `'NaN'` and it succeeds (returns `nan`)\n\nPython's JSON encoder accepts non-finite floats and emits the non-standard tokens 'NaN', 'Infinity', '-Infinity', and `json.loads` sympathetically parses them back. Strict JSON forbids these, so interoperating with other JSON tools can fail. Note that `json.loads('NaN')` (case matters — 'nan' lowercase raises `JSONDecodeError`) works only with Python's lenient parser."
+    },
+    {
+      "id": 174,
+      "question": "After `dd = defaultdict(list); x = dd['missing']`, print `dd` and `x`. Then what does `d2 = defaultdict(list); d2.get('y')` give, and is 'y' added?",
+      "answer": "Outputs: `defaultdict(<class 'list'>, {'missing': []})` and `[]`; then `None` and 'y' is NOT added\n\n`defaultdict.__getitem__` auto-inserts a new element built by the factory (here `[]`) for a missing key. `.get()` bypasses that logic entirely and returns the default, performing NO insertion — the key is absent afterward. This asymmetry is a classic bug source when checking membership with `in` after using `.get`."
+    },
+    {
+      "id": 175,
+      "question": "Predict: `d = defaultdict(int); d['n'] += 5; print(d['n'], d['m'])`.",
+      "answer": "Output: `5 0`\n\n`d['m']` is missing, so `defaultdict(int)` inserts 0 and returns it — no `KeyError`. `d['n'] += 5` first fetches the default 0, then stores 5 back. This makes `defaultdict(int)` ideal for counting and histogram patterns; a plain dict would raise `KeyError` on `d['m']`."
+    },
+    {
+      "id": 176,
+      "question": "What is the exact output of `Counter('abracadabra').most_common()`?",
+      "answer": "Output: `[('a', 5), ('b', 2), ('r', 2), ('c', 1), ('d', 1)]`\n\n`Counter('abracadabra')` counts: a×5, b×2, r×2, c×1, d×1. `most_common()` sorts by count descending; ties (b and r) keep the order of first appearance ('b' before 'r'). `most_common(3)` returns only `[('a', 5), ('b', 2), ('r', 2)]`, and `most_common(0)` yields `[]`."
+    },
+    {
+      "id": 177,
+      "question": "What does `Counter({'a': 5})['zzz']` return?",
+      "answer": "Output: `0`\n\nCounter is a dict subclass whose `__missing__` returns 0 for absent keys, matching the mathematical notion of an unlisted element having count zero — no `KeyError` is raised. Be careful with `c['zzz'] = c['zzz'] + 1`: it silently adds an entry with count 1. Iteration (`for k in c`) only yields keys with positive counts, not zero-count ones."
+    },
+    {
+      "id": 178,
+      "question": "Predict `Counter(a=3, b=1) - Counter(a=1, b=2)`.",
+      "answer": "Output: `Counter({'a': 2})`\n\nSubtraction subtracts counts elementwise: a→2, b→-1. `-` then DISCARDS entries whose result is zero or negative, so b disappears entirely. Compare with the `subtract()` method, which keeps negative counts — there the same inputs give `Counter({'a': 2, 'b': -1})`."
+    },
+    {
+      "id": 179,
+      "question": "What does `Counter(a=1, b=2) + Counter(a=1, b=1, c=1)` return?",
+      "answer": "Output: `Counter({'b': 3, 'a': 2, 'c': 1})`\n\n`+` combines counts elementwise: a→2, b→3, c→1. Like `-`, addition drops any non-positive results (the result never holds zero/negative counts), and the output order reflects the first counter's insertion (a, b) followed by new keys (c). The `|` union keeps the larger count and `&` intersection keeps the smaller."
+    },
+    {
+      "id": 180,
+      "question": "Predict: `c = Counter(a=3); c.update({'a': 1, 'b': 2}); print(c)`.",
+      "answer": "Output: `Counter({'a': 4, 'b': 2})`\n\n`update` ADDS the incoming counts to existing ones (a: 3+1=4) and inserts new keys (b: 2) — it never overwrites. This mirrors `dict.update`'s name but has opposite semantics: dict.update replaces, Counter.update accumulates. `update` also accepts a string/iterable and then counts its elements."
+    },
+    {
+      "id": 181,
+      "question": "True or False: `OrderedDict([(1,'a'),(2,'b')]) == {1:'a', 2:'b'}` and `OrderedDict([(1,'a'),(2,'b')]) == OrderedDict([(2,'b'),(1,'a')])`.",
+      "answer": "Answers: `True` then `False`\n\nSurprisingly, equality with a PLAIN dict only compares content and ignores order, so the first comparison is True. But comparing two OrderedDicts DOES consider order, so the reversed-insertion second one is False. In Python 3.7+ regular dicts are also insertion-ordered, yet their `==` remains order-insensitive — only OrderedDict-vs-OrderedDict checks order."
+    },
+    {
+      "id": 182,
+      "question": "Predict the final `list(od.items())` after: `od = OrderedDict([(1,'a'),(2,'b'),(3,'c')]); od.move_to_end(1); od.popitem()`.",
+      "answer": "Output: `[(2, 'b'), (3, 'c')]`\n\n`move_to_end(1)` relocates key 1 to the end → `[(2,'b'), (3,'c'), (1,'a')]`. The default `popitem()` removes the LAST item, so (1,'a') is dropped, leaving [(2,'b'),(3,'c')]. `popitem(last=False)` (or `move_to_end(1, last=False)` for the front) are the complementary operations on the other end."
+    },
+    {
+      "id": 183,
+      "question": "Predict: `dq = deque(); dq.append(1); dq.appendleft(2); dq.append(3); print(dq.popleft(), list(dq))`.",
+      "answer": "Output: `2 [1, 3]`\n\n`deque` supports O(1) appends and pops at BOTH ends. Sequence built: [2, 1, 3]; `popleft()` takes 2 from the left, leaving `[1, 3]`. This is why a deque is preferred over a `list` for a FIFO queue — `list.pop(0)` is O(n) while `deque.popleft()` is O(1)."
+    },
+    {
+      "id": 184,
+      "question": "Predict the outputs for `deque([1,2,3,4,5])` after `.rotate(2)` and after `.rotate(-2)`.",
+      "answer": "Outputs: `deque([4, 5, 1, 2, 3])` and `deque([3, 4, 5, 1, 2])`\n\n`rotate(n)` shifts elements right n positions, pulling items off the right end onto the left: +2 → [4,5,1,2,3]. A negative n rotates left instead: -2 → [3,4,5,1,2]. It is an in-place O(n) operation equivalent to `dq.appendleft(dq.pop())` repeated n times."
+    },
+    {
+      "id": 185,
+      "question": "What does `deque([1, 2, 3], maxlen=2)` become?",
+      "answer": "Output: `deque([2, 3], maxlen=2)`\n\nWhen a deque has a fixed `maxlen`, appending a new item on one end silently drops an item off the other end to keep the length bounded. Items are discarded from whichever end is opposite the append, so the newest two survive. A length-limited deque is handy for a rolling buffer or last-N history window."
+    },
+    {
+      "id": 186,
+      "question": "What exception does `p.x = 10` raise for `p = namedtuple('P', 'x y')(1, 2)`?",
+      "answer": "Exception: `AttributeError: can't set attribute`\n\nnamedtuple instances are immutable: they define only getters derived from the declared fields, using `__slots__ = ()` under the hood. Any attribute assignment raises `AttributeError`. Use `p._replace(x=10)` (creates a new instance) or prepare the value before construction instead."
+    },
+    {
+      "id": 187,
+      "question": "Predict `p._fields`, `p._asdict()`, and `p._replace(x=99)` for `P = namedtuple('P', 'x y'); p = P(3, 4)`.",
+      "answer": "Outputs: `('x', 'y')`, `{'x': 3, 'y': 4}`, and `P(x=99, y=4)`\n\n`_fields` is the tuple of field names, `_asdict()` returns an ordinary dict of field→value in order, and `_replace` builds a copy with only the named fields changed — the original `p` stays `P(x=3, y=4)` because immutability means no in-place mutation. `p._make([7, 8])` builds an instance from an iterable of exactly len(_fields) values."
+    },
+    {
+      "id": 188,
+      "question": "Predict `Q(1)` and `Q(1, 2)` for:\n```\nclass Q(namedtuple('P', 'x y')):\n    __slots__ = ()\n    def __new__(cls, x, y=10):\n        return super().__new__(cls, x, y)\n```",
+      "answer": "Outputs: `P(x=1, y=10)` and `P(x=1, y=2)`\n\nThe only way to give a namedtuple a default is to subclass it and override `__new__` with the default — `__slots__ = ()` keeps the subclass memory-lean. Because instances are immutable, the default is applied at construction time only. (In Python 3.7+ you can instead pass `defaults=[...]` directly to `namedtuple`.)"
+    },
+    {
+      "id": 189,
+      "question": "What is `ChainMap({'a':1}, {'a':2}, {'b':3})['a']`, and what does `.maps` give?",
+      "answer": "Outputs: `1` and `[{'a': 1}, {'a': 2}, {'b': 3}]`\n\n`ChainMap` searches its maps from LEFT to RIGHT and returns the FIRST match, so 'a' resolves to 1 from the first dict even though a later map holds 2. `.maps` is the mutable list of the constituent dicts (in search order). `new_child()` pushes a new dict to the front; `.parents` gives a ChainMap of everything except the first map."
+    },
+    {
+      "id": 190,
+      "question": "For `cm = ChainMap({'b': 1}, {'b': 2})`, what do `cm.setdefault('b', 100)` and then `cm['b'] = 99` do to the maps?",
+      "answer": "Outputs: `setdefault` returns `1` (existing kept) and prints `1`; after assignment `cm.maps` is `[{'b': 99}, {'b': 2}]`\n\n`setdefault` finds 'b' already present in the FIRST map, so it returns 1 and inserts nothing. Writes (`cm['b'] = 99`) and the `pop()`/`del` operations only ever touch the FIRST map, leaving the backing map {'b': 2} untouched. A missing-key `setdefault` WOULD insert into that first map."
+    },
+    {
+      "id": 191,
+      "question": "Predict: `m = partial(lambda a, b, c: a * b * c, 2); print(m(3, 4))`.",
+      "answer": "Output: `24`\n\n`partial` pre-binds the leftmost positional arguments, so `m(3, 4)` calls `func(2, 3, 4)` → 24. The partial fixed parameters are inserted at the FRONT, before any new positional args. This is handy for specializing a general function (e.g. fixing a multiplier) without writing a new function/closure."
+    },
+    {
+      "id": 192,
+      "question": "Predict: `p = partial(lambda a, b, c, d: a + b + c + d, 1, d=100); print(p(2, 3))` and `print(p(2, 3, d=999))`.",
+      "answer": "Outputs: `106` and `1005`\n\nPositional prebind supplies a=1; calling adds b=2, c=3, and the frozen keyword d=100 → 1+2+3+100=106. Keywords passed at call time OVERRIDE the frozen ones, so `d=999` replaces 100 → 1+2+3+999=1005. But a keyword that collides with a NEW positional slot is a `TypeError` ('got multiple values for argument …')."
+    },
+    {
+      "id": 193,
+      "question": "What does `reduce(lambda a, b: a + b, [])` raise, and what does the same call with initializer `0` return?",
+      "answer": "Exception/Output: `TypeError: reduce() of empty iterable with no initial value`, then `0`\n\nWith no initializer, reduce takes the first element as the accumulator, so an EMPTY iterable has nothing to fold and raises TypeError. Supplying an initializer fixes it: the accumulator starts at 0 and the function is never even called, so the result is 0. The initializer also serves as the starting value even for non-empty iterables."
+    },
+    {
+      "id": 194,
+      "question": "Predict `reduce(lambda a, b: a - b, [1, 2, 3], 100)`.",
+      "answer": "Output: `94`\n\nWith an initializer, reduce folds LEFT-TO-RIGHT starting from it: ((100−1)−2)−3 = 94. It is NOT a right fold — the subtraction order is strictly sequential, unlike `functools.reduce` from the right. The two-argument version (no initializer) would compute ((1−2)−3) = −4."
+    },
+    {
+      "id": 195,
+      "question": "Predict `fib(10)` and the number of calls to the `@lru_cache(maxsize=None)`-decorated fib that computes it. (fib returns n for n<2, else fib(n-1)+fib(n-2).)",
+      "answer": "Outputs: `55` and `11` calls\n\nThe naive fib recomputes subtrees; counting its calls gives 177 for fib(10). With `lru_cache(maxsize=None)` every (n) is computed exactly once — fib(0)..fib(10) = 11 calls — while later requests become cache hits. `fib.cache_info()` reports hits=6, misses=9, currsize=9 after computing fib(10) once."
+    },
+    {
+      "id": 196,
+      "question": "What happens when you call `lru_cache(maxsize=None)(lambda x: x)([1, 2])`?",
+      "answer": "Exception: `TypeError: unhashable type: 'list'`\n\nlru_cache stores arguments in a hash-table keyed by the argument tuple, so every argument must be hashable. `[1, 2]` is not hashable, so the call fails immediately with TypeError. Tuples, ints, strs, frozensets are fine; wrap unhashable args in a tuple before calling. `maxsize=None` disables eviction (no size limit) but changes nothing about the hashability requirement."
+    },
+    {
+      "id": 197,
+      "question": "After `g(1); g(2); g(1); g(3); g(2)` on `@lru_cache(maxsize=2) def g(x): return x`, what does `g.cache_info()` report?",
+      "answer": "Output: `CacheInfo(hits=1, misses=4, maxsize=2, currsize=2)`\n\nThe second g(1) hits (cache had 1, 2). Then g(3) is a miss and the LRU entry — 2, because 1 was touched more recently than 2 — is evicted. The final g(2) is then a miss again (it was evicted), giving 1 hit and 4 misses total. LRU eviction means cruft-free behavior but recomputes evicted values."
+    },
+    {
+      "id": 198,
+      "question": "Without `@wraps`, a decorated function's `__name__` becomes what? How does adding `functools.wraps` change it?",
+      "answer": "Answer: without wraps the attribute is `wrapper` and `__doc__` is `None`; with wraps they become the original function's name (`greet`) and docstring.\n\nA decorator that returns an inner function hides the original metadata unless told otherwise. `wraps(func)` calls `update_wrapper` under the hood, copying `__name__`, `__doc__`, `__module__` and any custom attributes from the wrapped function to the wrapper. Keeping `__name__` correct matters for pickling, debugging, and tools like help() or Sphinx."
+    },
+    {
+      "id": 199,
+      "question": "What does `sorted([3, 1, 2], key=cmp_to_key(lambda a, b: a - b))` return?",
+      "answer": "Output: `[1, 2, 3]`\n\n`cmp_to_key` adapts an old-style two-argument comparator (returning negative/zero/positive) into a key object usable by `sorted`/`min`/`max`. Here `a - b` yields ascending order. It exists to port pre-Python-3 comparator code; new code should prefer `key=lambda x: x`. It is functionally equivalent to `sorted([3,1,2])` but with the comparator driving the decisions."
+    },
+    {
+      "id": 200,
+      "question": "Predict: `p = partial(lambda a, b, c: a * b * c, 2, c=3); print(p.args); print(p.keywords); print(p(4))`.",
+      "answer": "Outputs: `(2,)`, `{'c': 3}`, and `24`\n\n`partial` exposes its bound positional prefix in `.args` (a tuple) and bound keywords in `.keywords` (a dict). The call `p(4)` becomes `func(2, 4, c=3)` → 2×4×3 = 24, because positional args are concatenated after `.args` and call-time kwargs override `.keywords`. Because `.func` holds the original callable, you can introspect or even build new partials on top of it."
+    }
+  ]
+}

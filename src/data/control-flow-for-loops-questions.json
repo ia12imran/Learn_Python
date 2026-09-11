@@ -1,0 +1,505 @@
+{
+  "description": "100 questions on Python for loops (coding questions, beginner to intermediate)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What does this print?\nfor i in range(3):\n    print(i)",
+      "answer": "0\n1\n2"
+    },
+    {
+      "id": 2,
+      "question": "What does range(5) produce?",
+      "answer": "0, 1, 2, 3, 4 (stop value 5 is exclusive)"
+    },
+    {
+      "id": 3,
+      "question": "What does this print?\nfor i in range(1, 4):\n    print(i)",
+      "answer": "1\n2\n3"
+    },
+    {
+      "id": 4,
+      "question": "What does range(1, 5) produce?",
+      "answer": "1, 2, 3, 4"
+    },
+    {
+      "id": 5,
+      "question": "What does this print?\nfor i in range(0, 10, 3):\n    print(i)",
+      "answer": "0\n3\n6\n9"
+    },
+    {
+      "id": 6,
+      "question": "What does this print?\nfor i in range(5, 0, -1):\n    print(i)",
+      "answer": "5\n4\n3\n2\n1"
+    },
+    {
+      "id": 7,
+      "question": "What does this print?\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor f in fruits:\n    print(f)",
+      "answer": "apple\nbanana\ncherry"
+    },
+    {
+      "id": 8,
+      "question": "What does this print?\nfor ch in \"abc\":\n    print(ch)",
+      "answer": "a\nb\nc"
+    },
+    {
+      "id": 9,
+      "question": "What does this print?\ntotal = 0\nfor i in range(1, 5):\n    total += i\nprint(total)",
+      "answer": "10 (1+2+3+4)"
+    },
+    {
+      "id": 10,
+      "question": "What does this print?\ntotal = 0\nfor i in range(1, 11):\n    total += i\nprint(total)",
+      "answer": "55"
+    },
+    {
+      "id": 11,
+      "question": "What is the sum of even numbers from 2 to 10? (Use a for loop or reasoning.)",
+      "answer": "30 (2+4+6+8+10)"
+    },
+    {
+      "id": 12,
+      "question": "What does this print?\nfor i in range(1, 6):\n    if i % 2 == 0:\n        print(i)",
+      "answer": "2\n4"
+    },
+    {
+      "id": 13,
+      "question": "What does this print?\nfor i in range(4):\n    print(i * 2)",
+      "answer": "0\n2\n4\n6"
+    },
+    {
+      "id": 14,
+      "question": "What does this print?\nfor i in range(3):\n    print(i ** 2)",
+      "answer": "0\n1\n4"
+    },
+    {
+      "id": 15,
+      "question": "What does this print?\nsquares = [x**2 for x in range(4)]\nprint(squares)",
+      "answer": "[0, 1, 4, 9]"
+    },
+    {
+      "id": 16,
+      "question": "What does this list comprehension produce?\n[x for x in range(6) if x % 2 == 0]",
+      "answer": "[0, 2, 4]"
+    },
+    {
+      "id": 17,
+      "question": "What does this print?\ncount = 0\nfor _ in range(5):\n    count += 1\nprint(count)",
+      "answer": "5"
+    },
+    {
+      "id": 18,
+      "question": "What does enumerate([\"a\", \"b\"]) produce when looped?\nfor i, item in enumerate([\"a\", \"b\"]):\n    print(i, item)",
+      "answer": "0 a\n1 b"
+    },
+    {
+      "id": 19,
+      "question": "What does this print?\nfor i, ch in enumerate(\"hi\"):\n    print(i, ch)",
+      "answer": "0 h\n1 i"
+    },
+    {
+      "id": 20,
+      "question": "What does zip([1, 2], [\"a\", \"b\"]) produce?",
+      "answer": "Pairs (1, 'a') and (2, 'b')"
+    },
+    {
+      "id": 21,
+      "question": "What does this print?\nnames = [\"Alice\", \"Bob\"]\nscores = [90, 80]\nfor name, score in zip(names, scores):\n    print(name, score)",
+      "answer": "Alice 90\nBob 80"
+    },
+    {
+      "id": 22,
+      "question": "What happens with zip when lists have different lengths?",
+      "answer": "It stops at the shortest list"
+    },
+    {
+      "id": 23,
+      "question": "What does this print?\nfor i in range(3):\n    for j in range(2):\n        print(i, j)\n    print(\"---\")",
+      "answer": "0 0\n0 1\n---\n1 0\n1 1\n---\n2 0\n2 1\n---"
+    },
+    {
+      "id": 24,
+      "question": "How many times does the inner loop body run here?\nfor i in range(3):\n    for j in range(4):\n        print(i, j)",
+      "answer": "12 times (3 x 4)"
+    },
+    {
+      "id": 25,
+      "question": "What does this print?\nresult = []\nfor word in [\"HELLO\", \"WORLD\"]:\n    result.append(word.lower())\nprint(result)",
+      "answer": "['hello', 'world']"
+    },
+    {
+      "id": 26,
+      "question": "What does this print?\nfirst = [1, 2, 3]\nfor x in first:\n    first.append(x)  # careful!\nprint(first)",
+      "answer": "Infinite loop - appending while iterating never ends"
+    },
+    {
+      "id": 27,
+      "question": "What does this print?\nfor i in range(3):\n    if i == 1:\n        break\n    print(i)",
+      "answer": "0 (break exits the loop when i is 1)"
+    },
+    {
+      "id": 28,
+      "question": "What does this print?\nfor i in range(5):\n    if i == 2:\n        continue\n    print(i)",
+      "answer": "0\n1\n3\n4 (2 is skipped, but the loop continues)"
+    },
+    {
+      "id": 29,
+      "question": "What does this print?\nfor i in range(10):\n    if i % 3 == 0:\n        continue\n    if i > 6:\n        break\n    print(i)",
+      "answer": "1\n2\n4\n5"
+    },
+    {
+      "id": 30,
+      "question": "What does this print?\nfor i in range(3):\n    print(i)\nelse:\n    print(\"done\")",
+      "answer": "0\n1\n2\ndone (else runs when loop finishes normally)"
+    },
+    {
+      "id": 31,
+      "question": "What does this print?\nfor i in range(3):\n    if i == 1:\n        break\n    print(i)\nelse:\n    print(\"done\")",
+      "answer": "0 (else does NOT run because loop was broken out of)"
+    },
+    {
+      "id": 32,
+      "question": "What does this print?\nword = \"hello\"\nfor ch in word:\n    print(ch.upper(), end=\"\")",
+      "answer": "HELLO"
+    },
+    {
+      "id": 33,
+      "question": "What does this print?\nfor i in range(1, 4):\n    line = \"*\" * i\n    print(line)",
+      "answer": "*\n**\n***"
+    },
+    {
+      "id": 34,
+      "question": "What does this print?\nmatrix = [[1, 2], [3, 4]]\nfor row in matrix:\n    for num in row:\n        print(num, end=\" \")",
+      "answer": "1 2 3 4 "
+    },
+    {
+      "id": 35,
+      "question": "What does this print?\nmat = [[1, 2], [3, 4]]\nflat = [num for row in mat for num in row]\nprint(flat)",
+      "answer": "[1, 2, 3, 4]"
+    },
+    {
+      "id": 36,
+      "question": "What does this print?\nfor i in range(1, 6):\n    if i * 7 > 28:\n        break\n    print(i * 7)",
+      "answer": "7\n14\n21\n28 (next would be 35 > 28, so it breaks)"
+    },
+    {
+      "id": 37,
+      "question": "What does this print?\nvals = [10, 20, 30]\nfor v in vals:\n    if v > 15:\n        print(v)\n        break",
+      "answer": "20"
+    },
+    {
+      "id": 38,
+      "question": "What does this print?\ntext = \"Hello World\"\nfor ch in text:\n    if not ch.isalpha():\n        print(ch, end=\"\")",
+      "answer": "  (prints just the space - 'H','e','l','l','o' are letters, space is not)"
+    },
+    {
+      "id": 39,
+      "question": "What does this print?\nnumbers = [3, 1, 2]\nfor n in sorted(numbers):\n    print(n)",
+      "answer": "1\n2\n3"
+    },
+    {
+      "id": 40,
+      "question": "What does this print?\nd = {\"a\": 1, \"b\": 2}\nfor key in d:\n    print(key)",
+      "answer": "a\nb"
+    },
+    {
+      "id": 41,
+      "question": "What does this print?\nd = {\"a\": 1, \"b\": 2}\nfor k, v in d.items():\n    print(k, v)",
+      "answer": "a 1\nb 2"
+    },
+    {
+      "id": 42,
+      "question": "What does this print?\nfor i in range(3):\n    print(i, end=\" \")\nprint()\nprint(\"done\")",
+      "answer": "0 1 2 \ndone"
+    },
+    {
+      "id": 43,
+      "question": "What does this print?\nn = 5\nfactorial = 1\nfor i in range(1, n + 1):\n    factorial *= i\nprint(factorial)",
+      "answer": "120"
+    },
+    {
+      "id": 44,
+      "question": "What does this print?\nprod = 1\nfor i in range(1, 4):\n    prod *= i\nprint(prod)",
+      "answer": "6 (1*2*3)"
+    },
+    {
+      "id": 45,
+      "question": "How many iterations does 'for i in range(0):' perform?",
+      "answer": "Zero (empty range means the body never runs)"
+    },
+    {
+      "id": 46,
+      "question": "What does this print?\nfor i in range(0):\n    print(\"x\")\nprint(\"done\")",
+      "answer": "done"
+    },
+    {
+      "id": 47,
+      "question": "What does this print?\nwords = [\"hi\", \"there\"]\nfor w in words:\n    print(len(w))",
+      "answer": "2\n5"
+    },
+    {
+      "id": 48,
+      "question": "What does this print?\nfor i in range(2):\n    print(\"row\", i)\n    for j in range(2):\n        print(\"  col\", j)",
+      "answer": "row 0\n  col 0\n  col 1\nrow 1\n  col 0\n  col 1"
+    },
+    {
+      "id": 49,
+      "question": "What does this print?\nresult = \"\"\nfor ch in \"python\":\n    if ch in \"aeiou\":\n        result += ch.upper()\n    else:\n        result += ch\nprint(result)",
+      "answer": "pYthOn (only vowels become uppercase)"
+    },
+    {
+      "id": 50,
+      "question": "What does this print?\nvals = [1, 2, 3, 4]\nlargest = 0\nfor v in vals:\n    if v > largest:\n        largest = v\nprint(largest)",
+      "answer": "4"
+    },
+    {
+      "id": 51,
+      "question": "What does this print?\nword = \"banana\"\nfor i, ch in enumerate(word):\n    if ch == \"a\":\n        print(i)",
+      "answer": "1\n3\n5"
+    },
+    {
+      "id": 52,
+      "question": "What does this print?\nfor i in range(1, 7):\n    if i % 2 == 0:\n        continue\n    print(i, end=\" \")",
+      "answer": "1 3 5 "
+    },
+    {
+      "id": 53,
+      "question": "What does this print?\nfor i in range(5):\n    print(i)\n    if i == 3:\n        break",
+      "answer": "0\n1\n2\n3"
+    },
+    {
+      "id": 54,
+      "question": "What does this print?\nnums = [5, 10, 15, 20]\ncount = 0\nfor n in nums:\n    if n % 10 == 0:\n        count += 1\nprint(count)",
+      "answer": "2 (10 and 20 are divisible by 10)"
+    },
+    {
+      "id": 55,
+      "question": "What does this print?\nsum_even = 0\nfor i in range(1, 11):\n    if i % 2 == 0:\n        sum_even += i\nprint(sum_even)",
+      "answer": "30"
+    },
+    {
+      "id": 56,
+      "question": "What does this print?\nfound = False\nfor i in range(3, 10):\n    if i % 7 == 0:\n        found = True\n        break\nprint(found)",
+      "answer": "True (7 is reached before the loop ends)"
+    },
+    {
+      "id": 57,
+      "question": "What does this print?\nfor ch in \"Programming\":\n    if ch.lower() in \"aeiou\":\n        print(ch, end=\"\")",
+      "answer": "oai (vowels in 'Programming': o, a, i)"
+    },
+    {
+      "id": 58,
+      "question": "What does this print?\nfor i in range(3):\n    for j in range(3):\n        if j == 2:\n            break\n        print(i, j)",
+      "answer": "0 0\n0 1\n1 0\n1 1\n2 0\n2 1 (inner loop stops at j=2 each time)"
+    },
+    {
+      "id": 59,
+      "question": "What does this print?\nfor i in range(3):\n    pass\nprint(\"finished\")",
+      "answer": "finished (pass is a no-op placeholder)"
+    },
+    {
+      "id": 60,
+      "question": "What does this print?\npeople = [(\"Alice\", 25), (\"Bob\", 30)]\nfor name, age in people:\n    print(f\"{name}: {age}\")",
+      "answer": "Alice: 25\nBob: 30"
+    },
+    {
+      "id": 61,
+      "question": "What does this print?\ncount = 0\nfor i in range(10):\n    if i % 2 == 0 and i % 3 == 0:\n        count += 1\nprint(count)",
+      "answer": "2 (0 and 6)"
+    },
+    {
+      "id": 62,
+      "question": "What does this print?\nresult = []\nfor x in range(1, 5):\n    result.append(x * x)\nprint(result)",
+      "answer": "[1, 4, 9, 16]"
+    },
+    {
+      "id": 63,
+      "question": "Write a one-line list comprehension for even numbers 0-20.",
+      "answer": "[x for x in range(21) if x % 2 == 0]"
+    },
+    {
+      "id": 64,
+      "question": "What does this print?\nfor i in range(3):\n    pass\n    print(i)",
+      "answer": "0\n1\n2"
+    },
+    {
+      "id": 65,
+      "question": "What does this print?\nnames = [\"Alice\", \"Bob\", \"Charlie\"]\nfor name in names:\n    if name.startswith(\"A\"):\n        print(name)",
+      "answer": "Alice"
+    },
+    {
+      "id": 66,
+      "question": "What does this print?\nfor i in range(5):\n    if i == 4:\n        print(\"last\")\n    else:\n        print(i)",
+      "answer": "0\n1\n2\n3\nlast"
+    },
+    {
+      "id": 67,
+      "question": "What does this print?\nmy_str = \"level\"\nreversed_str = \"\"\nfor ch in my_str:\n    reversed_str = ch + reversed_str\nprint(reversed_str)",
+      "answer": "level (building it backwards - it's a palindrome)"
+    },
+    {
+      "id": 68,
+      "question": "What does this print?\nmy_str = \"abc\"\nreversed_str = \"\"\nfor ch in my_str:\n    reversed_str = ch + reversed_str\nprint(reversed_str)",
+      "answer": "cba"
+    },
+    {
+      "id": 69,
+      "question": "What does this print?\ntext = \"The quick fox\"\nwords = text.split()\nlongest = \"\"\nfor w in words:\n    if len(w) > len(longest):\n        longest = w\nprint(longest)",
+      "answer": "quick (len 5, the others are 3 and 3)"
+    },
+    {
+      "id": 70,
+      "question": "What does this print?\nfor i in range(3):\n    if i:\n        print(i)",
+      "answer": "1\n2 (0 is falsy, so 0 is skipped)"
+    },
+    {
+      "id": 71,
+      "question": "What does this print?\nfor i in range(1, 5):\n    if i % 3 == 0:\n        continue\n    print(i, end=\"\")",
+      "answer": "124"
+    },
+    {
+      "id": 72,
+      "question": "What does this print?\ns = \"Python3\"\ndigits = 0\nfor ch in s:\n    if ch.isdigit():\n        digits += 1\nprint(digits)",
+      "answer": "1 (only '3' is a digit)"
+    },
+    {
+      "id": 73,
+      "question": "What does this print?\nfor i in range(2, 9, 2):\n    print(i)",
+      "answer": "2\n4\n6\n8"
+    },
+    {
+      "id": 74,
+      "question": "What does this print?\nfor i in range(10, 1, -2):\n    print(i)",
+      "answer": "10\n8\n6\n4\n2"
+    },
+    {
+      "id": 75,
+      "question": "What does this print?\ncolors = [\"red\", \"green\"]\nfor idx, color in enumerate(colors, start=1):\n    print(idx, color)",
+      "answer": "1 red\n2 green"
+    },
+    {
+      "id": 76,
+      "question": "What does this print?\nfor i in range(4):\n    if i == 2:\n        break\nelse:\n    print(\"complete\")\nprint(\"after\")",
+      "answer": "after (else skipped due to break; loop was broken before finishing)"
+    },
+    {
+      "id": 77,
+      "question": "What does this print?\nfor i in range(5):\n    if i == 2:\n        continue\n    if i == 4:\n        break\n    print(i)\nelse:\n    print(\"else\")",
+      "answer": "0\n1\n3 (continue skips 2, break at 4 exits, so else does not run)"
+    },
+    {
+      "id": 78,
+      "question": "What does this print?\nword = \"a1b2c3\"\nletters = \"\"\nfor ch in word:\n    if ch.isalpha():\n        letters += ch\nprint(letters)",
+      "answer": "abc"
+    },
+    {
+      "id": 79,
+      "question": "What does this print?\nfor i in range(1, 4):\n    print(str(i) * i)",
+      "answer": "1\n22\n333"
+    },
+    {
+      "id": 80,
+      "question": "What does this print?\nvals = [1, 2, 3, 4, 5]\nprint(vals[1:4])",
+      "answer": "[2, 3, 4]"
+    },
+    {
+      "id": 81,
+      "question": "What does this print?\nfor i in range(4):\n    if i < 2:\n        print(\"low\", i)\n    else:\n        print(\"high\", i)",
+      "answer": "low 0\nlow 1\nhigh 2\nhigh 3"
+    },
+    {
+      "id": 82,
+      "question": "What does this print?\nitems = [\"a\", \"b\", \"c\", \"d\"]\nfor i in range(0, len(items), 2):\n    print(items[i])",
+      "answer": "a\nc"
+    },
+    {
+      "id": 83,
+      "question": "What does this print?\ntotal = 0\nfor i in range(1, 7):\n    total += i if i % 2 == 0 else 0\nprint(total)",
+      "answer": "12 (2+4+6)"
+    },
+    {
+      "id": 84,
+      "question": "What does this print?\nfor i in range(3):\n    print(i)\n    break",
+      "answer": "0"
+    },
+    {
+      "id": 85,
+      "question": "What does this print?\nfor i in range(3):\n    for j in range(i + 1):\n        print(\"*\", end=\"\")\n    print()",
+      "answer": "*\n**\n***"
+    },
+    {
+      "id": 86,
+      "question": "What does this print?\nmonthly = [1200, 1300, 1250]\naverage = 0\nfor m in monthly:\n    average += m / len(monthly)\nprint(round(average))",
+      "answer": "1250"
+    },
+    {
+      "id": 87,
+      "question": "What does this print?\nword = \"racecar\"\nis_pal = True\nfor i in range(len(word) // 2):\n    if word[i] != word[-(i + 1)]:\n        is_pal = False\n        break\nprint(is_pal)",
+      "answer": "True"
+    },
+    {
+      "id": 88,
+      "question": "What does this print?\nword = \"hello\"\nis_pal = True\nfor i in range(len(word) // 2):\n    if word[i] != word[-(i + 1)]:\n        is_pal = False\n        break\nprint(is_pal)",
+      "answer": "False (h != o on the first check)"
+    },
+    {
+      "id": 89,
+      "question": "What does this print?\nfor a in range(1, 3):\n    for b in range(1, 3):\n        if a == b:\n            print(a, b, \"match\")",
+      "answer": "1 1 match\n2 2 match"
+    },
+    {
+      "id": 90,
+      "question": "What does this print?\nnums = [1, 2, 3, 4, 5]\nfor n in nums:\n    if n == 3:\n        print(\"found 3\")\n        break\nelse:\n    print(\"never found 3\")",
+      "answer": "found 3 (the else is skipped when break runs)"
+    },
+    {
+      "id": 91,
+      "question": "What does this print?\nword = \"abc\"\ncount = 0\nfor ch in word:\n    count += 1\n    if len(word) - count == 0:\n        print(\"end\")",
+      "answer": "end (printed on the last character)"
+    },
+    {
+      "id": 92,
+      "question": "What does this print?\ns = \"abcabc\"\nfor ch in set(s):\n    print(ch, s.count(ch))",
+      "answer": "Output order may vary, but each letter prints with count 2 (e.g., 'a 2', 'b 2', 'c 2')"
+    },
+    {
+      "id": 93,
+      "question": "What does this print?\nfor i in range(1, 4):\n    line = \"\"\n    for j in range(1, 4):\n        line += str(i * j) + \" \"\n    print(line.strip())",
+      "answer": "1 2 3\n2 4 6\n3 6 9 (a multiplication table)"
+    },
+    {
+      "id": 94,
+      "question": "What does this print?\nfor i in range(3):\n    total = 0\n    for j in range(4):\n        total += 1\n    print(total)",
+      "answer": "4\n4\n4 (total resets each outer iteration)"
+    },
+    {
+      "id": 95,
+      "question": "What does this print?\ncounts = {}\nletters = \"abbccc\"\nfor ch in letters:\n    counts[ch] = counts.get(ch, 0) + 1\nprint(counts)",
+      "answer": "{'a': 1, 'b': 2, 'c': 3}"
+    },
+    {
+      "id": 96,
+      "question": "What does this print?\nfor i in range(3):\n    for j in range(3):\n        if i == j:\n            continue\n        print(f\"({i},{j})\", end=\" \")\n    print()",
+      "answer": "(0,1) (0,2) \n(1,0) (1,2) \n(2,0) (2,1) "
+    },
+    {
+      "id": 97,
+      "question": "What does this print?\ntext = \"hello world\"\nletters = 0\nfor ch in text:\n    if ch == \" \":\n        continue\n    letters += 1\nprint(letters)",
+      "answer": "10 (space skipped)"
+    },
+    {
+      "id": 98,
+      "question": "What does this print?\nfor i in range(3):\n    print(\"*\", end=\"\")\nprint()\nfor i in range(3):\n    print(\"*\", end=\" \")",
+      "answer": "***\n* * *  (the trailing space in the second row varies)"
+    },
+    {
+      "id": 99,
+      "question": "What does this print?\nnums = [4, 7, 1]\nfor n in sorted(nums, reverse=True):\n    print(n, end=\" \")",
+      "answer": "7 4 1"
+    },
+    {
+      "id": 100,
+      "question": "What does this print?\nfor i in range(1, 4):\n    if i == 2:\n        continue\n    print(\"num\", i)\nelse:\n    print(\"done\")",
+      "answer": "num 1\nnum 3\ndone (continue does not prevent else from running)"
+    }
+  ]
+}

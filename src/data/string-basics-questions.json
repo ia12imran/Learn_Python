@@ -1,0 +1,1005 @@
+{
+  "description": "200 questions on Python string basics (coding questions, beginner to intermediate)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "How do you write a Python string using single quotes?",
+      "answer": "'hello'"
+    },
+    {
+      "id": 2,
+      "question": "How do you write a Python string using double quotes?",
+      "answer": "\"hello\""
+    },
+    {
+      "id": 3,
+      "question": "When should you wrap a string in double quotes?",
+      "answer": "When it contains single quotes, e.g. \"It's nice\""
+    },
+    {
+      "id": 4,
+      "question": "When should you use single quotes?",
+      "answer": "When the string contains double quotes, e.g. 'She said \"hi\"'"
+    },
+    {
+      "id": 5,
+      "question": "What is the value of 'a' + 'b'?",
+      "answer": "'ab'"
+    },
+    {
+      "id": 6,
+      "question": "What is the result of the adjacent literals 'py' 'thon'?",
+      "answer": "'python' (adjacent literals are concatenated)"
+    },
+    {
+      "id": 7,
+      "question": "How do you create an empty string?",
+      "answer": "'' or \"\""
+    },
+    {
+      "id": 8,
+      "question": "What does str(123) return?",
+      "answer": "'123'"
+    },
+    {
+      "id": 9,
+      "question": "What does str(3.14) return?",
+      "answer": "'3.14'"
+    },
+    {
+      "id": 10,
+      "question": "What does str(True) return?",
+      "answer": "'True'"
+    },
+    {
+      "id": 11,
+      "question": "What does str(None) return?",
+      "answer": "'None'"
+    },
+    {
+      "id": 12,
+      "question": "What is the type of 'python'?",
+      "answer": "<class 'str'>"
+    },
+    {
+      "id": 13,
+      "question": "Are single-quoted and double-quoted strings different in behavior?",
+      "answer": "No, they are completely identical"
+    },
+    {
+      "id": 14,
+      "question": "Can you write a string with triple single quotes?",
+      "answer": "Yes: '''hello'''"
+    },
+    {
+      "id": 15,
+      "question": "Can you write a string with triple double quotes?",
+      "answer": "Yes: \"\"\"hello\"\"\""
+    },
+    {
+      "id": 16,
+      "question": "What is the value of 'A' + ' ' + 'B'?",
+      "answer": "'A B'"
+    },
+    {
+      "id": 17,
+      "question": "What does '$' * 0 + 'x' evaluate to?",
+      "answer": "'x'"
+    },
+    {
+      "id": 18,
+      "question": "How would you create a string containing 10 dashes?",
+      "answer": "'-' * 10"
+    },
+    {
+      "id": 19,
+      "question": "What is the value of str(1) + str(2)?",
+      "answer": "'12'"
+    },
+    {
+      "id": 20,
+      "question": "Which built-in converts any object to a string?",
+      "answer": "str(object)"
+    },
+    {
+      "id": 21,
+      "question": "What does 'Hello, ' + 'World!' evaluate to?",
+      "answer": "'Hello, World!'"
+    },
+    {
+      "id": 22,
+      "question": "Can you concatenate a string and an integer with +?",
+      "answer": "No, it raises a TypeError"
+    },
+    {
+      "id": 23,
+      "question": "How do you join a number into a string?",
+      "answer": "str(number) + text, or use an f-string/format"
+    },
+    {
+      "id": 24,
+      "question": "What does 'py' + 'thon' produce?",
+      "answer": "'python'"
+    },
+    {
+      "id": 25,
+      "question": "What does 'a' + '' + 'b' produce?",
+      "answer": "'ab'"
+    },
+    {
+      "id": 26,
+      "question": "What does 'go' * 4 produce?",
+      "answer": "'gogogogo'"
+    },
+    {
+      "id": 27,
+      "question": "What does '-=' * 3 produce?",
+      "answer": "'-=-=-='"
+    },
+    {
+      "id": 28,
+      "question": "What does 'ha ' * 2 + '!' produce?",
+      "answer": "'ha ha !'"
+    },
+    {
+      "id": 29,
+      "question": "Is '5' + 5 valid Python?",
+      "answer": "No, it raises TypeError"
+    },
+    {
+      "id": 30,
+      "question": "What does '0' * 5 produce?",
+      "answer": "'00000'"
+    },
+    {
+      "id": 31,
+      "question": "What does 'a' * 3 * 2 produce?",
+      "answer": "'aaaaaa'"
+    },
+    {
+      "id": 32,
+      "question": "What does ('a' * 2) + ('b' * 2) produce?",
+      "answer": "'aabb'"
+    },
+    {
+      "id": 33,
+      "question": "Can you repeat a string with a float such as 'a' * 2.0?",
+      "answer": "No, it raises a TypeError"
+    },
+    {
+      "id": 34,
+      "question": "What does ' ' * 3 produce?",
+      "answer": "'   ' (three spaces)"
+    },
+    {
+      "id": 35,
+      "question": "What does 'x' * 1 produce?",
+      "answer": "'x'"
+    },
+    {
+      "id": 36,
+      "question": "How do you repeat a string N times in one expression?",
+      "answer": "s * N"
+    },
+    {
+      "id": 37,
+      "question": "What does len('Python') return?",
+      "answer": "6"
+    },
+    {
+      "id": 38,
+      "question": "What does len('hello world') return?",
+      "answer": "11"
+    },
+    {
+      "id": 39,
+      "question": "Does len() count spaces?",
+      "answer": "Yes, spaces are characters"
+    },
+    {
+      "id": 40,
+      "question": "What does len('   ') return?",
+      "answer": "3"
+    },
+    {
+      "id": 41,
+      "question": "What does len('a\\nb') return?",
+      "answer": "3"
+    },
+    {
+      "id": 42,
+      "question": "What does len('') return?",
+      "answer": "0"
+    },
+    {
+      "id": 43,
+      "question": "What does len('a' * 10) return?",
+      "answer": "10"
+    },
+    {
+      "id": 44,
+      "question": "What does len('12345') return?",
+      "answer": "5"
+    },
+    {
+      "id": 45,
+      "question": "What does len(str(100)) return?",
+      "answer": "3"
+    },
+    {
+      "id": 46,
+      "question": "What does len('') * 5 return?",
+      "answer": "0"
+    },
+    {
+      "id": 47,
+      "question": "What does len('hello') > 4 evaluate to?",
+      "answer": "True"
+    },
+    {
+      "id": 48,
+      "question": "What does len(' ') + len('') equal?",
+      "answer": "1"
+    },
+    {
+      "id": 49,
+      "question": "What does len('python') - 2 return?",
+      "answer": "4"
+    },
+    {
+      "id": 50,
+      "question": "Does len() work on an empty variable?",
+      "answer": "Yes, it returns 0"
+    },
+    {
+      "id": 51,
+      "question": "What is the index of the first character of a string?",
+      "answer": "0"
+    },
+    {
+      "id": 52,
+      "question": "What does 'Python'[0] return?",
+      "answer": "'P'"
+    },
+    {
+      "id": 53,
+      "question": "What does 'Python'[1] return?",
+      "answer": "'y'"
+    },
+    {
+      "id": 54,
+      "question": "What does 'Python'[-1] return?",
+      "answer": "'n'"
+    },
+    {
+      "id": 55,
+      "question": "What does 'Python'[-2] return?",
+      "answer": "'o'"
+    },
+    {
+      "id": 56,
+      "question": "What does 'Python'[-6] return?",
+      "answer": "'P'"
+    },
+    {
+      "id": 57,
+      "question": "What is -0 equal to in Python?",
+      "answer": "0, so s[-0] is s[0]"
+    },
+    {
+      "id": 58,
+      "question": "What does 'abc'[2] return?",
+      "answer": "'c'"
+    },
+    {
+      "id": 59,
+      "question": "What happens at 'abc'[3]?",
+      "answer": "IndexError: string index out of range"
+    },
+    {
+      "id": 60,
+      "question": "What happens at 'abc'[-4]?",
+      "answer": "IndexError: string index out of range"
+    },
+    {
+      "id": 61,
+      "question": "What does 'hello'[1] + 'hello'[4] give?",
+      "answer": "'eo'"
+    },
+    {
+      "id": 62,
+      "question": "What does ('hello'[0]).upper() return?",
+      "answer": "'H'"
+    },
+    {
+      "id": 63,
+      "question": "What does 'abc'[1] * 3 return?",
+      "answer": "'bbb'"
+    },
+    {
+      "id": 64,
+      "question": "How do you get the last character of any string s?",
+      "answer": "s[-1]"
+    },
+    {
+      "id": 65,
+      "question": "How do you get the second-to-last character of s?",
+      "answer": "s[-2]"
+    },
+    {
+      "id": 66,
+      "question": "What does 'python'[0] + 'python'[1] + 'python'[2] return?",
+      "answer": "'pyt'"
+    },
+    {
+      "id": 67,
+      "question": "Can you modify a character with s[0] = 'X'?",
+      "answer": "No, strings are immutable (TypeError)"
+    },
+    {
+      "id": 68,
+      "question": "What does 'abcd'[1] return?",
+      "answer": "'b'"
+    },
+    {
+      "id": 69,
+      "question": "What type is the result of 'abc'[0]?",
+      "answer": "str (a one-character string)"
+    },
+    {
+      "id": 70,
+      "question": "What does 'hello'[1 + 1] return?",
+      "answer": "'l'"
+    },
+    {
+      "id": 71,
+      "question": "What does 'hello'[5 - 3] return?",
+      "answer": "'l'"
+    },
+    {
+      "id": 72,
+      "question": "What does 'Pythonic'[7] return?",
+      "answer": "'c'"
+    },
+    {
+      "id": 73,
+      "question": "What does 'abcdef'[5] return?",
+      "answer": "'f'"
+    },
+    {
+      "id": 74,
+      "question": "What does 'abcdef'[-3] return?",
+      "answer": "'d'"
+    },
+    {
+      "id": 75,
+      "question": "What is the last valid index for len(s)?",
+      "answer": "len(s) - 1"
+    },
+    {
+      "id": 76,
+      "question": "What does list('abc')[1] return?",
+      "answer": "'b'"
+    },
+    {
+      "id": 77,
+      "question": "What does '123'[2] return?",
+      "answer": "'3'"
+    },
+    {
+      "id": 78,
+      "question": "What does int('123'[0]) return?",
+      "answer": "1"
+    },
+    {
+      "id": 79,
+      "question": "What does 'Hi there'[8] return?",
+      "answer": "'e'"
+    },
+    {
+      "id": 80,
+      "question": "What does 'Hi there'[-1] return?",
+      "answer": "'e'"
+    },
+    {
+      "id": 81,
+      "question": "What does 'x y z'[1] return?",
+      "answer": "' ' (a space)"
+    },
+    {
+      "id": 82,
+      "question": "What does 'x y z'[2] return?",
+      "answer": "'y'"
+    },
+    {
+      "id": 83,
+      "question": "What is the character at index 2 of 'amazing'?",
+      "answer": "'a' (a-m-a-z-i-n-g)"
+    },
+    {
+      "id": 84,
+      "question": "What does 'hello'[0:1] * 3 produce?",
+      "answer": "'hhh'"
+    },
+    {
+      "id": 85,
+      "question": "What does 'ab'[1] + 'cd'[0] produce?",
+      "answer": "'bc'"
+    },
+    {
+      "id": 86,
+      "question": "What does 'python'[0] return?",
+      "answer": "'p'"
+    },
+    {
+      "id": 87,
+      "question": "What does 'Python'[0:2] return?",
+      "answer": "'Py'"
+    },
+    {
+      "id": 88,
+      "question": "What does 'Python'[1:3] return?",
+      "answer": "'yt'"
+    },
+    {
+      "id": 89,
+      "question": "What does 'Python'[:3] return?",
+      "answer": "'Pyt'"
+    },
+    {
+      "id": 90,
+      "question": "What does 'Python'[3:] return?",
+      "answer": "'hon'"
+    },
+    {
+      "id": 91,
+      "question": "What does 'Python'[:] return?",
+      "answer": "'Python'"
+    },
+    {
+      "id": 92,
+      "question": "What does 'Python'[::2] return?",
+      "answer": "'Pto'"
+    },
+    {
+      "id": 93,
+      "question": "What does 'Python'[::-1] return?",
+      "answer": "'nohtyP'"
+    },
+    {
+      "id": 94,
+      "question": "What does 'Python'[1::2] return?",
+      "answer": "'yhn'"
+    },
+    {
+      "id": 95,
+      "question": "What does 'Python'[-3:] return?",
+      "answer": "'hon'"
+    },
+    {
+      "id": 96,
+      "question": "What does 'Python'[-3::-1] return?",
+      "answer": "'htyP'"
+    },
+    {
+      "id": 97,
+      "question": "What does 'Python'[:-2] return?",
+      "answer": "'Pyth'"
+    },
+    {
+      "id": 98,
+      "question": "What does 'Python'[1:-1] return?",
+      "answer": "'ytho'"
+    },
+    {
+      "id": 99,
+      "question": "What does 'abcdef'[::-1] return?",
+      "answer": "'fedcba'"
+    },
+    {
+      "id": 100,
+      "question": "What does 'abcdef'[0:6:2] return?",
+      "answer": "'ace'"
+    },
+    {
+      "id": 101,
+      "question": "What does 'abcdef'[1:5:2] return?",
+      "answer": "'bd'"
+    },
+    {
+      "id": 102,
+      "question": "What does 'abcdef'[4:0:-1] return?",
+      "answer": "'edcb'"
+    },
+    {
+      "id": 103,
+      "question": "What does 'abc'[0:0] return?",
+      "answer": "''"
+    },
+    {
+      "id": 104,
+      "question": "What does 'abc'[2:2] return?",
+      "answer": "''"
+    },
+    {
+      "id": 105,
+      "question": "What does 'hello world'[6:] return?",
+      "answer": "'world'"
+    },
+    {
+      "id": 106,
+      "question": "What does 'hello world'[:5] return?",
+      "answer": "'hello'"
+    },
+    {
+      "id": 107,
+      "question": "What does 'hello'[1:4] return?",
+      "answer": "'ell'"
+    },
+    {
+      "id": 108,
+      "question": "What does 'hello'[2:] return?",
+      "answer": "'llo'"
+    },
+    {
+      "id": 109,
+      "question": "What does 'hello'[:2] return?",
+      "answer": "'he'"
+    },
+    {
+      "id": 110,
+      "question": "What does 'hello'[-4:-1] return?",
+      "answer": "'ell'"
+    },
+    {
+      "id": 111,
+      "question": "What does 'hello'[-4:] return?",
+      "answer": "'ello'"
+    },
+    {
+      "id": 112,
+      "question": "What does 'hello'[:-1] return?",
+      "answer": "'hell'"
+    },
+    {
+      "id": 113,
+      "question": "What does 'python'[0:7] return?",
+      "answer": "'python' (out-of-range is clamped)"
+    },
+    {
+      "id": 114,
+      "question": "What does 'python'[3:99] return?",
+      "answer": "'hon'"
+    },
+    {
+      "id": 115,
+      "question": "What does 'abcdef'[::3] return?",
+      "answer": "'ad'"
+    },
+    {
+      "id": 116,
+      "question": "What does 'abcdef'[2::3] return?",
+      "answer": "'cf'"
+    },
+    {
+      "id": 117,
+      "question": "What does 'abcdef'[:4:2] return?",
+      "answer": "'ac'"
+    },
+    {
+      "id": 118,
+      "question": "How do you reverse a string using slicing?",
+      "answer": "s[::-1]"
+    },
+    {
+      "id": 119,
+      "question": "What does 'racecar'[::-1] return?",
+      "answer": "'racecar'"
+    },
+    {
+      "id": 120,
+      "question": "What does '123456'[::-2] return?",
+      "answer": "'642'"
+    },
+    {
+      "id": 121,
+      "question": "What does '123456'[::-3] return?",
+      "answer": "'63'"
+    },
+    {
+      "id": 122,
+      "question": "What does 'aaa bbb'[4:] return?",
+      "answer": "'bbb'"
+    },
+    {
+      "id": 123,
+      "question": "What does 'a b c'[::2] return?",
+      "answer": "'abc'"
+    },
+    {
+      "id": 124,
+      "question": "What does 'A B C'[1::2] return?",
+      "answer": "'  ' (two spaces)"
+    },
+    {
+      "id": 125,
+      "question": "What does 'hello'[5:] return?",
+      "answer": "''"
+    },
+    {
+      "id": 126,
+      "question": "What does 'hello'[0:5:1] return?",
+      "answer": "'hello'"
+    },
+    {
+      "id": 127,
+      "question": "Which loop prints each character of 'abc'?",
+      "answer": "for c in 'abc': print(c)"
+    },
+    {
+      "id": 128,
+      "question": "What does [c for c in 'abc'] produce?",
+      "answer": "['a', 'b', 'c']"
+    },
+    {
+      "id": 129,
+      "question": "What does list('python') produce?",
+      "answer": "['p', 'y', 't', 'h', 'o', 'n']"
+    },
+    {
+      "id": 130,
+      "question": "How do you iterate with index and character?",
+      "answer": "for i, c in enumerate(s):"
+    },
+    {
+      "id": 131,
+      "question": "What does tuple('ab') return?",
+      "answer": "('a', 'b')"
+    },
+    {
+      "id": 132,
+      "question": "What does set('abca') return?",
+      "answer": "{'a', 'b', 'c'} (order may vary)"
+    },
+    {
+      "id": 133,
+      "question": "How many 'o' are in 'hello' using a generator?",
+      "answer": "sum(1 for c in 'hello' if c == 'o') == 1"
+    },
+    {
+      "id": 134,
+      "question": "What does sum(c == 'a' for c in 'banana') equal?",
+      "answer": "3"
+    },
+    {
+      "id": 135,
+      "question": "What does max('python') return?",
+      "answer": "'y' (largest Unicode value)"
+    },
+    {
+      "id": 136,
+      "question": "What does min('python') return?",
+      "answer": "'h'"
+    },
+    {
+      "id": 137,
+      "question": "What does 'ell' in 'hello' return?",
+      "answer": "True"
+    },
+    {
+      "id": 138,
+      "question": "What does 'Hell' in 'hello' return?",
+      "answer": "False"
+    },
+    {
+      "id": 139,
+      "question": "What does 'x' not in 'hello' return?",
+      "answer": "True"
+    },
+    {
+      "id": 140,
+      "question": "What does '' in 'abc' return?",
+      "answer": "True (the empty string is in every string)"
+    },
+    {
+      "id": 141,
+      "question": "What does 'th' in 'python' return?",
+      "answer": "True"
+    },
+    {
+      "id": 142,
+      "question": "What does 'on' in 'python' return?",
+      "answer": "True"
+    },
+    {
+      "id": 143,
+      "question": "What does 'py' in 'Python' return?",
+      "answer": "False (case-sensitive)"
+    },
+    {
+      "id": 144,
+      "question": "What does 'py' in 'Python'.lower() return?",
+      "answer": "True"
+    },
+    {
+      "id": 145,
+      "question": "What does 'a' in 'banana' return?",
+      "answer": "True"
+    },
+    {
+      "id": 146,
+      "question": "What does 'z' in 'banana' return?",
+      "answer": "False"
+    },
+    {
+      "id": 147,
+      "question": "Which operator tests substring presence?",
+      "answer": "in"
+    },
+    {
+      "id": 148,
+      "question": "What does '10' in '1-10-100' return?",
+      "answer": "True"
+    },
+    {
+      "id": 149,
+      "question": "What does 'apple' < 'banana' return?",
+      "answer": "True (lexicographic order)"
+    },
+    {
+      "id": 150,
+      "question": "What does 'A' < 'a' return?",
+      "answer": "True (uppercase has lower Unicode values)"
+    },
+    {
+      "id": 151,
+      "question": "What does 'abc' == 'abc' return?",
+      "answer": "True"
+    },
+    {
+      "id": 152,
+      "question": "What does 'abc' == 'ABC' return?",
+      "answer": "False"
+    },
+    {
+      "id": 153,
+      "question": "What does 'abc' < 'abcd' return?",
+      "answer": "True"
+    },
+    {
+      "id": 154,
+      "question": "What does '10' < '9' return?",
+      "answer": "True ('1' < '9' lexicographically)"
+    },
+    {
+      "id": 155,
+      "question": "How do you write a raw string?",
+      "answer": "r'text' or R'text'"
+    },
+    {
+      "id": 156,
+      "question": "What does r'C:\\new' represent?",
+      "answer": "'C:\\\\new' (the backslash is literal)"
+    },
+    {
+      "id": 157,
+      "question": "What does r'\\n' represent?",
+      "answer": "Two characters: backslash and n"
+    },
+    {
+      "id": 158,
+      "question": "What is len(r'\\n')?",
+      "answer": "2"
+    },
+    {
+      "id": 159,
+      "question": "Why use raw strings?",
+      "answer": "To disable escape processing for regex and file paths"
+    },
+    {
+      "id": 160,
+      "question": "How do you write a multi-line string?",
+      "answer": "Use triple quotes ''' or \"\"\" "
+    },
+    {
+      "id": 161,
+      "question": "How do triple-quoted strings treat newlines?",
+      "answer": "They include the newlines as-is"
+    },
+    {
+      "id": 162,
+      "question": "Do escape sequences still work inside triple quotes?",
+      "answer": "Yes, e.g. '''a\\nb''' contains a newline"
+    },
+    {
+      "id": 163,
+      "question": "What is a docstring?",
+      "answer": "A triple-quoted string as the first statement of a module/function/class"
+    },
+    {
+      "id": 164,
+      "question": "What does print('''one\\ntwo''') output?",
+      "answer": "one, then two on the next line"
+    },
+    {
+      "id": 165,
+      "question": "What does len(r'a\\nb') equal?",
+      "answer": "4"
+    },
+    {
+      "id": 166,
+      "question": "Can a raw string end with an odd number of backslashes?",
+      "answer": "No, that is a syntax error"
+    },
+    {
+      "id": 167,
+      "question": "What does ''' It's fine ''' handle correctly?",
+      "answer": "Single quotes inside triple quotes do not break it"
+    },
+    {
+      "id": 168,
+      "question": "What does \"\"\"hi\"\"\" evaluate to?",
+      "answer": "'hi'"
+    },
+    {
+      "id": 169,
+      "question": "Are strings mutable?",
+      "answer": "No, strings are immutable"
+    },
+    {
+      "id": 170,
+      "question": "What happens when you assign s[0] = 'X'?",
+      "answer": "TypeError: 'str' object does not support item assignment"
+    },
+    {
+      "id": 171,
+      "question": "Does s.upper() change s?",
+      "answer": "No, it returns a new string"
+    },
+    {
+      "id": 172,
+      "question": "Why are strings immutable?",
+      "answer": "Enables hashing, safe sharing, and caching"
+    },
+    {
+      "id": 173,
+      "question": "What does s = s + 'a' do?",
+      "answer": "Creates a new string and rebinds s"
+    },
+    {
+      "id": 174,
+      "question": "Can a string be a dictionary key?",
+      "answer": "Yes, because it is hashable and immutable"
+    },
+    {
+      "id": 175,
+      "question": "Does 'Hello'.replace('H','h') modify the original?",
+      "answer": "No, only a new string is returned"
+    },
+    {
+      "id": 176,
+      "question": "What does 'abc'.upper() change about 'abc'?",
+      "answer": "Nothing, 'abc' stays 'abc'"
+    },
+    {
+      "id": 177,
+      "question": "What does hash('abc') return?",
+      "answer": "An integer hash value (varies between runs due to hash randomization)"
+    },
+    {
+      "id": 178,
+      "question": "Can you extend a string in place with append()?",
+      "answer": "No; build a new one with + or join()"
+    },
+    {
+      "id": 179,
+      "question": "What does ord('A') return?",
+      "answer": "65"
+    },
+    {
+      "id": 180,
+      "question": "What does ord('a') return?",
+      "answer": "97"
+    },
+    {
+      "id": 181,
+      "question": "What does ord('0') return?",
+      "answer": "48"
+    },
+    {
+      "id": 182,
+      "question": "What does chr(65) return?",
+      "answer": "'A'"
+    },
+    {
+      "id": 183,
+      "question": "What does chr(97) return?",
+      "answer": "'a'"
+    },
+    {
+      "id": 184,
+      "question": "What does chr(48) return?",
+      "answer": "'0'"
+    },
+    {
+      "id": 185,
+      "question": "What does ord('z') - ord('a') equal?",
+      "answer": "25"
+    },
+    {
+      "id": 186,
+      "question": "What does chr(ord('a') - 32) return?",
+      "answer": "'A'"
+    },
+    {
+      "id": 187,
+      "question": "What does ' '.join(chr(c) for c in range(65, 68)) return?",
+      "answer": "'A B C'"
+    },
+    {
+      "id": 188,
+      "question": "What does ord('€') return?",
+      "answer": "8364"
+    },
+    {
+      "id": 189,
+      "question": "How do you convert an integer like 42 to a string?",
+      "answer": "str(42)"
+    },
+    {
+      "id": 190,
+      "question": "How do you convert '42' to an integer?",
+      "answer": "int('42')"
+    },
+    {
+      "id": 191,
+      "question": "How do you convert '3.14' to a float?",
+      "answer": "float('3.14')"
+    },
+    {
+      "id": 192,
+      "question": "What happens with int('abc')?",
+      "answer": "It raises a ValueError"
+    },
+    {
+      "id": 193,
+      "question": "What does int('ff', 16) return?",
+      "answer": "255"
+    },
+    {
+      "id": 194,
+      "question": "What does int('101', 2) return?",
+      "answer": "5"
+    },
+    {
+      "id": 195,
+      "question": "What does float('inf') return?",
+      "answer": "inf"
+    },
+    {
+      "id": 196,
+      "question": "What does 'abc'[1:3][::-1] return?",
+      "answer": "'cb'"
+    },
+    {
+      "id": 197,
+      "question": "What does ('hi ' * 2).strip() return?",
+      "answer": "'hi hi'"
+    },
+    {
+      "id": 198,
+      "question": "What does 'a-b-c'.split('-')[::-1] return?",
+      "answer": "['c', 'b', 'a']"
+    },
+    {
+      "id": 199,
+      "question": "What does 'python'.index('y') + 1 return?",
+      "answer": "2"
+    },
+    {
+      "id": 200,
+      "question": "What does 'top'[::-1] + '!' return?",
+      "answer": "'pot!'"
+    }
+  ]
+}

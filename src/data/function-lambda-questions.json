@@ -1,0 +1,1255 @@
+{
+  "description": "Python Functions & Methods - Advanced Q&A covering lambda, map/filter/sorted/reduce, functools.partial, closures and late-binding, decorators, generators and yield. 250 questions.",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What keyword creates an anonymous function in Python?",
+      "answer": "lambda"
+    },
+    {
+      "id": 2,
+      "question": "What is the general syntax of a lambda?",
+      "answer": "lambda parameters: expression"
+    },
+    {
+      "id": 3,
+      "question": "What is a lambda function?",
+      "answer": "A small anonymous function defined as a single expression"
+    },
+    {
+      "id": 4,
+      "question": "Can a lambda have multiple parameters?",
+      "answer": "Yes: lambda a, b: a * b"
+    },
+    {
+      "id": 5,
+      "question": "Can a lambda have default parameters?",
+      "answer": "Yes: lambda x=1: x"
+    },
+    {
+      "id": 6,
+      "question": "Can a lambda contain statements like if/else blocks?",
+      "answer": "No, only a single expression (conditional expressions are allowed)"
+    },
+    {
+      "id": 7,
+      "question": "Does a lambda have an explicit return keyword?",
+      "answer": "No, it implicitly returns the value of its expression"
+    },
+    {
+      "id": 8,
+      "question": "What does print((lambda x: x + 1)(4)) output?",
+      "answer": "5"
+    },
+    {
+      "id": 9,
+      "question": "What does print((lambda a, b: a * b)(3, 4)) output?",
+      "answer": "12"
+    },
+    {
+      "id": 10,
+      "question": "What is the type of a lambda?",
+      "answer": "function (like a def function)"
+    },
+    {
+      "id": 11,
+      "question": "What is the __name__ attribute of a lambda?",
+      "answer": "\"<lambda>\""
+    },
+    {
+      "id": 12,
+      "question": "When should you use lambda instead of def?",
+      "answer": "For short, single-expression inline functions passed to higher-order calls"
+    },
+    {
+      "id": 13,
+      "question": "Why is naming a lambda (f = lambda x: x) discouraged?",
+      "answer": "PEP 8 says use def for named functions; lambdas are for anonymous use"
+    },
+    {
+      "id": 14,
+      "question": "How do you call a lambda immediately?",
+      "answer": "(lambda x: x * 2)(5)"
+    },
+    {
+      "id": 15,
+      "question": "Can a lambda be returned from a function?",
+      "answer": "Yes, it is a normal function object"
+    },
+    {
+      "id": 16,
+      "question": "What does a lambda like lambda: None return when called?",
+      "answer": "None"
+    },
+    {
+      "id": 17,
+      "question": "What does print(list(map(lambda x: x % 2, [1, 2, 3]))) output?",
+      "answer": "[1, 0, 1]"
+    },
+    {
+      "id": 18,
+      "question": "What does print(sum(map(len, [\"a\", \"bc\", \"def\"]))) output?",
+      "answer": "6 (1+2+3)"
+    },
+    {
+      "id": 19,
+      "question": "Can you store a lambda in a list?",
+      "answer": "Yes, and call it later: funcs[0]()"
+    },
+    {
+      "id": 20,
+      "question": "What does print((lambda *a: a)(1, 2, 3)) output?",
+      "answer": "(1, 2, 3) (lambda accepts *args too)"
+    },
+    {
+      "id": 21,
+      "question": "What does map() do?",
+      "answer": "Applies a function to each item of an iterable and yields the results lazily"
+    },
+    {
+      "id": 22,
+      "question": "What type does map() return?",
+      "answer": "A map object, which is an iterator"
+    },
+    {
+      "id": 23,
+      "question": "How do you materialize a map result?",
+      "answer": "list(map(...))"
+    },
+    {
+      "id": 24,
+      "question": "What does print(list(map(lambda x: x ** 2, range(3)))) output?",
+      "answer": "[0, 1, 4]"
+    },
+    {
+      "id": 25,
+      "question": "How does map behave with two iterables?",
+      "answer": "It pairs items like zip, passing one argument per iterable to the function"
+    },
+    {
+      "id": 26,
+      "question": "What does print(list(map(lambda a, b: a + b, [1, 2], [10, 20]))) output?",
+      "answer": "[11, 22]"
+    },
+    {
+      "id": 27,
+      "question": "How many items does map produce with uneven iterables?",
+      "answer": "As many as the shortest iterable"
+    },
+    {
+      "id": 28,
+      "question": "What does print(list(map(str, [1, 2]))) output?",
+      "answer": "['1', '2']"
+    },
+    {
+      "id": 29,
+      "question": "What does filter() do?",
+      "answer": "Yields the items of an iterable for which the function returns a truthy value"
+    },
+    {
+      "id": 30,
+      "question": "What does print(list(filter(lambda x: x > 2, [1, 2, 3, 4]))) output?",
+      "answer": "[3, 4]"
+    },
+    {
+      "id": 31,
+      "question": "What does print(list(filter(lambda x: x % 2 == 0, range(1, 6)))) output?",
+      "answer": "[2, 4]"
+    },
+    {
+      "id": 32,
+      "question": "Why pass None as the filter function?",
+      "answer": "None means keep only truthy items, e.g., filter(None, [0, 1, \"\", \"a\"])"
+    },
+    {
+      "id": 33,
+      "question": "What does print(list(filter(None, [0, 1, \"\", \"a\"]))) output?",
+      "answer": "[1, 'a']"
+    },
+    {
+      "id": 34,
+      "question": "What does sorted() take as the key parameter?",
+      "answer": "A function applied to each element to compute the sort key"
+    },
+    {
+      "id": 35,
+      "question": "What does print(sorted([3, 1, 2], key=lambda x: -x)) output?",
+      "answer": "[3, 2, 1]"
+    },
+    {
+      "id": 36,
+      "question": "How do you sort strings by their length?",
+      "answer": "sorted(words, key=len)"
+    },
+    {
+      "id": 37,
+      "question": "What does print(sorted([\"bb\", \"a\", \"ccc\"], key=len)) output?",
+      "answer": "['a', 'bb', 'ccc']"
+    },
+    {
+      "id": 38,
+      "question": "How do you sort by the second element of tuples?",
+      "answer": "sorted(pairs, key=lambda t: t[1])"
+    },
+    {
+      "id": 39,
+      "question": "How do you find the element with the largest abs value?",
+      "answer": "max(items, key=abs)"
+    },
+    {
+      "id": 40,
+      "question": "What does print(max([\"a\", \"ccc\", \"bb\"], key=len)) output?",
+      "answer": "ccc (longest string)"
+    },
+    {
+      "id": 41,
+      "question": "What does print(min([3, -5, 1], key=abs)) output?",
+      "answer": "1 (closest to zero)"
+    },
+    {
+      "id": 42,
+      "question": "How do you sort a dict's items by value?",
+      "answer": "sorted(d.items(), key=lambda item: item[1])"
+    },
+    {
+      "id": 43,
+      "question": "What is the difference between list.sort() and sorted()?",
+      "answer": "list.sort() mutates in place; sorted() returns a new list"
+    },
+    {
+      "id": 44,
+      "question": "Is sorted() stable?",
+      "answer": "Yes, equal keys preserve their original relative order"
+    },
+    {
+      "id": 45,
+      "question": "What does sorted(data, key=fn, reverse=True) do?",
+      "answer": "Sorts descending using fn as the key"
+    },
+    {
+      "id": 46,
+      "question": "What does functools.reduce do?",
+      "answer": "Folds an iterable into one accumulated value from left to right"
+    },
+    {
+      "id": 47,
+      "question": "Where do you import reduce from?",
+      "answer": "from functools import reduce"
+    },
+    {
+      "id": 48,
+      "question": "What does reduce(lambda a, b: a + b, [1, 2, 3, 4]) return?",
+      "answer": "10"
+    },
+    {
+      "id": 49,
+      "question": "What does reduce(lambda a, b: a * b, [1, 2, 3, 4, 5]) return?",
+      "answer": "120"
+    },
+    {
+      "id": 50,
+      "question": "What happens if reduce gets an empty iterable with no initial?",
+      "answer": "TypeError (reduce of empty sequence with no initial value)"
+    },
+    {
+      "id": 51,
+      "question": "What does reduce(lambda a, b: a + b, [], 10) return?",
+      "answer": "10 (the initial value)"
+    },
+    {
+      "id": 52,
+      "question": "How do you flatten [[1, 2], [3], [4, 5]] with reduce?",
+      "answer": "reduce(lambda acc, lst: acc + lst, data, [])"
+    },
+    {
+      "id": 53,
+      "question": "What does functools.partial do?",
+      "answer": "Creates a new function with some arguments pre-filled (frozen)"
+    },
+    {
+      "id": 54,
+      "question": "Where do you import partial from?",
+      "answer": "from functools import partial"
+    },
+    {
+      "id": 55,
+      "question": "What does partial(pow, 2) create?",
+      "answer": "A function that returns 2 ** x when called with x"
+    },
+    {
+      "id": 56,
+      "question": "What does print(partial(pow, 2)(3)) output?",
+      "answer": "8"
+    },
+    {
+      "id": 57,
+      "question": "What does partial(int, base=2) do?",
+      "answer": "Creates int-like function that parses strings as base-2 numbers"
+    },
+    {
+      "id": 58,
+      "question": "Does partial modify the original function?",
+      "answer": "No, it returns a new wrapped callable"
+    },
+    {
+      "id": 59,
+      "question": "What is function composition?",
+      "answer": "Combining functions so each output feeds the next: h(x) = g(f(x))"
+    },
+    {
+      "id": 60,
+      "question": "Write a small compose helper.",
+      "answer": "def compose(g, f):\n    return lambda x: g(f(x))"
+    },
+    {
+      "id": 61,
+      "question": "What is a closure?",
+      "answer": "An inner function that remembers and uses variables from its enclosing scope"
+    },
+    {
+      "id": 62,
+      "question": "What does make_adder(n) return in def make_adder(n): return lambda x: x + n?",
+      "answer": "A lambda that adds n to its argument"
+    },
+    {
+      "id": 63,
+      "question": "What does print(make_adder(5)(3)) output when make_adder(n): return lambda x: x + n?",
+      "answer": "8"
+    },
+    {
+      "id": 64,
+      "question": "How does a closure keep its free variables alive?",
+      "answer": "It holds references to the enclosing scope's cells (__closure__)"
+    },
+    {
+      "id": 65,
+      "question": "What do closures enable?",
+      "answer": "Making functions with remembered state without using globals or classes"
+    },
+    {
+      "id": 66,
+      "question": "What is the late-binding closure gotcha?",
+      "answer": "Loop-created closures all see the final value of the loop variable"
+    },
+    {
+      "id": 67,
+      "question": "What does the following print?\nfuncs = []\nfor i in range(3):\n    funcs.append(lambda: i)\nprint([f() for f in funcs])",
+      "answer": "[2, 2, 2] (all lambdas see the final i)"
+    },
+    {
+      "id": 68,
+      "question": "How do you fix the late-binding gotcha in a loop?",
+      "answer": "Bind the value as a default: lambda i=i: i"
+    },
+    {
+      "id": 69,
+      "question": "What does the fixed version print?\nfuncs = [lambda i=i: i for i in range(3)]\nprint([f() for f in funcs])",
+      "answer": "[0, 1, 2]"
+    },
+    {
+      "id": 70,
+      "question": "How do you fix the gotcha using a factory?",
+      "answer": "def mk(i): return lambda: i; call mk(i) per iteration"
+    },
+    {
+      "id": 71,
+      "question": "What does nonlocal do?",
+      "answer": "Allows assigning to a variable in an enclosing (non-global) function scope"
+    },
+    {
+      "id": 72,
+      "question": "Write a counter closure using nonlocal.",
+      "answer": "def counter():\n    n = 0\n    def up():\n        nonlocal n\n        n += 1\n        return n\n    return up"
+    },
+    {
+      "id": 73,
+      "question": "What does the counter return sequence look like for up() three times?",
+      "answer": "1, 2, 3"
+    },
+    {
+      "id": 74,
+      "question": "What happens if you assign to a name that matches an enclosing variable, without nonlocal?",
+      "answer": "Python treats it as a brand-new local variable in the inner function"
+    },
+    {
+      "id": 75,
+      "question": "What is a cell variable?",
+      "answer": "A special holder that lets inner functions share mutable state with enclosing scopes"
+    },
+    {
+      "id": 76,
+      "question": "Why does the closure share state between all returned lambdas?",
+      "answer": "Because they all reference the same cell, not a copy of the value"
+    },
+    {
+      "id": 77,
+      "question": "How do you inspect a closure's captured variables?",
+      "answer": "fn.__closure__ (a tuple of cell objects)"
+    },
+    {
+      "id": 78,
+      "question": "What does a cell's cell_contents give?",
+      "answer": "The current value the cell holds"
+    },
+    {
+      "id": 79,
+      "question": "How many cells are in f.__closure__ for def outer(): x = 1; def inner(): return x; return inner?",
+      "answer": "One (for x)"
+    },
+    {
+      "id": 80,
+      "question": "Can a lambda capture variables from a list comprehension?",
+      "answer": "Yes, but comprehension variable binding follows the same closure rules"
+    },
+    {
+      "id": 81,
+      "question": "What does print(f(2)) output for f = lambda x: x * 2 if x > 1 else 0?",
+      "answer": "4"
+    },
+    {
+      "id": 82,
+      "question": "What does print(sorted([(2, 'b'), (1, 'a'), (2, 'a')]) ) output?",
+      "answer": "[(1, 'a'), (2, 'a'), (2, 'b')] (sorted by all tuple elements)"
+    },
+    {
+      "id": 83,
+      "question": "What does list(map(lambda x: x.upper(), [\"a\", \"b\"])) return?",
+      "answer": "['A', 'B']"
+    },
+    {
+      "id": 84,
+      "question": "What does list(map(lambda s: s[::-1], [\"ab\", \"cd\"])) return?",
+      "answer": "['ba', 'dc']"
+    },
+    {
+      "id": 85,
+      "question": "What does list(filter(lambda x: isinstance(x, str), [1, \"a\", None, \"b\"])) return?",
+      "answer": "['a', 'b']"
+    },
+    {
+      "id": 86,
+      "question": "What does sum(filter(None, [0, 1, 0, 2])) return?",
+      "answer": "3"
+    },
+    {
+      "id": 87,
+      "question": "What does sorted(\"banana\", key=lambda c: c) return?",
+      "answer": "['a', 'a', 'a', 'b', 'n', 'n'] (sorted list of characters)"
+    },
+    {
+      "id": 88,
+      "question": "What does reduce(lambda a, b: a if a > b else b, [4, 9, 2, 7]) return?",
+      "answer": "9"
+    },
+    {
+      "id": 89,
+      "question": "What does reduce(lambda a, b: f\"{a}{b}\", [\"a\", \"b\", \"c\"]) return?",
+      "answer": "abc"
+    },
+    {
+      "id": 90,
+      "question": "What does print(list(map(lambda x, y: x - y, [5, 6], [1, 2]))) output?",
+      "answer": "[4, 4]"
+    },
+    {
+      "id": 91,
+      "question": "Can higher-order functions accept built-in functions as arguments?",
+      "answer": "Yes, e.g., map(len, words), sorted(items, key=str.lower)"
+    },
+    {
+      "id": 92,
+      "question": "Why does sorted([1, 2, 10], key=str) put 10 before 2?",
+      "answer": "Because it compares as strings: '1', '10', '2'"
+    },
+    {
+      "id": 93,
+      "question": "What does print(sorted([1, 2, 10], key=str)) output?",
+      "answer": "[1, 10, 2]"
+    },
+    {
+      "id": 94,
+      "question": "What are functional-style loops called in Python?",
+      "answer": "Higher-order patterns like map/filter/reduce, or comprehensions"
+    },
+    {
+      "id": 95,
+      "question": "When should you prefer comprehensions over map/filter?",
+      "answer": "When clarity matters; comprehensions are often more readable for simple transforms"
+    },
+    {
+      "id": 96,
+      "question": "Can you negate a function's result with a wrapper?",
+      "answer": "Yes: not_ = lambda f: lambda *a, **k: not f(*a, **k)"
+    },
+    {
+      "id": 97,
+      "question": "Give a currying-style factory example.",
+      "answer": "add = lambda n: lambda x: x + n; add5 = add(5)"
+    },
+    {
+      "id": 98,
+      "question": "What does print((lambda n: lambda x: x * n)(3)(2)) output?",
+      "answer": "6"
+    },
+    {
+      "id": 99,
+      "question": "What is currying?",
+      "answer": "Turning a function of several arguments into nested single-argument functions"
+    },
+    {
+      "id": 100,
+      "question": "What does functools.cmp_to_key do?",
+      "answer": "Converts an old-style comparison function into a sort key function"
+    },
+    {
+      "id": 101,
+      "question": "What does cmp_to_key expect to be passed?",
+      "answer": "A function of two args returning negative/zero/positive"
+    },
+    {
+      "id": 102,
+      "question": "What is an iterable vs an iterator?",
+      "answer": "Iterables produce iterators; iterators are lazy stateful objects you can next()"
+    },
+    {
+      "id": 103,
+      "question": "Are map/filter objects iterators?",
+      "answer": "Yes, they are single-use lazy iterators"
+    },
+    {
+      "id": 104,
+      "question": "What happens if you call list() twice on the same map object?",
+      "answer": "Second call gives [] because iterators are exhausted"
+    },
+    {
+      "id": 105,
+      "question": "What does a = map(len, [\"a\"]); list(a); print(list(a)) output?",
+      "answer": "[] (empty, exhausted)"
+    },
+    {
+      "id": 106,
+      "question": "What does list(zip([1, 2], [\"a\", \"b\"])) return?",
+      "answer": "[(1, 'a'), (2, 'b')]"
+    },
+    {
+      "id": 107,
+      "question": "How would you transpose rows with zip(*matrix)?",
+      "answer": "list(zip(*matrix)) swaps rows and columns"
+    },
+    {
+      "id": 108,
+      "question": "What does all() return for a list of truthy values?",
+      "answer": "True"
+    },
+    {
+      "id": 109,
+      "question": "What does any([0, 0, 1]) return?",
+      "answer": "True"
+    },
+    {
+      "id": 110,
+      "question": "What do any() and all() short-circuit?",
+      "answer": "They stop evaluating as soon as the result is determined"
+    },
+    {
+      "id": 111,
+      "question": "What does print(any(map(lambda x: x > 5, [1, 6, 2]))) output?",
+      "answer": "True"
+    },
+    {
+      "id": 112,
+      "question": "What does any() return for an empty list?",
+      "answer": "False"
+    },
+    {
+      "id": 113,
+      "question": "What does all() return for an empty list?",
+      "answer": "True"
+    },
+    {
+      "id": 114,
+      "question": "What is a predicate?",
+      "answer": "A function that returns True or False (used with filter, any, all)"
+    },
+    {
+      "id": 115,
+      "question": "What does __call__ do on an instance?",
+      "answer": "Lets you call the object: obj() invokes obj.__call__()"
+    },
+    {
+      "id": 116,
+      "question": "Write a class-based callable counter.",
+      "answer": "class Count:\n    def __init__(self): self.n = 0\n    def __call__(self): self.n += 1; return self.n"
+    },
+    {
+      "id": 117,
+      "question": "Why use a class with __call__ instead of a closure?",
+      "answer": "When you need richer state, inheritance, or multiple methods"
+    },
+    {
+      "id": 118,
+      "question": "What does callable print for a class instance with __call__?",
+      "answer": "True (callable())"
+    },
+    {
+      "id": 119,
+      "question": "What does callable(print) return?",
+      "answer": "True"
+    },
+    {
+      "id": 120,
+      "question": "What does callable(5) return?",
+      "answer": "False"
+    },
+    {
+      "id": 121,
+      "question": "Can a class itself be called?",
+      "answer": "Yes, calling a class constructs an instance"
+    },
+    {
+      "id": 122,
+      "question": "What is a dispatch table?",
+      "answer": "A dict mapping keys to functions used to select behavior at runtime"
+    },
+    {
+      "id": 123,
+      "question": "Give a dispatch table example.",
+      "answer": "ops = {\"add\": lambda a, b: a + b, \"mul\": lambda a, b: a * b}; ops[\"add\"](1, 2)"
+    },
+    {
+      "id": 124,
+      "question": "Why are dispatch tables preferred over long if/elif chains?",
+      "answer": "They are data-driven and easier to extend"
+    },
+    {
+      "id": 125,
+      "question": "What does fn.__name__ return for funcs = {\"key\": my_func}?",
+      "answer": "The original function's name (the dict doesn't rename it)"
+    },
+    {
+      "id": 126,
+      "question": "What does @ decorator syntax above a function mean?",
+      "answer": "f = decorator(f)"
+    },
+    {
+      "id": 127,
+      "question": "What are the three parts of a basic decorator?",
+      "answer": "The decorator function, the wrapper (inner) function, returning the wrapper"
+    },
+    {
+      "id": 128,
+      "question": "Why must a wrapper typically accept *args, **kwargs?",
+      "answer": "So it can accept and forward any arguments the original function may receive"
+    },
+    {
+      "id": 129,
+      "question": "What does a logging decorator typically do?",
+      "answer": "Prints a message before/after calling the wrapped function, then returns its result"
+    },
+    {
+      "id": 130,
+      "question": "Write a minimal decorator skeleton.",
+      "answer": "def deco(fn):\n    def wrapper(*a, **k):\n        return fn(*a, **k)\n    return wrapper"
+    },
+    {
+      "id": 131,
+      "question": "What happens if the wrapper forgets to return the inner result?",
+      "answer": "The decorated function returns None"
+    },
+    {
+      "id": 132,
+      "question": "What does functools.wraps do in a decorator?",
+      "answer": "Copies metadata (__name__, __doc__) from the original function onto the wrapper"
+    },
+    {
+      "id": 133,
+      "question": "What is __wrapped__?",
+      "answer": "An attribute (set by functools.wraps) pointing to the original function"
+    },
+    {
+      "id": 134,
+      "question": "How are stacked decorators applied?\n@a\n@b\ndef f():",
+      "answer": "Bottom-up: f = a(b(f))"
+    },
+    {
+      "id": 135,
+      "question": "What does a parameterized decorator look like?",
+      "answer": "def deco(arg):\n    def real(fn):\n        ...\n        return inner\n    return real"
+    },
+    {
+      "id": 136,
+      "question": "Why does a parameterized decorator need three levels?",
+      "answer": "Outer captures the params, middle captures the function, inner runs the call"
+    },
+    {
+      "id": 137,
+      "question": "What is a timing decorator's core logic?",
+      "answer": "Record time before and after calling fn, print or return the difference"
+    },
+    {
+      "id": 138,
+      "question": "What is a caching/memoization decorator?",
+      "answer": "A decorator that stores results by arguments so repeated calls skip computation"
+    },
+    {
+      "id": 139,
+      "question": "What decorator from functools provides ready-made memoization?",
+      "answer": "@lru_cache"
+    },
+    {
+      "id": 140,
+      "question": "What does @lru_cache(maxsize=...) control?",
+      "answer": "How many results are cached before old ones are evicted"
+    },
+    {
+      "id": 141,
+      "question": "What is a registration decorator?",
+      "answer": "One that records the function in a registry (e.g., a dict or list)"
+    },
+    {
+      "id": 142,
+      "question": "What are the built-in method decorators?",
+      "answer": "@staticmethod, @classmethod, @property"
+    },
+    {
+      "id": 143,
+      "question": "What does @staticmethod do?",
+      "answer": "Makes a method that receives neither self nor cls"
+    },
+    {
+      "id": 144,
+      "question": "What does @classmethod do?",
+      "answer": "Makes a method whose first parameter is the class (cls)"
+    },
+    {
+      "id": 145,
+      "question": "When is @classmethod used?",
+      "answer": "For factory/alternative-constructor methods operating on the class"
+    },
+    {
+      "id": 146,
+      "question": "What does @property do?",
+      "answer": "Turns a method into an attribute-style accessor"
+    },
+    {
+      "id": 147,
+      "question": "How do you define a property setter?",
+      "answer": "@x.setter on a second method named x"
+    },
+    {
+      "id": 148,
+      "question": "How do you define a property deleter?",
+      "answer": "@x.deleter on a method named x"
+    },
+    {
+      "id": 149,
+      "question": "What is a class-based decorator?",
+      "answer": "A class whose __call__ wraps the original function and stores state"
+    },
+    {
+      "id": 150,
+      "question": "Write a class-based decorator that counts calls.",
+      "answer": "class CountCalls:\n    def __init__(self, fn): self.fn = fn; self.n = 0\n    def __call__(self, *a, **k): self.n += 1; return self.fn(*a, **k)"
+    },
+    {
+      "id": 151,
+      "question": "Why would you use a class-based decorator?",
+      "answer": "To keep richer state and behavior in instance attributes"
+    },
+    {
+      "id": 152,
+      "question": "What is a generator?",
+      "answer": "A function containing yield that lazily produces a sequence of results"
+    },
+    {
+      "id": 153,
+      "question": "What keyword marks a generator's output points?",
+      "answer": "yield"
+    },
+    {
+      "id": 154,
+      "question": "What happens when you CALL a generator function?",
+      "answer": "Nothing runs yet; it returns a generator object"
+    },
+    {
+      "id": 155,
+      "question": "Which built-in advances a generator to its next yield?",
+      "answer": "next(gen)"
+    },
+    {
+      "id": 156,
+      "question": "What does next() return?",
+      "answer": "The value passed to the next yield statement"
+    },
+    {
+      "id": 157,
+      "question": "What error is raised when a generator is exhausted?",
+      "answer": "StopIteration"
+    },
+    {
+      "id": 158,
+      "question": "What does list(range_gen) do for a generator?",
+      "answer": "Consumes it and collects all values into a list"
+    },
+    {
+      "id": 159,
+      "question": "Why do generators save memory?",
+      "answer": "They compute one value at a time instead of storing the whole sequence"
+    },
+    {
+      "id": 160,
+      "question": "Write a generator that yields 0, 1, 2.",
+      "answer": "def small():\n    for i in range(3):\n        yield i"
+    },
+    {
+      "id": 161,
+      "question": "What does the following print?\ndef g():\n    yield 1\n    yield 2\nx = g()\nprint(next(x), next(x))",
+      "answer": "1 2"
+    },
+    {
+      "id": 162,
+      "question": "What does print(next(x)) output?\ndef g():\n    yield 5\nx = g()\nprint(next(x))",
+      "answer": "5"
+    },
+    {
+      "id": 163,
+      "question": "What is a generator expression?",
+      "answer": "A compact lazy generator using comprehension syntax: (x * 2 for x in range(5))"
+    },
+    {
+      "id": 164,
+      "question": "How is (x for x in r) different from [x for x in r]?",
+      "answer": "The generator is lazy and single-use; the list is eager and reusable"
+    },
+    {
+      "id": 165,
+      "question": "What does sum(x * x for x in range(1, 5)) return?",
+      "answer": "30 (1+4+9+16)"
+    },
+    {
+      "id": 166,
+      "question": "When is the expression in a generator expression evaluated?",
+      "answer": "Lazily, when each item is pulled, not all at once"
+    },
+    {
+      "id": 167,
+      "question": "Can generator expressions be filtered with if?",
+      "answer": "Yes: (x for x in data if x % 2 == 0)"
+    },
+    {
+      "id": 168,
+      "question": "What does list(x for x in range(5) if x % 2) return?",
+      "answer": "[1, 3]"
+    },
+    {
+      "id": 169,
+      "question": "What does yield from do?",
+      "answer": "Delegates to a sub-iterator, yielding each of its values in turn"
+    },
+    {
+      "id": 170,
+      "question": "Write a generator that flattens nested iterables with yield from.",
+      "answer": "def flat(iters):\n    for it in iters:\n        yield from it"
+    },
+    {
+      "id": 171,
+      "question": "Can a generator function have a return statement?",
+      "answer": "Yes, it stops the generator; the value lands in StopIteration.value"
+    },
+    {
+      "id": 172,
+      "question": "How do you send a value into a generator?",
+      "answer": "gen.send(value); the value becomes the yield expression's result"
+    },
+    {
+      "id": 173,
+      "question": "What must you do before the first send()?",
+      "answer": "Call next(gen) first (or send(None)) to reach the first yield"
+    },
+    {
+      "id": 174,
+      "question": "What does gen.close() do?",
+      "answer": "Raises GeneratorExit inside the generator so it can clean up"
+    },
+    {
+      "id": 175,
+      "question": "What is an infinite generator?",
+      "answer": "A generator that never stops, e.g., yield from itertools.count()"
+    },
+    {
+      "id": 176,
+      "question": "How is itertools.count different from range?",
+      "answer": "count has no upper bound and is lazy"
+    },
+    {
+      "id": 177,
+      "question": "What does itertools.cycle do?",
+      "answer": "Repeats an iterable endlessly"
+    },
+    {
+      "id": 178,
+      "question": "What does itertools.islice do?",
+      "answer": "Slices an iterator lazily, e.g., islice(gen, 5)"
+    },
+    {
+      "id": 179,
+      "question": "What does itertools.chain do?",
+      "answer": "Concatenates multiple iterables into one lazy sequence"
+    },
+    {
+      "id": 180,
+      "question": "What does list(itertools.islice(itertools.count(), 3)) return?",
+      "answer": "[0, 1, 2]"
+    },
+    {
+      "id": 181,
+      "question": "What does itertools.groupby require?",
+      "answer": "Sorted data (or data grouped by key) and optionally a key function"
+    },
+    {
+      "id": 182,
+      "question": "What does the following print?\ndef counter():\n    n = 0\n    while True:\n        n += 1\n        yield n\nprint(next(counter()))",
+      "answer": "1"
+    },
+    {
+      "id": 183,
+      "question": "Do generator expressions support multiple for clauses?",
+      "answer": "Yes, just like comprehensions: (a + b for a in x for b in y)"
+    },
+    {
+      "id": 184,
+      "question": "What is the primary PEP 8 advice about lambda?",
+      "answer": "Use def for named functions; reserve lambda for trivial inline expressions"
+    },
+    {
+      "id": 185,
+      "question": "Why should decorators name their wrapper (not return the raw function)?",
+      "answer": "So the wrapper actually adds the intended behavior and can forward args"
+    },
+    {
+      "id": 186,
+      "question": "What does a decorator returning a NEW function each call risk?",
+      "answer": "Fragile identity comparisons and re-registration; prefer stable wrapper objects"
+    },
+    {
+      "id": 187,
+      "question": "What does f.__closure__ contain for a closure?",
+      "answer": "A tuple of cell objects for the captured variables"
+    },
+    {
+      "id": 188,
+      "question": "What does len(inner.__closure__) equal for outer with 2 captured vars?",
+      "answer": "2"
+    },
+    {
+      "id": 189,
+      "question": "Can a class instance be stored in a closure cell?",
+      "answer": "Yes, any object can be captured"
+    },
+    {
+      "id": 190,
+      "question": "What is the singleton pattern of closures?",
+      "answer": "A closure creating only one instance, e.g., a lazily initialized resource"
+    },
+    {
+      "id": 191,
+      "question": "What does print(sorted([\"Banana\", \"apple\"], key=str.lower)) output?",
+      "answer": "['apple', 'Banana'] (case-insensitive order)"
+    },
+    {
+      "id": 192,
+      "question": "What does print(list(map(lambda v: v * 2, [1, 2]))) output?",
+      "answer": "[2, 4]"
+    },
+    {
+      "id": 193,
+      "question": "What does print(sum(filter(lambda n: n % 2 == 0, range(1, 10)))) output?",
+      "answer": "20 (2+4+6+8)"
+    },
+    {
+      "id": 194,
+      "question": "What does sorted(\"python\", key=ord) return?",
+      "answer": "['h', 'n', 'o', 'p', 't', 'y'] (sorted by codepoint)"
+    },
+    {
+      "id": 195,
+      "question": "What does the closure print?\ndef outer(x): return lambda: x\nf = outer(42)\nprint(f())",
+      "answer": "42"
+    },
+    {
+      "id": 196,
+      "question": "What does the following print?\ndef outer():\n    x = 1\n    def inner():\n        nonlocal x\n        x += 1\n        return x\n    return inner\ng = outer()\nprint(g(), g(), g())",
+      "answer": "2 3 4 (the nonlocal counter)"
+    },
+    {
+      "id": 197,
+      "question": "What does the following print?\ndef make():\n    x = []\n    def add(v):\n        x.append(v)\n        return x\n    return add\nf = make()\nprint(f(1), f(2))",
+      "answer": "[1, 2] [1, 2] (both printed references point to the same captured list)"
+    },
+    {
+      "id": 198,
+      "question": "What does the following print?\nfuncs = []\nfor i in range(3):\n    funcs.append(lambda i=i: i)\nprint([f() for f in funcs])",
+      "answer": "[0, 1, 2] (default arg snapshots i)"
+    },
+    {
+      "id": 199,
+      "question": "What does @deco below do in words?\n@deco\nasync def f()",
+      "answer": "It still wraps the coroutine function object; decorators work on callables"
+    },
+    {
+      "id": 200,
+      "question": "Can you decorate a class?",
+      "answer": "Yes, with a function taking the class and returning the class"
+    },
+    {
+      "id": 201,
+      "question": "What is functools.singledispatch used for?",
+      "answer": "To implement functions that dispatch on the type of the first argument"
+    },
+    {
+      "id": 202,
+      "question": "How do you register a singledispatch variant?",
+      "answer": "@funct.register(type) decorating the type-specific implementation"
+    },
+    {
+      "id": 203,
+      "question": "What does a singledispatch fallback function handle?",
+      "answer": "Arguments of types that have no registered variant"
+    },
+    {
+      "id": 204,
+      "question": "What is the difference between singledispatch and overloading?",
+      "answer": "Python has no static overloading; singledispatch does runtime dispatch on first arg"
+    },
+    {
+      "id": 205,
+      "question": "What does functools.cache do?",
+      "answer": "An unbounded simple memoization decorator (lru_cache without a size limit)"
+    },
+    {
+      "id": 206,
+      "question": "What happens if you call an lru_cached function with unhashable args?",
+      "answer": "TypeError, because the cache uses a dict keyed by arguments"
+    },
+    {
+      "id": 207,
+      "question": "What does itertools.tee do?",
+      "answer": "Splits one iterator into n independent clones"
+    },
+    {
+      "id": 208,
+      "question": "What does zip_longest do?",
+      "answer": "Pairs iterables and fills in missing values so none are dropped"
+    },
+    {
+      "id": 209,
+      "question": "What does itertools.product do?",
+      "answer": "Computes the Cartesian product of iterables"
+    },
+    {
+      "id": 210,
+      "question": "What does list(product(\"ab\", repeat=2)) return?",
+      "answer": "[('a', 'a'), ('a', 'b'), ('b', 'a'), ('b', 'b')]"
+    },
+    {
+      "id": 211,
+      "question": "What does itertools.combinations do?",
+      "answer": "Yields combinations of a given length without replacement, ignoring order"
+    },
+    {
+      "id": 212,
+      "question": "What does itertools.permutations do?",
+      "answer": "Yields ordered arrangements, honoring order"
+    },
+    {
+      "id": 213,
+      "question": "What is the difference between a generator and a list in iteration timing?",
+      "answer": "Lists are built eagerly up front; generators yield values one at a time on demand"
+    },
+    {
+      "id": 214,
+      "question": "What prints?\nprint(list(zip([1, 2, 3], \"ab\")))",
+      "answer": "[(1, 'a'), (2, 'b')] (zip stops at shortest)"
+    },
+    {
+      "id": 215,
+      "question": "What does the following print?\ng = (i * i for i in range(3))\nprint(list(g), list(g))",
+      "answer": "[0, 1, 4] [] (generators are single-use)"
+    },
+    {
+      "id": 216,
+      "question": "What does max([1, 2, 3], key=lambda x: -x) return?",
+      "answer": "1 (smallest value via negated key)"
+    },
+    {
+      "id": 217,
+      "question": "What does min([1, 2, 3], key=lambda x: -x) return?",
+      "answer": "3"
+    },
+    {
+      "id": 218,
+      "question": "What does reduce(lambda a, b: a * b, range(1, 6)) return?",
+      "answer": "120"
+    },
+    {
+      "id": 219,
+      "question": "What does functools.reduce(lambda a, b: a + b, map(len, [\"x\", \"yy\", \"zzz\"])) return?",
+      "answer": "6"
+    },
+    {
+      "id": 220,
+      "question": "Does the order of keyword arguments to sorted matter?",
+      "answer": "Use explicit keywords like key= and reverse=; position is fixed by signature"
+    },
+    {
+      "id": 221,
+      "question": "What does the following print?\ndef deco(fn):\n    def wrapper():\n        print(\"hi\")\n        return fn()\n    return wrapper\n@deco\ndef f():\n    return 1\nprint(f())",
+      "answer": "hi then 1"
+    },
+    {
+      "id": 222,
+      "question": "What does the parametrized decorator evaluate when?",
+      "answer": "The outer function runs at decoration time, the wrapper runs at each call"
+    },
+    {
+      "id": 223,
+      "question": "How do you make a generator release external resources when it is closed?",
+      "answer": "Wrap resource handling in try/finally; gen.close() raises GeneratorExit so finally always runs"
+    },
+    {
+      "id": 224,
+      "question": "What does a try/finally inside a generator do on close()?",
+      "answer": "Finally runs, which is why generators are context-manager friendly"
+    },
+    {
+      "id": 225,
+      "question": "What is the classic use of a decorator with functools.wraps alone?",
+      "answer": "To preserve the wrapped function's docs and signature metadata"
+    },
+    {
+      "id": 226,
+      "question": "How do you preserve compiler introspection (signature) with decorators?",
+      "answer": "Use functools.wraps (and __signature__ for complex wrappers)"
+    },
+    {
+      "id": 227,
+      "question": "What does partial(pow, 2, 3)() return?",
+      "answer": "8 (pow(2, 3), both args are frozen)"
+    },
+    {
+      "id": 228,
+      "question": "What does print(partial(pow, 2, 3)()) output?",
+      "answer": "8"
+    },
+    {
+      "id": 229,
+      "question": "What does partial(max, 100) change when called with a list?",
+      "answer": "partial(max, 100)(3, 7) -> max(100, 3, 7) -> 100"
+    },
+    {
+      "id": 230,
+      "question": "In a closure, when is the outer variable read?",
+      "answer": "At call time (late binding), unless snapshotted with defaults"
+    },
+    {
+      "id": 231,
+      "question": "What is the freeze pattern for closures?",
+      "answer": "Binding current values as default arguments or factory parameters"
+    },
+    {
+      "id": 232,
+      "question": "What does def f(): return (yield 1) do?",
+      "answer": "It is a generator function (because yield); calling returns a generator"
+    },
+    {
+      "id": 233,
+      "question": "What does list(f()) return for def f(): yield 1; yield 2?",
+      "answer": "[1, 2]"
+    },
+    {
+      "id": 234,
+      "question": "What would a runner like run_gen(gen) use to iterate lazily?",
+      "answer": "A for loop or next() calls until StopIteration"
+    },
+    {
+      "id": 235,
+      "question": "Can you convert a generator into a tuple directly?",
+      "answer": "Yes: tuple(gen)"
+    },
+    {
+      "id": 236,
+      "question": "What does tuple(x for x in range(3)) return?",
+      "answer": "(0, 1, 2)"
+    },
+    {
+      "id": 237,
+      "question": "Can a map object be iterated more than once?",
+      "answer": "No, a map object is a single-use iterator followed by exhaustion"
+    },
+    {
+      "id": 238,
+      "question": "What should you do if you need a mapped result more than once?",
+      "answer": "Store it once in a list: result = list(map(...)), then reuse the list"
+    },
+    {
+      "id": 239,
+      "question": "What is an iterators.next()/__next__ relationship?",
+      "answer": "iter(iterator) returns itself; __next__ pulls the next item"
+    },
+    {
+      "id": 240,
+      "question": "What does iter([]) return?",
+      "answer": "An empty list iterator"
+    },
+    {
+      "id": 241,
+      "question": "When is a decorator applied relative to the function definition?",
+      "answer": "Immediately after the function object is created, before it is bound in the namespace"
+    },
+    {
+      "id": 242,
+      "question": "What does @property's read-only behavior enforce?",
+      "answer": "No setter means obj.x = value raises AttributeError"
+    },
+    {
+      "id": 243,
+      "question": "What decorator chain implements a validation setter?",
+      "answer": "@property for the getter plus @x.setter for the validating setter"
+    },
+    {
+      "id": 244,
+      "question": "What does a classmethod's cls refer to in an inherited call?",
+      "answer": "The subclass that invoked the method, not the defining class"
+    },
+    {
+      "id": 245,
+      "question": "When does @staticmethod make sense?",
+      "answer": "When the method doesn't need self or cls, acting as a plain helper"
+    },
+    {
+      "id": 246,
+      "question": "What is the difference between a function default and a keyword-only default?",
+      "answer": "Regular defaults can be overridden positionally; keyword-only only by name"
+    },
+    {
+      "id": 247,
+      "question": "What does inspect.signature(fn) provide?",
+      "answer": "A Signature object describing the callable's parameters"
+    },
+    {
+      "id": 248,
+      "question": "Why lose the wrapper's signature without functools.wraps?",
+      "answer": "The signature becomes (*args, **kwargs), breaking introspection"
+    },
+    {
+      "id": 249,
+      "question": "What is the one-liner to bind a snapshot in a list comprehension closure?",
+      "answer": "lambda i=i: i (default argument binding)"
+    },
+    {
+      "id": 250,
+      "question": "What is the takeaway for combining map/filter/reduce?",
+      "answer": "Use comprehension or explicit loops for clarity; keep map/filter/reduce for concise transforms"
+    }
+  ]
+}

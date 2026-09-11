@@ -1,0 +1,1005 @@
+{
+  "description": "200 questions on Python list comprehension (basic to intermediate: filters, conditionals, nesting, matrices)",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the general syntax of a list comprehension?",
+      "answer": "[expression for item in iterable if condition]"
+    },
+    {
+      "id": 2,
+      "question": "What does [x for x in range(5)] return?",
+      "answer": "[0, 1, 2, 3, 4]"
+    },
+    {
+      "id": 3,
+      "question": "What does [x * 2 for x in range(5)] return?",
+      "answer": "[0, 2, 4, 6, 8]"
+    },
+    {
+      "id": 4,
+      "question": "What does [x ** 2 for x in range(1, 6)] return?",
+      "answer": "[1, 4, 9, 16, 25]"
+    },
+    {
+      "id": 5,
+      "question": "What does [str(x) for x in range(3)] return?",
+      "answer": "['0', '1', '2']"
+    },
+    {
+      "id": 6,
+      "question": "What does [len(w) for w in [\"a\", \"ab\", \"abc\"]] return?",
+      "answer": "[1, 2, 3]"
+    },
+    {
+      "id": 7,
+      "question": "What does [x + 1 for x in [1, 2, 3]] return?",
+      "answer": "[2, 3, 4]"
+    },
+    {
+      "id": 8,
+      "question": "Does a list comprehension create a new list?",
+      "answer": "Yes, it always returns a brand-new list"
+    },
+    {
+      "id": 9,
+      "question": "What does [x for x in \"abc\"] return?",
+      "answer": "['a', 'b', 'c']"
+    },
+    {
+      "id": 10,
+      "question": "What does [i for i in range(2, 11, 2)] return?",
+      "answer": "[2, 4, 6, 8, 10]"
+    },
+    {
+      "id": 11,
+      "question": "What does [0 for _ in range(3)] return?",
+      "answer": "[0, 0, 0]"
+    },
+    {
+      "id": 12,
+      "question": "What does [x for x in range(3) if x != 1] return?",
+      "answer": "[0, 2]"
+    },
+    {
+      "id": 13,
+      "question": "In a comprehension, what comes first: the for clause or the if clause?",
+      "answer": "The expression, then for, then the optional if condition"
+    },
+    {
+      "id": 14,
+      "question": "What does [x for x in [1, 2, 3] if x > 1] return?",
+      "answer": "[2, 3]"
+    },
+    {
+      "id": 15,
+      "question": "What does [x for x in (1, 2, 3)] return (comprehension over a tuple)?",
+      "answer": "[1, 2, 3]"
+    },
+    {
+      "id": 16,
+      "question": "What does [x.upper() for x in [\"hi\"]] return?",
+      "answer": "['HI']"
+    },
+    {
+      "id": 17,
+      "question": "What does [x for x in range(10) if x % 2 == 0] return?",
+      "answer": "[0, 2, 4, 6, 8] (all even numbers)"
+    },
+    {
+      "id": 18,
+      "question": "What does [x for x in range(10) if x % 2 == 1] return?",
+      "answer": "[1, 3, 5, 7, 9] (all odd numbers)"
+    },
+    {
+      "id": 19,
+      "question": "Can you name the loop variable anything you like in a comprehension?",
+      "answer": "Yes, the variable name is arbitrary, e.g., for n in ..., for w in ..."
+    },
+    {
+      "id": 20,
+      "question": "What does [round(x) for x in [1.7, 2.2]] return?",
+      "answer": "[2, 2]"
+    },
+    {
+      "id": 21,
+      "question": "What does [x for x in range(4)] return?",
+      "answer": "[0, 1, 2, 3]"
+    },
+    {
+      "id": 22,
+      "question": "What does [x * x for x in range(6) if x * x > 10] return?",
+      "answer": "[16, 25] (squares 16 and 25 are greater than 10)"
+    },
+    {
+      "id": 23,
+      "question": "What does [x for x in range(1, 11) if x % 3 == 0] return?",
+      "answer": "[3, 6, 9]"
+    },
+    {
+      "id": 24,
+      "question": "What does [x for x in range(5, 0, -1)] return?",
+      "answer": "[5, 4, 3, 2, 1]"
+    },
+    {
+      "id": 25,
+      "question": "What does [x ** 3 for x in range(1, 5)] return?",
+      "answer": "[1, 8, 27, 64]"
+    },
+    {
+      "id": 26,
+      "question": "What does [x for x in range(10) if 5 < x < 8] return?",
+      "answer": "[6, 7]"
+    },
+    {
+      "id": 27,
+      "question": "What does sum([x for x in range(1, 5)]) return?",
+      "answer": "10"
+    },
+    {
+      "id": 28,
+      "question": "What does [i for i in range(0, 50, 10)] return?",
+      "answer": "[0, 10, 20, 30, 40]"
+    },
+    {
+      "id": 29,
+      "question": "What does [x for x in range(100) if x % 7 == 0] return for the first few values?",
+      "answer": "[0, 7, 14, 21, 28, ...] multiples of 7"
+    },
+    {
+      "id": 30,
+      "question": "What does [x for x in range(-3, 3)] return?",
+      "answer": "[-3, -2, -1, 0, 1, 2]"
+    },
+    {
+      "id": 31,
+      "question": "What does [bool(x) for x in [0, 1, \"\", [1]]] return?",
+      "answer": "[False, True, False, True]"
+    },
+    {
+      "id": 32,
+      "question": "What does [x % 2 for x in range(5)] return?",
+      "answer": "[0, 1, 0, 1, 0]"
+    },
+    {
+      "id": 33,
+      "question": "What does [x // 2 for x in range(0, 6, 3)] return?",
+      "answer": "[0, 1] (0//2=0, 3//2=1)"
+    },
+    {
+      "id": 34,
+      "question": "How do you get a list of even numbers from 0 to 20?",
+      "answer": "[x for x in range(21) if x % 2 == 0] or list(range(0, 21, 2))"
+    },
+    {
+      "id": 35,
+      "question": "How many elements are in [x for x in range(20) if x % 5 == 0]?",
+      "answer": "4 (0, 5, 10, 15)"
+    },
+    {
+      "id": 36,
+      "question": "What does [x for x in range(10) if x == 7] return?",
+      "answer": "[7]"
+    },
+    {
+      "id": 37,
+      "question": "What does [10 - x for x in range(3)] return?",
+      "answer": "[10, 9, 8]"
+    },
+    {
+      "id": 38,
+      "question": "What does [x for x in range(2, 20) if all(x % i for i in range(2, x))] produce?",
+      "answer": "All prime numbers less than 20: [2, 3, 5, 7, 11, 13, 17, 19]"
+    },
+    {
+      "id": 39,
+      "question": "What does len([x for x in range(5) if x % 2 == 0]) return?",
+      "answer": "3 (0, 2, 4)"
+    },
+    {
+      "id": 40,
+      "question": "What does [x + x for x in range(4)] return?",
+      "answer": "[0, 2, 4, 6]"
+    },
+    {
+      "id": 41,
+      "question": "What does [x for x in range(10) if x % 3 == 0] return?",
+      "answer": "[0, 3, 6, 9]"
+    },
+    {
+      "id": 42,
+      "question": "What does [x for x in [-1, 2, -3, 4] if x > 0] return?",
+      "answer": "[2, 4] (filters out negatives)"
+    },
+    {
+      "id": 43,
+      "question": "What does [w for w in [\"cat\", \"dog\", \"ox\"] if len(w) > 3] return?",
+      "answer": "[] (both words have length 3 or less)"
+    },
+    {
+      "id": 44,
+      "question": "What does [w for w in [\"apple\", \"banana\"] if w.startswith(\"a\")] return?",
+      "answer": "[\"apple\"]"
+    },
+    {
+      "id": 45,
+      "question": "What does [x for x in [1, \"a\", 2, \"b\"] if isinstance(x, int)] return?",
+      "answer": "[1, 2]"
+    },
+    {
+      "id": 46,
+      "question": "What does [c for c in \"hello123\" if c.isalpha()] return?",
+      "answer": "['h', 'e', 'l', 'l', 'o']"
+    },
+    {
+      "id": 47,
+      "question": "What does [c for c in \"hello123\" if c.isdigit()] return?",
+      "answer": "['1', '2', '3']"
+    },
+    {
+      "id": 48,
+      "question": "What does [c for c in \"banana\" if c in \"aeiou\"] return?",
+      "answer": "['a', 'a', 'a'] (all the vowels in order)"
+    },
+    {
+      "id": 49,
+      "question": "What does [w for w in [\"apple\", \"pear\"] if \"p\" in w] return?",
+      "answer": "[\"apple\", \"pear\"]"
+    },
+    {
+      "id": 50,
+      "question": "What does [x for x in [1, None, 3, None] if x is not None] return?",
+      "answer": "[1, 3]"
+    },
+    {
+      "id": 51,
+      "question": "What does [x for x in [\"\", \"hi\", \"\"] if x] return?",
+      "answer": "[\"hi\"] (empty strings are falsy and are removed)"
+    },
+    {
+      "id": 52,
+      "question": "What does [x for x in [0, 1, \"\", 2, None] if x] return?",
+      "answer": "[1, 2] (falsy values removed)"
+    },
+    {
+      "id": 53,
+      "question": "What does [x for x in range(20) if x % 2 == 0 and x % 3 == 0] return?",
+      "answer": "[0, 6, 12, 18] (multiples of 6)"
+    },
+    {
+      "id": 54,
+      "question": "What does [n for n in range(1, 11) if n % 2 == 0 or n % 5 == 0] return?",
+      "answer": "[2, 4, 5, 6, 8, 10]"
+    },
+    {
+      "id": 55,
+      "question": "What does [x for x in [1, 2, 3] if x in [2, 3, 4]] return?",
+      "answer": "[2, 3] (list intersection)"
+    },
+    {
+      "id": 56,
+      "question": "What does [x for x in range(1, 31) if x % 2 and x % 3] return?",
+      "answer": "Numbers not divisible by 2 or 3: e.g., [1, 5, 7, 11, 13, 17, 19, 23, 25, 29]"
+    },
+    {
+      "id": 57,
+      "question": "How do you keep words with at least one vowel?",
+      "answer": "[w for w in words if any(c in \"aeiou\" for c in w)]"
+    },
+    {
+      "id": 58,
+      "question": "What does [num for num in [2, 8, 5, 9] if num > sum([2, 8, 5, 9]) / 4] return?",
+      "answer": "[8, 9] (above the average of 6)"
+    },
+    {
+      "id": 59,
+      "question": "How do you remove duplicates while preserving order?",
+      "answer": "seen = set()\n[x for x in data if not (x in seen or seen.add(x))]"
+    },
+    {
+      "id": 60,
+      "question": "What does [day for day in [\"Mon\", \"Sat\", \"Sun\"] if day in (\"Sat\", \"Sun\")] return?",
+      "answer": "[\"Sat\", \"Sun\"]"
+    },
+    {
+      "id": 61,
+      "question": "What does [t for t in [25, 35, 28, 40] if t > 30] return?",
+      "answer": "[35, 40]"
+    },
+    {
+      "id": 62,
+      "question": "How do you keep only passing scores (>= 60)?",
+      "answer": "[s for s in scores if s >= 60]"
+    },
+    {
+      "id": 63,
+      "question": "What does [c for c in \"a b c\" if c != \" \"] return?",
+      "answer": "['a', 'b', 'c']"
+    },
+    {
+      "id": 64,
+      "question": "What does [x for i, x in enumerate([10, 20, 30, 40]) if i % 2 == 0] return?",
+      "answer": "[10, 30] (items at even indices)"
+    },
+    {
+      "id": 65,
+      "question": "What does [x for x in [6, 12, 18, 24] if 6 <= x <= 18] return?",
+      "answer": "[6, 12, 18]"
+    },
+    {
+      "id": 66,
+      "question": "How do you select only strings from a mixed list?",
+      "answer": "[x for x in data if isinstance(x, str)]"
+    },
+    {
+      "id": 67,
+      "question": "What does [x for x in [1, 2, 3, 4, 5] if x % 2] return?",
+      "answer": "[1, 3, 5] (truthy remainders are the odd numbers)"
+    },
+    {
+      "id": 68,
+      "question": "What does [x for x in [50, 60, 70] if x >= 60 and x < 70] return?",
+      "answer": "[60]"
+    },
+    {
+      "id": 69,
+      "question": "How do you get a list of numbers greater than the first element?",
+      "answer": "[x for x in nums if x > nums[0]]"
+    },
+    {
+      "id": 70,
+      "question": "What does [x for x in \"Mississippi\" if x == \"s\"] return?",
+      "answer": "['s', 's', 's', 's']"
+    },
+    {
+      "id": 71,
+      "question": "What does [x if x % 2 == 0 else \"odd\" for x in range(4)] return?",
+      "answer": "[0, 'odd', 2, 'odd']"
+    },
+    {
+      "id": 72,
+      "question": "What does [\"even\" if x % 2 == 0 else \"odd\" for x in range(4)] return?",
+      "answer": "['even', 'odd', 'even', 'odd']"
+    },
+    {
+      "id": 73,
+      "question": "What does [x if x > 0 else 0 for x in [-1, 2, -3, 4]] return?",
+      "answer": "[0, 2, 0, 4] (clamps negatives to 0)"
+    },
+    {
+      "id": 74,
+      "question": "What does [\"+\" if x > 0 else \"-\" for x in [1, -1, 2, -2]] return?",
+      "answer": "['+', '-', '+', '-']"
+    },
+    {
+      "id": 75,
+      "question": "What does [\"small\" if x < 10 else \"big\" for x in [5, 15, 20]] return?",
+      "answer": "['small', 'big', 'big']"
+    },
+    {
+      "id": 76,
+      "question": "What does [\"A\" if s >= 90 else \"B\" if s >= 80 else \"C\" for s in [95, 85, 70]] return?",
+      "answer": "['A', 'B', 'C']"
+    },
+    {
+      "id": 77,
+      "question": "What does [x * 2 if x % 2 else x * 3 for x in range(1, 5)] return?",
+      "answer": "[2, 6, 6, 12] (odd*2, even*3)"
+    },
+    {
+      "id": 78,
+      "question": "What does [x if x != \"\" else \"N/A\" for x in [\"a\", \"\", \"b\"]] return?",
+      "answer": "['a', 'N/A', 'b']"
+    },
+    {
+      "id": 79,
+      "question": "What does [x if x % 5 == 0 else None for x in range(1, 11)] return?",
+      "answer": "[None, None, None, None, 5, None, None, None, None, 10]"
+    },
+    {
+      "id": 80,
+      "question": "What does [c.upper() if c.islower() else c for c in \"Py\"] return?",
+      "answer": "['P', 'Y']"
+    },
+    {
+      "id": 81,
+      "question": "What does [x if isinstance(x, int) else 0 for x in [1, \"a\", 2]] return?",
+      "answer": "[1, 0, 2]"
+    },
+    {
+      "id": 82,
+      "question": "What does [1 if x > 0 else -1 if x < 0 else 0 for x in [5, -5, 0]] return?",
+      "answer": "[1, -1, 0]"
+    },
+    {
+      "id": 83,
+      "question": "What does [str(x) if x % 2 else x for x in range(4)] return?",
+      "answer": "[0, '1', 2, '3'] (odd numbers become strings)"
+    },
+    {
+      "id": 84,
+      "question": "What does [x if x in \"aeiou\" else \"_\" for x in \"hello\"] return?",
+      "answer": "['_', 'e', '_', '_', 'o']"
+    },
+    {
+      "id": 85,
+      "question": "What does [len(w) if len(w) > 3 else 0 for w in [\"hi\", \"world\"]] return?",
+      "answer": "[0, 5]"
+    },
+    {
+      "id": 86,
+      "question": "What does [p if p > 100 else p * 2 for p in [50, 150]] return?",
+      "answer": "[100, 150]"
+    },
+    {
+      "id": 87,
+      "question": "What does [\"Fizz\" if x % 3 == 0 else x for x in range(1, 6)] return?",
+      "answer": "[1, 2, 'Fizz', 4, 5]"
+    },
+    {
+      "id": 88,
+      "question": "What does [x if x > 5 else x + 10 for x in [3, 7]] return?",
+      "answer": "[13, 7]"
+    },
+    {
+      "id": 89,
+      "question": "What does [x * 2 if x == 0 else x for x in [0, 1]] return?",
+      "answer": "[0, 1]"
+    },
+    {
+      "id": 90,
+      "question": "What does [\"even\" if x % 2 == 0 else \"odd\" for x in range(6) if x > 2] return?",
+      "answer": "['odd', 'even', 'odd'] (for x = 3, 4, 5)"
+    },
+    {
+      "id": 91,
+      "question": "What does [abs(x) for x in [-3, 5, -1]] return?",
+      "answer": "[3, 5, 1]"
+    },
+    {
+      "id": 92,
+      "question": "What does [x % 2 == 0 for x in [1, 2, 3]] return?",
+      "answer": "[False, True, False]"
+    },
+    {
+      "id": 93,
+      "question": "What does [x * 10 if x < 3 else x for x in [1, 2, 4]] return?",
+      "answer": "[10, 20, 4]"
+    },
+    {
+      "id": 94,
+      "question": "What does [sum(range(1, x + 1)) for x in range(1, 5)] return?",
+      "answer": "[1, 3, 6, 10] (first four triangular numbers)"
+    },
+    {
+      "id": 95,
+      "question": "What does [type(x).__name__ for x in [1, \"a\", 1.5]] return?",
+      "answer": "['int', 'str', 'float']"
+    },
+    {
+      "id": 96,
+      "question": "What does [\".\" if x in \"aeiou\" else x for x in \"ae\"] return?",
+      "answer": "['.', '.'] (both are vowels, replaced by '.')"
+    },
+    {
+      "id": 97,
+      "question": "What does [x if x < 0 else x ** 2 for x in [-2, 3]] return?",
+      "answer": "[-2, 9]"
+    },
+    {
+      "id": 98,
+      "question": "What does [\"high\" if i >= len([0, 1, 2]) // 2 else \"low\" for i in range(4)] return?",
+      "answer": "['low', 'high', 'high', 'high'] (len // 2 == 1)"
+    },
+    {
+      "id": 99,
+      "question": "What does [max(x, 0) for x in [-5, 3, -1, 7]] return?",
+      "answer": "[0, 3, 0, 7]"
+    },
+    {
+      "id": 100,
+      "question": "What does [x if x > 2 else 2 for x in range(4)] return?",
+      "answer": "[2, 2, 2, 3] (ensures a minimum of 2)"
+    },
+    {
+      "id": 101,
+      "question": "What does [w.strip() for w in [\"  hi \", \"  we \"]] return?",
+      "answer": "['hi', 'we']"
+    },
+    {
+      "id": 102,
+      "question": "What does [w[::-1] for w in [\"abc\", \"de\"]] return?",
+      "answer": "['cba', 'ed']"
+    },
+    {
+      "id": 103,
+      "question": "What does [c for c in \"hello\" if c in \"aeiou\"] return?",
+      "answer": "['e', 'o']"
+    },
+    {
+      "id": 104,
+      "question": "What does [w.upper() for w in [\"python\", \"is\", \"cool\"]] return?",
+      "answer": "['PYTHON', 'IS', 'COOL']"
+    },
+    {
+      "id": 105,
+      "question": "What does [len(w) for w in \"a big fish\".split()] return?",
+      "answer": "[1, 3, 4]"
+    },
+    {
+      "id": 106,
+      "question": "What does [w[0] for w in [\"apple\", \"banana\"]] return?",
+      "answer": "['a', 'b']"
+    },
+    {
+      "id": 107,
+      "question": "What does [w.title() for w in [\"hello world\"]] return?",
+      "answer": "['Hello World']"
+    },
+    {
+      "id": 108,
+      "question": "What does [c + c for c in \"ab\"] return?",
+      "answer": "['aa', 'bb']"
+    },
+    {
+      "id": 109,
+      "question": "What does [c * 2 for c in \"ab\"] return?",
+      "answer": "['aa', 'bb']"
+    },
+    {
+      "id": 110,
+      "question": "What does [\"\".join(c for c in w if c not in \"aeiou\") for w in [\"hello\", \"world\"]] return?",
+      "answer": "['hll', 'wrld'] (vowels removed)"
+    },
+    {
+      "id": 111,
+      "question": "What does [w.replace(\"a\", \"@\") for w in [\"apple\"]] return?",
+      "answer": "['@pple']"
+    },
+    {
+      "id": 112,
+      "question": "What does [w.count(\"e\") for w in [\"tree\", \"apple\"]] return?",
+      "answer": "[2, 1]"
+    },
+    {
+      "id": 113,
+      "question": "What does [ch.isdigit() for ch in \"a1\"] return?",
+      "answer": "[False, True]"
+    },
+    {
+      "id": 114,
+      "question": "What does [int(x) for x in [\"1\", \"2\", \"3\"]] return?",
+      "answer": "[1, 2, 3]"
+    },
+    {
+      "id": 115,
+      "question": "What does [float(x) for x in [\"1.5\", \"2\"]] return?",
+      "answer": "[1.5, 2.0]"
+    },
+    {
+      "id": 116,
+      "question": "What does [str(n) for n in [1, 2, 3]] return?",
+      "answer": "['1', '2', '3']"
+    },
+    {
+      "id": 117,
+      "question": "matrix = [[1, 2], [3, 4]]. What does [x for row in matrix for x in row] return?",
+      "answer": "[1, 2, 3, 4] (flattening)"
+    },
+    {
+      "id": 118,
+      "question": "What does [x * y for x in range(1, 4) for y in range(1, 4)] return?",
+      "answer": "[1, 2, 3, 2, 4, 6, 3, 6, 9] (9 products)"
+    },
+    {
+      "id": 119,
+      "question": "What does [(x, y) for x in range(2) for y in range(2)] return?",
+      "answer": "[(0, 0), (0, 1), (1, 0), (1, 1)]"
+    },
+    {
+      "id": 120,
+      "question": "In a nested comprehension, which loop runs first: the outer or the inner?",
+      "answer": "The first for is the outer loop; the second for is the inner loop"
+    },
+    {
+      "id": 121,
+      "question": "What does [[i * j for j in range(1, 4)] for i in range(1, 4)] produce?",
+      "answer": "[[1, 2, 3], [2, 4, 6], [3, 6, 9]] (a multiplication table)"
+    },
+    {
+      "id": 122,
+      "question": "What does [[row[i] for row in [[1, 2, 3], [4, 5, 6]]] for i in range(3)] produce?",
+      "answer": "[[1, 4], [2, 5], [3, 6]] (a transposed matrix)"
+    },
+    {
+      "id": 123,
+      "question": "matrix = [[1, 2], [3, 4]]. What does [x for row in matrix for x in row if x % 2 == 0] return?",
+      "answer": "[2, 4] (evens from the flattened matrix)"
+    },
+    {
+      "id": 124,
+      "question": "How do you count the total number of elements in a matrix with a comprehension?",
+      "answer": "len([x for row in matrix for x in row])"
+    },
+    {
+      "id": 125,
+      "question": "What does sum([x for row in [[1, 2], [3, 4]] for x in row]) return?",
+      "answer": "10"
+    },
+    {
+      "id": 126,
+      "question": "What does [x for x in range(10) for y in range(1) if x % 4 == 0] return?",
+      "answer": "[0, 4, 8]"
+    },
+    {
+      "id": 127,
+      "question": "What does [[0] * 3 for _ in range(3)] produce?",
+      "answer": "[[0, 0, 0], [0, 0, 0], [0, 0, 0]]"
+    },
+    {
+      "id": 128,
+      "question": "Why use [[0] * 3 for _ in range(3)] instead of [[0] * 3] * 3?",
+      "answer": "The comprehension creates 3 separate rows; [*] * 3 makes 3 references to one row"
+    },
+    {
+      "id": 129,
+      "question": "What does [[x, y] for x in [1, 2] for y in [3, 4]] return?",
+      "answer": "[[1, 3], [1, 4], [2, 3], [2, 4]]"
+    },
+    {
+      "id": 130,
+      "question": "What does [x for x in range(3) for _ in range(2)] return?",
+      "answer": "[0, 0, 1, 1, 2, 2] (each value repeated twice)"
+    },
+    {
+      "id": 131,
+      "question": "What does [x + y for x in [10, 20] for y in [1, 2]] return?",
+      "answer": "[11, 12, 21, 22]"
+    },
+    {
+      "id": 132,
+      "question": "What does [x for row in [[1, 2], [3]] for x in row] return?",
+      "answer": "[1, 2, 3] (flattens uneven rows too)"
+    },
+    {
+      "id": 133,
+      "question": "What does [letter for word in [\"ab\", \"cd\"] for letter in word] return?",
+      "answer": "['a', 'b', 'c', 'd']"
+    },
+    {
+      "id": 134,
+      "question": "What does [[x, y] for y in range(3) for x in range(2)] return?",
+      "answer": "[[0, 0], [1, 0], [0, 1], [1, 1], [0, 2], [1, 2]] (y is the outer loop)"
+    },
+    {
+      "id": 135,
+      "question": "How do you build a list of each row's sum for a matrix?",
+      "answer": "[sum(row) for row in matrix]"
+    },
+    {
+      "id": 136,
+      "question": "matrix = [[1, 2], [3, 4]]. What does [max(row) for row in matrix] return?",
+      "answer": "[2, 4]"
+    },
+    {
+      "id": 137,
+      "question": "How do you extract the second column of [[1, 2], [3, 4], [5, 6]]?",
+      "answer": "[row[1] for row in matrix] -> [2, 4, 6]"
+    },
+    {
+      "id": 138,
+      "question": "What does [[c for c in w] for w in [\"ab\", \"cd\"]] return?",
+      "answer": "[['a', 'b'], ['c', 'd']]"
+    },
+    {
+      "id": 139,
+      "question": "How do you create a 3x3 identity-like 2D list of (i, j) pairs?",
+      "answer": "[[(i, j) for j in range(3)] for i in range(3)]"
+    },
+    {
+      "id": 140,
+      "question": "What does [n for row in [[1, 2], [3, 4]] for n in row if n > 2] return?",
+      "answer": "[3, 4]"
+    },
+    {
+      "id": 141,
+      "question": "How do you add two matrices element-wise with comprehensions?",
+      "answer": "[[a + b for a, b in zip(r1, r2)] for r1, r2 in zip(m1, m2)]"
+    },
+    {
+      "id": 142,
+      "question": "What does [i for i, v in enumerate([\"a\", \"b\", \"a\"]) if v == \"a\"] return?",
+      "answer": "[0, 2] (indices where the value is \"a\")"
+    },
+    {
+      "id": 143,
+      "question": "What does [x * 2 for row in [[1, 2], [3, 4]] for x in row] return?",
+      "answer": "[2, 4, 6, 8]"
+    },
+    {
+      "id": 144,
+      "question": "How do you get a list of (index, value) for a list using a comprehension?",
+      "answer": "[(i, v) for i, v in enumerate(lst)]"
+    },
+    {
+      "id": 145,
+      "question": "What does [[0, 0], [0, 0]] == [[0] * 2 for _ in range(2)] evaluate to?",
+      "answer": "True (both are a 2x2 matrix of zeros)"
+    },
+    {
+      "id": 146,
+      "question": "What is the difference between a list comprehension and a dictionary comprehension syntax?",
+      "answer": "List uses [expr ...]; dict uses {key: value ...}"
+    },
+    {
+      "id": 147,
+      "question": "What does {x: x ** 2 for x in range(4)} return?",
+      "answer": "{0: 0, 1: 1, 2: 4, 3: 9}"
+    },
+    {
+      "id": 148,
+      "question": "What does {x for x in [1, 1, 2]} return?",
+      "answer": "{1, 2} (set comprehension removes duplicates)"
+    },
+    {
+      "id": 149,
+      "question": "What does [(x, x % 2) for x in range(3)] return?",
+      "answer": "[(0, 0), (1, 1), (2, 0)]"
+    },
+    {
+      "id": 150,
+      "question": "How do you zip two lists into a dictionary with a comprehension?",
+      "answer": "{k: v for k, v in zip(keys, values)}"
+    },
+    {
+      "id": 151,
+      "question": "What does {w: len(w) for w in [\"a\", \"bb\"]} return?",
+      "answer": "{'a': 1, 'bb': 2}"
+    },
+    {
+      "id": 152,
+      "question": "How do you invert a dictionary with a comprehension?",
+      "answer": "{v: k for k, v in d.items()}"
+    },
+    {
+      "id": 153,
+      "question": "What does {i: x for i, x in enumerate([\"a\", \"b\"])} return?",
+      "answer": "{0: 'a', 1: 'b'}"
+    },
+    {
+      "id": 154,
+      "question": "What does {k: v * 2 for k, v in {\"a\": 1, \"b\": 2}.items()} return?",
+      "answer": "{'a': 2, 'b': 4}"
+    },
+    {
+      "id": 155,
+      "question": "What does {x.upper(): x for x in [\"cat\", \"dog\"]} return?",
+      "answer": "{'CAT': 'cat', 'DOG': 'dog'}"
+    },
+    {
+      "id": 156,
+      "question": "What is (x for x in range(3))?",
+      "answer": "A generator expression, NOT a tuple (use tuple() to materialize it)"
+    },
+    {
+      "id": 157,
+      "question": "What does list(x for x in range(3)) return?",
+      "answer": "[0, 1, 2]"
+    },
+    {
+      "id": 158,
+      "question": "What does sum(x * x for x in range(4)) return?",
+      "answer": "0 + 1 + 4 + 9 = 14"
+    },
+    {
+      "id": 159,
+      "question": "What does [k for k, v in {\"a\": 1, \"b\": 2}.items() if v > 1] return?",
+      "answer": "['b']"
+    },
+    {
+      "id": 160,
+      "question": "What does [v for k, v in {\"a\": 1, \"b\": 2}.items() if k != \"a\"] return?",
+      "answer": "[2]"
+    },
+    {
+      "id": 161,
+      "question": "What does {x % 3 for x in range(5)} return?",
+      "answer": "{0, 1, 2} (a set of remainders)"
+    },
+    {
+      "id": 162,
+      "question": "What does {k: 0 for k in [\"a\", \"b\", \"c\"]} return?",
+      "answer": "{'a': 0, 'b': 0, 'c': 0}"
+    },
+    {
+      "id": 163,
+      "question": "How do you count word lengths with a dict comprehension?",
+      "answer": "{w: len(w) for w in words}"
+    },
+    {
+      "id": 164,
+      "question": "What does [v for v in {\"a\": 5, \"b\": 3}.values() if v >= 5] return?",
+      "answer": "[5]"
+    },
+    {
+      "id": 165,
+      "question": "What does {c: \"vowel\" if c in \"aeiou\" else \"consonant\" for c in \"aez\"} return?",
+      "answer": "{'a': 'vowel', 'e': 'vowel', 'z': 'consonant'}"
+    },
+    {
+      "id": 166,
+      "question": "What does print([x for x in range(3) if x % 2 == 0]) output?",
+      "answer": "[0, 2]"
+    },
+    {
+      "id": 167,
+      "question": "What does print([len(x) for x in [\"ab\", \"c\"]]) output?",
+      "answer": "[2, 1]"
+    },
+    {
+      "id": 168,
+      "question": "What does print([x for x in [1, 2, 3] if x > 1]) output?",
+      "answer": "[2, 3]"
+    },
+    {
+      "id": 169,
+      "question": "What does print([x * x for x in range(5) if x % 2]) output?",
+      "answer": "[1, 9] (squares of 1 and 3)"
+    },
+    {
+      "id": 170,
+      "question": "What does print([x % 3 for x in range(5)]) output?",
+      "answer": "[0, 1, 2, 0, 1]"
+    },
+    {
+      "id": 171,
+      "question": "What does print([\"yes\" if x else \"no\" for x in [1, 0, \"\"]]) output?",
+      "answer": "['yes', 'no', 'no']"
+    },
+    {
+      "id": 172,
+      "question": "What does print([x for x in \"hello\" if x == \"l\"]) output?",
+      "answer": "['l', 'l']"
+    },
+    {
+      "id": 173,
+      "question": "What does print([[1, 2], [3]][0]) output?",
+      "answer": "[1, 2]"
+    },
+    {
+      "id": 174,
+      "question": "What does print([x for x in range(6) if x not in (2, 4)]) output?",
+      "answer": "[0, 1, 3, 5]"
+    },
+    {
+      "id": 175,
+      "question": "What does print([c.upper() for c in \"cat\"]) output?",
+      "answer": "['C', 'A', 'T']"
+    },
+    {
+      "id": 176,
+      "question": "What does print([x + 10 for x in [1, 2]]) output?",
+      "answer": "[11, 12]"
+    },
+    {
+      "id": 177,
+      "question": "What does print([x for x in range(1, 6) if x % 2 == 0] + [x for x in range(1, 6) if x % 2 == 1]) output?",
+      "answer": "[2, 4, 1, 3, 5] (evens then odds)"
+    },
+    {
+      "id": 178,
+      "question": "What does print([x for x in range(10) if x // 5 == 1]) output?",
+      "answer": "[5, 6, 7, 8, 9]"
+    },
+    {
+      "id": 179,
+      "question": "What does print([w[1:] for w in [\"ab\", \"cd\"]]) output?",
+      "answer": "['b', 'd']"
+    },
+    {
+      "id": 180,
+      "question": "What does print(sum([x for x in range(1, 8) if x % 2 == 0])) output?",
+      "answer": "12 (2 + 4 + 6)"
+    },
+    {
+      "id": 181,
+      "question": "What does print(len([x for x in range(100) if x % 9 == 0])) output?",
+      "answer": "12 (0, 9, 18, ..., 99)"
+    },
+    {
+      "id": 182,
+      "question": "What does print([x for x in range(-2, 3) if x != 0]) output?",
+      "answer": "[-2, -1, 1, 2]"
+    },
+    {
+      "id": 183,
+      "question": "What does print([n for n in range(1, 10) if n % 2 == 0 or n % 3 == 0]) output?",
+      "answer": "[2, 3, 4, 6, 8, 9]"
+    },
+    {
+      "id": 184,
+      "question": "What does print([x * 2 for x in range(3)] == [0, 2, 4]) output?",
+      "answer": "True"
+    },
+    {
+      "id": 185,
+      "question": "What does print([i for i in [10, 20, 30] if i >= 20]) output?",
+      "answer": "[20, 30]"
+    },
+    {
+      "id": 186,
+      "question": "What does print([x % 2 for x in [3, 4, 5]]) output?",
+      "answer": "[1, 0, 1]"
+    },
+    {
+      "id": 187,
+      "question": "What does print([x for x in \"abac\" if x != \"a\" and x != \"c\"]) output?",
+      "answer": "['b']"
+    },
+    {
+      "id": 188,
+      "question": "What does print([f\"{x}{y}\" for x in \"12\" for y in \"ab\"]) output?",
+      "answer": "['1a', '1b', '2a', '2b']"
+    },
+    {
+      "id": 189,
+      "question": "What does print([x for x in range(1, 4)] * 2) output?",
+      "answer": "[1, 2, 3, 1, 2, 3]"
+    },
+    {
+      "id": 190,
+      "question": "What does print([x for x in [5, 1, 3] if x not in [2, 3]]) output?",
+      "answer": "[5, 1] (order is preserved)"
+    },
+    {
+      "id": 191,
+      "question": "What does print([x for x in range(5) if x in (0, 2, 4)]) output?",
+      "answer": "[0, 2, 4]"
+    },
+    {
+      "id": 192,
+      "question": "What does print([w.upper() if len(w) > 2 else w for w in [\"a\", \"abc\"]]) output?",
+      "answer": "['a', 'ABC']"
+    },
+    {
+      "id": 193,
+      "question": "What does print([len(s) for s in [\"\", \"x\", \"xyz\"]]) output?",
+      "answer": "[0, 1, 3]"
+    },
+    {
+      "id": 194,
+      "question": "What does print([x for x in \"abc\" if x > \"b\"]) output?",
+      "answer": "['c']"
+    },
+    {
+      "id": 195,
+      "question": "What does print(bool([x for x in range(3) if x == 9])) output?",
+      "answer": "False (the comprehension is empty)"
+    },
+    {
+      "id": 196,
+      "question": "What does print([k for k in {\"a\": 1, \"b\": 2}]) output?",
+      "answer": "['a', 'b'] (iterating a dict gives its keys)"
+    },
+    {
+      "id": 197,
+      "question": "What does print([x for x in range(1, 5) if x < 3 or x > 3]) output?",
+      "answer": "[1, 2, 4] (3 is excluded)"
+    },
+    {
+      "id": 198,
+      "question": "What does print([x for x in range(3, 0, -1) if x % 2]) output?",
+      "answer": "[3, 1] (odd numbers in reverse)"
+    },
+    {
+      "id": 199,
+      "question": "What does print([w for w in \"one two three\".split() if len(w) <= 3]) output?",
+      "answer": "['one', 'two']"
+    },
+    {
+      "id": 200,
+      "question": "What does print([x for x in range(1, 11) if x % 2 == 0][:2]) output?",
+      "answer": "[2, 4] (the first two even numbers)"
+    }
+  ]
+}
