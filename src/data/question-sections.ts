@@ -16,13 +16,6 @@ import functionLambda from "./function-lambda-questions.json";
 import dictionaries from "./dictionary-questions.json";
 import oopClassesBasics from "./oop-classes-basics-questions.json";
 import oopInheritance from "./oop-inheritance-questions.json";
-import oopAttributes from "./oop-attributes-questions.json";
-import oopMethods from "./oop-methods-questions.json";
-import oopSelfCls from "./oop-self-cls-questions.json";
-import oopInitNewDel from "./oop-init-new-del-questions.json";
-import oopPolymorphism from "./oop-polymorphism-questions.json";
-import oopEncapsulation from "./oop-encapsulation-questions.json";
-import oopAbstraction from "./oop-abstraction-questions.json";
 import errorHandling from "./error-handling-questions.json";
 import fileHandling from "./file-handling-questions.json";
 import questionBank from "./question-bank.json";
@@ -44,13 +37,6 @@ const splitSections: Record<string, QuestionBankSection> = {
   dictionaries: dictionaries as QuestionBankSection,
   oop_classes_basics: oopClassesBasics as QuestionBankSection,
   oop_inheritance: oopInheritance as QuestionBankSection,
-  oop_attributes: oopAttributes as QuestionBankSection,
-  oop_methods: oopMethods as QuestionBankSection,
-  oop_self_cls: oopSelfCls as QuestionBankSection,
-  oop_init_new_del: oopInitNewDel as QuestionBankSection,
-  oop_polymorphism: oopPolymorphism as QuestionBankSection,
-  oop_encapsulation: oopEncapsulation as QuestionBankSection,
-  oop_abstraction: oopAbstraction as QuestionBankSection,
   error_handling: errorHandling as QuestionBankSection,
   file_handling: fileHandling as QuestionBankSection,
 };

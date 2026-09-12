@@ -87,13 +87,6 @@ function LessonView({ topicSlug, lessonSlug }: { topicSlug: string; lessonSlug: 
     "dictionaries/dict-basics": "dictionaries",
     "oop/classes-basics": "oop_classes_basics",
     "oop/inheritance": "oop_inheritance",
-    "oop/oop-attributes": "oop_attributes",
-    "oop/oop-methods": "oop_methods",
-    "oop/oop-self-cls": "oop_self_cls",
-    "oop/oop-special-methods": "oop_init_new_del",
-    "oop/oop-polymorphism": "oop_polymorphism",
-    "oop/oop-encapsulation": "oop_encapsulation",
-    "oop/oop-abstraction": "oop_abstraction",
     "error-handling/try-except": "error_handling",
     "file-handling/file-operations": "file_handling",
   };

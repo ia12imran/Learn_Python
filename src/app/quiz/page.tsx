@@ -43,15 +43,8 @@ const qaSections = [
   { key: "dictionaries", label: "10. Dictionaries", count: 500, gradient: "from-violet-500 to-purple-700" },
   { key: "oop_classes_basics", label: "11. Classes & Objects", count: 100, gradient: "from-indigo-500 to-violet-700" },
   { key: "oop_inheritance", label: "12. Inheritance", count: 100, gradient: "from-teal-500 to-cyan-700" },
-  { key: "oop_attributes", label: "13. Attributes", count: 100, gradient: "from-lime-600 to-green-700" },
-  { key: "oop_methods", label: "14. Methods", count: 100, gradient: "from-slate-500 to-gray-700" },
-  { key: "oop_self_cls", label: "15. self & cls Keywords", count: 100, gradient: "from-rose-500 to-pink-600" },
-  { key: "oop_init_new_del", label: "16. __init__ & __new__ & __del__", count: 100, gradient: "from-sky-500 to-blue-600" },
-  { key: "oop_polymorphism", label: "17. Polymorphism", count: 100, gradient: "from-emerald-500 to-green-600" },
-  { key: "oop_encapsulation", label: "18. Encapsulation", count: 100, gradient: "from-amber-500 to-yellow-600" },
-  { key: "oop_abstraction", label: "19. Abstraction", count: 100, gradient: "from-purple-500 to-violet-600" },
-  { key: "error_handling", label: "20. Error Handling", count: 100, gradient: "from-red-500 to-rose-600" },
-  { key: "file_handling", label: "21. File Handling", count: 300, gradient: "from-amber-600 to-orange-700" },
+  { key: "error_handling", label: "13. Error Handling", count: 100, gradient: "from-red-500 to-rose-600" },
+  { key: "file_handling", label: "14. File Handling", count: 300, gradient: "from-amber-600 to-orange-700" },
 ];
 
 export default function QuizPage() {
