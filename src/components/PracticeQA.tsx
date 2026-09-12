@@ -1,9 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { QAQuestion } from "@/data/types";
-import { ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
+import { ChevronLeft, ChevronRight, Eye, EyeOff, ArrowRight } from "lucide-react";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
 
@@ -93,6 +94,7 @@ function QuestionEditor({ q }: { q: QAQuestion }) {
 export default function PracticeQA({ questions }: PracticeQAProps) {
   const [current, setCurrent] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  const router = useRouter();
 
   const total = questions.length;
   const q = questions[current];
@@ -109,6 +111,8 @@ export default function PracticeQA({ questions }: PracticeQAProps) {
     if (current < total - 1) {
       setCurrent((c) => c + 1);
       setRevealed(false);
+    } else {
+      router.push("/practice");
     }
   };
 
@@ -189,14 +193,9 @@ export default function PracticeQA({ questions }: PracticeQAProps) {
         <button
           type="button"
           onClick={handleNext}
-          disabled={current === total - 1}
-          className={`flex items-center gap-2 px-5 py-3 font-medium rounded-xl transition cursor-pointer ${
-            current === total - 1
-              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700 text-white"
-          }`}
+          className="flex items-center gap-2 px-5 py-3 font-medium rounded-xl transition cursor-pointer bg-blue-600 hover:bg-blue-700 text-white"
         >
-          Next <ChevronRight size={18} />
+          {current === total - 1 ? <>Go to Practice <ArrowRight size={18} /></> : <>Next <ChevronRight size={18} /></>}
         </button>
       </div>
     </div>
