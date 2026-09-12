@@ -1,0 +1,2 @@
+:HL["/Learn_Python/_next/static/chunks/3pkh0elzainji.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"sm0vod5oLl8anHpJUtbyZ"}
