@@ -4,502 +4,502 @@
     {
       "id": 1,
       "question": "What does this print?\ncount = 0\nwhile count < 3:\n    print(count)\n    count += 1",
-      "answer": "0\n1\n2"
+      "answer": "count starts at 0 and prints 0, 1, 2; when it reaches 3 the condition fails and the loop ends.\n\ncode:\ncount = 0\nwhile count < 3:\n    print(count)\n    count += 1\n\nreal example:\nProcessing the first three records of an intake queue."
     },
     {
       "id": 2,
       "question": "What is the risk if a while condition never becomes False?",
-      "answer": "An infinite loop that runs forever"
+      "answer": "The loop never ends, running forever and freezing the program.\n\ncode:\nn = 1\nwhile n > 0:\n    print(n)  # n never changes\n\nreal example:\nGuaranteeing a progress indicator always advances, or it spins endlessly."
     },
     {
       "id": 3,
       "question": "How do you write an infinite loop?",
-      "answer": "while True: (usually with a break inside to exit)"
+      "answer": "Use while True: and put a break inside the body to exit when you are ready.\n\ncode:\nwhile True:\n    value = input(\"type q to quit: \")\n    if value == \"q\":\n        break\n\nreal example:\nKeeping a menu open until the user chooses to exit."
     },
     {
       "id": 4,
       "question": "What does this print?\nn = 5\nwhile n > 0:\n    print(n, end=\" \")\n    n -= 1",
-      "answer": "5 4 3 2 1 "
+      "answer": "n counts down by 1 each pass, printing 5 4 3 2 1 on one line before reaching 0.\n\ncode:\nn = 5\nwhile n > 0:\n    print(n, end=\" \")\n    n -= 1\n\nreal example:\nShowing a countdown before a game starts."
     },
     {
       "id": 5,
       "question": "What does this print?\nx = 2\nwhile x < 10:\n    print(x, end=\" \")\n    x *= 2",
-      "answer": "2 4 8 "
+      "answer": "x doubles each loop, printing 2, 4, 8; 16 is not under 10, so it stops.\n\ncode:\nx = 2\nwhile x < 10:\n    print(x, end=\" \")\n    x *= 2\n\nreal example:\nDoubling savings until they pass a savings goal."
     },
     {
       "id": 6,
       "question": "What does this print?\nx = 100\nwhile x > 1:\n    x //= 2\n    print(x)",
-      "answer": "50\n25\n12\n6\n3\n1"
+      "answer": "x is halved with floor division: 50, 25, 12, 6, 3, 1, then stops at 1.\n\ncode:\nx = 100\nwhile x > 1:\n    x //= 2\n    print(x)\n\nreal example:\nHalving a distance until you reach the destination block."
     },
     {
       "id": 7,
       "question": "What does this print?\ntotal = 0\nn = 1\nwhile n <= 4:\n    total += n\n    n += 1\nprint(total)",
-      "answer": "10"
+      "answer": "total sums 1 + 2 + 3 + 4 = 10.\n\ncode:\ntotal = 0\nn = 1\nwhile n <= 4:\n    total += n\n    n += 1\nprint(total)\n\nreal example:\nAdding the first four prices on a receipt."
     },
     {
       "id": 8,
       "question": "What does this print?\ns = \"\"\nwhile len(s) < 3:\n    s += \"a\"\nprint(s)",
-      "answer": "aaa"
+      "answer": "One a is appended per pass until the string reaches length 3, printing aaa.\n\ncode:\ns = \"\"\nwhile len(s) < 3:\n    s += \"a\"\nprint(s)\n\nreal example:\nBuilding a code by concatenating characters to a fixed length."
     },
     {
       "id": 9,
       "question": "What does 'break' do in a while loop?",
-      "answer": "Immediately exits the loop"
+      "answer": "break immediately exits the loop and continues with the code after it.\n\ncode:\nn = 0\nwhile n < 100:\n    if n == 3:\n        break\n    n += 1\nprint(n)\n\nreal example:\nBailing out of a search the moment a match is found."
     },
     {
       "id": 10,
       "question": "What does this print?\nn = 0\nwhile True:\n    print(n, end=\" \")\n    n += 1\n    if n == 4:\n        break",
-      "answer": "0 1 2 3 "
+      "answer": "The infinite loop prints n, increments it, and breaks at 4, giving 0 1 2 3.\n\ncode:\nn = 0\nwhile True:\n    print(n, end=\" \")\n    n += 1\n    if n == 4:\n        break\n\nreal example:\nGenerating numbers until a goal value is reached."
     },
     {
       "id": 11,
       "question": "What does this print?\nn = 0\nwhile n < 6:\n    n += 1\n    if n % 2 == 0:\n        continue\n    print(n)",
-      "answer": "1\n3\n5"
+      "answer": "continue skips even n, so only the odd numbers 1, 3, 5 print.\n\ncode:\nn = 0\nwhile n < 6:\n    n += 1\n    if n % 2 == 0:\n        continue\n    print(n)\n\nreal example:\nListing only the odd-numbered lockers that need opening."
     },
     {
       "id": 12,
       "question": "What does 'continue' do in a while loop?",
-      "answer": "Skips the rest of the current iteration and jumps back to the condition check"
+      "answer": "continue skips the rest of the current iteration and jumps straight back to the condition check.\n\ncode:\nn = 0\nwhile n < 5:\n    n += 1\n    if n == 3:\n        continue\n    print(n)\n\nreal example:\nSkipping a corrupt record but continuing with the remaining ones."
     },
     {
       "id": 13,
       "question": "What does this print?\nn = 10\nwhile n > 0:\n    n -= 3\n    print(n)",
-      "answer": "7\n4\n1\n-2"
+      "answer": "n decreases by 3: 7, 4, 1, then -2, which is no longer greater than 0, so it stops.\n\ncode:\nn = 10\nwhile n > 0:\n    n -= 3\n    print(n)\n\nreal example:\nPaying down a bill in fixed installments and watching the balance."
     },
     {
       "id": 14,
       "question": "What does this print?\nn = 1\nwhile n < 4:\n    print(n)\n    n += 1\nelse:\n    print(\"finished\")",
-      "answer": "1\n2\n3\nfinished"
+      "answer": "The loop ends normally, so the else prints finished after 1, 2, 3.\n\ncode:\nn = 1\nwhile n < 4:\n    print(n)\n    n += 1\nelse:\n    print(\"finished\")\n\nreal example:\nConfirming all pages were printed when nothing interrupted the loop."
     },
     {
       "id": 15,
       "question": "What does this print?\nn = 1\nwhile n < 10:\n    if n == 4:\n        break\n    print(n)\n    n += 1\nelse:\n    print(\"finished\")",
-      "answer": "1\n2\n3 (else does not run because of break)"
+      "answer": "break at n == 4 exits early, so the else never runs and only 1, 2, 3 print.\n\ncode:\nn = 1\nwhile n < 10:\n    if n == 4:\n        break\n    print(n)\n    n += 1\nelse:\n    print(\"finished\")\n\nreal example:\nInterrupting a scan when the item is located."
     },
     {
       "id": 16,
       "question": "What does this print?\nis_running = True\ncount = 0\nwhile is_running:\n    count += 1\n    if count == 3:\n        is_running = False\nprint(count)",
-      "answer": "3"
+      "answer": "count rises to 3, then the flag becomes False and the loop ends, printing 3.\n\ncode:\nis_running = True\ncount = 0\nwhile is_running:\n    count += 1\n    if count == 3:\n        is_running = False\nprint(count)\n\nreal example:\nRunning exactly three retries before giving up on a network request."
     },
     {
       "id": 17,
       "question": "What does this print?\nn = 0\nwhile n < 5:\n    n += 1\nprint(n)",
-      "answer": "5"
+      "answer": "The loop only increments n, ending once it reaches 5, so 5 prints.\n\ncode:\nn = 0\nwhile n < 5:\n    n += 1\nprint(n)\n\nreal example:\nCounting the days until the weekend arrives."
     },
     {
       "id": 18,
       "question": "What does this print?\nn = 0\nwhile n < 5:\n    print(n)\n    n += 2",
-      "answer": "0\n2\n4"
+      "answer": "n steps by 2 from 0: it prints 0, 2, 4 and stops when n would reach 6.\n\ncode:\nn = 0\nwhile n < 5:\n    print(n)\n    n += 2\n\nreal example:\nVisiting every second queue position."
     },
     {
       "id": 19,
       "question": "What does this print?\nbalance = 100\nrate = 1.1\nmonths = 0\nwhile balance < 200:\n    balance *= rate\n    months += 1\nprint(months)",
-      "answer": "8 (100 grows to ~214.36 after 8 months of 10% growth)"
+      "answer": "The balance grows 10% monthly and passes 200 after 8 months, so 8 prints.\n\ncode:\nbalance = 100\nmonths = 0\nwhile balance < 200:\n    balance *= 1.1\n    months += 1\nprint(months)\n\nreal example:\nWorking out how long savings take to double."
     },
     {
       "id": 20,
       "question": "What does this print?\nn = 0\nwhile n < 3:\n    inner = 0\n    while inner < 2:\n        print(n, inner)\n        inner += 1\n    n += 1",
-      "answer": "0 0\n0 1\n1 0\n1 1\n2 0\n2 1"
+      "answer": "The inner loop runs fully for each outer n, producing six number pairs 0 0 through 2 1.\n\ncode:\nn = 0\nwhile n < 3:\n    inner = 0\n    while inner < 2:\n        print(n, inner)\n        inner += 1\n    n += 1\n\nreal example:\nLabelling rows and columns of a small table."
     },
     {
       "id": 21,
       "question": "How many times does the body run in 'while False:'?",
-      "answer": "Zero (condition is checked before each iteration)"
+      "answer": "Zero. The condition is checked before every iteration, so a False condition never enters the body.\n\ncode:\nwhile False:\n    print(\"never\")\nprint(\"done\")\n\nreal example:\nTurning a feature off with a False switch so it never executes."
     },
     {
       "id": 22,
       "question": "What does this print?\nwhile False:\n    print(\"never\")\nprint(\"done\")",
-      "answer": "done"
+      "answer": "The body never runs because the condition is checked first, so only done prints.\n\ncode:\nwhile False:\n    print(\"never\")\nprint(\"done\")\n\nreal example:\nUsing False as a placeholder to disable a feature."
     },
     {
       "id": 23,
       "question": "What does this print?\nn = 5\ntotal = 0\nwhile n > 0:\n    total += n\n    n -= 1\nprint(total)",
-      "answer": "15 (5+4+3+2+1)"
+      "answer": "total adds 5 + 4 + 3 + 2 + 1 = 15.\n\ncode:\nn = 5\ntotal = 0\nwhile n > 0:\n    total += n\n    n -= 1\nprint(total)\n\nreal example:\nAdding up someone's scores over a five-day week."
     },
     {
       "id": 24,
       "question": "What does this print?\nn = 32\nwhile n % 2 == 0:\n    n //= 2\nprint(n)",
-      "answer": "1 (32/2/2/2/2/2)"
+      "answer": "32 halves to 16, 8, 4, 2, 1; 1 is odd so the loop ends there, printing 1.\n\ncode:\nn = 32\nwhile n % 2 == 0:\n    n //= 2\nprint(n)\n\nreal example:\nReducing a size until it can no longer be split evenly."
     },
     {
       "id": 25,
       "question": "What does this print?\ntext = \"hello\"\na = 0\nz = len(text) - 1\nwhile a < z:\n    print(text[a], text[z])\n    a += 1\n    z -= 1",
-      "answer": "h o\ne l\nl l"
+      "answer": "Two pointers move inward, printing h o, e l, then l l.\n\ncode:\ntext = \"hello\"\na = 0\nz = len(text) - 1\nwhile a < z:\n    print(text[a], text[z])\n    a += 1\n    z -= 1\n\nreal example:\nComparing the ends of a word to test for palindromes."
     },
     {
       "id": 26,
       "question": "Which loop (for or while) is better when you don't know the number of iterations in advance?",
-      "answer": "while - it runs until a condition changes"
+      "answer": "Use while, because it keeps running until a condition changes rather than over a fixed count.\n\ncode:\nbalance = 100\nwhile balance > 0:\n    balance -= 25\nprint(balance)\n\nreal example:\nProcessing purchases until an account runs out of money."
     },
     {
       "id": 27,
       "question": "What does this print?\ncount = 0\nwhile True:\n    count += 1\n    if count % 2 == 0:\n        print(count)\n    if count >= 4:\n        break",
-      "answer": "2\n4"
+      "answer": "Even counts print and the loop stops at 4, so 2 and 4 print.\n\ncode:\ncount = 0\nwhile True:\n    count += 1\n    if count % 2 == 0:\n        print(count)\n    if count >= 4:\n        break\n\nreal example:\nReporting every other error code as they are scanned."
     },
     {
       "id": 28,
       "question": "What does this print?\nn = 1\nwhile n < 8:\n    n = n * 2 + 1\nprint(n)",
-      "answer": "15 (1 -> 3 -> 7 -> 15; 15 is not less than 8)"
+      "answer": "n grows 1 -> 3 -> 7 -> 15; 15 is no longer under 8, so it stops and prints 15.\n\ncode:\nn = 1\nwhile n < 8:\n    n = n * 2 + 1\nprint(n)\n\nreal example:\nProjecting a growing population until it overshoots a cap."
     },
     {
       "id": 29,
       "question": "What does this print?\nguess = 4\ntarget = 7\nwhile guess != target:\n    guess += 1\nprint(guess)",
-      "answer": "7"
+      "answer": "guess climbs 4, 5, 6, 7 until it equals target, printing 7.\n\ncode:\nguess = 4\ntarget = 7\nwhile guess != target:\n    guess += 1\nprint(guess)\n\nreal example:\nStepping a measurement upward until it matches the goal."
     },
     {
       "id": 30,
       "question": "What is the classic danger of this pattern?\nn = 1\nwhile n < 100:\n    n += 1",
-      "answer": "None - it terminates when n reaches 100 (missing update would cause an infinite loop)"
+      "answer": "None here, because n += 1 makes it terminate at 100. The classic danger is forgetting such an update, causing an infinite loop.\n\ncode:\nn = 1\nwhile n < 100:\n    n += 1\nprint(n)\n\nreal example:\nAlways incrementing a counter so every loop is guaranteed to end."
     },
     {
       "id": 31,
       "question": "What does this print?\nn = 1\nwhile n < 5:\n    pass\n    n += 1\nprint(n)",
-      "answer": "5"
+      "answer": "pass does nothing, so n still reaches 5 and the loop stops, printing 5.\n\ncode:\nn = 1\nwhile n < 5:\n    pass\n    n += 1\nprint(n)\n\nreal example:\nKeeping a placeholder body while the real logic is still being written."
     },
     {
       "id": 32,
       "question": "What does this print?\ns = \"12345\"\nresult = \"\"\nindex = 0\nwhile index < len(s):\n    result += s[index] + \"-\"\n    index += 2\nprint(result)",
-      "answer": "1-3-5-"
+      "answer": "index grabs characters at 0, 2, 4 and appends a dash each time, giving 1-3-5-.\n\ncode:\ns = \"12345\"\nresult = \"\"\nindex = 0\nwhile index < len(s):\n    result += s[index] + \"-\"\n    index += 2\nprint(result)\n\nreal example:\nFormatting an account number with separators between digits."
     },
     {
       "id": 33,
       "question": "What does this print?\nn = 0\nwhile n < 10:\n    n += 1\n    if n > 6:\n        break\nprint(n)",
-      "answer": "7"
+      "answer": "n increments to 7, which triggers the break, so 7 prints.\n\ncode:\nn = 0\nwhile n < 10:\n    n += 1\n    if n > 6:\n        break\nprint(n)\n\nreal example:\nCounting up until a safety cutoff is reached."
     },
     {
       "id": 34,
       "question": "What does this print?\nn = 0\nwhile n < 10:\n    n += 1\n    if n == 3 or n == 5:\n        continue\n    if n > 6:\n        break\n    print(n)",
-      "answer": "1\n2\n4\n6"
+      "answer": "continue skips 3 and 5, then 7 breaks, leaving 1, 2, 4, 6.\n\ncode:\nn = 0\nwhile n < 10:\n    n += 1\n    if n == 3 or n == 5:\n        continue\n    if n > 6:\n        break\n    print(n)\n\nreal example:\nLogging valid checks while skipping two known bad codes."
     },
     {
       "id": 35,
       "question": "What does this print?\ncount = 5\nwhile count:\n    print(count)\n    count -= 1",
-      "answer": "5\n4\n3\n2\n1 (stops when count becomes 0/falsy)"
+      "answer": "count prints 5, 4, 3, 2, 1 and stops when it becomes 0, which is falsy.\n\ncode:\ncount = 5\nwhile count:\n    print(count)\n    count -= 1\n\nreal example:\nTaking five steps back in a retry countdown."
     },
     {
       "id": 36,
       "question": "What does this print?\nwhile (n := 0):\n    print(\"never\")\nprint(\"after\")",
-      "answer": "after (n assigned 0 which is falsy, so the loop never runs)"
+      "answer": "The walrus operator sets n to 0, which is falsy, so the body never runs and after prints.\n\ncode:\nn = 0\nwhile n:\n    print(\"never\")\nprint(\"after\")\n\nreal example:\nGuarding a routine that must stay switched off using a falsy switch."
     },
     {
       "id": 37,
       "question": "What does this print?\nn = 0\nwhile n < 3:\n    n += 1\n    if n == 2:\n        break\nelse:\n    print(\"done\")",
-      "answer": "(nothing printed) - else is skipped because of break"
+      "answer": "break at n == 2 interrupts the loop, so the else is skipped and nothing prints.\n\ncode:\nn = 0\nwhile n < 3:\n    n += 1\n    if n == 2:\n        break\nelse:\n    print(\"done\")\n\nreal example:\nLeaving a loop via break without reporting completion."
     },
     {
       "id": 38,
       "question": "What does this print?\ntotal = 0\ni = 1\nwhile i <= 10:\n    if i % 2 == 0:\n        total += i\n    i += 1\nprint(total)",
-      "answer": "30"
+      "answer": "Even numbers 2, 4, 6, 8, 10 sum to 30.\n\ncode:\ntotal = 0\ni = 1\nwhile i <= 10:\n    if i % 2 == 0:\n        total += i\n    i += 1\nprint(total)\n\nreal example:\nSumming only even-numbered bills in a month."
     },
     {
       "id": 39,
       "question": "What does this print?\nn = 5\nfactorial = 1\nwhile n > 0:\n    factorial *= n\n    n -= 1\nprint(factorial)",
-      "answer": "120"
+      "answer": "factorial multiplies 5 * 4 * 3 * 2 * 1 = 120.\n\ncode:\nn = 5\nfactorial = 1\nwhile n > 0:\n    factorial *= n\n    n -= 1\nprint(factorial)\n\nreal example:\nCounting the ways to arrange five order items."
     },
     {
       "id": 40,
       "question": "What does this print?\nnum = 123\nsum_digits = 0\nwhile num > 0:\n    sum_digits += num % 10\n    num //= 10\nprint(sum_digits)",
-      "answer": "6 (1+2+3)"
+      "answer": "Each pass takes the last digit with % 10 and strips it with // 10, adding 1 + 2 + 3 = 6.\n\ncode:\nnum = 123\nsum_digits = 0\nwhile num > 0:\n    sum_digits += num % 10\n    num //= 10\nprint(sum_digits)\n\nreal example:\nAdding the digits of a number for a checksum."
     },
     {
       "id": 41,
       "question": "What does this print?\nnum = 987\ncount_digits = 0\nwhile num > 0:\n    count_digits += 1\n    num //= 10\nprint(count_digits)",
-      "answer": "3"
+      "answer": "Dividing by 10 removes one digit per pass, and 987 has 3 digits, so 3 prints.\n\ncode:\nnum = 987\ncount_digits = 0\nwhile num > 0:\n    count_digits += 1\n    num //= 10\nprint(count_digits)\n\nreal example:\nCounting how many digits a phone number has."
     },
     {
       "id": 42,
       "question": "What does this print?\nnums = [1, 2, 3, 4]\navg = 0\ni = 0\nwhile i < len(nums):\n    avg += nums[i]\n    i += 1\navg /= len(nums)\nprint(avg)",
-      "answer": "2.5"
+      "answer": "(1 + 2 + 3 + 4) / 4 = 2.5.\n\ncode:\nnums = [1, 2, 3, 4]\navg = sum(nums) / len(nums)\nprint(avg)\n\nreal example:\nFinding the average order size in a shop."
     },
     {
       "id": 43,
       "question": "What does this print?\nitems = [5, 10, 15]\ntotal = 0\nwhile items:\n    total += items.pop()\nprint(total)",
-      "answer": "30 (pops from the end)"
+      "answer": "pop removes from the end each time, so total is 15 + 10 + 5 = 30 and the list empties.\n\ncode:\nitems = [5, 10, 15]\ntotal = 0\nwhile items:\n    total += items.pop()\nprint(total)\n\nreal example:\nEmptying a stack of loads and summing their weight."
     },
     {
       "id": 44,
       "question": "What does this print?\nq = [\"a\", \"b\", \"c\"]\nwhile q:\n    print(q.pop(0), end=\" \")",
-      "answer": "a b c "
+      "answer": "pop(0) removes from the front, so the items print in order: a b c.\n\ncode:\nq = [\"a\", \"b\", \"c\"]\nwhile q:\n    print(q.pop(0), end=\" \")\n\nreal example:\nProcessing a queue in first-in, first-out order."
     },
     {
       "id": 45,
       "question": "What does this print?\nn = 2\nwhile n < 100:\n    n = n ** 2\n    print(n)",
-      "answer": "4\n16\n256"
+      "answer": "n squares each pass: 4, then 16, then 256 which stops the loop since it is not under 100.\n\ncode:\nn = 2\nwhile n < 100:\n    n = n ** 2\n    print(n)\n\nreal example:\nModelling a value exploding past an upper bound."
     },
     {
       "id": 46,
       "question": "What does this print?\nsecret = 7\nguess = 3\nattempts = 0\nwhile guess != secret:\n    attempts += 1\n    guess += 2\nprint(attempts)",
-      "answer": "2 (3 -> 5 -> 7)"
+      "answer": "guess advances 3 -> 5 -> 7, needing exactly 2 attempts.\n\ncode:\nsecret = 7\nguess = 3\nattempts = 0\nwhile guess != secret:\n    attempts += 1\n    guess += 2\nprint(attempts)\n\nreal example:\nCounting how many price bumps it takes to reach a target."
     },
     {
       "id": 47,
       "question": "What does this print?\ncount = 1\nwhile count <= 4:\n    print(\"*\" * count)\n    count += 1",
-      "answer": "*\n**\n***\n****"
+      "answer": "count repeats the star to draw rows of length 1 to 4: *, **, ***, ****.\n\ncode:\ncount = 1\nwhile count <= 4:\n    print(\"*\" * count)\n    count += 1\n\nreal example:\nDrawing a growing bar for a simple chart."
     },
     {
       "id": 48,
       "question": "What does this print?\na, b = 0, 1\nwhile a < 10:\n    print(a, end=\" \")\n    a, b = b, a + b",
-      "answer": "0 1 1 2 3 5 8 "
+      "answer": "a and b shift to the next Fibonacci pair, printing 0 1 1 2 3 5 8.\n\ncode:\na, b = 0, 1\nwhile a < 10:\n    print(a, end=\" \")\n    a, b = b, a + b\n\nreal example:\nGenerating a growth sequence for lesson spacing."
     },
     {
       "id": 49,
       "question": "How would you ask for input until the user enters a number?",
-      "answer": "while True:\n    value = input(\"...\")\n    if value.isdigit():\n        break"
+      "answer": "Loop forever, read input each time, and break once it passes a digit check.\n\ncode:\nwhile True:\n    value = input(\"enter a number: \")\n    if value.isdigit():\n        break\nprint(\"got\", value)\n\nreal example:\nRe-prompting a user until they type a valid age."
     },
     {
       "id": 50,
       "question": "What does this print?\nlow, high = 0, 100\nmid = 50\nsteps = 0\ntarget = 42\nwhile mid != target:\n    steps += 1\n    if mid < target:\n        low = mid + 1\n    else:\n        high = mid - 1\n    mid = (low + high) // 2\nprint(steps)",
-      "answer": "6 (50 -> 24 -> 37 -> 43 -> 40 -> 41 -> 42)"
+      "answer": "Binary search halves the range each time: 50, 24, 37, 43, 40, 41, 42, taking 6 steps.\n\ncode:\nlow, high = 0, 100\nmid = 50\nsteps = 0\ntarget = 42\nwhile mid != target:\n    steps += 1\n    if mid < target:\n        low = mid + 1\n    else:\n        high = mid - 1\n    mid = (low + high) // 2\nprint(steps)\n\nreal example:\nGuessing a number in a game by halving the range each round."
     },
     {
       "id": 51,
       "question": "What does this print?\ncounter = 3\nwhile counter:\n    counter -= 1\n    if counter == 1:\n        continue\n    print(counter)",
-      "answer": "2\n0 (start 3 -> counter 2 printed -> counter 1 skipped -> counter 0 printed)"
+      "answer": "counter becomes 2 (printed), then 1 is skipped, then 0 is printed and 0 is falsy, so the loop ends.\n\ncode:\ncounter = 3\nwhile counter:\n    counter -= 1\n    if counter == 1:\n        continue\n    print(counter)\n\nreal example:\nLogging progress steps but skipping a specific milestone."
     },
     {
       "id": 52,
       "question": "What does this print?\nn = 0\nwhile n < 5:\n    n += 1\n    if n == 3:\n        continue\n    print(n)",
-      "answer": "1\n2\n4\n5"
+      "answer": "continue skips the number 3, so 1, 2, 4, 5 print.\n\ncode:\nn = 0\nwhile n < 5:\n    n += 1\n    if n == 3:\n        continue\n    print(n)\n\nreal example:\nRecording readings while omitting one clearly bad sample."
     },
     {
       "id": 53,
       "question": "What does this print?\nx = 1\nwhile x < 20:\n    x *= 3\nprint(x)",
-      "answer": "27"
+      "answer": "x triples 1 -> 3 -> 9 -> 27, and 27 is not under 20, so 27 prints.\n\ncode:\nx = 1\nwhile x < 20:\n    x *= 3\nprint(x)\n\nreal example:\nTripling a bet size until it passes a limit."
     },
     {
       "id": 54,
       "question": "What does this print?\nis_prime = True\nn = 2\ndivisor = 2\nwhile divisor * divisor <= n:\n    if n % divisor == 0:\n        is_prime = False\n        break\n    divisor += 1\nprint(is_prime)",
-      "answer": "True (2 is prime)"
+      "answer": "2 is prime, so the divisor test never finds a factor and True prints.\n\ncode:\ndef is_prime(n):\n    d = 2\n    while d * d <= n:\n        if n % d == 0:\n            return False\n        d += 1\n    return True\nprint(is_prime(2))\n\nreal example:\nQuickly checking small numbers in a random draw."
     },
     {
       "id": 55,
       "question": "What does this print?\nn = 9\ndivisor = 2\nis_prime = True\nwhile divisor * divisor <= n:\n    if n % divisor == 0:\n        is_prime = False\n        break\n    divisor += 1\nprint(is_prime)",
-      "answer": "False (9 = 3x3)"
+      "answer": "9 divides evenly by 3, so is_prime becomes False and False prints.\n\ncode:\ndef is_prime(n):\n    d = 2\n    while d * d <= n:\n        if n % d == 0:\n            return False\n        d += 1\n    return True\nprint(is_prime(9))\n\nreal example:\nFiltering composite numbers out of a candidate list."
     },
     {
       "id": 56,
       "question": "What does this print?\ndoubles = 1\nwhile doubles < 64:\n    doubles *= 2\nprint(doubles)",
-      "answer": "64"
+      "answer": "doubles goes 1, 2, 4, ..., 64; at 64 the condition fails, so 64 prints.\n\ncode:\ndoubles = 1\nwhile doubles < 64:\n    doubles *= 2\nprint(doubles)\n\nreal example:\nFinding the smallest power of two that meets a size requirement."
     },
     {
       "id": 57,
       "question": "What does this print?\nline = 1\nwhile line <= 3:\n    spaces = 3 - line\n    print(\" \" * spaces + \"*\" * line)\n    line += 1",
-      "answer": "  *\n **\n***"
+      "answer": "Each row has fewer spaces and more stars, drawing a right-leaning triangle.\n\ncode:\nline = 1\nwhile line <= 3:\n    print(\" \" * (3 - line) + \"*\" * line)\n    line += 1\n\nreal example:\nAligning bars in a simple sideways chart."
     },
     {
       "id": 58,
       "question": "What does this print?\nremainder = 100\nwhile remainder >= 10:\n    remainder -= 30\nprint(remainder)",
-      "answer": "-20 (100 -> 70 -> 40 -> 10 -> -20, then -20 is not >= 10)"
+      "answer": "100 -> 70 -> 40 -> 10 -> -20; -20 fails the check, so -20 prints.\n\ncode:\nremainder = 100\nwhile remainder >= 10:\n    remainder -= 30\nprint(remainder)\n\nreal example:\nReducing a total in fixed chunks and reading the leftover."
     },
     {
       "id": 59,
       "question": "What does this print?\nval = 5\nwhile val:\n    print(val)\n    val -= 2",
-      "answer": "5\n3\n1"
+      "answer": "It never stops. It prints 5, 3, 1, -1, -3 and keeps going, because negative numbers are still truthy.\n\ncode:\nval = 5\nwhile val > 0:\n    print(val)\n    val -= 2\n\nreal example:\nAlways use a clear condition like val > 0, or the loop may run forever."
     },
     {
       "id": 60,
       "question": "What does this print?\nval = 4\nwhile val:\n    print(val)\n    val -= 2",
-      "answer": "4\n2"
+      "answer": "4 then 2 print, then val becomes 0 which is falsy, ending the loop.\n\ncode:\nval = 4\nwhile val:\n    print(val)\n    val -= 2\n\nreal example:\nStepping a value down to its zero starting point."
     },
     {
       "id": 61,
       "question": "What does this print?\nn = 7\nwhile n:\n    n //= 2\n    print(n)",
-      "answer": "3\n1\n0"
+      "answer": "Floor division gives 3, then 1, then 0; 0 is falsy so the loop stops there.\n\ncode:\nn = 7\nwhile n:\n    n //= 2\n    print(n)\n\nreal example:\nHalving a number until it reaches zero for a bit-counting trick."
     },
     {
       "id": 62,
       "question": "What does this print?\ntotal = 0\nnum = 3\nwhile num <= 9:\n    total += num\n    num += 3\nprint(total)",
-      "answer": "18 (3+6+9)"
+      "answer": "3 + 6 + 9 = 18.\n\ncode:\ntotal = 0\nnum = 3\nwhile num <= 9:\n    total += num\n    num += 3\nprint(total)\n\nreal example:\nAdding up every third dollar amount in a period."
     },
     {
       "id": 63,
       "question": "What does this print?\ns = \"hello\"\ni = 0\nwhile i < len(s):\n    print(s[i], end=\"-\")\n    i += 1",
-      "answer": "h-e-l-l-o-"
+      "answer": "Each character prints followed by a dash, giving h-e-l-l-o-.\n\ncode:\ns = \"hello\"\ni = 0\nwhile i < len(s):\n    print(s[i], end=\"-\")\n    i += 1\n\nreal example:\nSpacing out the letters of a license plate."
     },
     {
       "id": 64,
       "question": "What does this print?\nmatch_count = 0\nn = 1\nwhile n <= 6:\n    if n % 3 == 0:\n        match_count += 1\n    n += 1\nprint(match_count)",
-      "answer": "2 (3 and 6)"
+      "answer": "Only 3 and 6 are divisible by 3, so match_count is 2.\n\ncode:\nmatch_count = 0\nn = 1\nwhile n <= 6:\n    if n % 3 == 0:\n        match_count += 1\n    n += 1\nprint(match_count)\n\nreal example:\nCounting the on-time slots in a six-part schedule."
     },
     {
       "id": 65,
       "question": "What does this print?\ncount = 0\nwhile count < 3:\n    print(\"outer\")\n    inner = 0\n    while inner < 1:\n        print(\"  inner\")\n        inner += 1\n    count += 1",
-      "answer": "outer\n  inner\nouter\n  inner\nouter\n  inner"
+      "answer": "The outer loop runs 3 times and each time runs its inner loop once, producing three outer/inner pairs.\n\ncode:\ncount = 0\nwhile count < 3:\n    print(\"outer\")\n    inner = 0\n    while inner < 1:\n        print(\"  inner\")\n        inner += 1\n    count += 1\n\nreal example:\nLogging each batch and then a sub-step within it."
     },
     {
       "id": 66,
       "question": "What is the difference between break and continue?",
-      "answer": "break exits the whole loop; continue skips only the current iteration"
+      "answer": "break ends the whole loop immediately; continue skips only the current iteration and moves to the next one.\n\ncode:\nfor i in range(5):\n    if i == 2:\n        continue\n    if i == 4:\n        break\n    print(i)\n\nreal example:\nSkipping bad records with continue but stopping the batch with break."
     },
     {
       "id": 67,
       "question": "What does this print?\nn = 2\nwhile n != 16:\n    if n == 8:\n        break\n    n *= 2\nprint(n)",
-      "answer": "8"
+      "answer": "n doubles 2, 4, 8 and breaks at 8, printing 8.\n\ncode:\nn = 2\nwhile n != 16:\n    if n == 8:\n        break\n    n *= 2\nprint(n)\n\nreal example:\nDoubling a measure but stopping at a known intermediate value."
     },
     {
       "id": 68,
       "question": "What does this print?\ns = \"python\"\nrev = \"\"\ni = len(s) - 1\nwhile i >= 0:\n    rev += s[i]\n    i -= 1\nprint(rev)",
-      "answer": "nohtyp"
+      "answer": "Reading from the last character backwards builds the reverse: nohtyp.\n\ncode:\ns = \"python\"\nrev = \"\"\ni = len(s) - 1\nwhile i >= 0:\n    rev += s[i]\n    i -= 1\nprint(rev)\n\nreal example:\nReversing a confirmation code before storing it."
     },
     {
       "id": 69,
       "question": "What does this print?\nnum = 6\nwhile num > 0:\n    if num == 3:\n        break\n    print(num)\n    num -= 1",
-      "answer": "6\n5\n4"
+      "answer": "num prints 6, 5, 4 and breaks when it reaches 3.\n\ncode:\nnum = 6\nwhile num > 0:\n    if num == 3:\n        break\n    print(num)\n    num -= 1\n\nreal example:\nCounting down but stopping early at a warning level."
     },
     {
       "id": 70,
       "question": "While loops use a condition. Which value makes a while loop run at least once guaranteed?",
-      "answer": "None guaranteed - the condition is checked first. Use a do-while pattern (run body, then check) if needed."
+      "answer": "None. The condition is checked before the body, so even a True condition guarantees nothing about prior runs. Use a do-while style pattern if you must run once.\n\ncode:\nwhile True:\n    check()\n    if done():\n        break\n\nreal example:\nAsking for confirmation at least once before giving up."
     },
     {
       "id": 71,
       "question": "What does this print?\nx = 5\nwhile x:\n    x -= 1\n    if x % 2 == 0:\n        print(x)",
-      "answer": "4\n2\n0"
+      "answer": "The loop prints x whenever it is even after decrementing: 4, 2, 0.\n\ncode:\nx = 5\nwhile x:\n    x -= 1\n    if x % 2 == 0:\n        print(x)\n\nreal example:\nCollecting the even remaining balances during a countdown."
     },
     {
       "id": 72,
       "question": "What does this print?\nstack = [1, 2, 3]\nwhile stack:\n    print(stack.pop())\n    if len(stack) == 1:\n        break",
-      "answer": "3\n2 (breaks when one item left)"
+      "answer": "pop prints 3, then 2, and breaks once one item remains, so the 1 is never printed.\n\ncode:\nstack = [1, 2, 3]\nwhile len(stack) > 1:\n    print(stack.pop())\n\nreal example:\nUnloading boxes but leaving the bottom one in place."
     },
     {
       "id": 73,
       "question": "What does this print?\nn = 0\nwhile n < 4:\n    n += 1\n    if n % 2 == 1:\n        continue\n    print(\"even:\", n)",
-      "answer": "even: 2\neven: 4"
+      "answer": "continue skips odd n, so only even: 2 and even: 4 print.\n\ncode:\nn = 0\nwhile n < 4:\n    n += 1\n    if n % 2 == 1:\n        continue\n    print(\"even:\", n)\n\nreal example:\nFlagging only the even rounds of a tournament."
     },
     {
       "id": 74,
       "question": "What does this print?\na = 0\nb = 5\nwhile a < b:\n    a += 2\nprint(a)",
-      "answer": "6 (0->2->4->6, then 6 < 5 is False)"
+      "answer": "a goes 0 -> 2 -> 4 -> 6, and 6 < 5 is False, so 6 prints.\n\ncode:\na = 0\nb = 5\nwhile a < b:\n    a += 2\nprint(a)\n\nreal example:\nRaising a bid in increments until it passes the opponent's offer."
     },
     {
       "id": 75,
       "question": "What does this print?\ntries = 0\nwhile tries < 3:\n    tries += 1\nelse:\n    print(\"max tries reached\")\nprint(\"after\")",
-      "answer": "max tries reached\nafter"
+      "answer": "The loop finishes normally, so the else prints, then after prints too.\n\ncode:\ntries = 0\nwhile tries < 3:\n    tries += 1\nelse:\n    print(\"max tries reached\")\nprint(\"after\")\n\nreal example:\nReporting after the last allowed login attempt is used up."
     },
     {
       "id": 76,
       "question": "What does this print?\ntries = 0\nwhile tries < 3:\n    tries += 1\n    if tries == 2:\n        break\nelse:\n    print(\"max tries reached\")\nprint(\"after\")",
-      "answer": "after (else skipped because break fired)"
+      "answer": "break at tries == 2 skips the else, so only after prints.\n\ncode:\ntries = 0\nwhile tries < 3:\n    tries += 1\n    if tries == 2:\n        break\nelse:\n    print(\"max tries reached\")\nprint(\"after\")\n\nreal example:\nLeaving an attempt loop early once a success occurs."
     },
     {
       "id": 77,
       "question": "What does this print?\nval = 0\nwhile val >= 0:\n    if val > 3:\n        break\n    print(val)\n    val += 1\nelse:\n    print(\"loop done\")",
-      "answer": "0\n1\n2\n3 (break at val 4 exits, so else does not print)"
+      "answer": "val prints 0, 1, 2, 3 and break fires at 4, so the else never runs.\n\ncode:\nval = 0\nwhile val >= 0:\n    if val > 3:\n        break\n    print(val)\n    val += 1\nelse:\n    print(\"loop done\")\n\nreal example:\nScanning a range but stopping at a hard limit, skipping the completion message."
     },
     {
       "id": 78,
       "question": "What does this print?\nval = 0.5\ntime = 0\nwhile val >= 0.1:\n    val *= 0.5\n    time += 1\nprint(time)",
-      "answer": "3 (0.5 -> 0.25 -> 0.125 -> 0.0625 which is < 0.1)"
+      "answer": "val halves 0.5 -> 0.25 -> 0.125 -> 0.0625; the last is below 0.1, so time is 3.\n\ncode:\nval = 0.5\ntime = 0\nwhile val >= 0.1:\n    val *= 0.5\n    time += 1\nprint(time)\n\nreal example:\nCounting how many halvings until a dose falls below a threshold."
     },
     {
       "id": 79,
       "question": "What does this print?\nm = 10\nwhile m > 0:\n    if m == 3:\n        m = 0\n        continue\n    print(m)\n    m -= 1",
-      "answer": "10\n9\n8\n7\n6\n5\n4 (at m==3, sets m=0 and continues -> loop checks 0 > 0 which is False, stops)"
+      "answer": "10 through 4 print, then at 3 m becomes 0 and continue jumps to the check, ending the loop.\n\ncode:\nm = 10\nwhile m > 0:\n    if m == 3:\n        m = 0\n        continue\n    print(m)\n    m -= 1\n\nreal example:\nAborting a countdown early once a special value is hit."
     },
     {
       "id": 80,
       "question": "What does this print?\np = 1\nwhile p < 7:\n    p += 2\n    if p == 5:\n        continue\nprint(p)",
-      "answer": "7 (1->3->5 skipped print, continue -> check 5<7 True -> p=7 -> 7<7 False -> stop)"
+      "answer": "p climbs 1 -> 3 -> 5 -> 7; the continue at 5 just skips nothing here, and 7 ends the loop, printing 7.\n\ncode:\np = 1\nwhile p < 7:\n    p += 2\n    if p == 5:\n        continue\nprint(p)\n\nreal example:\nAdvancing a counter by twos until it passes a cap."
     },
     {
       "id": 81,
       "question": "What does this print?\nscores = [70, 85, 92]\ni = 0\npassed = 0\nwhile i < len(scores):\n    if scores[i] >= 80:\n        passed += 1\n    i += 1\nprint(passed)",
-      "answer": "2"
+      "answer": "85 and 92 meet the 80 threshold, so passed is 2.\n\ncode:\nscores = [70, 85, 92]\npassed = len([s for s in scores if s >= 80])\nprint(passed)\n\nreal example:\nCounting how many students passed an exam."
     },
     {
       "id": 82,
       "question": "What does this print?\nv = 1\nwhile v * v < 50:\n    v += 1\nprint(v)",
-      "answer": "8 (7*7=49 < 50, 8*8=64 >= 50)"
+      "answer": "7*7 = 49 is under 50 but 8*8 = 64 is not, so v stops at 8.\n\ncode:\nv = 1\nwhile v * v < 50:\n    v += 1\nprint(v)\n\nreal example:\nFinding the smallest square plot size that fits a field."
     },
     {
       "id": 83,
       "question": "What does this print?\ngcd = 0\na, b = 24, 18\nwhile b:\n    a, b = b, a % b\nprint(a)",
-      "answer": "6 (Euclidean algorithm, GCD of 24 and 18)"
+      "answer": "The Euclidean algorithm replaces (a, b) with (b, a % b): 24, 18 -> 18, 6 -> 6, 0, leaving 6 as the GCD.\n\ncode:\na, b = 24, 18\nwhile b:\n    a, b = b, a % b\nprint(a)\n\nreal example:\nFinding the largest tile size that fits two room dimensions."
     },
     {
       "id": 84,
       "question": "What does this print?\na, b = 12, 8\nwhile b:\n    a, b = b, a % b\nprint(a)",
-      "answer": "4"
+      "answer": "The steps are 12, 8 -> 8, 4 -> 4, 0, so the GCD prints as 4.\n\ncode:\na, b = 12, 8\nwhile b:\n    a, b = b, a % b\nprint(a)\n\nreal example:\nSimplifying a fraction like 12/8 to its lowest terms."
     },
     {
       "id": 85,
       "question": "What does this print?\nn = 3\nmax_so_far = 1\nwhile n > 0:\n    product = 1\n    factor = n\n    while factor > 0:\n        product *= factor\n        factor -= 1\n    if product > max_so_far:\n        max_so_far = product\n    n -= 1\nprint(max_so_far)",
-      "answer": "6 (factorials: 3!=6, 2!=2, 1!=1)"
+      "answer": "The inner loop computes factorials 3! = 6, 2! = 2, 1! = 1, and the largest is 6.\n\ncode:\nfrom math import factorial\nn = 3\nprint(max(factorial(k) for k in range(1, n + 1)))\n\nreal example:\nFinding the largest number of arrangements across several group sizes."
     },
     {
       "id": 86,
       "question": "What does this print?\nnum = 10\nwhile num > 0:\n    num //= 2\n    print(num, end=\" \")",
-      "answer": "5 2 1 0 "
+      "answer": "Floor division gives 5, 2, 1, 0 and the loop ends at 0: 5 2 1 0.\n\ncode:\nnum = 10\nwhile num > 0:\n    num //= 2\n    print(num, end=\" \")\n\nreal example:\nRecording each halving step when compressing a file."
     },
     {
       "id": 87,
       "question": "What does this print?\narr = [1, 3, 5, 7]\ni = 0\nfound = \"no\"\nwhile i < len(arr):\n    if arr[i] == 5:\n        found = \"yes\"\n        break\n    i += 1\nprint(found)",
-      "answer": "yes"
+      "answer": "The loop finds 5 at index 2, sets found to yes, breaks, and yes prints.\n\ncode:\narr = [1, 3, 5, 7]\nprint(\"yes\" if 5 in arr else \"no\")\n\nreal example:\nChecking whether a product ID exists in a catalog."
     },
     {
       "id": 88,
       "question": "What does this print?\nc = 0\nwhile c < 5:\n    c = c + 1 if c < 3 else c + 2\nprint(c)",
-      "answer": "5 (0 -> 1 -> 2 -> 3 -> 5, then 5 < 5 is False)"
+      "answer": "c steps 0 -> 1 -> 2 -> 3 -> 5, and 5 is not under 5, so it stops and prints 5.\n\ncode:\nc = 0\nwhile c < 5:\n    c = c + 1 if c < 3 else c + 2\nprint(c)\n\nreal example:\nAccelerating a counter once it passes a certain point."
     },
     {
       "id": 89,
       "question": "What does this print?\nn = 1\nwhile n <= 32:\n    n *= 2\n    if n == 32:\n        break\nelse:\n    print(\"done\")",
-      "answer": "Nothing printed (break at 32 skips the else clause)"
+      "answer": "break fires when n reaches 32, so the else is skipped and nothing prints.\n\ncode:\nn = 1\nwhile n <= 32:\n    n *= 2\n    if n == 32:\n        break\nelse:\n    print(\"done\")\n\nreal example:\nHalting at a target size and suppressing the completion notice."
     },
     {
       "id": 90,
       "question": "What does this print?\nsteps = 0\ndistance = 100\nwhile distance > 1:\n    distance /= 2\n    steps += 1\nprint(steps)",
-      "answer": "7 (100 -> 50 -> 25 -> 12.5 -> 6.25 -> 3.125 -> 1.5625 -> 0.78)"
+      "answer": "Halving 100 takes 7 divisions to fall below 1: 100, 50, 25, 12.5, 6.25, 3.125, 1.5625, 0.78.\n\ncode:\nsteps = 0\nd = 100\nwhile d > 1:\n    d /= 2\n    steps += 1\nprint(steps)\n\nreal example:\nEstimating how many widenings until a gap shrinks below one meter."
     },
     {
       "id": 91,
       "question": "What does this print?\ncount = 0\nwhile count < 10:\n    count += 3\n    if count > 8:\n        break\nprint(count)",
-      "answer": "9 (0->3->6->9, 9>8 so break)"
+      "answer": "count goes 0 -> 3 -> 6 -> 9, which exceeds 8 and triggers break, printing 9.\n\ncode:\ncount = 0\nwhile count < 10:\n    count += 3\n    if count > 8:\n        break\nprint(count)\n\nreal example:\nLoading items in batches of three and stopping at the last batch."
     },
     {
       "id": 92,
       "question": "What does this print?\nplaying = True\nscore = 0\nwhile playing:\n    score += 10\n    if score == 30:\n        playing = False\nprint(score)",
-      "answer": "30"
+      "answer": "score gains 10 three times to reach 30, then the flag turns False and the loop ends.\n\ncode:\nplaying = True\nscore = 0\nwhile playing:\n    score += 10\n    if score == 30:\n        playing = False\nprint(score)\n\nreal example:\nEarning points until a round reaches its target score."
     },
     {
       "id": 93,
       "question": "What does this print?\nval = 1\nstreak = 0\nwhile val < 20:\n    streak += 1\n    val *= 3\nprint(streak)",
-      "answer": "3 (1->3->9->27)"
+      "answer": "val triples 1 -> 3 -> 9 -> 27, needing 3 steps to pass 20, so streak is 3.\n\ncode:\nval = 1\nstreak = 0\nwhile val < 20:\n    streak += 1\n    val *= 3\nprint(streak)\n\nreal example:\nCounting the doublings until savings surpass a target."
     },
     {
       "id": 94,
       "question": "What does this print?\nword = \"aab\"\nresult = \"\"\ni = len(word) - 1\nwhile i >= 0:\n    result += word[i] * 2\n    i -= 1\nprint(result)",
-      "answer": "bbaaaa (doubling chars from the end: b b, a a, a a)"
+      "answer": "Starting from the end, each character doubles and appends: bb, then aa, then aa, giving bbaaaa.\n\ncode:\nword = \"aab\"\nresult = \"\".join(ch * 2 for ch in reversed(word))\nprint(result)\n\nreal example:\nRepeating the last letters of a code for emphasis."
     },
     {
       "id": 95,
       "question": "What does this print?\nn = 0\nwhile n < 3:\n    n += 1\n    if n == 1:\n        continue\n    print(n)",
-      "answer": "2\n3"
+      "answer": "continue skips 1, so only 2 and 3 print.\n\ncode:\nn = 0\nwhile n < 3:\n    n += 1\n    if n == 1:\n        continue\n    print(n)\n\nreal example:\nShowing scores while hiding the very first round."
     },
     {
       "id": 96,
       "question": "True or False: a while loop should always be used for iterating over a known range of numbers.",
-      "answer": "False - use a for loop when the number of iterations is known"
+      "answer": "False. When the number of iterations is known in advance, a for loop over a range or list is the clearer choice.\n\ncode:\nfor i in range(5):\n    print(i)\n\nreal example:\nProcessing exactly ten known customer records."
     },
     {
       "id": 97,
       "question": "What does this print?\ntext = list(\"abc\")\nwhile len(text) > 1:\n    text.pop()\nprint(text)",
-      "answer": "['a']"
+      "answer": "pop removes from the end until only one element remains, leaving ['a'].\n\ncode:\ntext = list(\"abc\")\nwhile len(text) > 1:\n    text.pop()\nprint(text)\n\nreal example:\nShrinking a list down to its first entry for a quick peek."
     },
     {
       "id": 98,
       "question": "What does this print?\ncash = 100\nprice = 7\nitems = 0\nwhile cash >= price:\n    cash -= price\n    items += 1\nprint(items, cash)",
-      "answer": "14 2 (14 items for 98, 2 left)"
+      "answer": "14 items cost 98, leaving 2, so 14 2 prints.\n\ncode:\ncash = 100\nprice = 7\nitems = 0\nwhile cash >= price:\n    cash -= price\n    items += 1\nprint(items, cash)\n\nreal example:\nWorking out how many sodas fit a day's snack budget."
     },
     {
       "id": 99,
       "question": "What does this print?\nn = 1234\nrev = 0\nwhile n > 0:\n    rev = rev * 10 + n % 10\n    n //= 10\nprint(rev)",
-      "answer": "4321"
+      "answer": "Each pass shifts rev and appends the last digit, building 4, 43, 432, 4321.\n\ncode:\nn = 1234\nrev = 0\nwhile n > 0:\n    rev = rev * 10 + n % 10\n    n //= 10\nprint(rev)\n\nreal example:\nReversing a number for a palindromic check."
     },
     {
       "id": 100,
       "question": "What does this print?\nx = 2\npower = 0\nwhile x ** power < 1000:\n    power += 1\nprint(power - 1)",
-      "answer": "9 (2^9=512 < 1000, 2^10=1024 >= 1000; loop ends with power=10, prints 9)"
+      "answer": "2^9 = 512 is under 1000 but 2^10 = 1024 is not, so the loop leaves power at 10 and prints 9.\n\ncode:\nx = 2\npower = 0\nwhile x ** power < 1000:\n    power += 1\nprint(power - 1)\n\nreal example:\nFinding the largest power of two still below a storage limit."
     }
   ]
 }

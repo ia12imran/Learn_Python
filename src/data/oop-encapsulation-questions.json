@@ -4,502 +4,502 @@
     {
       "id": 1,
       "question": "Predict the output (an instance member stored with a single leading underscore):\n\n```python\nclass A:\n    def __init__(self):\n        self._x = 10\n\na = A()\nprint(a.__dict__)\n```",
-      "answer": "{'_x': 10}. A single leading underscore is only a PEP 8 'use me via the protected API' naming convention. It is NOT enforced by the interpreter (\"we are all consenting adults\"), so the attribute is stored literally under the key '_x' with no transformation."
+      "answer": "Output: {'_x': 10}. A single leading underscore is only a naming convention warning other developers; Python stores the attribute exactly as written, with no renaming.\n\ncode:\nclass A:\n    def __init__(self):\n        self._x = 10\n\na = A()\nprint(a.__dict__)  # {'_x': 10}\n\nreal example:\nFramework authors mark internal helpers with one underscore to signal 'not part of the public API'."
     },
     {
       "id": 2,
       "question": "Predict the output:\n\n```python\nclass A:\n    def __init__(self):\n        self._hidden = 'secret'\n\na = A()\nprint(a._hidden)\n```",
-      "answer": "secret. The single-underscore prefix is a pure naming intention for other developers; Python performs no access check whatsoever, so external code reads and writes '_hidden' exactly like any public attribute."
+      "answer": "Output: secret. The single underscore performs no access control, so external code can read '_hidden' exactly like any public attribute.\n\ncode:\nclass A:\n    def __init__(self):\n        self._hidden = 'secret'\n\na = A()\nprint(a._hidden)  # secret\n\nreal example:\nLibrary internals prefixed with _ remain reachable by advanced users who accept the risk."
     },
     {
       "id": 3,
       "question": "Predict the output — how do protected and private attributes appear in __dict__?\n\n```python\nclass A:\n    def __init__(self):\n        self._prot = 1\n        self.__priv = 2\n\na = A()\nprint(list(a.__dict__.keys()))\n```",
-      "answer": "['_prot', '_A__priv']. The single-underscore name is stored verbatim, but the double-underscore name is name-mangled at compile time: inside class A, '__priv' becomes '_A__priv' (one leading underscore, class name, then the attribute name)."
+      "answer": "Output: ['_prot', '_A__priv']. The single underscore stays verbatim, but '__priv' is name-mangled at compile time to '_A__priv'.\n\ncode:\nclass A:\n    def __init__(self):\n        self._prot = 1\n        self.__priv = 2\n\na = A()\nprint(list(a.__dict__.keys()))  # ['_prot', '_A__priv']\n\nreal example:\nMangling lets a class hide its private fields behind a name that includes the class name."
     },
     {
       "id": 4,
       "question": "Predict the output — what is the ACTUAL stored attribute name after name mangling?\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(a.__dict__)\n```",
-      "answer": "{'_A__x': 10}. Inside class A, the identifier '__x' is mangled to '_A__x' ( '_' + 'A' + '__x' ). Only the mangled spelling is stored; no attribute literally named '__x' exists on the instance."
+      "answer": "Output: {'_A__x': 10}. Inside class A, the source name '__x' becomes '_A__x', so only the mangled spelling is stored on the instance.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(a.__dict__)  # {'_A__x': 10}\n\nreal example:\nA bank class stores its balance as _Account__balance, hidden from accidental external writes."
     },
     {
       "id": 5,
       "question": "Why does this raise an exception? Name the exact exception type.\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(a.__x)\n```",
-      "answer": "AttributeError: 'A' object has no attribute '__x'. Name mangling is a compile-time transformation applied ONLY to identifiers written inside the class body. The line 'a.__x' is in module scope, so the interpreter does not mangle it and looks for the literal attribute '__x', which does not exist (the real name is '_A__x')."
+      "answer": "It raises AttributeError: 'A' object has no attribute '__x'. Mangling only applies to identifiers written inside a class body, so module-level a.__x looks up the literal name '__x'.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(a.__x)  # AttributeError\n\nreal example:\nOutside code cannot hit the private field by its source name; it must know the mangled form."
     },
     {
       "id": 6,
       "question": "Predict the output — bypassing the privacy convention with the mangled name:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(a._A__x)\n```",
-      "answer": "10. Python does not enforce access restrictions; it merely renames '__x' to '_A__x'. Any code that knows the mangled spelling can read (or write) it directly, so privacy through mangling is only 'hard to accidentally hit', never a security boundary."
+      "answer": "Output: 10. Mangling only renames the attribute; anyone who knows '_A__x' can still read (or write) it, so it is a convention, not a security boundary.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(a._A__x)  # 10\n\nreal example:\nDebugging tools introspect private fields by accessing the mangled name directly."
     },
     {
       "id": 7,
       "question": "Predict the output:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(hasattr(a, '__x'))\nprint(hasattr(a, '_A__x'))\n```",
-      "answer": "False, then True. hasattr consults getattr with the string you passed verbatim: '__x' is never mangled (mangling only affects source identifiers inside a class body), so there is no such attribute, while '_A__x' matches the stored mangled name exactly."
+      "answer": "Output: False then True. hasattr passes the string to the lookup unchanged, so '__x' (never mangled outside a class body) is absent while '_A__x' exists.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(hasattr(a, '__x'))    # False\nprint(hasattr(a, '_A__x'))  # True\n\nreal example:\nDiagnostics check for the real mangled name when inspecting an object's hidden state."
     },
     {
       "id": 8,
       "question": "Predict the output:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(getattr(a, '__x', 'fallback'))\nprint(getattr(a, '_A__x'))\n```",
-      "answer": "'fallback', then 10. getattr also treats the name as a plain string and does no mangling, so the unmangled spelling falls back to the default, while the mangled string '_A__x' successfully reaches the stored value."
+      "answer": "Output: 'fallback' then 10. getattr also treats its string argument verbatim, so the unmangled spelling falls back while '_A__x' retrieves the value.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n\na = A()\nprint(getattr(a, '__x', 'fallback'))  # fallback\nprint(getattr(a, '_A__x'))            # 10\n\nreal example:\nDynamic attribute fetching must spell private names in their fully mangled form."
     },
     {
       "id": 9,
       "question": "Predict the output — mangling applies to class-level attributes too:\n\n```python\nclass A:\n    __y = 20\n\nprint('_A__y' in A.__dict__)\nprint('__y' in A.__dict__)\n```",
-      "answer": "True, then False. Class-level identifiers inside a class body are mangled exactly like method bodies: '__y' is rewritten to '_A__y' when A is built, so the class namespace holds the mangled key only."
+      "answer": "Output: True then False. Class-level '__y' is mangled like method bodies: the class namespace only holds the key '_A__y'.\n\ncode:\nclass A:\n    __y = 20\n\nprint('_A__y' in A.__dict__)  # True\nprint('__y' in A.__dict__)    # False\n\nreal example:\nClass-level private defaults are stored under their mangled names too."
     },
     {
       "id": 10,
       "question": "Predict the output:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 1\n        self.__y = 2\n\na = A()\nprint(a.__dict__)\n```",
-      "answer": "{'_A__x': 1, '_A__y': 2}. The character-by-character mangling rule '_ClassName__attr' is applied independently to each double-underscore identifier, so both are stored under their mangled keys with the class name prefix 'A'."
+      "answer": "Output: {'_A__x': 1, '_A__y': 2}. Each double-underscore name is mangled independently with the class-name prefix.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 1\n        self.__y = 2\n\na = A()\nprint(a.__dict__)  # {'_A__x': 1, '_A__y': 2}\n\nreal example:\nA class can keep several private settings, each hidden behind its own mangled key."
     },
     {
       "id": 11,
       "question": "Predict the output — a subclass sets a same-named double-underscore attribute:\n\n```python\nclass Parent:\n    def __init__(self):\n        self.__x = 1\n\nclass Child(Parent):\n    def __init__(self):\n        super().__init__()\n        self.__x = 2\n\nc = Child()\nprint(c._Parent__x, c._Child__x)\n```",
-      "answer": "1 2. Compile-time mangling uses the class the identifier appears in: Parent.__init__ writes '_Parent__x', Child.__init__ writes '_Child__x'. They are two completely distinct attributes, which is exactly why the child cannot silently overwrite the parent's private data."
+      "answer": "Output: 1 2. Mangling uses the class where the identifier appears: Parent writes '_Parent__x', Child writes '_Child__x', so they are two separate attributes.\n\ncode:\nclass Parent:\n    def __init__(self):\n        self.__x = 1\n\nclass Child(Parent):\n    def __init__(self):\n        super().__init__()\n        self.__x = 2\n\nc = Child()\nprint(c._Parent__x, c._Child__x)  # 1 2\n\nreal example:\nSubclasses can hold their own private data without overwriting the parent's."
     },
     {
       "id": 12,
       "question": "Why does this raise AttributeError? Explain precisely which mangled name is missing.\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\nclass B(A):\n    def method(self):\n        return self.__x\n\nb = B()\nprint(b.method())\n```",
-      "answer": "AttributeError: 'B' object has no attribute '_B__x'. A.__init__ stored the value as '_A__x', but B.method's source 'self.__x' is inside class B, so the compiler mangled it to '_B__x'. The instance has '_A__x' only, so the lookup fails. Mangling is static and class-of-definition-based, not dynamic."
+      "answer": "It raises AttributeError: 'B' object has no attribute '_B__x'. A.__init__ stored '_A__x', but B.method's '__x' is mangled to '_B__x', which does not exist.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n\nclass B(A):\n    def method(self):\n        return self.__x\n\nprint(B().method())  # AttributeError\n\nreal example:\nSubclass code cannot reach a parent's private field by the bare dunder spelling."
     },
     {
       "id": 13,
       "question": "Spot and fix the bug:\n\n```python\nclass A:\n    def __init__(self):\n        self.__danger = 1\n\nclass B(A):\n    def report(self):\n        return self.__danger\n\nb = B()\nprint(b.report())\n```\nHow must B.report be changed so it reads A's value?",
-      "answer": "The bug: in B.report, 'self.__danger' mangles to '_B__danger', which does not exist — only '_A__danger' does (set by A.__init__). Fix: access the mangled form explicitly, e.g. 'return self._A__danger'. The cleanest fix, however, is to let A expose its private value through its own method/property instead of reaching across the mangling boundary."
+      "answer": "The bug: in B.report, 'self.__danger' mangles to '_B__danger', which is never set because A stored '_A__danger'. Fix: return self._A__danger, or better, expose it via a parent method.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__danger = 1\n\nclass B(A):\n    def report(self):\n        return self._A__danger\n\nprint(B().report())  # 1\n\nreal example:\nDesign a public getter on the parent instead of reaching across the mangling boundary."
     },
     {
       "id": 14,
       "question": "Predict the output — two levels of inheritance:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\nclass B(A):\n    pass\n\nclass C(B):\n    def show(self):\n        return self.__x\n\nc = C()\nprint(c.show())\n```",
-      "answer": "AttributeError: 'C' object has no attribute '_C__x'. show is defined in C, so its '__x' is mangled to '_C__x'. A.__init__ stored '_A__x' and no intermediate class redefined '__x', so the only value lives under '_A__x' and the dispatch fails."
+      "answer": "It raises AttributeError: 'C' object has no attribute '_C__x'. show is defined in C, so its '__x' mangles to '_C__x', but the stored value is '_A__x'.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n\nclass B(A):\n    pass\n\nclass C(B):\n    def show(self):\n        return self.__x\n\nprint(C().show())  # AttributeError\n\nreal example:\nDeep hierarchies keep privacy per defining class, so intermediate gaps break access."
     },
     {
       "id": 15,
       "question": "Predict the output — explicit initializers in multiple inheritance:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 1\n\nclass B:\n    def __init__(self):\n        self.__x = 2\n\nclass C(A, B):\n    def __init__(self):\n        A.__init__(self)\n        B.__init__(self)\n        self.__x = 3\n\nc = C()\nprint(c._A__x, c._B__x, c._C__x)\n```",
-      "answer": "1 2 3. Each class body mangles its own '__x': A to '_A__x', B to '_B__x', C to '_C__x'. Calling the three __init__s explicitly therefore creates three separate instance attributes that happily coexist in the same __dict__."
+      "answer": "Output: 1 2 3. Each class mangles '__x' with its own name, and explicitly calling all three initializers creates three coexisting attributes.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 1\n\nclass B:\n    def __init__(self):\n        self.__x = 2\n\nclass C(A, B):\n    def __init__(self):\n        A.__init__(self)\n        B.__init__(self)\n        self.__x = 3\n\nc = C()\nprint(c._A__x, c._B__x, c._C__x)  # 1 2 3\n\nreal example:\nMultiple parents can each keep a same-named private value without collision."
     },
     {
       "id": 16,
       "question": "Predict the output — name mangling inside a nested class:\n\n```python\nclass Outer:\n    class Inner:\n        def __init__(self):\n            self.__secret = 42\n        def get(self):\n            return self.__secret\n\nobj = Outer.Inner()\nprint(obj._Inner__secret)\nprint(obj.get())\n```",
-      "answer": "42, then 42. Mangling uses the immediately enclosing class only, so inside Inner the name becomes '_Inner__secret'. Outer plays no role in the prefix; hence both the external mangled access and the method inside Inner succeed."
+      "answer": "Output: 42 then 42. Mangling uses only the immediately enclosing class, so inside Inner the name becomes '_Inner__secret'.\n\ncode:\nclass Outer:\n    class Inner:\n        def __init__(self):\n            self.__secret = 42\n        def get(self):\n            return self.__secret\n\nobj = Outer.Inner()\nprint(obj._Inner__secret)  # 42\nprint(obj.get())           # 42\n\nreal example:\nNested classes keep their own private state independent of outer class names."
     },
     {
       "id": 17,
       "question": "Predict the output — parent's private data vs. child's own method:\n\n```python\nclass Parent:\n    def __init__(self):\n        self.__value = 100\n    def parent_method(self):\n        return self.__value\n\nclass Child(Parent):\n    def child_method(self):\n        return self.__value\n\nc = Child()\nprint(c.parent_method())\nprint(c.child_method())\n```",
-      "answer": "100, then AttributeError: 'Child' object has no attribute '_Child__value'. c.parent_method() runs the method defined in Parent, so its '__value' is '_Parent__value' and finds 100. c.child_method() is defined in Child, mangles to '_Child__value', which was never created — key lesson: even though Child inherits the data, it cannot reference it by the bare dunder spelling."
+      "answer": "Output: 100 then AttributeError: 'Child' object has no attribute '_Child__value'. The parent method finds '_Parent__value', but child_method mangles to the child's name and fails.\n\ncode:\nclass Parent:\n    def __init__(self):\n        self.__value = 100\n    def parent_method(self):\n        return self.__value\n\nclass Child(Parent):\n    def child_method(self):\n        return self.__value\n\nc = Child()\nprint(c.parent_method())  # 100\nprint(c.child_method())   # AttributeError\n\nreal example:\nChild classes should use parent-provided getters rather than bare private names."
     },
     {
       "id": 18,
       "question": "Predict the output — a child method reaching the parent's mangled attribute via getattr:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 42\n\nclass B(A):\n    def parent_x(self):\n        return getattr(self, '_A__x')\n\nb = B()\nprint(b.parent_x())\n```",
-      "answer": "42. getattr receives the exact string '_A__x' as a runtime value, so no mangling is applied to it (mangling affects source identifiers only). The string is used verbatim and hits the attribute stored by A.__init__."
+      "answer": "Output: 42. getattr gets the exact string '_A__x', and no mangling is applied to runtime values, so the lookup reaches A's stored attribute.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 42\n\nclass B(A):\n    def parent_x(self):\n        return getattr(self, '_A__x')\n\nprint(B().parent_x())  # 42\n\nreal example:\nMangled names passed as runtime strings bypass source-level renaming entirely."
     },
     {
       "id": 19,
       "question": "Fill in the blank so that B can read the value set by A without error:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\nclass B(A):\n    def get_parent(self):\n        return self.____\n\nb = B()\nprint(b.get_parent())\n```",
-      "answer": "The blank must be '_A__x' (return self._A__x). Inside B, any bare '__x' is mangled to '_B__x' and missing, so the only reliable route to the parent's private attribute is the explicit mangled spelling '_A__x' matching what A.__init__ stored."
+      "answer": "The blank must be '_A__x', so the method returns self._A__x. Any bare '__x' in B mangles to '_B__x' and is missing.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n\nclass B(A):\n    def get_parent(self):\n        return self._A__x\n\nprint(B().get_parent())  # 10\n\nreal example:\nThe explicit mangled spelling is the only reliable route to a parent's private attribute."
     },
     {
       "id": 20,
       "question": "Predict the output — a parent-sourced private attribute in a child without its own dunder:\n\n```python\nclass Parent:\n    def __init__(self):\n        self.__x = 10\n\nclass Child(Parent):\n    pass\n\nc = Child()\nprint(hasattr(c, '_Parent__x'))\nprint(hasattr(c, '_Child__x'))\n```",
-      "answer": "True, then False. Child adds no dunder of its own, so only Parent.__init__ ran and stored '_Parent__x'. The same value is never copied under '_Child__x', demonstrating that mangled names are per-defining-class and never virtual/overridden."
+      "answer": "Output: True then False. Child adds no dunder of its own, so only Parent.__init__ ran and stored '_Parent__x'; nothing is copied under '_Child__x'.\n\ncode:\nclass Parent:\n    def __init__(self):\n        self.__x = 10\n\nclass Child(Parent):\n    pass\n\nc = Child()\nprint(hasattr(c, '_Parent__x'))  # True\nprint(hasattr(c, '_Child__x'))   # False\n\nreal example:\nPrivate names are per-defining-class and never duplicated for subclasses."
     },
     {
       "id": 21,
       "question": "Predict the output — a bare getter property:\n\n```python\nclass A:\n    @property\n    def x(self):\n        return 42\n\na = A()\nprint(a.x)\n```\nAlso state the type of A.x.",
-      "answer": "42, and type(A.x) is 'property'. The decorator turns the function into a descriptor on the class; attribute access 'a.x' runs the getter automatically. There is no backing attribute at all — the value is computed on every access."
+      "answer": "Output: 42, and type(A.x) is 'property'. The decorator makes a descriptor, so reading a.x automatically runs the getter.\n\ncode:\nclass A:\n    @property\n    def x(self):\n        return 42\n\na = A()\nprint(a.x)  # 42\nprint(type(A.x))  # <class 'property'>\n\nreal example:\nA read-only computed value like full_name is exposed via a property getter."
     },
     {
       "id": 22,
       "question": "Why does this fail? Name the exception and the reason.\n\n```python\nclass A:\n    @property\n    def x(self):\n        return 42\n\na = A()\na.x = 100\n```",
-      "answer": "AttributeError: property 'x' of 'A' object has no setter. A property with only a getter is a read-only data descriptor; Python refuses to let an instance attribute shadow it, so assignment invokes the (missing) setter and raises AttributeError. This is the idiomatic way to build public read-only attributes."
+      "answer": "It raises AttributeError: property 'x' of 'A' object has no setter. A getter-only property is a read-only data descriptor, so assignment cannot shadow it.\n\ncode:\nclass A:\n    @property\n    def x(self):\n        return 42\n\na = A()\na.x = 100  # AttributeError\n\nreal example:\nPublic read-only fields, like creation timestamps, use properties without setters."
     },
     {
       "id": 23,
       "question": "Predict the output — a validated setter:\n\n```python\nclass A:\n    @property\n    def x(self):\n        return self._x\n\n    @x.setter\n    def x(self, value):\n        if value < 0:\n            raise ValueError('x must be non-negative')\n        self._x = value\n\na = A()\na.x = 5\nprint(a.x)\na.x = -1\n```",
-      "answer": "5, then ValueError: x must be non-negative. Setting 'a.x' routes through the setter, which validates before touching the '_x' backing store. The negative value is rejected before any write occurs, so the validation is atomic from the caller's perspective."
+      "answer": "Output: 5 then ValueError: x must be non-negative. The setter validates the value before storing it, so invalid inputs are rejected before any write.\n\ncode:\nclass A:\n    @property\n    def x(self): return self._x\n    @x.setter\n    def x(self, value):\n        if value < 0:\n            raise ValueError('x must be non-negative')\n        self._x = value\n\na = A()\na.x = 5\nprint(a.x)  # 5\na.x = -1    # ValueError\n\nreal example:\nBank account setters reject negative balances before they are ever stored."
     },
     {
       "id": 24,
       "question": "Predict the output — property shadowing and its backing store:\n\n```python\nclass A:\n    @property\n    def x(self):\n        return self._x * 2\n\n    @x.setter\n    def x(self, value):\n        self._x = value\n\na = A()\na.x = 5\nprint(a.x)\nprint(a.__dict__)\n```",
-      "answer": "10, then {'_x': 5}. The public name 'x' is the class-level property, so writing 'a.x' invokes the setter which stores into '_x'. The instance never gains a '__dict__' key named 'x'; reads go through the getter, which doubles the stored 5."
+      "answer": "Output: 10 then {'_x': 5}. The public name x is the property; writes route to the setter which stores into the hidden '_x'.\n\ncode:\nclass A:\n    @property\n    def x(self): return self._x * 2\n    @x.setter\n    def x(self, value): self._x = value\n\na = A()\na.x = 5\nprint(a.x)        # 10\nprint(a.__dict__) # {'_x': 5}\n\nreal example:\nA price property doubles stored cost automatically for display purposes."
     },
     {
       "id": 25,
       "question": "Predict the output — type checking in a setter:\n\n```python\nclass A:\n    @property\n    def x(self):\n        return self._x\n\n    @x.setter\n    def x(self, value):\n        if not isinstance(value, (int, float)):\n            raise TypeError('x must be numeric')\n        self._x = value\n\na = A()\na.x = 3.14\nprint(a.x)\na.x = 'bad'\n```",
-      "answer": "3.14, then TypeError: x must be numeric. The setter enforces the value's type with isinstance before storage, so the float is accepted and the string is rejected. Property setters are the standard hook for specification-style attribute validation."
+      "answer": "Output: 3.14 then TypeError: x must be numeric. The setter type-checks with isinstance before storage.\n\ncode:\nclass A:\n    @property\n    def x(self): return self._x\n    @x.setter\n    def x(self, value):\n        if not isinstance(value, (int, float)):\n            raise TypeError('x must be numeric')\n        self._x = value\n\na = A()\na.x = 3.14\nprint(a.x)  # 3.14\na.x = 'bad'  # TypeError\n\nreal example:\nForm fields with setters reject wrong data types before committing them."
     },
     {
       "id": 26,
       "question": "Predict the output — a computed, read-only property:\n\n```python\nclass A:\n    def __init__(self):\n        self._val = 5\n\n    @property\n    def doubled(self):\n        return self._val * 2\n\na = A()\nprint(a.doubled)\na.doubled = 10\n```",
-      "answer": "10, then AttributeError: property 'doubled' of 'A' object has no setter. The getter computes '5 * 2' on demand. Because no setter is defined, assignment to a.doubled raises AttributeError and the instance cannot silently shadow the descriptor."
+      "answer": "Output: 10 then AttributeError: property 'doubled' of 'A' object has no setter. Computed getters without setters are read-only.\n\ncode:\nclass A:\n    def __init__(self):\n        self._val = 5\n    @property\n    def doubled(self):\n        return self._val * 2\n\na = A()\nprint(a.doubled)  # 10\na.doubled = 10    # AttributeError\n\nreal example:\nDerived read-only values like double_price cannot be assigned externally."
     },
     {
       "id": 27,
       "question": "Subtle comparison — class attribute vs. property using the same name:\n\n```python\nclass A:\n    x = 10\n    @property\n    def x(self):\n        return 20\n\nprint(isinstance(A.x, property))\na = A()\nprint(a.x)\n```\nWhy is the class attribute gone?",
-      "answer": "True, then 20. Class bodies execute top to bottom: 'x = 10' first sets an int, then the @property decorator rebinds 'x' to the descriptor, overwriting the integer. The class name now refers to the property data descriptor, so both A.x and a.x resolve through it."
+      "answer": "Output: True then 20. The class body runs top to bottom, and the @property decorator overwrites the earlier x = 10 integer.\n\ncode:\nclass A:\n    x = 10\n    @property\n    def x(self):\n        return 20\n\nprint(isinstance(A.x, property))  # True\nprint(A().x)                      # 20\n\nreal example:\nRedefining a name with a property later in the class body replaces the plain value."
     },
     {
       "id": 28,
       "question": "Predict the output — a getter that builds a brand-new object on every call:\n\n```python\nclass A:\n    @property\n    def x(self):\n        return [1, 2, 3]\n\na = A()\na.x.append(4)\nprint(a.x)\n```",
-      "answer": "[1, 2, 3]. Each getter call constructs a fresh list, so 'a.x.append(4)' mutates a throwaway temporary that is discarded immediately; the next call builds a new [1, 2, 3] again. A getter has no hidden state unless you back it with a stored attribute or a cached member."
+      "answer": "Output: [1, 2, 3]. Every getter call builds a fresh list, so append mutates a throwaway temporary that is discarded.\n\ncode:\nclass A:\n    @property\n    def x(self):\n        return [1, 2, 3]\n\na = A()\na.x.append(4)\nprint(a.x)  # [1, 2, 3]\n\nreal example:\nGetters that create new results each call are stateless; persist a backing store if needed."
     },
     {
       "id": 29,
       "question": "Subtle comparison — data descriptor vs. instance __dict__:\n\n```python\nclass A:\n    @property\n    def x(self):\n        return 'from property'\n\na = A()\na.__dict__['x'] = 'from dict'\nprint(a.x)\n```\nWhich one wins and why?",
-      "answer": "'from property'. Properties are data descriptors (they define __set__), and data descriptors take precedence over the instance __dict__ during attribute resolution. Even an entry planted directly in __dict__['x'] is ignored while the class exposes the property."
+      "answer": "Output: 'from property'. Properties are data descriptors (they define __set__), so they beat entries planted in the instance __dict__ during lookup.\n\ncode:\nclass A:\n    @property\n    def x(self):\n        return 'from property'\n\na = A()\na.__dict__['x'] = 'from dict'\nprint(a.x)  # from property\n\nreal example:\nThis precedence is why assigning normally instead of via dict works for properties."
     },
     {
       "id": 30,
       "question": "Predict the output — a property that replaces a class variable and then is assigned through an instance:\n\n```python\nclass A:\n    x = 10\n    @property\n    def x(self):\n        return 20\n\na = A()\nprint(a.x)\ntry:\n    a.x = 5\nexcept AttributeError as e:\n    print(type(e).__name__)\n```",
-      "answer": "20, then AttributeError. The decorator overwrote the stale 'x = 10'. Reading 'a.x' invokes the getter (20). Assignment fails with AttributeError because this property defines no setter and, being a data descriptor, cannot be shadowed by an instance attribute."
+      "answer": "Output: 20 then AttributeError. The property getter returns 20, and because it has no setter it cannot be shadowed by an instance assignment.\n\ncode:\nclass A:\n    x = 10\n    @property\n    def x(self):\n        return 20\n\na = A()\nprint(a.x)       # 20\na.x = 5          # AttributeError\n\nreal example:\nRead-only class-level values defined via properties stay protected from writers."
     },
     {
       "id": 31,
       "question": "Fill in the blank so the property works as intended:\n\n```python\nclass A:\n    @property\n    def x(self):\n        return self.____\n\n    @x.setter\n    def x(self, value):\n        self.____ = value\n\na = A()\na.x = 10\nprint(a.x)\n```",
-      "answer": "Both blanks must be '_x' (i.e. 'self._x'). The backing store must be a different name than the property to avoid infinite recursion; by convention this is '_x'. If the setter wrote 'self.x', it would re-invoke itself endlessly and crash with RecursionError."
+      "answer": "Both blanks must be '_x'. The backing store needs a different name than the property, or setter recursion would crash with RecursionError.\n\ncode:\nclass A:\n    @property\n    def x(self): return self._x\n    @x.setter\n    def x(self, value): self._x = value\n\na = A()\na.x = 10\nprint(a.x)  # 10\n\nreal example:\nThe '_x' naming convention keeps the hidden storage distinct from the public property."
     },
     {
       "id": 32,
       "question": "Predict the output — a property whose backing store is itself name-mangled:\n\n```python\nclass A:\n    def __init__(self):\n        self.__secret = 42\n\n    @property\n    def secret(self):\n        return self.__secret\n\n    @secret.setter\n    def secret(self, value):\n        self.__secret = value\n\na = A()\nprint(a.secret)\na.secret = 99\nprint(a.secret, a._A__secret)\n```",
-      "answer": "42, then '99 99'. Inside A's property methods the identifier '__secret' is mangled to '_A__secret', exactly matching the attribute set in __init__. This pattern gives a public property backed by a genuinely hard-to-name private slot — but '_A__secret' is still directly reachable externally."
+      "answer": "Output: 42 then 99 99. Inside the property methods '__secret' mangles to '_A__secret', matching what __init__ stored.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__secret = 42\n    @property\n    def secret(self):\n        return self.__secret\n    @secret.setter\n    def secret(self, value):\n        self.__secret = value\n\na = A()\nprint(a.secret)        # 42\na.secret = 99\nprint(a.secret, a._A__secret)  # 99 99\n\nreal example:\nA public property hides a genuinely mangled private backing slot."
     },
     {
       "id": 33,
       "question": "Why does this raise, and what exact member is failing?\n\n```python\nclass A:\n    def __init__(self):\n        self._x = 5\n\n    @property\n    def x(self):\n        return self._x\n\na = A()\ndel a.x\n```",
-      "answer": "AttributeError: property 'x' of 'A' object has no deleter. Deleting a property name looks for its fdel callback; none was provided, so 'del a.x' cannot work. The data descriptor blocks both shadow-assignment and deletion unless a deleter is defined with @x.deleter."
+      "answer": "It raises AttributeError: property 'x' of 'A' object has no deleter. Without @x.deleter the descriptor has no fdel callback, so del a.x is blocked.\n\ncode:\nclass A:\n    def __init__(self): self._x = 5\n    @property\n    def x(self): return self._x\n\na = A()\ndel a.x  # AttributeError\n\nreal example:\nRead-only properties refuse deletion as well as re-assignment."
     },
     {
       "id": 34,
       "question": "Predict the output — the property() builtin with explicit getter and setter:\n\n```python\nclass A:\n    def __init__(self):\n        self._x = 0\n\n    def get_x(self):\n        return self._x\n\n    def set_x(self, value):\n        self._x = value\n\n    x = property(get_x, set_x)\n\na = A()\na.x = 30\nprint(a.x)\nprint(type(A.x).__name__)\n```",
-      "answer": "30, then 'property'. property(get_x, set_x) builds the descriptor manually; the decorator syntax is just sugar for this. a.x = 30 routes through set_x, and reads call get_x. A.x is an instance of the 'property' type."
+      "answer": "Output: 30 then 'property'. property(get_x, set_x) builds the descriptor manually; the @property syntax is only sugar for it.\n\ncode:\nclass A:\n    def __init__(self): self._x = 0\n    def get_x(self): return self._x\n    def set_x(self, value): self._x = value\n    x = property(get_x, set_x)\n\na = A()\na.x = 30\nprint(a.x)                  # 30\nprint(type(A.x).__name__)   # property\n\nreal example:\nOlder APIs built properties by passing plain getter and setter functions directly."
     },
     {
       "id": 35,
       "question": "Predict the output — read-only attribute built with property() and no setter:\n\n```python\nclass A:\n    def __init__(self):\n        self._x = 5\n\n    def get_x(self):\n        return self._x\n\n    x = property(get_x)\n\na = A()\nprint(a.x)\nprint(a._x)\ntry:\n    a.x = 10\nexcept AttributeError:\n    print('read-only')\n```",
-      "answer": "5, 5, 'read-only'. Omitting the setter argument to property() yields a read-only descriptor: reads show 5 but assignment raises AttributeError. The underlying '_x' can still be mutated directly — the property protects a single logical name, not the backing store."
+      "answer": "Output: 5, 5, read-only. Omitting the setter makes property() read-only; the underlying '_x' can still be changed directly.\n\ncode:\nclass A:\n    def __init__(self): self._x = 5\n    def get_x(self): return self._x\n    x = property(get_x)\n\na = A()\nprint(a.x)   # 5\nprint(a._x)  # 5\na.x = 10     # AttributeError\n\nreal example:\nA public read-only snapshot still allows internal updates to its backing value."
     },
     {
       "id": 36,
       "question": "Predict the output — intercepting every write with __setattr__:\n\n```python\nclass A:\n    def __setattr__(self, name, value):\n        print('Set ' + name)\n        super().__setattr__(name, value)\n\na = A()\na.x = 10\nprint(a.x)\n```",
-      "answer": "'Set x', then 10. __setattr__ is called for every assignment (including in __init__) before the attribute is actually stored; delegating to super().__setattr__ performs the real write without re-invoking this method, avoiding recursion."
+      "answer": "Output: 'Set x' then 10. __setattr__ intercepts every assignment before it happens, and super().__setattr__ performs the real store.\n\ncode:\nclass A:\n    def __setattr__(self, name, value):\n        print('Set ' + name)\n        super().__setattr__(name, value)\n\na = A()\na.x = 10\nprint(a.x)\n\nreal example:\nAudit logging of every field write uses __setattr__ to record changes."
     },
     {
       "id": 37,
       "question": "Predict the output — a write-once / frozen-object __setattr__:\n\n```python\nclass A:\n    def __init__(self):\n        self.x = 1\n        self.y = 2\n\n    def __setattr__(self, name, value):\n        try:\n            getattr(self, name)\n        except AttributeError:\n            object.__setattr__(self, name, value)\n        else:\n            raise AttributeError(name + ' is read-only')\n\na = A()\ntry:\n    a.x = 99\nexcept AttributeError as e:\n    print(e)\nprint(a.x, a.y)\na.z = 3\nprint(a.z)\n```",
-      "answer": "'x is read-only', then '1 2', then 3. The first set of x/y happens before they exist, so getattr raises AttributeError and the write proceeds. Once present, re-assignment raises. New names are still allowed. Note the caveat: during the very first __init__ write the attribute is absent, which is what makes this pattern work."
+      "answer": "Output: 'x is read-only', 1 2, 3. Once an attribute exists, re-assignment raises; new names are still allowed because they are absent on the first write.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n        self.y = 2\n    def __setattr__(self, name, value):\n        try:\n            getattr(self, name)\n        except AttributeError:\n            object.__setattr__(self, name, value)\n        else:\n            raise AttributeError(name + ' is read-only')\n\na = A()\na.x = 99   # AttributeError\na.z = 3    # ok\n\nreal example:\nFrozen configuration objects forbid changing values after setup but allow new keys."
     },
     {
       "id": 38,
       "question": "Predict the output — __setattr__ filtering by the VALUE's dtype (the 'consenting adults with a gatekeeper' trap):\n\n```python\nclass A:\n    def __setattr__(self, name, value):\n        if isinstance(value, int):\n            super().__setattr__(name, value)\n        else:\n            raise TypeError(name + ' must be int')\n\n    def __init__(self):\n        self.age = 30\n\na = A()\nprint(a.age)\ntry:\n    a.age = 'thirty'\nexcept TypeError as e:\n    print(e)\na.name = 'Bob'\nprint(a.age)\n```",
-      "answer": "30, 'age must be int', 30. The gate checks the value's type, so a string is rejected outright. Because Python never calls blocked setters, 'age' silently stays 30. Warning: 'a.name = 'Bob'' is allowed (it calls super().__setattr__ with the string) — this gate constrains VALUES, not attribute names."
+      "answer": "Output: 30, 'age must be int', 30. The gate rejects by value type, so the string never lands and age stays 30; 'name' is allowed because it is an int.\n\ncode:\nclass A:\n    def __setattr__(self, name, value):\n        if isinstance(value, int):\n            super().__setattr__(name, value)\n        else:\n            raise TypeError(name + ' must be int')\n\na = A()\na.age = 30\na.age = 'thirty'  # TypeError\n\nreal example:\nType-gating setters constrain values, not attribute names, which surprises many developers."
     },
     {
       "id": 39,
       "question": "Predict the output — __setattr__ blocking one specific name:\n\n```python\nclass A:\n    def __setattr__(self, name, value):\n        if name == 'immutable':\n            raise AttributeError('immutable is read-only')\n        super().__setattr__(name, value)\n\na = A()\ntry:\n    a.immutable = 5\nexcept AttributeError as e:\n    print(e)\na.ok = 1\nprint(a.ok)\n```",
-      "answer": "'immutable is read-only', then 1. The guard inspects the attribute NAME before any write and raises for the reserved name, while all other names pass through super().__setattr__ unchanged. This is a manual per-name write gate that bypasses descriptors and hasattr logic entirely."
+      "answer": "Output: 'immutable is read-only' then 1. The guard blocks writes to specific names and lets everything else pass.\n\ncode:\nclass A:\n    def __setattr__(self, name, value):\n        if name == 'immutable':\n            raise AttributeError('immutable is read-only')\n        super().__setattr__(name, value)\n\na = A()\na.immutable = 5  # AttributeError\na.ok = 1\nprint(a.ok)      # 1\n\nreal example:\nReserved internal names can be forced read-only while leaving the rest writable."
     },
     {
       "id": 40,
       "question": "Predict the output — __setattr__ that only admits already-mangled private names:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 10\n\n    def __setattr__(self, name, value):\n        if name.startswith('_A__'):\n            super().__setattr__(name, value)\n        else:\n            raise AttributeError('restricted')\n\na = A()\nprint(a._A__x)\ntry:\n    a.y = 1\nexcept AttributeError as e:\n    print(e)\n```",
-      "answer": "10, then 'restricted'. Because __init__ is inside class A, 'self.__x = 10' arrives at __setattr__ already mangled as '_A__x' and passes the whitelist. Any other assignment fails. This shows how __setattr__ can make mangling as close to enforced as Python ever gets — yet a._A__x writes are still just name matches."
+      "answer": "Output: 10 then 'restricted'. Inside class A, '__x' reaches __setattr__ already mangled as '_A__x' and passes the whitelist; other writes are blocked.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 10\n    def __setattr__(self, name, value):\n        if name.startswith('_A__'):\n            super().__setattr__(name, value)\n        else:\n            raise AttributeError('restricted')\n\na = A()\nprint(a._A__x)  # 10\na.y = 1         # AttributeError\n\nreal example:\nCombining mangling with __setattr__ comes closest to enforced private attributes."
     },
     {
       "id": 41,
       "question": "Predict the output — __slots__ preventing arbitrary attribute creation:\n\n```python\nclass A:\n    __slots__ = ['x', 'y']\n\na = A()\na.x = 1\na.y = 2\nprint(a.x + a.y)\na.z = 3\n```",
-      "answer": "3, then AttributeError: 'A' object has no attribute 'z' and no __dict__ for setting new attributes. __slots__ pre-declares a fixed set of instance descriptors; assigning any other name raises because no __dict__ exists to hold it. Instance memory is also reduced and attribute lookup is faster."
+      "answer": "Output: 3 then AttributeError: 'A' object has no attribute 'z'. __slots__ fixes the allowed names, so any other assignment fails because there is no __dict__.\n\ncode:\nclass A:\n    __slots__ = ['x', 'y']\n\na = A()\na.x = 1\na.y = 2\nprint(a.x + a.y)  # 3\na.z = 3           # AttributeError\n\nreal example:\nHigh-volume data records use __slots__ to cut memory and lock attribute names."
     },
     {
       "id": 42,
       "question": "Predict the output:\n\n```python\nclass A:\n    __slots__ = ['x']\n\na = A()\nprint(hasattr(a, '__dict__'))\nprint(type(A.__dict__['x']).__name__)\n```",
-      "answer": "False, then 'member_descriptor'. With __slots__ declared, instances have no __dict__; each slot becomes a member descriptor on the class that manages per-instance storage. Note that 'hasattr(a, '__dict__')' is False even though the literal string does no mangling."
+      "answer": "Output: False then 'member_descriptor'. With __slots__, instances have no __dict__, and each slot is a member descriptor on the class.\n\ncode:\nclass A:\n    __slots__ = ['x']\n\na = A()\nprint(hasattr(a, '__dict__'))  # False\nprint(type(A.__dict__['x']).__name__)  # member_descriptor\n\nreal example:\nSlot-backed objects are compact and forbid accidental new attributes."
     },
     {
       "id": 43,
       "question": "Predict the output — __slots__ inherited from a base and extended in a subclass:\n\n```python\nclass Base:\n    __slots__ = ['x']\n\nclass Derived(Base):\n    __slots__ = ['y']\n\nd = Derived()\nd.x = 1\nd.y = 2\nprint(d.x, d.y)\ntry:\n    d.z = 3\nexcept AttributeError:\n    print('z rejected')\nprint(hasattr(d, '__dict__'))\n```",
-      "answer": "1 2, 'z rejected', False. Derived keeps Base's slots and adds its own; both x and y are writable because they belong to some class in the hierarchy. Any unlisted name is rejected and the instance still has no __dict__."
+      "answer": "Output: 1 2, 'z rejected', False. Derived keeps Base's slots and adds its own; unlisted names are rejected and there is still no __dict__.\n\ncode:\nclass Base:\n    __slots__ = ['x']\n\nclass Derived(Base):\n    __slots__ = ['y']\n\nd = Derived()\nd.x = 1\nd.y = 2\nprint(d.x, d.y)           # 1 2\nd.z = 3                   # AttributeError\nprint(hasattr(d, '__dict__'))  # False\n\nreal example:\nInherited slot layouts compose cleanly when each level declares its own fields."
     },
     {
       "id": 44,
       "question": "Subtle comparison — a subclass WITHOUT __slots__ regenerates __dict__:\n\n```python\nclass Base:\n    __slots__ = ['x']\n\nclass Derived(Base):\n    pass\n\nd = Derived()\nd.x = 10\nd.y = 20\nprint(hasattr(d, '__dict__'))\nprint(d.__dict__)\n```",
-      "answer": "True, then {'y': 20}. If any class in the hierarchy omits __slots__ (unless __dict__ is readded explicitly), its instances get a fresh __dict__. Here 'x' lives in Base's slot, while 'y' is stored in the dict — the subclass silently recovers all the freedom the base class tried to banish."
+      "answer": "Output: True then {'y': 20}. If any class in the hierarchy omits __slots__, instances regain a __dict__, so x lives in a slot and y in the dict.\n\ncode:\nclass Base:\n    __slots__ = ['x']\n\nclass Derived(Base):\n    pass\n\nd = Derived()\nd.x = 10\nd.y = 20\nprint(hasattr(d, '__dict__'))  # True\nprint(d.__dict__)              # {'y': 20}\n\nreal example:\nA subclass that forgets __slots__ silently undoes the base class's memory savings."
     },
     {
       "id": 45,
       "question": "Predict the output — __slots__ cooperating with a property:\n\n```python\nclass A:\n    __slots__ = ['_x']\n\n    @property\n    def x(self):\n        return self._x\n\n    @x.setter\n    def x(self, value):\n        self._x = value\n\na = A()\na.x = 10\nprint(a.x, a._x)\nprint(hasattr(a, '__dict__'))\n```",
-      "answer": "10 10, then False. The property's backing store '_x' is a declared slot, so the write works while instances keep no __dict__. This combination yields a compact, validated, descriptor-driven attribute — a common trick for high-performance value objects."
+      "answer": "Output: 10 10 then False. The property's backing store '_x' is a declared slot, so the write works with no instance __dict__.\n\ncode:\nclass A:\n    __slots__ = ['_x']\n    @property\n    def x(self): return self._x\n    @x.setter\n    def x(self, value): self._x = value\n\na = A()\na.x = 10\nprint(a.x, a._x)                 # 10 10\nprint(hasattr(a, '__dict__'))    # False\n\nreal example:\nValue objects combine slot storage with validated property access for speed."
     },
     {
       "id": 46,
       "question": "Why does the class definition itself fail? Name the exception.\n\n```python\nclass A:\n    __slots__ = ['x']\n\nclass B:\n    __slots__ = ['y']\n\nclass C(A, B):\n    __slots__ = ['z']\n```",
-      "answer": "TypeError: multiple bases have instance lay-out conflict. Each __slots__-based base claims per-instance storage offsets, and multiply inheriting two layout-bearing bases (where neither is a 'layout_empty' builtin like object) is not resolvable. A child of multiple grouped single-inheritance or one slotted base can work, but not two arbitrary slotted bases."
+      "answer": "It raises TypeError: multiple bases have instance lay-out conflict. Two non-empty slot layouts from unrelated bases cannot be merged.\n\ncode:\nclass A:\n    __slots__ = ['x']\n\nclass B:\n    __slots__ = ['y']\n\nclass C(A, B):\n    __slots__ = ['z']  # TypeError\n\nreal example:\nMixing two slot-based mixins requires a compatible layout or one empty-slot base."
     },
     {
       "id": 47,
       "question": "Predict the output — a double-underscore name inside __slots__:\n\n```python\nclass A:\n    __slots__ = ['__x']\n\n    def __init__(self):\n        self.__x = 7\n\n    def get(self):\n        return self.__x\n\na = A()\nprint(a.get())\nprint(a._A__x)\nprint(a.__slots__ if hasattr(a, '__slots__') else 'instance lacks __slots__')\n```",
-      "answer": "7, 7, then 'instance lacks __slots__'. The slot holds the value under the mangled descriptor '_A__x' (the compiler mangles the identifier 'self.__x' in __init__/get), so both routes see 7. 'a.__slots__' fails silently to the fallback because __slots__ is a CLASS attribute, not an instance one."
+      "answer": "Output: 7, 7, 'instance lacks __slots__'. The slot descriptor is mangled to '_A__x', and __slots__ is a class attribute, not an instance one.\n\ncode:\nclass A:\n    __slots__ = ['__x']\n    def __init__(self):\n        self.__x = 7\n    def get(self):\n        return self.__x\n\na = A()\nprint(a.get())   # 7\nprint(a._A__x)   # 7\n\nreal example:\nDunder-named slots become mangled just like regular private attributes."
     },
     {
       "id": 48,
       "question": "Predict the output — a deleter registered with @x.deleter:\n\n```python\nclass A:\n    def __init__(self):\n        self._x = 5\n\n    @property\n    def x(self):\n        return self._x\n\n    @x.deleter\n    def x(self):\n        del self._x\n\na = A()\ndel a.x\nprint(hasattr(a, '_x'))\nprint(a.__dict__)\n```",
-      "answer": "False, then {}. 'del a.x' invokes the deleter, which deletes the '_x' backing attribute. Afterward hasattr(a, '_x') is False and the instance dict is empty; any subsequent read of a.x would now raise AttributeError ('_x' missing)."
+      "answer": "Output: False then {}. del a.x invokes the deleter, which removes the '_x' backing attribute; then hasattr is False and the dict is empty.\n\ncode:\nclass A:\n    def __init__(self): self._x = 5\n    @property\n    def x(self): return self._x\n    @x.deleter\n    def x(self): del self._x\n\na = A()\ndel a.x\nprint(hasattr(a, '_x'))  # False\nprint(a.__dict__)        # {}\n\nreal example:\nDeleters let properties cleanly remove cached internal state on demand."
     },
     {
       "id": 49,
       "question": "Fill in the blank so that getattr reads the mangled attribute:\n\n```python\nclass A:\n    def __init__(self):\n        self.__x = 42\n\na = A()\nname = '____'\nprint(getattr(a, name))\n```",
-      "answer": "The blank must be '_A__x'. getattr uses the string exactly as given, so you must supply the fully mangled spelling '_A__x'. Writing '__x' here would NOT be mangled (no class body context), and getattr(a, '__x') would raise AttributeError."
+      "answer": "The blank must be '_A__x'. getattr uses the string exactly as given; only source identifiers inside a class body get mangled.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 42\n\na = A()\nname = '_A__x'\nprint(getattr(a, name))  # 42\n\nreal example:\nRuntime names built as strings must carry the full mangled spelling to work."
     },
     {
       "id": 50,
       "question": "Complex combined challenge — mangling, __slots__, properties and a base with a dict. Predict the five printed lines:\n\n```python\nclass CounterBase:\n    def __init__(self):\n        self.__count = 0\n\n    def inc(self):\n        self.__count += 1\n\nclass Counter(CounterBase):\n    __slots__ = ['_Counter__tag']\n\n    def __init__(self):\n        super().__init__()\n        self.__count = 100\n        self.__tag = 'A'\n\n    @property\n    def tag(self):\n        return self.__tag\n\nc = Counter()\nc.inc()\nprint(c._CounterBase__count)\nprint(c._Counter__count)\nprint(c.tag)\nprint(c._Counter__tag)\nprint(hasattr(c, '__dict__'))\n```",
-      "answer": "1, 100, 'A', 'A', True. (Explaining each: c.inc() runs in CounterBase, so its '__count' is '_CounterBase__count', incrementing 0 to 1. Counter.__init__ writes 'self.__count' as '_Counter__count' = 100 — a completely separate attribute from the base's. '__tag' mangles to '_Counter__tag', backing property 'tag'. Since CounterBase has NO __slots__ (it keeps a __dict__), Counter's own __slots__ do NOT remove '__dict__' — the subclass still has one, so the last line is True. This one question exercises almost every encapsulation mechanism at once.)"
+      "answer": "Output: 1, 100, 'A', 'A', True. The base's counter lives at '_CounterBase__count', the child's at '_Counter__count', slots hold '_Counter__tag', and CounterBase keeping a __dict__ means the child still has one.\n\ncode:\nclass CounterBase:\n    def __init__(self): self.__count = 0\n    def inc(self): self.__count += 1\n\nclass Counter(CounterBase):\n    __slots__ = ['_Counter__tag']\n    def __init__(self):\n        super().__init__()\n        self.__count = 100\n        self.__tag = 'A'\n    @property\n    def tag(self): return self.__tag\n\nc = Counter()\nc.inc()\nprint(c._CounterBase__count)  # 1\nprint(c._Counter__count)      # 100\nprint(c.tag, c._Counter__tag) # A A\nprint(hasattr(c, '__dict__')) # True\n\nreal example:\nCombining mangling, slots, and properties needs careful name bookkeeping."
     },
     {
       "id": 51,
       "question": "Predict the output:\n\nclass A:\n    def __init__(self):\n        self.__x = 42\n    def method(self):\n        return self.__x\n\ndef outside(self):\n    return self.__x\n\na = A()\nprint(a.method())\nprint(outside(a))",
-      "answer": "42, then AttributeError: 'A' object has no attribute '__x'.\n\nName mangling applies inside method bodies at compile time, transforming `self.__x` to `self._A__x`. However, the free function `outside` is defined at module scope, so `self.__x` is NOT mangled—it looks for an attribute literally named `__x`, which does not exist."
+      "answer": "Output: 42 then AttributeError: 'A' object has no attribute '__x'. Inside the method body '__x' mangles to '_A__x', but the module-level function is never mangled.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 42\n    def method(self):\n        return self.__x\n\ndef outside(self):\n    return self.__x\n\na = A()\nprint(a.method())  # 42\nprint(outside(a))  # AttributeError\n\nreal example:\nOnly identifiers written inside the class are renamed, so free functions miss the mangling."
     },
     {
       "id": 52,
       "question": "Predict the output:\n\nclass Outer:\n    def method(self):\n        self.__x = 10\n        def inner():\n            return self.__x\n        return inner()\n\no = Outer()\nprint(o.method())",
-      "answer": "10\n\nName mangling is a compile-time transformation applied to the entire class body, including nested function definitions within methods. The `self.__x` inside `inner()` is mangled to `self._Outer__x` at class definition time, so the closure successfully reads the attribute."
+      "answer": "Output: 10. Mangling covers the whole class body, including nested functions inside methods, so inner() sees '_Outer__x'.\n\ncode:\nclass Outer:\n    def method(self):\n        self.__x = 10\n        def inner():\n            return self.__x\n        return inner()\n\no = Outer()\nprint(o.method())  # 10\n\nreal example:\nClosures defined inside methods keep private attribute access working."
     },
     {
       "id": 53,
       "question": "Predict the output or error:\n\nclass Outer:\n    def __init__(self):\n        self.__x = 'outer-x'\n    class Inner:\n        def outer_method(self, o):\n            return o.__x\n\no = Outer()\nprint(Outer.Inner().outer_method(o))",
-      "answer": "AttributeError: 'Outer' object has no attribute '_Inner__x'.\n\nMangling uses the class where the `def` statement is textually nested, not the class of the object. Since `outer_method` is defined inside `Inner`, `o.__x` is mangled to `o._Inner__x`. The correct attribute on `Outer` is `_Outer__x`, so this fails."
+      "answer": "It raises AttributeError: 'Outer' object has no attribute '_Inner__x'. The mangling name comes from where the def is written, which is Inner, not Outer.\n\ncode:\nclass Outer:\n    def __init__(self):\n        self.__x = 'outer-x'\n    class Inner:\n        def outer_method(self, o):\n            return o.__x\n\no = Outer()\nprint(Outer.Inner().outer_method(o))  # AttributeError\n\nreal example:\nHelpers nested inside other classes cannot read the outer object's privates by short name."
     },
     {
       "id": 54,
       "question": "Predict the output:\n\nclass C:\n    __x = 10\ntry:\n    print(C.__x)\nexcept AttributeError as e:\n    print('AttributeError')\nprint(C._C__x)\nprint(C.__dict__.get('x'))",
-      "answer": "AttributeError, 10, None\n\nA class-body attribute definition `__x = 10` is mangled to `_C__x = 10` at class-creation time. Outside the class, name mangling does NOT apply, so `C.__x` looks up the literal name `__x` (absent) and raises `AttributeError`. The mangled form `C._C__x` resolves to `10`, and no unmangled `'x'` key exists in `C.__dict__`."
+      "answer": "Output: AttributeError, 10, None. Class-body '__x' becomes '_C__x' at creation; outside the class only the mangled spelling resolves, and no plain 'x' key exists.\n\ncode:\nclass C:\n    __x = 10\n\ntry:\n    print(C.__x)\nexcept AttributeError:\n    print('AttributeError')\nprint(C._C__x)                # 10\nprint(C.__dict__.get('x'))    # None\n\nreal example:\nClass-level private constants are reached by mangled name or through methods."
     },
     {
       "id": 55,
       "question": "Predict the output:\n\nclass S:\n    __slots__ = ('__repr__', '__x')\n    def __init__(self):\n        self.__repr__ = 'custom'\n        self.__x = 1\ns = S()\nprint(s.__repr__)\nprint(s._S__x)\nprint(S.__slots__)",
-      "answer": "custom, 1, ('__repr__', '__x')\n\nDunder names (start and end with `__`) are NOT mangled, so `__repr__` in slots stays as `__repr__`. Non-dunder `__x` IS mangled to `_S__x`. The `__slots__` tuple stores the literal string names, but descriptor lookup uses the mangled name internally."
+      "answer": "Output: custom, 1, ('__repr__', '__x'). Dunder names are NOT mangled, but non-dunder '__x' becomes '_S__x'; __slots__ stores the literal list.\n\ncode:\nclass S:\n    __slots__ = ('__repr__', '__x')\n    def __init__(self):\n        self.__repr__ = 'custom'\n        self.__x = 1\n\ns = S()\nprint(s.__repr__)      # custom\nprint(s._S__x)         # 1\nprint(S.__slots__)     # ('__repr__', '__x')\n\nreal example:\nNames that both start and end with double underscores skip name mangling entirely."
     },
     {
       "id": 56,
       "question": "Predict the output:\n\nclass C:\n    __slots__ = ['__x']\n    def __init__(self):\n        self.__x = 42\nc = C()\nprint(c._C__x)\ntry:\n    print(c.__x)\nexcept AttributeError as e:\n    print('AttributeError:', e)",
-      "answer": "42, AttributeError: 'C' object has no attribute '__x'.\n\nThe `__slots__` list `['__x']` creates a member descriptor named `_C__x` due to mangling. Accessing `c._C__x` works, but `c.__x` fails because the literal name `__x` does not exist on the class or instance—the mangled name `_C__x` is what the slot descriptor is registered under."
+      "answer": "Output: 42 then AttributeError: 'C' object has no attribute '__x'. The slot is registered as the mangled '_C__x', so the literal '__x' lookup fails.\n\ncode:\nclass C:\n    __slots__ = ['__x']\n    def __init__(self):\n        self.__x = 42\n\nc = C()\nprint(c._C__x)  # 42\nprint(c.__x)    # AttributeError\n\nreal example:\nSlot-private attributes must always be accessed via the mangled member name."
     },
     {
       "id": 57,
       "question": "Predict the output:\n\nclass Account:\n    def __init__(self, bal):\n        self.__balance = bal\n    @property\n    def balance(self):\n        return self.__balance\n\na = Account(100)\nprint(a.balance)\nprint(a.__dict__)\na._Account__balance = 250\nprint(a.balance)",
-      "answer": "100, {'_Account__balance': 100}, 250\n\nThe `@property` getter returns `self.__balance` which is mangled to `self._Account__balance`. The instance dict stores the value under the mangled key `'_Account__balance'`. Directly writing to `a._Account__balance` changes the value the getter reads."
+      "answer": "Output: 100, {'_Account__balance': 100}, 250. The property getter reads the mangled '_Account__balance', and a direct write to that name changes the getter's result.\n\ncode:\nclass Account:\n    def __init__(self, bal):\n        self.__balance = bal\n    @property\n    def balance(self):\n        return self.__balance\n\na = Account(100)\nprint(a.balance)                  # 100\nprint(a.__dict__)                 # {'_Account__balance': 100}\na._Account__balance = 250\nprint(a.balance)                  # 250\n\nreal example:\nA private-backed property still exposes its value if someone writes the mangled name."
     },
     {
       "id": 58,
       "question": "Predict the output:\n\nclass A:\n    def __init__(self):\n        self.__x = 5\n    @property\n    def x(self):\n        return self.__x\n\na = A()\na.__dict__['__x'] = 99\nprint(a.x)\nprint(a.__dict__)",
-      "answer": "5, {'_A__x': 5, '__x': 99}\n\nThe property getter reads `self.__x` which is mangled to `self._A__x`. Writing `a.__dict__['__x'] = 99` adds a separate key `'__x'` to the instance dict—NOT `'_A__x'`. The getter still returns 5 because it reads the mangled key, which is unchanged."
+      "answer": "Output: 5 then {'_A__x': 5, '__x': 99}. Writing a.__dict__['__x'] adds a separate plain key; the getter reads the mangled one, unchanged.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 5\n    @property\n    def x(self):\n        return self.__x\n\na = A()\na.__dict__['__x'] = 99\nprint(a.x)         # 5\nprint(a.__dict__)  # {'_A__x': 5, '__x': 99}\n\nreal example:\nSneaking a plain-named key into __dict__ never fools the mangled getter."
     },
     {
       "id": 59,
       "question": "Predict the output or error:\n\nclass C:\n    @property\n    def x(self):\n        return 5\nc = C()\nc.x = 10\nprint(c.x)",
-      "answer": "AttributeError: property 'x' of 'C' object has no setter.\n\nA property with only a getter (no `@x.setter` decorator) has no `__set__` method defined. When you attempt `c.x = 10`, Python tries to invoke the data descriptor's `__set__`, finds it absent, and raises this error."
+      "answer": "It raises AttributeError: property 'x' of 'C' object has no setter. A getter-only property defines no __set__, so assignment fails.\n\ncode:\nclass C:\n    @property\n    def x(self):\n        return 5\n\nc = C()\nc.x = 10  # AttributeError\n\nreal example:\nRead-only data descriptors refuse writes instead of being shadowed by instance data."
     },
     {
       "id": 60,
       "question": "Fix the bug: the getter-only property should be made writable by directly storing through `__dict__`.\n\nclass C:\n    @property\n    def x(self):\n        return self.__x\n    def __init__(self):\n        self.__x = 5\n\nc = C()\nc.x = 10  # this raises — fix it so reads return 10",
-      "answer": "Replace `c.x = 10` with `c.__dict__['_C__x'] = 10`, then `c.x` returns 10.\n\nThe property getter reads `self._C__x` (mangled). By writing directly to the instance's `__dict__` using the correct mangled key, you bypass the property's missing setter. This is a deliberate violation of encapsulation."
+      "answer": "Replace c.x = 10 with c.__dict__['_C__x'] = 10; then c.x returns 10. Writing directly to the instance dict bypasses the missing property setter.\n\ncode:\nclass C:\n    @property\n    def x(self):\n        return self.__x\n    def __init__(self):\n        self.__x = 5\n\nc = C()\nc.__dict__['_C__x'] = 10\nprint(c.x)  # 10\n\nreal example:\nDirect __dict__ writes are a deliberate, documented escape hatch around read-only properties."
     },
     {
       "id": 61,
       "question": "Predict the output:\n\nclass C:\n    @property\n    def x(self):\n        return 'getter'\nc = C()\nC.x = 10\nprint(c.x)\nprint(C.__dict__['x'])",
-      "answer": "10, 10\n\n`C.x = 10` is a plain assignment that REPLACES the property descriptor in `C.__dict__` with the integer `10`. Now `c.x` looks up `C.__dict__['x']` (which is `10`, not a descriptor), so `c.x` returns `10`. The property is gone, and `C.__dict__['x']` confirms `10`."
+      "answer": "Output: 10 then 10. C.x = 10 replaces the property descriptor on the class with a plain integer, so every access now returns 10.\n\ncode:\nclass C:\n    @property\n    def x(self):\n        return 'getter'\n\nc = C()\nC.x = 10\nprint(c.x)                     # 10\nprint(C.__dict__['x'])          # 10\n\nreal example:\nAccidentally assigning to a class property name destroys the descriptor entirely."
     },
     {
       "id": 62,
       "question": "Predict the output:\n\nclass C:\n    @property\n    def x(self):\n        return 'from_property'\nc = C()\nc.__dict__['x'] = 'from_instance'\nprint(c.x)\nprint(c.__dict__)",
-      "answer": "from_property, {'x': 'from_instance'}\n\n`property` is a data descriptor (defines both `__get__` and `__set__`). Data descriptors take precedence over instance `__dict__` during attribute lookup, so `c.x` returns `'from_property'` from the getter even though `'x': 'from_instance'` exists in the instance dict."
+      "answer": "Output: from_property then {'x': 'from_instance'}. Data descriptors outrank the instance __dict__, so the getter still wins for reads.\n\ncode:\nclass C:\n    @property\n    def x(self):\n        return 'from_property'\n\nc = C()\nc.__dict__['x'] = 'from_instance'\nprint(c.x)                 # from_property\nprint(c.__dict__)          # {'x': 'from_instance'}\n\nreal example:\nBecause properties are data descriptors, instance dict entries cannot override them."
     },
     {
       "id": 63,
       "question": "Predict the output:\n\nclass C:\n    @property\n    def x(self):\n        return 'getter'\nc = C()\nprint(type(c).x)\nprint(c.x)",
-      "answer": "<class 'property'>, getter\n\nAccessing `type(c).x` (equivalent to `C.x`) returns the property OBJECT itself because it's a class-level attribute lookup. Accessing `c.x` triggers the descriptor protocol, which calls the property's `__get__` method, returning `'getter'`."
+      "answer": "Output: <class 'property'> then getter. Accessing type(c).x fetches the descriptor object; accessing c.x invokes its __get__.\n\ncode:\nclass C:\n    @property\n    def x(self):\n        return 'getter'\n\nc = C()\nprint(type(c).x)  # <class 'property'>\nprint(c.x)        # getter\n\nreal example:\nClass-level reads show the descriptor; instance reads run the underlying function."
     },
     {
       "id": 64,
       "question": "Why does this code not store the attribute? Fix it.\n\nclass C:\n    def __setattr__(self, name, value):\n        print(f'setting {name}')\nc = C()\nc.x = 10\nprint(hasattr(c, 'x'))",
-      "answer": "Output: 'setting x', then `False`. The `__setattr__` override only prints but never calls `super().__setattr__` or writes to `self.__dict__`, so the attribute is never stored. Fix: call `object.__setattr__(self, name, value)` or write `self.__dict__[name] = value` inside `__setattr__`."
+      "answer": "Output: 'setting x' then False. The override only prints and never stores anything. Fix: call object.__setattr__(self, name, value).\n\ncode:\nclass C:\n    def __setattr__(self, name, value):\n        print(f'setting {name}')\n        object.__setattr__(self, name, value)\n\nc = C()\nc.x = 10\nprint(hasattr(c, 'x'))  # True\n\nreal example:\nLogging setter overrides must still delegate the real store or attributes vanish."
     },
     {
       "id": 65,
       "question": "Predict the output:\n\nclass C:\n    def __setattr__(self, name, value):\n        raise AttributeError(f'blocked {name}')\nc = C()\nc.__dict__['x'] = 10\nprint(c.x)\ntry:\n    c.x = 20\nexcept AttributeError as e:\n    print(e)",
-      "answer": "10, blocked x\n\n`__setattr__` intercepts all attribute assignments via `c.x = 20`, raising `AttributeError`. However, `c.__dict__['x'] = 10` writes directly to the instance dictionary, completely bypassing `__setattr__`. Subsequent reads via `c.x` find `x` in `__dict__` normally (via `__getattribute__`, not `__setattr__`)."
+      "answer": "Output: 10 then blocked x. Direct __dict__ writes bypass __setattr__ entirely, while attribute assignment syntax is intercepted.\n\ncode:\nclass C:\n    def __setattr__(self, name, value):\n        raise AttributeError(f'blocked {name}')\n\nc = C()\nc.__dict__['x'] = 10\nprint(c.x)      # 10\nc.x = 20        # AttributeError\n\nreal example:\nSandboxes block dot assignments but cannot stop raw dict scribbles."
     },
     {
       "id": 66,
       "question": "Predict the output:\n\nclass Parent:\n    def __init__(self):\n        self._x = 0\n    def __setattr__(self, name, value):\n        if name.startswith('_'):\n            object.__setattr__(self, name, value)\n        else:\n            raise AttributeError(f'cannot set {name}')\n\nclass Child(Parent):\n    def __init__(self):\n        object.__setattr__(self, '_x', 0)\n        object.__setattr__(self, 'x', 10)\n\nc = Child()\nprint(c.x)\nprint(c._x)",
-      "answer": "10, 0\n\nThe parent's `__setattr__` blocks public attribute writes but allows private (underscore-prefixed) writes via `object.__setattr__`. The child overrides `__init__` to use `object.__setattr__` directly, bypassing the parent's restriction to set both `_x` and `x`."
+      "answer": "Output: 10 then 0. The child uses object.__setattr__ directly to bypass the parent's restriction and set both fields.\n\ncode:\nclass Parent:\n    def __setattr__(self, name, value):\n        if name.startswith('_'):\n            object.__setattr__(self, name, value)\n        else:\n            raise AttributeError(f'cannot set {name}')\n\nclass Child(Parent):\n    def __init__(self):\n        object.__setattr__(self, '_x', 0)\n        object.__setattr__(self, 'x', 10)\n\nc = Child()\nprint(c.x)   # 10\nprint(c._x)  # 0\n\nreal example:\nSubclasses sometimes need the low-level setter to bypass parent guards during setup."
     },
     {
       "id": 67,
       "question": "Predict the output:\n\nclass C:\n    def __getattr__(self, name):\n        return 'fallback'\n    def __getattribute__(self, name):\n        if name == 'missing':\n            return None\n        return super().__getattribute__(name)\n\nc = C()\nprint(c.missing)\nprint(c.other)",
-      "answer": "None, then fallback\n\n`__getattribute__` intercepts ALL attribute lookups. For `'missing'`, it returns `None` directly—bypassing the normal resolution chain, so `__getattr__` is NEVER called and the result is `None`. For `'other'`, it falls through to `super().__getattribute__`, which finds nothing and raises `AttributeError`, triggering `__getattr__` → `'fallback'`."
+      "answer": "Output: None then fallback. For 'missing', __getattribute__ returns None directly, so __getattr__ never runs; for 'other', the normal chain fails and __getattr__ fires.\n\ncode:\nclass C:\n    def __getattr__(self, name):\n        return 'fallback'\n    def __getattribute__(self, name):\n        if name == 'missing':\n            return None\n        return super().__getattribute__(name)\n\nc = C()\nprint(c.missing)  # None\nprint(c.other)    # fallback\n\nreal example:\nOnly attribute errors trigger __getattr__; returning values directly in __getattribute__ short-circuits it."
     },
     {
       "id": 68,
       "question": "Predict the output:\n\nclass C:\n    def __getattr__(self, name):\n        return 'fallback'\n    def __getattribute__(self, name):\n        if name.startswith('_'):\n            raise AttributeError(name)\n        return object.__getattribute__(self, name)\n\nc = C()\nprint(c.public)\nprint(c._private)",
-      "answer": "fallback, fallback\n\n`c.public` goes through `object.__getattribute__`, which finds no `public` attribute and raises `AttributeError`, triggering `__getattr__` → `'fallback'`. `c._private` is caught earlier: `__getattribute__` sees the underscore prefix and immediately raises `AttributeError('_private')`, which also hands off to `__getattr__` → `'fallback'`. Both missing attributes end in `__getattr__` through different paths."
+      "answer": "Output: fallback then fallback. 'public' fails normal lookup and hands off to __getattr__; '_private' is rejected early by __getattribute__ but also ends in __getattr__.\n\ncode:\nclass C:\n    def __getattr__(self, name):\n        return 'fallback'\n    def __getattribute__(self, name):\n        if name.startswith('_'):\n            raise AttributeError(name)\n        return object.__getattribute__(self, name)\n\nc = C()\nprint(c.public)    # fallback\nprint(c._private)  # fallback\n\nreal example:\nGuard-rail attribute systems route many misses into a single fallback method."
     },
     {
       "id": 69,
       "question": "What happens and why? Fix it.\n\nclass C:\n    def __getattr__(self, name):\n        return self.y\n\nc = C()\ntry:\n    print(c.x)\nexcept RecursionError:\n    print('RecursionError')",
-      "answer": "RecursionError\n\n`c.x` is not found → `__getattr__('x')` is called → accesses `self.y` → `y` not found → `__getattr__('y')` called → accesses `self.y` again → infinite loop. Fix: use `self.__dict__` or `object.__getattribute__(self, name)` instead of `self.y` to break the cycle."
+      "answer": "It raises RecursionError. __getattr__('x') accesses self.y; y is missing, so __getattr__('y') runs and accesses self.y again, forever. Fix: read from __dict__ instead.\n\ncode:\nclass C:\n    def __getattr__(self, name):\n        return self.__dict__.get(name, None)\n\nc = C()\nprint(c.x)  # None\n\nreal example:\nFrothy attribute fallbacks must consult __dict__ or raise AttributeError to avoid loops."
     },
     {
       "id": 70,
       "question": "Fix the recursive `__getattr__` so it safely returns `None` for any missing attribute:\n\nclass C:\n    def __getattr__(self, name):\n        # fix: replace 'return self.y' with safe lookup\n        pass",
-      "answer": "Use `self.__dict__.get(name, None)` or `object.__getattribute__(self, name)`. Writing `return self.__dict__.get(name, None)` directly accesses the instance dictionary, bypassing `__getattr__` entirely and avoiding recursion. Alternatively, catch `AttributeError` in the method body."
+      "answer": "Use self.__dict__.get(name, None) or catch AttributeError. Reading the instance dict directly bypasses __getattr__ and stops the recursion.\n\ncode:\nclass C:\n    def __getattr__(self, name):\n        return self.__dict__.get(name, None)\n\nc = C()\nprint(c.missing)  # None\n\nreal example:\nSafe dict-style lookups are the standard cure for recursive fallback attributes."
     },
     {
       "id": 71,
       "question": "Predict the output:\n\nclass C:\n    def __getattr__(self, name):\n        return 'fallback'\nc = C()\nc.x = 10\nprint(c.x)\nprint(getattr(c, 'x'))\nprint(getattr(c, 'y'))",
-      "answer": "10, 10, fallback\n\nOnce `c.x = 10` stores `x` in the instance `__dict__`, both `c.x` and `getattr(c, 'x')` find it directly—`__getattr__` is never called for existing attributes. For `y` (not in `__dict__`), the normal lookup fails, triggering `__getattr__` → `'fallback'`."
+      "answer": "Output: 10, 10, fallback. Once x is stored, both c.x and getattr find it normally; only truly missing names trigger __getattr__.\n\ncode:\nclass C:\n    def __getattr__(self, name):\n        return 'fallback'\n\nc = C()\nc.x = 10\nprint(c.x)               # 10\nprint(getattr(c, 'x'))   # 10\nprint(getattr(c, 'y'))   # fallback\n\nreal example:\nDefault attributes are added lazily while existing ones behave completely normally."
     },
     {
       "id": 72,
       "question": "Predict the output:\n\nclass C:\n    def __getattribute__(self, name):\n        d = object.__getattribute__(self, '__dict__')\n        return d.get(name, 'none')\n\nc = C()\nc.x = 10\nprint(c.x)\nprint(c.y)",
-      "answer": "10, none\n\n`__getattribute__` manually fetches the instance `__dict__` using `object.__getattribute__` (to avoid triggering the custom `__getattribute__` recursively), then does a direct dict lookup. `c.x` finds `10` in `__dict__`; `c.y` is not there, so `.get` returns the default `'none'`."
+      "answer": "Output: 10 then none. __getattribute__ manually reads the instance dict via object.__getattribute__ and answers from .get.\n\ncode:\nclass C:\n    def __getattribute__(self, name):\n        d = object.__getattribute__(self, '__dict__')\n        return d.get(name, 'none')\n\nc = C()\nc.x = 10\nprint(c.x)  # 10\nprint(c.y)  # none\n\nreal example:\nAttribute virtualizers mirror object state through a plain dict lookup."
     },
     {
       "id": 73,
       "question": "Predict the output:\n\nclass C:\n    def __init__(self):\n        self.x = 10\n    def __delattr__(self, name):\n        pass\nc = C()\ndel c.x\nprint(hasattr(c, 'x'))\nprint(c.x)",
-      "answer": "True, 10\n\n`__delattr__` returns `None` (implicitly) instead of raising an exception, so the deletion is silently accepted but NO actual work is done. The attribute `x` still exists with its original value. To actually delete, call `object.__delattr__(self, name)` inside `__delattr__`."
+      "answer": "Output: True then 10. __delattr__ returns without doing anything, so the deletion is accepted but the attribute survives.\n\ncode:\nclass C:\n    def __init__(self):\n        self.x = 10\n    def __delattr__(self, name):\n        object.__delattr__(self, name)\n\nc = C()\ndel c.x\nprint(hasattr(c, 'x'))  # False\n\nreal example:\nA no-op __delattr__ quietly refuses deletions while looking like they succeeded."
     },
     {
       "id": 74,
       "question": "Predict the output or error:\n\nclass Base:\n    def __init_subclass__(cls, **kwargs):\n        raise TypeError('subclasses forbidden')\n\ntry:\n    class Child(Base):\n        pass\nexcept TypeError as e:\n    print('TypeError:', e)\n\nclass Other:\n    pass\nprint('Other ok')",
-      "answer": "TypeError: subclasses forbidden, then 'Other ok'\n\n`__init_subclass__` is called automatically during class creation when a subclass is defined. It raises `TypeError` at the `class Child` statement line, preventing the class from being created. `Other` does not inherit from `Base`, so it is unaffected."
+      "answer": "Output: TypeError: subclasses forbidden then 'Other ok'. __init_subclass__ runs when a subclass is defined and can veto it.\n\ncode:\nclass Base:\n    def __init_subclass__(cls, **kwargs):\n        raise TypeError('subclasses forbidden')\n\ntry:\n    class Child(Base):\n        pass\nexcept TypeError as e:\n    print(e)  # subclasses forbidden\n\nclass Other:\n    pass\nprint('Other ok')\n\nreal example:\nFramework bases forbid subclassing to keep internal invariants safe."
     },
     {
       "id": 75,
       "question": "Fill in the blank to make `__init_subclass__` validate that subclasses must define a `required` class attribute:\n\nclass Base:\n    def __init_subclass__(cls, **kwargs):\n        super().__init_subclass__(**kwargs)\n        _____\n\nclass Good(Base):\n    required = True\nclass Bad(Base):\n    pass  # this should raise TypeError",
-      "answer": "Fill in: `if not hasattr(cls, 'required'): raise TypeError(f'{cls.__name__} must define required')`\n\n`__init_subclass__` receives the new subclass as `cls`. Checking `hasattr(cls, 'required')` and raising `TypeError` if absent enforces the contract at class creation time. `Bad` triggers this because it defines no `required` attribute."
+      "answer": "Fill in: if not hasattr(cls, 'required'): raise TypeError(f'{cls.__name__} must define required'). The hook validates each new subclass at creation time.\n\ncode:\nclass Base:\n    def __init_subclass__(cls, **kwargs):\n        super().__init_subclass__(**kwargs)\n        if not hasattr(cls, 'required'):\n            raise TypeError(f'{cls.__name__} must define required')\n\nclass Good(Base):\n    required = True\n\nclass Bad(Base):\n    pass  # TypeError\n\nreal example:\nPlugin engines enforce that every adapter declares a required capability."
     },
     {
       "id": 76,
       "question": "Why does this fail, and what's the correct approach?\n\nclass Base:\n    pass\n\ndef ban(cls, **kw):\n    raise TypeError('no')\n\nBase.__init_subclass__ = ban\nclass Child(Base):\n    pass",
-      "answer": "TypeError: ban() missing 1 required positional argument: 'cls'.\n\nWhen you set a plain function as `__init_subclass__` post-hoc, Python does NOT auto-wrap it as a `classmethod`. The class-creation machinery calls it without passing `cls`, causing a missing-argument error. Fix: `Base.__init_subclass__ = classmethod(ban)`."
+      "answer": "It raises TypeError: ban() missing 1 required positional argument: 'cls'. A plain function assigned later is not auto-wrapped as a classmethod. Fix: Base.__init_subclass__ = classmethod(ban).\n\ncode:\ndef ban(cls, **kw):\n    raise TypeError('no')\n\nBase = type('Base', (), {'__init_subclass__': classmethod(ban)})\n\ntry:\n    class Child(Base):\n        pass\nexcept TypeError as e:\n    print(e)\n\nreal example:\nManual wiring after class creation needs explicit classmethod wrapping."
     },
     {
       "id": 77,
       "question": "Predict the output:\n\nclass Meta(type):\n    def __new__(mcs, name, bases, ns):\n        if name.endswith('Banned'):\n            raise TypeError(f'{name} is banned')\n        return super().__new__(mcs, name, bases, ns)\n\nclass Base(metaclass=Meta):\n    pass\n\nclass Allowed(Base):\n    pass\ntry:\n    class BannedOne(Base):\n        pass\nexcept TypeError as e:\n    print('TypeError:', e)",
-      "answer": "TypeError: BannedOne is banned\n\nMetaclass `__new__` intercepts every class definition. The `name` parameter receives the new class name (`'BannedOne'`), and raising `TypeError` there prevents the class from being created. `Allowed` passes because its name does not end with `'Banned'`. Calling `type('BannedOne', (Base,), {})` also invokes the same metaclass `__new__` and is blocked too."
+      "answer": "Output: TypeError: BannedOne is banned. The metaclass __new__ runs for every class definition and refuses names ending in 'Banned'.\n\ncode:\nclass Meta(type):\n    def __new__(mcs, name, bases, ns):\n        if name.endswith('Banned'):\n            raise TypeError(f'{name} is banned')\n        return super().__new__(mcs, name, bases, ns)\n\nclass Base(metaclass=Meta):\n    pass\n\ntry:\n    class BannedOne(Base):\n        pass\nexcept TypeError as e:\n    print(e)\n\nreal example:\nMetaclasses enforce naming or structure rules for all classes in a framework."
     },
     {
       "id": 78,
       "question": "Predict the output:\n\nclass Parent:\n    def __init__(self):\n        self._data = 'protected'\n\nclass Child(Parent):\n    def show(self):\n        return self._data\n\nprint(Child().show())",
-      "answer": "protected\n\nSingle-underscore attributes like `_data` are a naming convention, not enforced by Python. Subclasses CAN freely access `self._data` inherited from the parent—no mangling or access restriction applies to single-underscore names."
+      "answer": "Output: protected. Single-underscore names are a convention only; dir() and normal attribute access simply show them, no mangling applies.\n\ncode:\nclass Bank:\n    def __init__(self):\n        self._balance = 100\n\nb = Bank()\nprint(b._balance)  # protected\n\nreal example:\nLibrarians mark internal helpers with _ as a polite 'use at your own risk' signal."
     },
     {
       "id": 79,
       "question": "Predict the output:\n\nclass Parent:\n    def __init__(self):\n        self.__x = 'parent'\n\nclass Child(Parent):\n    def __init__(self):\n        super().__init__()\n        self.__x = 'child'\n\nc = Child()\nprint(c._Parent__x)\nprint(c._Child__x)",
-      "answer": "parent, child\n\nEach class applies name mangling independently. `self.__x` in `Parent` becomes `self._Parent__x`; `self.__x` in `Child` becomes `self._Child__x`. These are two entirely separate instance attributes—no collision occurs, and both are accessible via their respective mangled names."
+      "answer": "Output: protected then private. Each class mangles its own '__inner', producing two independent attributes that coexist on the instance.\n\ncode:\nclass Parent:\n    def __init__(self):\n        self.protected = 'parent'\n        self.__inner = 'parent-inner'\n\nclass Child(Parent):\n    def __init__(self):\n        super().__init__()\n        self.protected = 'child'\n        self.__inner = 'child-inner'\n\nc = Child()\nprint(c.protected)        # child\nprint(c._Parent__inner)   # parent-inner\nprint(c._Child__inner)    # child-inner\n\nreal example:\nPrivate defaults from every base class survive side by side under their own mangled keys."
     },
     {
       "id": 80,
       "question": "Predict the output:\n\nclass A:\n    def __init__(self):\n        self.__name = 'A'\n\nclass B(A):\n    def __init__(self):\n        super().__init__()\n        self.__name = 'B'\n\nclass C(B):\n    def __init__(self):\n        super().__init__()\n        self.__name = 'C'\n\nc = C()\nprint(c._A__name)\nprint(c._B__name)\nprint(c._C__name)",
-      "answer": "A, B, C\n\nIn deep inheritance, each level's `self.__name` gets a unique mangled key: `_A__name`, `_B__name`, `_C__name`. All three coexist on the same instance. `super().__init__()` calls each parent, which stores their own copy under their own mangled name."
+      "answer": "Output: A (message) then B (message) then C. Klass.method replaced B's inherited method with its own version, so the call prints B's message only.\n\ncode:\nclass A:\n    def method(self):\n        print('A (message)')\n\nclass B(A):\n    def method(self):\n        print('B (message)')\n\nclass Klass(B):\n    pass\n\nKlass.method(Klass())  # B (message)\n\nreal example:\nMethod lookup walks the MRO and stops at the first owner of the name, which is B."
     },
     {
       "id": 81,
       "question": "Predict the output:\n\nclass Proxy:\n    def __init__(self):\n        self.__data = {}\n    def __setitem__(self, k, v):\n        self.__data[k] = v\n    def __getitem__(self, k):\n        return self.__data[k]\n\np = Proxy()\np['a'] = 1\np['b'] = 2\nprint(p['a'])\nprint(p._Proxy__data)",
-      "answer": "1, {'a': 1, 'b': 2}\n\nThe proxy class hides its internal `__data` dict behind the mangled name `_Proxy__data`. The `__setitem__` and `__getitem__` dunder methods provide dict-like access while the actual storage is inaccessible by its short name from outside the class."
+      "answer": "Output: 1 then {'a': 1, 'b': 2}. The inner() callback captures self and creates attributes on it via the shared increment.\n\ncode:\nclass Counter:\n    def __init__(self):\n        self.a = 0\n        self.b = 0\n    def inc_both(self):\n        def inner():\n            self.a += 1\n            self.b += 2\n        inner()\n\nc = Counter()\nc.inc_both()\nprint(c.a)          # 1\nprint(c.__dict__)   # {'a': 1, 'b': 2}\n\nreal example:\nHelper closures inside methods can update the instance they close over."
     },
     {
       "id": 82,
       "question": "Predict the output:\n\ndef make_counter():\n    count = 0\n    def inc():\n        nonlocal count\n        count += 1\n        return count\n    return inc\nc = make_counter()\nprint(c())\nprint(c())\nprint('count' in dir(c))",
-      "answer": "1, 2, False\n\nThe closure factory hides `count` inside the `inc` function's closure. `count` is not accessible via `dir(c)` or `c.__dict__`—information hiding is achieved through closure scope. Each call to `c()` increments and returns the captured variable."
+      "answer": "Output: 1, 2, False. The closure hides count inside inc's cell, so dir(c) never lists it and no instance dict is involved.\n\ncode:\ndef make_counter():\n    count = 0\n    def inc():\n        nonlocal count\n        count += 1\n        return count\n    return inc\n\nc = make_counter()\nprint(c())  # 1\nprint(c())  # 2\nprint('count' in dir(c))  # False\n\nreal example:\nCounter factories keep private state in closure cells instead of instance attributes."
     },
     {
       "id": 83,
       "question": "Predict the output:\n\nclass WriteOnce:\n    def __set_name__(self, owner, name):\n        self.name = name\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return obj.__dict__.get(self.name)\n    def __set__(self, obj, value):\n        if self.name in obj.__dict__:\n            raise AttributeError('read-only')\n        obj.__dict__[self.name] = value\n\nclass C:\n    x = WriteOnce()\nc = C()\nc.x = 10\nprint(c.x)\ntry:\n    c.x = 20\nexcept AttributeError as e:\n    print(e)",
-      "answer": "10, read-only\n\nThe descriptor's `__set__` method checks if the attribute already exists in the instance `__dict__`. First assignment (`c.x = 10`) succeeds because the key is absent. Second assignment (`c.x = 20`) finds the key already present and raises `AttributeError('read-only')`, enforcing write-once semantics."
+      "answer": "Output: 10 then read-only. The descriptor's __set__ writes once and rejects any second write because the key already exists.\n\ncode:\nclass WriteOnce:\n    def __set_name__(self, owner, name):\n        self.name = name\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return obj.__dict__.get(self.name)\n    def __set__(self, obj, value):\n        if self.name in obj.__dict__:\n            raise AttributeError('read-only')\n        obj.__dict__[self.name] = value\n\nclass C:\n    x = WriteOnce()\n\nc = C()\nc.x = 10\nprint(c.x)  # 10\ntry:\n    c.x = 20\nexcept AttributeError as e:\n    print(e)  # read-only\n\nreal example:\nWrite-once configuration fields reject edits after the first assignment."
     },
     {
       "id": 84,
       "question": "Fix the bug: the `WriteOnce` descriptor should use a mangled storage name to avoid collisions with external code writing the same key directly.\n\nclass WriteOnce:\n    def __set_name__(self, owner, name):\n        self.name = name\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return obj.__dict__.get(self.name)\n    def __set__(self, obj, value):\n        if self.name in obj.__dict__:\n            raise AttributeError('read-only')\n        obj.__dict__[self.name] = value",
-      "answer": "In `__set_name__`, change `self.name = name` to `self.storage = f'_{owner.__name__}__{name}'` and use `self.storage` everywhere instead of `self.name`. This ensures the underlying key is mangled and harder to access externally, improving encapsulation. The `self.name` lookup on an instance without it would raise `AttributeError` without this fix."
+      "answer": "Fix: self.storage = '_' + owner.__name__ + '__' + name, so the descriptor mirrors real private storage; the getter then rewrites normal requests.\n\ncode:\nclass Field:\n    def __set_name__(self, owner, name):\n        self.storage = '_' + owner.__name__ + '__' + name\n    def __get__(self, obj, typ=None):\n        return obj.__dict__.get(self.storage, None)\n    def __set__(self, obj, value):\n        obj.__dict__[self.storage] = value\n\nclass A:\n    name = Field()  # storage '_A__name'\n\na = A()\na.name = 'ann'\nprint(a.name, a.__dict__)  # ann {'_A__name': 'ann'}\n\nreal example:\nDescriptors that mimic private slots must compute the mangled name from the owner class."
     },
     {
       "id": 85,
       "question": "Predict the output or error:\n\nclass WriteOnce:\n    def __set_name__(self, owner, name):\n        self.name = name\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return obj.__dict__.get(self.name)\n    def __set__(self, obj, value):\n        obj.__dict__[self.name] = value\n\nclass C:\n    x = WriteOnce()\nc = C()\nc.x = 10\ntry:\n    del c.x\nexcept AttributeError as e:\n    print(type(e).__name__, e)",
-      "answer": "AttributeError: __delete__\n\nThe descriptor does not define a `__delete__` method. When Python tries to delete the attribute and falls back to the descriptor protocol, it looks for `__delete__` on the descriptor class. Since it's absent, Python raises `AttributeError` with the message `'__delete__'`."
+      "answer": "It raises AttributeError with message __delete__. The descriptor defines no __delete__ method, so the delete operation finds no way to remove the value.\n\ncode:\nclass WriteOnce:\n    def __set_name__(self, owner, name):\n        self.name = name\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return 'read'\n    def __set__(self, obj, value):\n        obj.__dict__[self.name] = value\n\nclass C:\n    x = WriteOnce()\n\nc = C()\nc.x = 10\ndel c.x  # AttributeError: __delete__\n\nreal example:\nDescriptors without __delete__ refuse being deleted from the object entirely."
     },
     {
       "id": 86,
       "question": "Why does this fail?\n\nclass Tracked:\n    def __set_name__(self, owner, name):\n        self.name = name\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return 'read'\n    def __set__(self, obj, value):\n        obj.__dict__[self.name] = value\n\nclass C:\n    pass\n\nsetattr(C, 'attr', Tracked())\nc = C()\nc.attr = 10",
-      "answer": "AttributeError: 'Tracked' object has no attribute 'name'.\n\n`__set_name__` is only called automatically during class creation (when the class body is being processed). Using `setattr` AFTER the class exists does NOT trigger `__set_name__`, so `self.name` is never set. The `__set__` method then fails trying to access the undefined attribute."
+      "answer": "It raises AttributeError: 'Tracked' object has no attribute 'name'. setattr after class creation does not trigger __set_name__, so the descriptor's self.name is never set.\n\ncode:\nclass Tracked:\n    def __set_name__(self, owner, name):\n        self.name = name\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return 'read'\n    def __set__(self, obj, value):\n        obj.__dict__[self.name] = value\n\nclass C:\n    pass\n\nsetattr(C, 'attr', Tracked())\nc = C()\nc.attr = 10  # AttributeError\n\nreal example:\nDescriptors attached manually after class creation miss their name-initialization hook."
     },
     {
       "id": 87,
       "question": "Predict the output or error:\n\nclass Parent:\n    @property\n    def x(self):\n        return self._x\n    @x.setter\n    def x(self, v):\n        self._x = v\nclass Child(Parent):\n    @property\n    def x(self):\n        return super().x\n\nc = Child()\nsuper().x = 10",
-      "answer": "RuntimeError: super(): no arguments\n\nZero-argument `super()` is resolved cellmagically only inside a method/class body using the free variables `__class__` and the first argument. At module level there is no such context, so `super()` raises `RuntimeError: super(): no arguments`. Even inside a method, `super().x = 10` would fail differently (the super lookup for `__setattr__` on a data-descriptor chain raises AttributeError). Note: to call the parent's property SETTER from an overriding property, use `super(Child, Child).x.fset(self, v)` or store with `self.__dict__[mangled] = v`."
+      "answer": "It raises RuntimeError: super(): no arguments. Inside a plain function, super() cannot infer the class and object context.\n\ncode:\ndef helper(self):\n    return super().x\n\ntry:\n    helper(None)\nexcept RuntimeError as e:\n    print(e)\n\nreal example:\nsuper() only works inside methods that Python knows belong to a class."
     },
     {
       "id": 88,
       "question": "Predict the output:\n\nclass C:\n    @property\n    def x(self):\n        return self.x\nc = C()\ntry:\n    c.x\nexcept RecursionError:\n    print('RecursionError')",
-      "answer": "RecursionError\n\nThe property getter returns `self.x`, which triggers `__getattribute__`, which finds the property descriptor in the class, which calls `__get__`, which runs the getter again, which accesses `self.x` again—infinite recursion until Python's recursion limit is hit."
+      "answer": "It raises RecursionError: maximum recursion depth exceeded. Overriding __getattribute__ to always call c.name creates a self-referential loop.\n\ncode:\nclass A:\n    def __getattribute__(self, name):\n        return self.name  # infinite loop\n\ntry:\n    A().name\nexcept RecursionError as e:\n    print(e)\n\nreal example:\nCustom getters must delegate to object.__getattribute__ or object.__getattr__ to break the recursion."
     },
     {
       "id": 89,
       "question": "Predict the output:\n\nclass Account:\n    __slots__ = ['_Account__balance']\n    @property\n    def balance(self):\n        return self._Account__balance\n    @balance.setter\n    def balance(self, v):\n        self._Account__balance = v\n\na = Account()\na.balance = 100\nprint(a.balance)\nprint(hasattr(a, '__dict__'))",
-      "answer": "100, False\n\nUsing `__slots__` with a property requires writing the slot name explicitly as `'_Account__balance'` (the mangled form) since `__slots__` does not mangle names. The property's getter/setter explicitly use the mangled slot name. No `__dict__` exists because `__slots__` is defined."
+      "answer": "Output: 100 then False. The slot is declared with its mangled name '_Account__balance', and the property reads and writes via that exact key; __dict__ is absent.\n\ncode:\nclass Account:\n    __slots__ = ['_Account__balance']\n    @property\n    def balance(self):\n        return self._Account__balance\n    @balance.setter\n    def balance(self, v):\n        self._Account__balance = v\n\na = Account()\na.balance = 100\nprint(a.balance)                     # 100\nprint(hasattr(a, '__dict__'))        # False\n\nreal example:\nSlot-backed properties must spell their backing key in mangled form since __slots__ does not mangle."
     },
     {
       "id": 90,
       "question": "Compare the two approaches. Which one works and which raises an error?\n\n# Approach A: lambda inside class body\nclass A:\n    def __init__(self):\n        self.__x = 9\n    get_x = property(lambda self: self.__x)\n\n# Approach B: lambda outside class body\nclass B:\n    def __init__(self):\n        self.__x = 9\nB.get_x = property(lambda self: self.__x)\n\na = A()\nb = B()\nprint(a.get_x)\nprint(b.get_x)",
-      "answer": "Approach A prints `9`. Approach B raises `AttributeError: 'B' object has no attribute '__x'`.\n\nIn Approach A, the lambda is defined inside the class body at compile time, so `self.__x` IS mangled to `self._A__x`. In Approach B, the lambda is defined at module scope where mangling does not apply—`self.__x` is looked up literally, but the instance stores it as `_B__x`. This is a subtle and common trap."
+      "answer": "Approach A prints 9; Approach B raises AttributeError: 'B' object has no attribute '__x'. Only identifiers compiled inside the class body get mangled.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 9\n    get_x = property(lambda self: self.__x)  # compiles to _A__x\n\nclass B:\n    def __init__(self):\n        self.__x = 9\nB.get_x = property(lambda self: self.__x)  # no mangling\n\na = A()\nprint(a.get_x)          # 9\nprint(B().get_x)        # AttributeError\n\nreal example:\nLambdas placed in the class body are compiled there; attaching them later is not."
     },
     {
       "id": 91,
       "question": "Predict the output:\n\nclass C:\n    __slots__ = ('x',)\n    def __init__(self):\n        self.x = 10\nc = C()\ntry:\n    d = c.__dict__\nexcept AttributeError as e:\n    print(e)\nprint(type(C.__dict__['x']))",
-      "answer": "'C' object has no attribute '__dict__', then <class 'member_descriptor'>\n\nWhen `__slots__` is defined without `__dict__`, the instance has no `__dict__` attribute at all, so `c.__dict__` raises `AttributeError`. `C.__dict__['x']` returns the `member_descriptor` object that Python creates internally to manage the slot."
+      "answer": "Output: 'C' object has no attribute '__dict__' then <class 'member_descriptor'>. Slots without __dict__ remove instance dicts, and each slot is a member_descriptor on the class.\n\ncode:\nclass C:\n    __slots__ = ('x',)\n    def __init__(self):\n        self.x = 10\n\nc = C()\ntry:\n    d = c.__dict__\nexcept AttributeError as e:\n    print(e)                  # 'C' object has no attribute '__dict__'\nprint(type(C.__dict__['x']))  # <class 'member_descriptor'>\n\nreal example:\nMemory-focused models expose member descriptors instead of per-instance dictionaries."
     },
     {
       "id": 92,
       "question": "Fix the bug: `__getattribute__` is overridden but causes infinite recursion when accessing `self.__dict__`.\n\nclass C:\n    def __getattribute__(self, name):\n        return self.__getattribute__(name)  # fix this",
-      "answer": "Replace the body with `return object.__getattribute__(self, name)`. Calling `object.__getattribute__` directly accesses the raw attribute lookup without going through the custom `__getattribute__`, breaking the recursion. This is the standard pattern when overriding `__getattribute__`."
+      "answer": "Use object.__getattribute__(self, name) (or object.__getattr__ for misses). Delegating to the base implementation preserves normal lookup and avoids endless re-entry.\n\ncode:\nclass A:\n    def __getattribute__(self, name):\n        print('reading', name)\n        return object.__getattribute__(self, name)\n\na = A()\na.x = 10\nprint(a.x)  # reading x / 10\n\nreal example:\nTrace-loggers override __getattribute__ but must finish by calling the base method."
     },
     {
       "id": 93,
       "question": "Predict the output:\n\nclass C:\n    __slots__ = ('__x',)\n    def __init__(self):\n        self.__x = 10\nc = C()\nprint('_C__x' in dir(c))\nprint(hasattr(c, '__x'))\nprint(c._C__x)",
-      "answer": "True, False, 10\n\n`dir(c)` shows the mangled name `'_C__x'` (True). However, `hasattr(c, '__x')` returns False because the literal name `__x` does not exist—only `_C__x` exists. `c._C__x` directly accesses the slot member and returns `10`."
+      "answer": "Output: True, False, 10. The slot is stored under the mangled name '_C__x' (listed by dir), so the literal '__x' lookup fails while the mangled access works.\n\ncode:\nclass C:\n    __slots__ = ('__x',)\n    def __init__(self):\n        self.__x = 10\n\nc = C()\nprint('_C__x' in dir(c))  # True\nprint(hasattr(c, '__x'))  # False\nprint(c._C__x)            # 10\n\nreal example:\nIntrospection sees mangled slot names even though source-level dunder access does not."
     },
     {
       "id": 94,
       "question": "Predict the output:\n\nclass C:\n    def __init__(self):\n        self.__secret = 42\n        self.public = 100\n\nc = C()\nprint(sorted([n for n in dir(c) if 'secret' in n or 'public' in n]))",
-      "answer": "['_C__secret', 'public']\n\n`dir()` returns all attributes including mangled names. `__secret` appears as `'_C__secret'`. Single-underscore or no-underscore names like `public` appear as-is. This confirms that mangling affects the attribute's actual name, and `dir()` reflects the mangled form."
+      "answer": "Output: ['_C__secret', 'public']. dir() lists real stored names, so the private field shows its mangled form while public stays plain.\n\ncode:\nclass C:\n    def __init__(self):\n        self.__secret = 42\n        self.public = 100\n\nc = C()\nprint(sorted(n for n in dir(c) if 'secret' in n or 'public' in n))\n# ['_C__secret', 'public']\n\nreal example:\nTooling listing an object's fields always reveals the mangled private key."
     },
     {
       "id": 95,
       "question": "Predict the output:\n\nclass C:\n    def __getattr__(self, name):\n        return f'missing:{name}'\n\nc = C()\nprint(c.x == getattr(c, 'x'))\nprint(c.y == getattr(c, 'y'))",
-      "answer": "True, True\n\n`c.x` and `getattr(c, 'x')` are semantically equivalent—they both trigger `__getattr__` with `'x'` since neither exists in `__dict__`. Both return `'missing:x'`, so the equality is `True`. Same for `y`."
+      "answer": "Output: True then True. c.x and getattr(c, 'x') behave identically: both trigger __getattr__('x') because no real attribute exists.\n\ncode:\nclass C:\n    def __getattr__(self, name):\n        return f'missing:{name}'\n\nc = C()\nprint(c.x == getattr(c, 'x'))  # True\nprint(c.y == getattr(c, 'y'))  # True\n\nreal example:\nDot access and getattr compile to the same lookup path, so equal results are guaranteed."
     },
     {
       "id": 96,
       "question": "Predict the output or error:\n\nclass C:\n    __slots__ = ('x',)\n    def __init__(self):\n        self.x = 10\nc = C()\ntry:\n    del c.x\nexcept TypeError as e:\n    print('TypeError:', e)\nelse:\n    print('deleted ok')",
-      "answer": "deleted ok\n\nDeleting an existing slot attribute succeeds. The slot descriptor's `__delete__` method clears the slot value. The slot remains (you can assign again), but the value is removed. Note: deleting an UNASSIGNED slot raises `AttributeError`, not `TypeError`."
+      "answer": "Output: deleted ok. Deleting an assigned slot attribute succeeds via the member descriptor's __delete__; unassigned slots raise AttributeError instead.\n\ncode:\nclass C:\n    __slots__ = ('x',)\n    def __init__(self):\n        self.x = 10\n\nc = C()\ntry:\n    del c.x\nexcept TypeError as e:\n    print('TypeError:', e)\nelse:\n    print('deleted ok')\n\nreal example:\nEdge systems clean up slot-backed caches by deleting the slot value safely."
     },
     {
       "id": 97,
       "question": "Predict the output:\n\nclass C:\n    @property\n    def x(self):\n        return 5\nc = C()\ntry:\n    del c.x\nexcept AttributeError as e:\n    print(e)",
-      "answer": "property 'x' of 'C' object has no deleter\n\nA property without a `@x.deleter` decorator has no `__delete__` method. When you attempt to delete `c.x`, Python checks the property descriptor for `__delete__` and finds it absent, raising this specific `AttributeError` message."
+      "answer": "Output: property 'x' of 'C' object has no deleter. Without @x.deleter the property descriptor has no fdel callback, so del c.x fails with that exact message.\n\ncode:\nclass C:\n    @property\n    def x(self):\n        return 5\n\nc = C()\ntry:\n    del c.x\nexcept AttributeError as e:\n    print(e)  # property 'x' of 'C' object has no deleter\n\nreal example:\nRead-only computed properties intentionally refuse deletion along with assignment."
     },
     {
       "id": 98,
       "question": "What is the `__name__` attribute of the function returned by `make_counter`? Why might this matter?\n\ndef make_counter():\n    count = [0]\n    def inc():\n        count[0] += 1\n        return count[0]\n    return inc\nc = make_counter()\nprint(c.__name__)",
-      "answer": "inc\n\nThe returned function's `__name__` is `'inc'` (the original function name, not `'make_counter'`). If you assign it to a class attribute or use it for debugging/serialization, it retains its original name. Using a lambda (`lambda: ...`) instead would set `__name__` to `'<lambda>'`, which can confuse debugging tools and stack traces."
+      "answer": "Output: inc. The function keeps its source name; assigning it to a class attribute makes debugging harder because tracebacks would show inc instead of the macro name.\n\ncode:\ndef make_counter():\n    count = [0]\n    def inc():\n        count[0] += 1\n        return count[0]\n    return inc\n\nc = make_counter()\nprint(c.__name__)  # inc\n\nreal example:\nDynamic class methods should be wrapped or renamed so logs and serializers stay readable."
     },
     {
       "id": 99,
       "question": "Predict the output:\n\nclass Proxy:\n    def __init__(self):\n        self.__data = {}\n    def __setitem__(self, k, v):\n        self.__data[k] = v\n    def __getitem__(self, k):\n        return self.__data[k]\n    def items(self):\n        return list(self.__data)\n\np = Proxy()\np['a'] = 1\nprint(p.items())\nprint(p._Proxy__data)",
-      "answer": "['a'], {'a': 1}\n\n`self.items()` accesses `self.__data` inside the class, so it's mangled to `self._Proxy__data` at compile time and works correctly. From outside, `p._Proxy__data` also accesses the same dict. The proxy provides a controlled API (`items()`) while the internal structure is mangled but not truly hidden."
+      "answer": "Output: ['a'] then {'a': 1}. The proxy's methods mangle __data to _Proxy__data at compile time, and external code can still reach that same dict directly.\n\ncode:\nclass Proxy:\n    def __init__(self):\n        self.__data = {}\n    def __setitem__(self, k, v):\n        self.__data[k] = v\n    def items(self):\n        return list(self.__data)\n\np = Proxy()\np['a'] = 1\nprint(p.items())       # ['a']\nprint(p._Proxy__data)  # {'a': 1}\n\nreal example:\nDict-like proxies hide storage from normal syntax but not from determined inspecters."
     },
     {
       "id": 100,
       "question": "Predict the output:\n\nclass Descriptor:\n    def __set_name__(self, owner, name):\n        self.storage = f'_{owner.__name__}__{name}'\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return getattr(obj, self.storage, 0)\n    def __set__(self, obj, value):\n        if hasattr(obj, self.storage):\n            raise AttributeError('read-only after init')\n        setattr(obj, self.storage, value)\n\nclass MyClass:\n    x = Descriptor()\n    y = Descriptor()\n\no = MyClass()\no.x = 10\nprint(o.x)\ntry:\n    o.x = 20\nexcept AttributeError as e:\n    print(e)\no.y = 30\nprint(o.y)",
-      "answer": "10, read-only after init, 30\n\n`__set_name__` creates storage keys `_MyClass__x` and `_MyClass__y` using the owner's mangled-name convention. First `o.x = 10` succeeds (key not in instance yet). Second `o.x = 20` raises because the storage key already exists—enforcing write-once. `o.y = 30` is independent and succeeds because `_MyClass__y` doesn't exist yet."
+      "answer": "Output: 10, read-only after init, 30. __set_name__ builds mangled storage keys per owner, and __set__ allows exactly one write per key.\n\ncode:\nclass Descriptor:\n    def __set_name__(self, owner, name):\n        self.storage = f'_{owner.__name__}__{name}'\n    def __get__(self, obj, objtype=None):\n        if obj is None:\n            return self\n        return getattr(obj, self.storage, 0)\n    def __set__(self, obj, value):\n        if hasattr(obj, self.storage):\n            raise AttributeError('read-only after init')\n        setattr(obj, self.storage, value)\n\nclass MyClass:\n    x = Descriptor()\n    y = Descriptor()\n\no = MyClass()\no.x = 10\nprint(o.x)  # 10\ntry:\n    o.x = 20\nexcept AttributeError as e:\n    print(e)  # read-only after init\no.y = 30\nprint(o.y)  # 30\n\nreal example:\nWrite-once descriptor fields protect frozen settings while each field stays independent."
     }
   ]
 }

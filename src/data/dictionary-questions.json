@@ -4,2502 +4,2502 @@
     {
       "id": 1,
       "question": "What does {} create in Python?",
-      "answer": "An empty dictionary {}"
+      "answer": "An empty dictionary, a set of key-value pairs with no entries yet.\n\ncode:\nd = {}\nprint(d)  # {}\nprint(len(d))  # 0\n\nreal example:\nA blank contact book waiting to be filled with names and numbers."
     },
     {
       "id": 2,
       "question": "What does dict(a=1, b=2) return?",
-      "answer": "{'a': 1, 'b': 2}"
+      "answer": "It returns {'a': 1, 'b': 2}. Keyword arguments become string keys automatically.\n\ncode:\nd = dict(a=1, b=2)\nprint(d)  # {'a': 1, 'b': 2}\n\nreal example:\nBuilding a profile dict from named fields in one call."
     },
     {
       "id": 3,
       "question": "What does dict([('a', 1), ('b', 2)]) return?",
-      "answer": "{'a': 1, 'b': 2}"
+      "answer": "It returns {'a': 1, 'b': 2}. \n\ncode:\npairs = [('a', 1), ('b', 2)]\nd = dict(pairs)\nprint(d)\n\nreal example:\nConverting a list of (name, score) rows into a quick lookup table."
     },
     {
       "id": 4,
       "question": "What does dict(zip(['a', 'b'], [1, 2])) return?",
-      "answer": "{'a': 1, 'b': 2}"
+      "answer": "It returns {'a': 1, 'b': 2}. zip pairs each key with the matching value in order.\n\ncode:\nd = dict(zip(['a', 'b'], [1, 2]))\nprint(d)\n\nreal example:\nPairing column headers with the values in a table row."
     },
     {
       "id": 5,
       "question": "What does dict.fromkeys(['a', 'b'], 0) return?",
-      "answer": "{'a': 0, 'b': 0}"
+      "answer": "It returns {'a': 0, 'b': 0}. Every key gets the same default value.\n\ncode:\nd = dict.fromkeys(['a', 'b'], 0)\nprint(d)  # {'a': 0, 'b': 0}\n\nreal example:\nInitializing a scoreboard where every player starts at 0."
     },
     {
       "id": 6,
       "question": "What does dict.fromkeys(['x', 'y']) return (no default given)?",
-      "answer": "{'x': None, 'y': None}"
+      "answer": "It returns {'x': None, 'y': None}. Without a default, each key maps to None.\n\ncode:\nd = dict.fromkeys(['x', 'y'])\nprint(d)  # {'x': None, 'y': None}\n\nreal example:\nPreparing a checklist where each item's value is filled in later."
     },
     {
       "id": 7,
       "question": "What does set([1, 2]) produce: a set or a dict?",
-      "answer": "A set {1, 2}; braces with no colons make a set"
+      "answer": "It produces a set, not a dict. Braces or set() with elements but no colons make a set.\n\ncode:\ns = set([1, 2])\nprint(type(s))  # <class 'set'>\n\nreal example:\nKeeping the unique tags of a single blog post."
     },
     {
       "id": 8,
       "question": "What does {1, 2} produce?",
-      "answer": "A set, not a dict"
+      "answer": "It produces a set, not a dict, because the entries have no colons.\n\ncode:\ns = {1, 2}\nprint(type(s))  # <class 'set'>\n\nreal example:\nCollecting the unique student IDs that attended a class."
     },
     {
       "id": 9,
       "question": "What does {1: 'one', 2: 'two'} produce?",
-      "answer": "A dict with integer keys {1: 'one', 2: 'two'}"
+      "answer": "It produces a dict with integer keys: {1: 'one', 2: 'two'}.\n\ncode:\nd = {1: 'one', 2: 'two'}\nprint(d[1])  # 'one'\n\nreal example:\nMapping day numbers to their weekday names."
     },
     {
       "id": 10,
       "question": "What does dict() by itself return?",
-      "answer": "An empty dictionary {}"
+      "answer": "It returns an empty dictionary {}.\n\ncode:\nd = dict()\nprint(d)  # {}\n\nreal example:\nCreating an empty settings store to fill in as the program runs."
     },
     {
       "id": 11,
       "question": "Can a dictionary store mixed value types like ints, strings, lists and dicts?",
-      "answer": "Yes, values can be any Python object"
+      "answer": "Yes. Values can be ints, strings, lists, dicts, or any Python object.\n\ncode:\nd = {'n': 3, 'name': 'Al', 'tags': [1, 2], 'meta': {'x': 1}}\nprint(d)\n\nreal example:\nA user record mixing age, name, a tag list, and a nested settings dict."
     },
     {
       "id": 12,
       "question": "What does dict('ab') raise?",
-      "answer": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+      "answer": "It raises ValueError: dictionary update sequence element #0 has length 1; 2 is required, because 'a' is a single character, not a (key, value) pair.\n\ncode:\ntry:\n    dict('ab')\nexcept ValueError as e:\n    print(e)\n\nreal example:\nThe error reminds you each item passed to dict() must be a 2-part pair."
     },
     {
       "id": 13,
       "question": "What does dict([1, 2]) raise?",
-      "answer": "TypeError: cannot convert dictionary update sequence element #0 to a sequence"
+      "answer": "It raises TypeError: cannot convert dictionary update sequence element #0 to a sequence, because integers can't be unpacked into key-value pairs.\n\ncode:\ntry:\n    dict([1, 2])\nexcept TypeError as e:\n    print(e)\n\nreal example:\nEach item must look like a two-column row, not a bare number."
     },
     {
       "id": 14,
       "question": "Can you create a dict using a generator expression like dict((x, x*x) for x in range(3))?",
-      "answer": "Yes, it returns {0: 0, 1: 1, 2: 4}"
+      "answer": "Yes. It returns {0: 0, 1: 1, 2: 4}.\n\ncode:\nd = dict((x, x * x) for x in range(3))\nprint(d)  # {0: 0, 1: 1, 2: 4}\n\nreal example:\nBuilding a small cache of numbers to their squares as you generate them."
     },
     {
       "id": 15,
       "question": "What is the output of d = {'a': 1, 'b': 2}; list(d)?",
-      "answer": "['a', 'b'] (iterating a dict yields its keys)"
+      "answer": "It outputs ['a', 'b']. Iterating a dict yields its keys only.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(list(d))  # ['a', 'b']\n\nreal example:\nGetting the list of usernames out of a users dict."
     },
     {
       "id": 16,
       "question": "What does len({'a': 1, 'b': 2, 'c': 3}) return?",
-      "answer": "3"
+      "answer": "It returns 3, the number of key-value pairs.\n\ncode:\nd = {'a': 1, 'b': 2, 'c': 3}\nprint(len(d))  # 3\n\nreal example:\nReporting how many items are in a shopping cart dict."
     },
     {
       "id": 17,
       "question": "What does 'b' in {'a': 1, 'b': 2} return?",
-      "answer": "True"
+      "answer": "It returns True, because 'b' is a key in the dict.\n\ncode:\nprint('b' in {'a': 1, 'b': 2})  # True\n\nreal example:\nChecking whether a username exists before processing it."
     },
     {
       "id": 18,
       "question": "What does 1 in {'a': 1} return?",
-      "answer": "False (in checks keys, not values)"
+      "answer": "It returns False, because in checks keys, not values.\n\ncode:\nprint(1 in {'a': 1})  # False\n\nreal example:\nThe membership test asks about the key (like a username), not what it stores."
     },
     {
       "id": 19,
       "question": "What does bool({}) return?",
-      "answer": "False (empty dict is falsy)"
+      "answer": "It returns False, because an empty dict is falsy.\n\ncode:\nprint(bool({}))  # False\n\nreal example:\nA quick if not config: check that warns you when no settings were loaded."
     },
     {
       "id": 20,
       "question": "What does bool({'a': 1}) return?",
-      "answer": "True"
+      "answer": "It returns True, because a non-empty dict is truthy.\n\ncode:\nprint(bool({'a': 1}))  # True\n\nreal example:\nChecking a cart isn't empty before letting the user check out."
     },
     {
       "id": 21,
       "question": "What does {'a': 1} == {'a': 1} return?",
-      "answer": "True"
+      "answer": "It returns True, because the content is identical.\n\ncode:\nprint({'a': 1} == {'a': 1})  # True\n\nreal example:\nComparing two saved config files to see if they hold the same settings."
     },
     {
       "id": 22,
       "question": "What does {'a': 1, 'b': 2} == {'b': 2, 'a': 1} return?",
-      "answer": "True (dict equality ignores order)"
+      "answer": "It returns True, because dict equality ignores order.\n\ncode:\nprint({'a': 1, 'b': 2} == {'b': 2, 'a': 1})  # True\n\nreal example:\nTwo identically filled schedules still count as the same even if reordered."
     },
     {
       "id": 23,
       "question": "What does {'a': 1} == {'a': 2} return?",
-      "answer": "False"
+      "answer": "It returns False, because the values differ.\n\ncode:\nprint({'a': 1} == {'a': 2})  # False\n\nreal example:\nTwo records with the same field name but different amounts are different."
     },
     {
       "id": 24,
       "question": "What does {'a': 1} == {'A': 1} return?",
-      "answer": "False (keys are case-sensitive and must match exactly)"
+      "answer": "It returns False, because keys are case-sensitive and must match exactly.\n\ncode:\nprint({'a': 1} == {'A': 1})  # False\n\nreal example:\n'User' and 'user' are different fields in a form."
     },
     {
       "id": 25,
       "question": "What does {'a': [1, 2]} == {'a': [1, 2]} return?",
-      "answer": "True (equality compares nested values too)"
+      "answer": "It returns True, because equality compares nested values too.\n\ncode:\nprint({'a': [1, 2]} == {'a': [1, 2]})  # True\n\nreal example:\nComparing two order dicts that both hold the same list of items."
     },
     {
       "id": 26,
       "question": "What does {1: 'a'} == {'1': 'a'} return?",
-      "answer": "False (1 and '1' are different keys with different types)"
+      "answer": "It returns False, because 1 and '1' are different keys with different types.\n\ncode:\nprint({1: 'a'} == {'1': 'a'})  # False\n\nreal example:\nIn user input, the string '1' and the number 1 are treated as different entries."
     },
     {
       "id": 27,
       "question": "What does d = {'a': 1, 'a': 2}; print(d) produce?",
-      "answer": "{'a': 2} (later duplicate keys overwrite earlier ones)"
+      "answer": "It produces {'a': 2}. Later duplicate keys overwrite earlier ones.\n\ncode:\nd = {'a': 1, 'a': 2}\nprint(d)  # {'a': 2}\n\nreal example:\nWhen merging two config sources, the last write wins."
     },
     {
       "id": 28,
       "question": "How many entries does {'x': 1, 'x': 2, 'x': 3} contain?",
-      "answer": "One entry: {'x': 3}"
+      "answer": "It contains one entry: {'x': 3}. Duplicate keys collapse to a single key.\n\ncode:\nd = {'x': 1, 'x': 2, 'x': 3}\nprint(d)  # {'x': 3}\n\nreal example:\nA file that is overwritten several times; only the last version exists."
     },
     {
       "id": 29,
       "question": "What does type({'a': 1}.keys()) return?",
-      "answer": "dict_keys"
+      "answer": "It returns dict_keys. The keys() method returns a view, not a list.\n\ncode:\nprint(type({'a': 1}.keys()))  # <class 'dict_keys'>\n\nreal example:\nYou usually convert it with list() before iterating or indexing."
     },
     {
       "id": 30,
       "question": "What does type({'a': 1}.values()) return?",
-      "answer": "dict_values"
+      "answer": "It returns dict_values.\n\ncode:\nprint(type({'a': 1}.values()))  # <class 'dict_values'>\n\nreal example:\nIterating over values to total up a shopping cart."
     },
     {
       "id": 31,
       "question": "What does type({'a': 1}.items()) return?",
-      "answer": "dict_items"
+      "answer": "It returns dict_items.\n\ncode:\nprint(type({'a': 1}.items()))  # <class 'dict_items'>\n\nreal example:\nLooping over key-value pairs while reading a settings file."
     },
     {
       "id": 32,
       "question": "Do dict_keys, dict_values and dict_items behave like lists?",
-      "answer": "No, they are views; convert with list() to get a list"
+      "answer": "No. They are live views, not lists; convert with list() to get a real list.\n\ncode:\nv = {'a': 1}.keys()\nprint(list(v))  # ['a']\nprint(isinstance(v, list))  # False\n\nreal example:\nViews update when the dict changes, like a live dashboard."
     },
     {
       "id": 33,
       "question": "What is the output of d = {'a': 1, 'b': 2}; print(list(d.keys()))?",
-      "answer": "['a', 'b']"
+      "answer": "The output is ['a', 'b'].\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(list(d.keys()))  # ['a', 'b']\n\nreal example:\nListing the column names of a database record."
     },
     {
       "id": 34,
       "question": "What is the output of print(list({'a': 1, 'b': 2}.values()))?",
-      "answer": "[1, 2]"
+      "answer": "The output is [1, 2].\n\ncode:\nprint(list({'a': 1, 'b': 2}.values()))  # [1, 2]\n\nreal example:\nGetting the numbers in a stats dict to feed into a chart."
     },
     {
       "id": 35,
       "question": "What is the output of print(list({'a': 1, 'b': 2}.items()))?",
-      "answer": "[('a', 1), ('b', 2)]"
+      "answer": "The output is [('a', 1), ('b', 2)].\n\ncode:\nprint(list({'a': 1, 'b': 2}.items()))  # [('a', 1), ('b', 2)]\n\nreal example:\nTurning a dict into a list of row tuples for a table."
     },
     {
       "id": 36,
       "question": "What does d = {'a': 1}; print(type(d['a'])) output?",
-      "answer": "<class 'int'>"
+      "answer": "It outputs <class 'int'>.\n\ncode:\nd = {'a': 1}\nprint(type(d['a']))  # <class 'int'>\n\nreal example:\nKnowing the value type before doing arithmetic on it."
     },
     {
       "id": 37,
       "question": "Can a dictionary be nested inside another dictionary as a value?",
-      "answer": "Yes, e.g., {'user': {'name': 'A', 'age': 20}}"
+      "answer": "Yes. A dict can hold another dict as its value, for example {'user': {'name': 'A', 'age': 20}}.\n\ncode:\nuser = {'user': {'name': 'A', 'age': 20}}\nprint(user['user']['name'])  # 'A'\n\nreal example:\nA JSON API response nests objects inside other objects."
     },
     {
       "id": 38,
       "question": "Can a dictionary store a list as a value?",
-      "answer": "Yes, e.g., {'marks': [90, 85, 88]}"
+      "answer": "Yes. A list can be stored as a value, for example {'marks': [90, 85, 88]}.\n\ncode:\nmarks = {'marks': [90, 85, 88]}\nprint(marks['marks'][1])  # 85\n\nreal example:\nStoring a student's list of test scores under one key."
     },
     {
       "id": 39,
       "question": "What does d = {}; d['k'] = 1; print(d) produce?",
-      "answer": "{'k': 1} (assigning a new key adds it)"
+      "answer": "It produces {'k': 1}. Assigning to a new key adds it to the dict.\n\ncode:\nd = {}\nd['k'] = 1\nprint(d)  # {'k': 1}\n\nreal example:\nAdding a newly registered user to a users dict."
     },
     {
       "id": 40,
       "question": "What does d = {'k': 1}; d['k'] = 2; print(d) produce?",
-      "answer": "{'k': 2} (assigning to an existing key overwrites its value)"
+      "answer": "It produces {'k': 2}. Assigning to an existing key overwrites its value.\n\ncode:\nd = {'k': 1}\nd['k'] = 2\nprint(d)  # {'k': 2}\n\nreal example:\nUpdating a cart quantity instead of adding a second entry."
     },
     {
       "id": 41,
       "question": "What does d = {'a': 1}; print(d['a']) output?",
-      "answer": "1"
+      "answer": "It outputs 1, the value stored under the key 'a'.\n\ncode:\nd = {'a': 1}\nprint(d['a'])  # 1\n\nreal example:\nReading a product's price by looking up its product id."
     },
     {
       "id": 42,
       "question": "What does d = {'a': 1}; print(d['b']) do?",
-      "answer": "Raises KeyError: 'b'"
+      "answer": "It raises KeyError: 'b', because 'b' is not a key.\n\ncode:\nd = {'a': 1}\ntry:\n    print(d['b'])\nexcept KeyError as e:\n    print(e)\n\nreal example:\nLooking up a name that isn't in the contact list."
     },
     {
       "id": 43,
       "question": "What does d = {'a': 1}; print(d.get('a')) output?",
-      "answer": "1"
+      "answer": "It outputs 1, because get returns the value for an existing key.\n\ncode:\nd = {'a': 1}\nprint(d.get('a'))  # 1\n\nreal example:\nFetching an option's value when you know it exists."
     },
     {
       "id": 44,
       "question": "What does d = {'a': 1}; print(d.get('b')) output?",
-      "answer": "None (no error)"
+      "answer": "It outputs None, and raises no error for a missing key.\n\ncode:\nd = {'a': 1}\nprint(d.get('b'))  # None\n\nreal example:\nAsking for an optional setting that hasn't been configured."
     },
     {
       "id": 45,
       "question": "What does d = {'a': 1}; print(d.get('b', 0)) output?",
-      "answer": "0 (the provided default)"
+      "answer": "It outputs 0, the provided default, because 'b' is missing.\n\ncode:\nd = {'a': 1}\nprint(d.get('b', 0))  # 0\n\nreal example:\nItem counts default to 0 instead of crashing when a key is absent."
     },
     {
       "id": 46,
       "question": "What does d = {'a': 1}; print(d.get('a', 100)) output?",
-      "answer": "1 (default ignored when key exists)"
+      "answer": "It outputs 1, because the default is ignored when the key exists.\n\ncode:\nd = {'a': 1}\nprint(d.get('a', 100))  # 1\n\nreal example:\nAn existing setting returns its real value rather than the fallback."
     },
     {
       "id": 47,
       "question": "What does d = {'a': 1}; print(d.get('b') is None) output?",
-      "answer": "True"
+      "answer": "It outputs True, since the missing key yields None.\n\ncode:\nd = {'a': 1}\nprint(d.get('b') is None)  # True\n\nreal example:\nDistinguishing a genuinely missing setting from one set to a special value."
     },
     {
       "id": 48,
       "question": "Is the default argument of .get() evaluated even when the key exists?",
-      "answer": "Yes, it is evaluated eagerly before the call"
+      "answer": "Yes. Like all Python arguments, it is evaluated eagerly before the call.\n\ncode:\nd = {'a': 1}\nprint(d.get('a', 99))  # 99 is still computed, but not returned\n\nreal example:\nAvoid expensive or side-effecting expressions inside a get default."
     },
     {
       "id": 49,
       "question": "What does d = {}.setdefault('x', 5); print(d) produce?",
-      "answer": "{'x': 5}; setdefault returns 5 and inserts the key"
+      "answer": "It produces {'x': 5}. setdefault returns 5 and inserts the missing key.\n\ncode:\nd = {}\nd.setdefault('x', 5)\nprint(d)  # {'x': 5}\n\nreal example:\nInitializing a counter on its first use without checking first."
     },
     {
       "id": 50,
       "question": "What does d = {'x': 5}; print(d.setdefault('x', 10)) output?",
-      "answer": "5 (existing value is returned and not changed)"
+      "answer": "It outputs 5, because the existing value is returned and not changed.\n\ncode:\nd = {'x': 5}\nprint(d.setdefault('x', 10))  # 5\n\nreal example:\nFilling a default only when the key is missing, never overwriting real data."
     },
     {
       "id": 51,
       "question": "What does d = {'x': 5}; d.setdefault('y', []) ; print(d) produce?",
-      "answer": "{'x': 5, 'y': []}"
+      "answer": "It produces {'x': 5, 'y': []}. setdefault inserts a missing key with its default.\n\ncode:\nd = {'x': 5}\nd.setdefault('y', [])\nprint(d)  # {'x': 5, 'y': []}\n\nreal example:\nPreparing a new key so you can safely collect data into it."
     },
     {
       "id": 52,
       "question": "What does d = {'x': 5}; print(d.setdefault('y', [])) output?",
-      "answer": "[]"
+      "answer": "It outputs [], the inserted default for the missing key.\n\ncode:\nd = {'x': 5}\nprint(d.setdefault('y', []))  # []\n\nreal example:\nGetting an empty list to start appending values to."
     },
     {
       "id": 53,
       "question": "What does d = {'x': 5}; d.setdefault('x', []) ; print(d['x']) output?",
-      "answer": "5 (setdefault does not replace existing values)"
+      "answer": "It outputs 5, because setdefault does not replace existing values.\n\ncode:\nd = {'x': 5}\nd.setdefault('x', [])\nprint(d['x'])  # 5\n\nreal example:\nKeeping the original value when a key already has data."
     },
     {
       "id": 54,
       "question": "What does d = {'a': 1, 'b': 2}; print(d.pop('a')) output?",
-      "answer": "1, and 'a' is removed from the dict"
+      "answer": "It outputs 1, and 'a' is removed from the dict.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(d.pop('a'))  # 1\nprint(d)  # {'b': 2}\n\nreal example:\nRemoving a completed task and grabbing its status in one step."
     },
     {
       "id": 55,
       "question": "What does d = {'a': 1}; print(d.pop('b', 'missing')) output?",
-      "answer": "'missing' (default returned when key absent)"
+      "answer": "It outputs 'missing', because the default is returned when the key is absent.\n\ncode:\nd = {'a': 1}\nprint(d.pop('b', 'missing'))  # 'missing'\n\nreal example:\nConsuming a queue item, or falling back when none is left."
     },
     {
       "id": 56,
       "question": "What does d = {'a': 1}; d.pop('b') do?",
-      "answer": "Raises KeyError: 'b' (no default provided)"
+      "answer": "It raises KeyError: 'b', because no default was provided.\n\ncode:\nd = {'a': 1}\ntry:\n    d.pop('b')\nexcept KeyError as e:\n    print(e)\n\nreal example:\nTelling the user the item they tried to remove doesn't exist."
     },
     {
       "id": 57,
       "question": "Does d.pop('a') remove the key from the dictionary?",
-      "answer": "Yes, it removes and returns the value"
+      "answer": "Yes. pop removes the key and returns its value.\n\ncode:\nd = {'a': 1}\nv = d.pop('a')\nprint(v)  # 1\nprint(d)  # {}\n\nreal example:\nTaking an item out of stock and recording what was removed."
     },
     {
       "id": 58,
       "question": "What does d = {'a': 1, 'b': 2}; print(d.popitem()) output?",
-      "answer": "('b', 2) (removes and returns the last inserted item)"
+      "answer": "It outputs ('b', 2), removing and returning the last inserted item.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(d.popitem())  # ('b', 2)\nprint(d)  # {'a': 1}\n\nreal example:\nUndoing the most recent change, like a small undo stack."
     },
     {
       "id": 59,
       "question": "What does d = {}; print(d.popitem()) do?",
-      "answer": "Raises KeyError: 'popitem(): dictionary is empty'"
+      "answer": "It raises KeyError: 'popitem(): dictionary is empty'.\n\ncode:\nd = {}\ntry:\n    d.popitem()\nexcept KeyError as e:\n    print(e)\n\nreal example:\nPressing undo when there's nothing left to undo."
     },
     {
       "id": 60,
       "question": "What does d = {'a': 1, 'b': 2, 'c': 3}; print(d.popitem()[0]) output?",
-      "answer": "'c' (the last inserted key)"
+      "answer": "It outputs 'c', the last inserted key.\n\ncode:\nd = {'a': 1, 'b': 2, 'c': 3}\nprint(d.popitem()[0])  # 'c'\n\nreal example:\nGetting the name of the newest entry before it is deleted."
     },
     {
       "id": 61,
       "question": "What does del d['a'] do when 'a' exists?",
-      "answer": "Removes the key-value pair; no return value"
+      "answer": "It removes the key-value pair and returns nothing.\n\ncode:\nd = {'a': 1}\ndel d['a']\nprint(d)  # {}\n\nreal example:\nDeleting a user's session without needing a return value."
     },
     {
       "id": 62,
       "question": "What does d = {'a': 1}; del d['b'] do?",
-      "answer": "Raises KeyError: 'b'"
+      "answer": "It raises KeyError: 'b', because the key does not exist.\n\ncode:\nd = {'a': 1}\ntry:\n    del d['b']\nexcept KeyError as e:\n    print(e)\n\nreal example:\nTrying to delete a record that isn't in the database."
     },
     {
       "id": 63,
       "question": "What does d = {'a': 1, 'b': 2}; d.clear(); print(d) produce?",
-      "answer": "{} (clear removes all items and returns None)"
+      "answer": "It produces {}. clear removes all items and returns None.\n\ncode:\nd = {'a': 1, 'b': 2}\nd.clear()\nprint(d)  # {}\n\nreal example:\nResetting a game scoreboard at the start of a new round."
     },
     {
       "id": 64,
       "question": "What does d = {'a': 1}; d.update({'b': 2}); print(d) produce?",
-      "answer": "{'a': 1, 'b': 2}"
+      "answer": "It produces {'a': 1, 'b': 2}. update adds missing keys.\n\ncode:\nd = {'a': 1}\nd.update({'b': 2})\nprint(d)  # {'a': 1, 'b': 2}\n\nreal example:\nMerging new form fields into an existing profile."
     },
     {
       "id": 65,
       "question": "What does d = {'a': 1}; d.update({'a': 10}); print(d) produce?",
-      "answer": "{'a': 10} (update overwrites existing keys)"
+      "answer": "It produces {'a': 10}. update overwrites existing keys.\n\ncode:\nd = {'a': 1}\nd.update({'a': 10})\nprint(d)  # {'a': 10}\n\nreal example:\nApplying edits that replace old values with new ones."
     },
     {
       "id": 66,
       "question": "What does print({'a': 1}.update({'b': 2})) output?",
-      "answer": "None (update modifies in place and returns None)"
+      "answer": "It outputs None, because update modifies the dict in place and returns None.\n\ncode:\nd = {'a': 1}\nprint(d.update({'b': 2}))  # None\n\nreal example:\nupdate is for changing an existing dict, not for producing a new value."
     },
     {
       "id": 67,
       "question": "What does d = {'a': 1}; d.update(b=2); print(d) produce?",
-      "answer": "{'a': 1, 'b': 2}"
+      "answer": "It produces {'a': 1, 'b': 2}. Keyword arguments become string keys.\n\ncode:\nd = {'a': 1}\nd.update(b=2)\nprint(d)  # {'a': 1, 'b': 2}\n\nreal example:\nAdding structured fields using readable keyword syntax."
     },
     {
       "id": 68,
       "question": "What does d = {}; d.update([('x', 10), ('y', 20)]); print(d) produce?",
-      "answer": "{'x': 10, 'y': 20}"
+      "answer": "It produces {'x': 10, 'y': 20}. update accepts a list of pairs.\n\ncode:\nd = {}\nd.update([('x', 10), ('y', 20)])\nprint(d)  # {'x': 10, 'y': 20}\n\nreal example:\nLoading (key, value) rows from a config file into a dict."
     },
     {
       "id": 69,
       "question": "What does d = {'a': 1}; d |= {'b': 2}; print(d) produce?",
-      "answer": "{'a': 1, 'b': 2} (|= is the in-place merge operator, Python 3.9+)"
+      "answer": "It produces {'a': 1, 'b': 2}. |= is the in-place merge operator (Python 3.9+).\n\ncode:\nd = {'a': 1}\nd |= {'b': 2}\nprint(d)  # {'a': 1, 'b': 2}\n\nreal example:\nCombining user settings into the main config in place."
     },
     {
       "id": 70,
       "question": "What does d = {'a': 1}; d |= {'a': 100, 'b': 2}; print(d) produce?",
-      "answer": "{'a': 100, 'b': 2}"
+      "answer": "It produces {'a': 100, 'b': 2}. |= overwrites with the right-side values.\n\ncode:\nd = {'a': 1}\nd |= {'a': 100, 'b': 2}\nprint(d)  # {'a': 100, 'b': 2}\n\nreal example:\nApplying user overrides on top of default config values."
     },
     {
       "id": 71,
       "question": "What does {'a': 1} | {'b': 2} return?",
-      "answer": "{'a': 1, 'b': 2} (the | merge operator returns a new dict)"
+      "answer": "It returns {'a': 1, 'b': 2}. The | merge operator creates a new dict.\n\ncode:\nprint({'a': 1} | {'b': 2})  # {'a': 1, 'b': 2}\n\nreal example:\nCombining two sets of key-value rules without touching the originals."
     },
     {
       "id": 72,
       "question": "What does {'a': 1} | {'a': 99} return?",
-      "answer": "{'a': 99} (values on the right win)"
+      "answer": "It returns {'a': 99}, because values on the right win.\n\ncode:\nprint({'a': 1} | {'a': 99})  # {'a': 99}\n\nreal example:\nOverriding a default theme with the user's chosen one."
     },
     {
       "id": 73,
       "question": "What does {**{'a': 1}, **{'b': 2}} return?",
-      "answer": "{'a': 1, 'b': 2} (unpacking merge)"
+      "answer": "It returns {'a': 1, 'b': 2}. Double-star unpacking merges dicts into one literal.\n\ncode:\nprint({**{'a': 1}, **{'b': 2}})  # {'a': 1, 'b': 2}\n\nreal example:\nMerging several small setting dicts into a single one."
     },
     {
       "id": 74,
       "question": "What does {**{'a': 1}, **{'a': 99, 'b': 2}} return?",
-      "answer": "{'a': 99, 'b': 2}"
+      "answer": "It returns {'a': 99, 'b': 2}, because the later value wins.\n\ncode:\nprint({**{'a': 1}, **{'a': 99, 'b': 2}})  # {'a': 99, 'b': 2}\n\nreal example:\nA fallback chain where later sources override earlier ones."
     },
     {
       "id": 75,
       "question": "Can the | operator merge three dicts like a | b | c?",
-      "answer": "Yes, merging is left-associative: (a | b) | c"
+      "answer": "Yes. Merging is left-associative, so it runs as (a | b) | c.\n\ncode:\nmerged = {'a': 1} | {'b': 2} | {'c': 3}\nprint(merged)  # {'a': 1, 'b': 2, 'c': 3}\n\nreal example:\nCombining three data sources in a single expression."
     },
     {
       "id": 76,
       "question": "What does d = {'a': 1}; d2 = d.copy(); print(d2) produce?",
-      "answer": "{'a': 1} (a shallow copy)"
+      "answer": "It produces {'a': 1}, a shallow copy of d.\n\ncode:\nd = {'a': 1}\nd2 = d.copy()\nprint(d2)  # {'a': 1}\n\nreal example:\nDuplicating a config before you edit it, so the original stays safe."
     },
     {
       "id": 77,
       "question": "Is d.copy() a deep copy?",
-      "answer": "No, it is shallow; nested objects are shared"
+      "answer": "No. It is shallow, so nested objects are shared between the copies.\n\ncode:\nd = {'a': [1]}\nd2 = d.copy()\nprint(d2['a'] is d['a'])  # True\n\nreal example:\nShared inner lists mean a change in one copy is visible in the other."
     },
     {
       "id": 78,
       "question": "What does d = {'a': [1]}; d2 = d.copy(); d2['a'].append(2); print(d) produce?",
-      "answer": "{'a': [1, 2]} (shallow copy shares the same list)"
+      "answer": "It produces {'a': [1, 2]}, because the shallow copy shares the same list.\n\ncode:\nd = {'a': [1]}\nd2 = d.copy()\nd2['a'].append(2)\nprint(d)  # {'a': [1, 2]}\n\nreal example:\nTwo carts sharing one item list mutate together."
     },
     {
       "id": 79,
       "question": "What does import copy; d = {'a': [1]}; d2 = copy.deepcopy(d); d2['a'].append(2); print(d) produce?",
-      "answer": "{'a': [1]} (deepcopy gives a fully independent copy)"
+      "answer": "It produces {'a': [1]}, because deepcopy gives a fully independent copy.\n\ncode:\nimport copy\nd = {'a': [1]}\nd2 = copy.deepcopy(d)\nd2['a'].append(2)\nprint(d)  # {'a': [1]}\n\nreal example:\nSafer when you truly need separate copies of nested data."
     },
     {
       "id": 80,
       "question": "What does d = {'a': 1}; print(d is d.copy()) output?",
-      "answer": "False (copy creates a new object)"
+      "answer": "It outputs False, because copy creates a new object.\n\ncode:\nd = {'a': 1}\nprint(d is d.copy())  # False\n\nreal example:\nThe copy is a distinct object, even if its content is equal."
     },
     {
       "id": 81,
       "question": "What does d = {'a': 1, 'b': 2}; print(*d) output?",
-      "answer": "a b (unpacking a dict yields its keys)"
+      "answer": "It outputs a b, because unpacking a dict yields its keys.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(*d)  # a b\n\nreal example:\nPassing just the keys of a dict as separate arguments to a function."
     },
     {
       "id": 82,
       "question": "What does a, b = {'x': 1, 'y': 2}; print(a, b) output?",
-      "answer": "x y (unpacking a dict unpacks its keys)"
+      "answer": "It outputs x y, because unpacking a dict unpacks its keys.\n\ncode:\na, b = {'x': 1, 'y': 2}\nprint(a, b)  # x y\n\nreal example:\nReading the first two keys directly into named variables."
     },
     {
       "id": 83,
       "question": "What does x, y = {'x': 1, 'y': 2}; print(x) output?",
-      "answer": "x (the first key)"
+      "answer": "It outputs x, the first key to be unpacked.\n\ncode:\nx, y = {'x': 1, 'y': 2}\nprint(x)  # x\n\nreal example:\nPulling field names out without writing a loop."
     },
     {
       "id": 84,
       "question": "What does a, b = {'a': 1} do?",
-      "answer": "Raises ValueError: not enough values to unpack"
+      "answer": "It raises ValueError: not enough values to unpack, because there is only one key.\n\ncode:\ntry:\n    a, b = {'a': 1}\nexcept ValueError as e:\n    print(e)\n\nreal example:\nAsking for two names when only one key exists."
     },
     {
       "id": 85,
       "question": "What does for k in {'a': 1, 'b': 2} produce?",
-      "answer": "Iterates over the keys 'a' and 'b'"
+      "answer": "It iterates over the keys 'a' then 'b'.\n\ncode:\nfor k in {'a': 1, 'b': 2}:\n    print(k)\n\nreal example:\nVisiting every username in a members dict."
     },
     {
       "id": 86,
       "question": "What does for v in {'a': 1, 'b': 2}.values() produce?",
-      "answer": "Iterates over the values 1 and 2"
+      "answer": "It iterates over the values 1 and 2.\n\ncode:\nfor v in {'a': 1, 'b': 2}.values():\n    print(v)\n\nreal example:\nSumming up hourly readings stored in a sensor dict."
     },
     {
       "id": 87,
       "question": "What does for k, v in {'a': 1}.items() produce for iteration?",
-      "answer": "Pairs (k, v) as ('a', 1)"
+      "answer": "It produces the (k, v) pair as ('a', 1) on each step.\n\ncode:\nfor k, v in {'a': 1}.items():\n    print(k, v)  # a 1\n\nreal example:\nReading the name and age for each person in a record set."
     },
     {
       "id": 88,
       "question": "How do you write an items() loop over a dict d?",
-      "answer": "for k, v in d.items(): print(k, v)"
+      "answer": "Use for k, v in d.items(): then handle each pair inside the loop.\n\ncode:\nd = {'a': 1, 'b': 2}\nfor k, v in d.items():\n    print(k, v)\n\nreal example:\nPrinting every setting in a config file with its value."
     },
     {
       "id": 89,
       "question": "Are dict keys iterated in insertion order?",
-      "answer": "Yes, since Python 3.7 dictionaries preserve insertion order"
+      "answer": "Yes. Since Python 3.7, dictionaries preserve insertion order.\n\ncode:\nd = {'a': 1, 'b': 2}\nd['c'] = 3\nprint(list(d))  # ['a', 'b', 'c']\n\nreal example:\nKeeping a playlist in the order you added the songs."
     },
     {
       "id": 90,
       "question": "What does list(reversed({'a': 1, 'b': 2})) return?",
-      "answer": "['b', 'a'] (reversed() yields keys in reverse insertion order)"
+      "answer": "It returns ['b', 'a'], the keys in reverse insertion order.\n\ncode:\nprint(list(reversed({'a': 1, 'b': 2})))  # ['b', 'a']\n\nreal example:\nReading a history dict newest-first."
     },
     {
       "id": 91,
       "question": "What does d = {'a': 1, 'b': 2}; print(list(enumerate(d))) output?",
-      "answer": "[(0, 'a'), (1, 'b')] (enumerate pairs indices with keys)"
+      "answer": "It outputs [(0, 'a'), (1, 'b')]. enumerate pairs indices with keys.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(list(enumerate(d)))  # [(0, 'a'), (1, 'b')]\n\nreal example:\nNumbering the rows of a table that is stored as a dict."
     },
     {
       "id": 92,
       "question": "What does list(enumerate({'a': 1, 'b': 2}.values())) return?",
-      "answer": "[(0, 1), (1, 2)]"
+      "answer": "It returns [(0, 1), (1, 2)].\n\ncode:\nprint(list(enumerate({'a': 1, 'b': 2}.values())))  # [(0, 1), (1, 2)]\n\nreal example:\nTagging each value with its position in order."
     },
     {
       "id": 93,
       "question": "What does print(sorted({'b': 1, 'a': 2, 'c': 3})) output?",
-      "answer": "['a', 'b', 'c'] (sorts the keys)"
+      "answer": "It outputs ['a', 'b', 'c'], because sorted() sorts the keys.\n\ncode:\nprint(sorted({'b': 1, 'a': 2, 'c': 3}))  # ['a', 'b', 'c']\n\nreal example:\nShowing dictionary keys in alphabetical order."
     },
     {
       "id": 94,
       "question": "What does sorted({'b': 1, 'a': 2}, reverse=True) return?",
-      "answer": "['b', 'a']"
+      "answer": "It returns ['b', 'a'].\n\ncode:\nprint(sorted({'b': 1, 'a': 2}, reverse=True))  # ['b', 'a']\n\nreal example:\nListing names in reverse alphabetical order."
     },
     {
       "id": 95,
       "question": "What does sorted({'abc': 1, 'd': 2, 'ef': 3}, key=len) return?",
-      "answer": "['d', 'ef', 'abc'] (keys sorted by length)"
+      "answer": "It returns ['d', 'ef', 'abc'], the keys sorted by length.\n\ncode:\nprint(sorted({'abc': 1, 'd': 2, 'ef': 3}, key=len))  # ['d', 'ef', 'abc']\n\nreal example:\nOrdering words by length in a writing tool."
     },
     {
       "id": 96,
       "question": "What does set({'a': 1, 'b': 2}) return?",
-      "answer": "{'b', 'a'} (a set of the keys)"
+      "answer": "It returns a set of the keys, like {'b', 'a'}.\n\ncode:\nprint(set({'a': 1, 'b': 2}))  # {'b', 'a'}\n\nreal example:\nGetting all distinct field names as a set you can test against."
     },
     {
       "id": 97,
       "question": "What does set({'a': 1, 'a': 2}.keys()) return?",
-      "answer": "{'a'}"
+      "answer": "It returns {'a'}, since the duplicate key collapsed to one entry.\n\ncode:\nprint(set({'a': 1, 'a': 2}.keys()))  # {'a'}\n\nreal example:\nOne unique key remains after duplicates are overwritten."
     },
     {
       "id": 98,
       "question": "Can you use d.keys() in set operations like d.keys() & others?",
-      "answer": "Yes, the keys view is set-like for hashable keys"
+      "answer": "Yes. The keys view is set-like for hashable keys.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(d.keys() & {'b'})  # {'b'}\n\nreal example:\nComparing the key sets of two dicts directly."
     },
     {
       "id": 99,
       "question": "What does d = {'a': 1, 'b': 2}; print(d.keys() & {'b', 'c'}) output?",
-      "answer": "{'b'} (set intersection of keys)"
+      "answer": "It outputs {'b'}, the set intersection of the keys.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(d.keys() & {'b', 'c'})  # {'b'}\n\nreal example:\nFields that appear in both a record and a submitted form."
     },
     {
       "id": 100,
       "question": "What does d = {'a': 1, 'b': 2}; print(d.keys() - {'a'}) output?",
-      "answer": "{'b'}"
+      "answer": "It outputs {'b'}.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(d.keys() - {'a'})  # {'b'}\n\nreal example:\nFinding optional extra keys beyond the required ones."
     },
     {
       "id": 101,
       "question": "What does d = {'a': 1}; print(d.keys() | {'z'}) output?",
-      "answer": "{'z', 'a'}"
+      "answer": "It outputs {'z', 'a'}, the union of the keys and the set.\n\ncode:\nd = {'a': 1}\nprint(d.keys() | {'z'})  # {'z', 'a'}\n\nreal example:\nCombining existing field names with new candidate ones."
     },
     {
       "id": 102,
       "question": "What does d = {'a': 1, 'b': 2}; print(d.keys() == {'a', 'b'}) output?",
-      "answer": "True (a keys view is set-like)"
+      "answer": "It outputs True, because a keys view is set-like.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(d.keys() == {'a', 'b'})  # True\n\nreal example:\nComparing a dict's keys to an expected set of fields."
     },
     {
       "id": 103,
       "question": "Is d.values() set-like and usable in set operations?",
-      "answer": "No, the values view is not set-like"
+      "answer": "No. The values view is not set-like, so set operations fail.\n\ncode:\nd = {'a': 1, 'b': 1}\ntry:\n    d.values() & {1}\nexcept TypeError as e:\n    print(type(e).__name__)\n\nreal example:\nDuplicate values would break the set guarantee, so it isn't supported."
     },
     {
       "id": 104,
       "question": "What does sub = {'a': 1}; sup = {'a': 1, 'b': 2}; print(sub.items() <= sup.items()) output?",
-      "answer": "True (items view supports subset tests)"
+      "answer": "It outputs True, because the items view supports subset tests.\n\ncode:\nsub = {'a': 1}\nsup = {'a': 1, 'b': 2}\nprint(sub.items() <= sup.items())  # True\n\nreal example:\nChecking that required fields are present with matching values."
     },
     {
       "id": 105,
       "question": "What does d = {'a': 1, 'b': 2}; print({'a': 1}.items() <= d.items()) output?",
-      "answer": "True"
+      "answer": "It outputs True, because every pair in the left dict is in the right one.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint({'a': 1}.items() <= d.items())  # True\n\nreal example:\nVerifying that submitted login data matches a stored record."
     },
     {
       "id": 106,
       "question": "Do dict views reflect later changes to the dict?",
-      "answer": "Yes, views are live and see changes"
+      "answer": "Yes. Views are live and immediately see changes to the dict.\n\ncode:\nd = {'a': 1}\nv = d.values()\nd['b'] = 2\nprint(list(v))  # [1, 2]\n\nreal example:\nA live dashboard updates as new data is added."
     },
     {
       "id": 107,
       "question": "What does d = {'a': 1}; v = d.keys(); d['b'] = 2; print(list(v)) output?",
-      "answer": "['a', 'b'] (the view updated dynamically)"
+      "answer": "It outputs ['a', 'b'], because the view updated dynamically.\n\ncode:\nd = {'a': 1}\nv = d.keys()\nd['b'] = 2\nprint(list(v))  # ['a', 'b']\n\nreal example:\nNewly added fields show up automatically in your stale view."
     },
     {
       "id": 108,
       "question": "What does d = {'a': 1}; v = d.values(); d['a'] = 10; print(list(v)) output?",
-      "answer": "[10] (live view reflects the new value)"
+      "answer": "It outputs [10], because the live view reflects the new value.\n\ncode:\nd = {'a': 1}\nv = d.values()\nd['a'] = 10\nprint(list(v))  # [10]\n\nreal example:\nA chart tied to a view updates as the value changes."
     },
     {
       "id": 109,
       "question": "Can you reverse a dict with reversed({1: 'a', 2: 'b'}) directly?",
-      "answer": "Yes, reversed() iterates keys in reverse, but dict itself is not a sequence for indexing"
+      "answer": "Yes. reversed() iterates the keys backwards, though a dict is not an indexable sequence.\n\ncode:\nd = {1: 'a', 2: 'b'}\nprint(list(reversed(d)))  # [2, 1]\n\nreal example:\nShowing recent posts newest-first from a posts dict."
     },
     {
       "id": 110,
       "question": "What does d = {'a': 1, 'b': 2}; print([k for k in d if d[k] > 1]) output?",
-      "answer": "['b'] (list of keys whose value > 1)"
+      "answer": "It outputs ['b'], the list of keys whose value is greater than 1.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint([k for k in d if d[k] > 1])  # ['b']\n\nreal example:\nProducts whose quantity is above a restock threshold."
     },
     {
       "id": 111,
       "question": "What does 'b' in {'b': 1} vs 1 in {'b': 1} evaluate to?",
-      "answer": "True then False (in checks keys only)"
+      "answer": "They evaluate to True then False, because in checks keys only.\n\ncode:\nd = {'b': 1}\nprint('b' in d)  # True\nprint(1 in d)  # False\n\nreal example:\nThe test asks about the key (a name), not the value it stores."
     },
     {
       "id": 112,
       "question": "What does d = {'a': 1}; print(1 in d.values()) output?",
-      "answer": "True (use d.values() to search values)"
+      "answer": "It outputs True, because d.values() lets you search the values.\n\ncode:\nd = {'a': 1}\nprint(1 in d.values())  # True\n\nreal example:\nChecking whether some value exists anywhere in a settings dict."
     },
     {
       "id": 113,
       "question": "What does max({'a': 1, 'b': 5, 'c': 3}) return?",
-      "answer": "'c' (max of keys lexicographically)"
+      "answer": "It returns 'c', the largest key compared lexicographically.\n\ncode:\nd = {'a': 1, 'b': 5, 'c': 3}\nprint(max(d))  # 'c'\n\nreal example:\nFinding the alphabetically last name in a registry."
     },
     {
       "id": 114,
       "question": "What does max({'a': 1, 'b': 5}.values()) return?",
-      "answer": "5"
+      "answer": "It returns 5, the largest value.\n\ncode:\nprint(max({'a': 1, 'b': 5}.values()))  # 5\n\nreal example:\nFinding the highest score in a stats dict."
     },
     {
       "id": 115,
       "question": "What does max({'a': 1, 'b': 5}, key={'a': 1, 'b': 5}.get) return?",
-      "answer": "'b' (the key with the largest value)"
+      "answer": "It returns 'b', the key with the largest value.\n\ncode:\nd = {'a': 1, 'b': 5}\nprint(max(d, key=d.get))  # 'b'\n\nreal example:\nFinding the employee with the highest sales in a dict."
     },
     {
       "id": 116,
       "question": "What does min({'a': 3, 'b': 1, 'c': 2}.items(), key=lambda x: x[1]) return?",
-      "answer": "('b', 1)"
+      "answer": "It returns ('b', 1), the item with the smallest value.\n\ncode:\nprint(min({'a': 3, 'b': 1, 'c': 2}.items(), key=lambda x: x[1]))\n\nreal example:\nFinding the cheapest item in a price dict."
     },
     {
       "id": 117,
       "question": "What does sum({'a': 1, 'b': 2, 'c': 3}.values()) return?",
-      "answer": "6"
+      "answer": "It returns 6.\n\ncode:\nprint(sum({'a': 1, 'b': 2, 'c': 3}.values()))  # 6\n\nreal example:\nTotaling the price of everything in a cart."
     },
     {
       "id": 118,
       "question": "What does sum({1: 10, 2: 20}) return?",
-      "answer": "3 (sums the keys by default)"
+      "answer": "It returns 3, because iterating a dict sums the keys by default.\n\ncode:\nprint(sum({1: 10, 2: 20}))  # 3\n\nreal example:\nIterating a dict gives keys, so sum() adds the keys unless you use .values()."
     },
     {
       "id": 119,
       "question": "What does d = {'a': 1, 'b': 2}; print(sum(d.values()) / len(d)) output?",
-      "answer": "1.5 (average of the values)"
+      "answer": "It outputs 1.5, the average of the values.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(sum(d.values()) / len(d))  # 1.5\n\nreal example:\nComputing the average grade across subjects."
     },
     {
       "id": 120,
       "question": "What does any(v > 3 for v in {'a': 1, 'b': 4}.values()) return?",
-      "answer": "True"
+      "answer": "It returns True, because at least one value exceeds 3.\n\ncode:\nprint(any(v > 3 for v in {'a': 1, 'b': 4}.values()))  # True\n\nreal example:\nChecking whether any room temperature is too high."
     },
     {
       "id": 121,
       "question": "What does all(v > 0 for v in {'a': 1, 'b': 2}.values()) return?",
-      "answer": "True"
+      "answer": "It returns True, because every value is greater than 0.\n\ncode:\nprint(all(v > 0 for v in {'a': 1, 'b': 2}.values()))  # True\n\nreal example:\nVerifying all prices in a catalog are positive."
     },
     {
       "id": 122,
       "question": "What does all(v > 1 for v in {'a': 1, 'b': 2}.values()) return?",
-      "answer": "False (value 1 fails the test)"
+      "answer": "It returns False, because the value 1 fails the test.\n\ncode:\nprint(all(v > 1 for v in {'a': 1, 'b': 2}.values()))  # False\n\nreal example:\nOne negative balance breaks your 'everything is positive' check."
     },
     {
       "id": 123,
       "question": "What does {x: x ** 2 for x in range(4)} return?",
-      "answer": "{0: 0, 1: 1, 2: 4, 3: 9}"
+      "answer": "It returns {0: 0, 1: 1, 2: 4, 3: 9}.\n\ncode:\nprint({x: x ** 2 for x in range(4)})  # {0: 0, 1: 1, 2: 4, 3: 9}\n\nreal example:\nBuilding a small table mapping numbers to their squares."
     },
     {
       "id": 124,
       "question": "What does {w: len(w) for w in ['a', 'bb', 'ccc']} return?",
-      "answer": "{'a': 1, 'bb': 2, 'ccc': 3}"
+      "answer": "It returns {'a': 1, 'bb': 2, 'ccc': 3}.\n\ncode:\nprint({w: len(w) for w in ['a', 'bb', 'ccc']})  # {'a': 1, 'bb': 2, 'ccc': 3}\n\nreal example:\nComputing word lengths for a spelling game."
     },
     {
       "id": 125,
       "question": "What does {k: v * 2 for k, v in {'a': 1, 'b': 2}.items()} return?",
-      "answer": "{'a': 2, 'b': 4}"
+      "answer": "It returns {'a': 2, 'b': 4}.\n\ncode:\nprint({k: v * 2 for k, v in {'a': 1, 'b': 2}.items()})  # {'a': 2, 'b': 4}\n\nreal example:\nDoubling every price in a price list."
     },
     {
       "id": 126,
       "question": "What does {x: x % 2 for x in range(5)} return?",
-      "answer": "{0: 0, 1: 1, 2: 0, 3: 1, 4: 0}"
+      "answer": "It returns {0: 0, 1: 1, 2: 0, 3: 1, 4: 0}.\n\ncode:\nprint({x: x % 2 for x in range(5)})  # {0: 0, 1: 1, 2: 0, 3: 1, 4: 0}\n\nreal example:\nClassifying numbers as even (0) or odd (1)."
     },
     {
       "id": 127,
       "question": "What does {i: chr(65 + i) for i in range(3)} return?",
-      "answer": "{0: 'A', 1: 'B', 2: 'C'}"
+      "answer": "It returns {0: 'A', 1: 'B', 2: 'C'}, converting numbers to letters.\n\ncode:\nprint({i: chr(65 + i) for i in range(3)})  # {0: 'A', 1: 'B', 2: 'C'}\n\nreal example:\nGenerating spreadsheet column labels A, B, C from numbers."
     },
     {
       "id": 128,
       "question": "What does {v: k for k, v in {'a': 1, 'b': 2}.items()} return?",
-      "answer": "{1: 'a', 2: 'b'} (inverted dictionary)"
+      "answer": "It returns {1: 'a', 2: 'b'}, the inverted dictionary.\n\ncode:\nprint({v: k for k, v in {'a': 1, 'b': 2}.items()})  # {1: 'a', 2: 'b'}\n\nreal example:\nLooking up a name from an ID instead of an ID from a name."
     },
     {
       "id": 129,
       "question": "What does {k: v for k, v in {'a': 1, 'b': 2, 'c': 3}.items() if v % 2 == 1} return?",
-      "answer": "{'a': 1, 'c': 3} (filters odd values)"
+      "answer": "It returns {'a': 1, 'c': 3}, filtering to odd values.\n\ncode:\nprint({k: v for k, v in {'a': 1, 'b': 2, 'c': 3}.items() if v % 2 == 1})  # {'a': 1, 'c': 3}\n\nreal example:\nKeeping only odd-numbered rows in a report."
     },
     {
       "id": 130,
       "question": "What does {k: v for k, v in {'ab': 1, 'xyz': 2, 'p': 3}.items() if len(k) > 1} return?",
-      "answer": "{'ab': 1, 'xyz': 2}"
+      "answer": "It returns {'ab': 1, 'xyz': 2}.\n\ncode:\nprint({k: v for k, v in {'ab': 1, 'xyz': 2, 'p': 3}.items() if len(k) > 1})  # {'ab': 1, 'xyz': 2}\n\nreal example:\nKeeping only abbreviations that are at least two letters long."
     },
     {
       "id": 131,
       "question": "What does {k: 'even' if v % 2 == 0 else 'odd' for k, v in {'a': 1, 'b': 2}.items()} return?",
-      "answer": "{'a': 'odd', 'b': 'even'}"
+      "answer": "It returns {'a': 'odd', 'b': 'even'}.\n\ncode:\nprint({k: 'even' if v % 2 == 0 else 'odd' for k, v in {'a': 1, 'b': 2}.items()})  # {'a': 'odd', 'b': 'even'}\n\nreal example:\nLabeling each number in a report as even or odd."
     },
     {
       "id": 132,
       "question": "What does {x: 'small' if x < 5 else 'big' for x in range(1, 8)} return for key 6?",
-      "answer": "6 maps to 'big'"
+      "answer": "It maps 6 to 'big', because 6 is not less than 5.\n\ncode:\nd = {x: 'small' if x < 5 else 'big' for x in range(1, 8)}\nprint(d[6])  # 'big'\n\nreal example:\nClassifying budget sizes above a threshold as 'big'."
     },
     {
       "id": 133,
       "question": "What does {c: c.upper() for c in 'abc'} return?",
-      "answer": "{'a': 'A', 'b': 'B', 'c': 'C'}"
+      "answer": "It returns {'a': 'A', 'b': 'B', 'c': 'C'}.\n\ncode:\nprint({c: c.upper() for c in 'abc'})  # {'a': 'A', 'b': 'B', 'c': 'C'}\n\nreal example:\nBuilding an uppercase lookup table for letters."
     },
     {
       "id": 134,
       "question": "What does {i: w for i, w in enumerate(['zero', 'one', 'two'])} return?",
-      "answer": "{0: 'zero', 1: 'one', 2: 'two'}"
+      "answer": "It returns {0: 'zero', 1: 'one', 2: 'two'}.\n\ncode:\nprint({i: w for i, w in enumerate(['zero', 'one', 'two'])})  # {0: 'zero', 1: 'one', 2: 'two'}\n\nreal example:\nNumbering the words in a list as you build a lookup."
     },
     {
       "id": 135,
       "question": "What does dict(zip('abc', [1, 2, 3])) return?",
-      "answer": "{'a': 1, 'b': 2, 'c': 3}"
+      "answer": "It returns {'a': 1, 'b': 2, 'c': 3}.\n\ncode:\nprint(dict(zip('abc', [1, 2, 3])))  # {'a': 1, 'b': 2, 'c': 3}\n\nreal example:\nPairing letters with their positions in the alphabet."
     },
     {
       "id": 136,
       "question": "What does dict(zip('ab', [1, 2, 3])) return when lengths differ?",
-      "answer": "{'a': 1, 'b': 2} (zip stops at the shorter input)"
+      "answer": "It returns {'a': 1, 'b': 2}, because zip stops at the shorter input.\n\ncode:\nprint(dict(zip('ab', [1, 2, 3])))  # {'a': 1, 'b': 2}\n\nreal example:\nZip trims the extra values so every key still has a matching pair."
     },
     {
       "id": 137,
       "question": "How do you zip two lists into a dict?",
-      "answer": "dict(zip(keys, values))"
+      "answer": "Call dict(zip(keys, values)).\n\ncode:\nkeys = ['a', 'b']\nvals = [1, 2]\nd = dict(zip(keys, vals))\nprint(d)  # {'a': 1, 'b': 2}\n\nreal example:\nCreating a dict from two table columns of names and values."
     },
     {
       "id": 138,
       "question": "What does {k: v for k, v in zip(['a', 'b'], [1, 2])} return?",
-      "answer": "{'a': 1, 'b': 2}"
+      "answer": "It returns {'a': 1, 'b': 2}.\n\ncode:\nprint({k: v for k, v in zip(['a', 'b'], [1, 2])})  # {'a': 1, 'b': 2}\n\nreal example:\nThe same key-value pairing written as a comprehension."
     },
     {
       "id": 139,
       "question": "What does {x: y for x in [1, 2] for y in [10, 20]} return?",
-      "answer": "{1: 20, 2: 20} (each key keeps the last inner value)"
+      "answer": "It returns {1: 20, 2: 20}, because each key keeps the last inner value.\n\ncode:\nprint({x: y for x in [1, 2] for y in [10, 20]})  # {1: 20, 2: 20}\n\nreal example:\nLater values win when combining two sets of options."
     },
     {
       "id": 140,
       "question": "What does {x: y for y in [10, 20] for x in [1, 2]} return?",
-      "answer": "{1: 20, 2: 20}"
+      "answer": "It returns {1: 20, 2: 20}, the same result because duplicate keys collapse.\n\ncode:\nprint({x: y for y in [10, 20] for x in [1, 2]})  # {1: 20, 2: 20}\n\nreal example:\nLoop order doesn't change the final dict here because keys repeat."
     },
     {
       "id": 141,
       "question": "What does {(r, c): v for r in range(2) for c in range(2)} return for (r, c) keys?",
-      "answer": "A dict with tuple keys like {(0, 0): 0, (0, 1): 1, (1, 0): 1, (1, 1): 2}"
+      "answer": "It builds a grid dict with (row, column) tuple keys. Using r + c as the value gives {(0, 0): 0, (0, 1): 1, (1, 0): 1, (1, 1): 2}; as literally written with undefined v it would raise NameError.\n\ncode:\ngrid = {(r, c): r + c for r in range(2) for c in range(2)}\nprint(grid)  # {(0, 0): 0, (0, 1): 1, (1, 0): 1, (1, 1): 2}\n\nreal example:\nStoring cell values for a small grid by their (row, column) coordinates."
     },
     {
       "id": 142,
       "question": "What does {k: v for k, v in [('a', 1), ('b', 2), ('a', 3)]} return?",
-      "answer": "{'a': 3, 'b': 2} (duplicate key a keeps the last value)"
+      "answer": "It returns {'a': 3, 'b': 2}, because duplicate key 'a' keeps the last value.\n\ncode:\nprint({k: v for k, v in [('a', 1), ('b', 2), ('a', 3)]})  # {'a': 3, 'b': 2}\n\nreal example:\nMerging duplicate rows where the most recent entry wins."
     },
     {
       "id": 143,
       "question": "What does {ch: 0 for ch in 'hello'} return?",
-      "answer": "{'h': 0, 'e': 0, 'l': 0, 'o': 0}"
+      "answer": "It returns {'h': 0, 'e': 0, 'l': 0, 'o': 0}.\n\ncode:\nprint({ch: 0 for ch in 'hello'})  # {'h': 0, 'e': 0, 'l': 0, 'o': 0}\n\nreal example:\nInitializing a letter counter before counting occurrences."
     },
     {
       "id": 144,
       "question": "How do you count word frequencies with a loop using .get?",
-      "answer": "for w in words: freq[w] = freq.get(w, 0) + 1"
+      "answer": "Loop over the words and add one to each word's existing count.\n\ncode:\nwords = ['a', 'b', 'a']\nfreq = {}\nfor w in words:\n    freq[w] = freq.get(w, 0) + 1\nprint(freq)  # {'a': 2, 'b': 1}\n\nreal example:\nCounting how often words appear in a document."
     },
     {
       "id": 145,
       "question": "For text = 'the cat sat', what does the .get counting loop produce?",
-      "answer": "{'the': 1, 'cat': 1, 'sat': 1}"
+      "answer": "It produces {'the': 1, 'cat': 1, 'sat': 1}.\n\ncode:\ntext = 'the cat sat'\nfreq = {}\nfor w in text.split():\n    freq[w] = freq.get(w, 0) + 1\nprint(freq)  # {'the': 1, 'cat': 1, 'sat': 1}\n\nreal example:\nCounting the unique words in a short sentence."
     },
     {
       "id": 146,
       "question": "For s = 'aab', what does the .get char-count loop produce?",
-      "answer": "{'a': 2, 'b': 1}"
+      "answer": "It produces {'a': 2, 'b': 1}.\n\ncode:\ns = 'aab'\nfreq = {}\nfor c in s:\n    freq[c] = freq.get(c, 0) + 1\nprint(freq)  # {'a': 2, 'b': 1}\n\nreal example:\nCounting letters in a word for a guessing game."
     },
     {
       "id": 147,
       "question": "What does d = {'a': 1}; d['b'] = d.get('b', 0) + 1; print(d) produce?",
-      "answer": "{'a': 1, 'b': 1}"
+      "answer": "It produces {'a': 1, 'b': 1}, starting key 'b' at zero then adding one.\n\ncode:\nd = {'a': 1}\nd['b'] = d.get('b', 0) + 1\nprint(d)  # {'a': 1, 'b': 1}\n\nreal example:\nAdding a first occurrence to a running tally."
     },
     {
       "id": 148,
       "question": "What does Counter('abracadabra') count?",
-      "answer": "Char frequencies: a:5, b:2, r:2, c:1, d:1"
+      "answer": "It counts character frequencies: a:5, b:2, r:2, c:1, d:1.\n\ncode:\nfrom collections import Counter\nprint(Counter('abracadabra'))  # Counter({'a': 5, 'b': 2, 'r': 2, 'c': 1, 'd': 1})\n\nreal example:\nCounting letters in a phrase for a word puzzle."
     },
     {
       "id": 149,
       "question": "What does Counter + Counter do in Python?",
-      "answer": "Adds counts element-wise and keeps only positive ones"
+      "answer": "It adds counts element-wise and keeps only positive results.\n\ncode:\nfrom collections import Counter\nprint(Counter('aab') + Counter('bc'))  # Counter({'a': 2, 'b': 2, 'c': 1})\n\nreal example:\nMerging vote tallies from two polls."
     },
     {
       "id": 150,
       "question": "What does Counter('abc') - Counter('ab') return?",
-      "answer": "Counter({'c': 1}) (only positive results remain)"
+      "answer": "It returns Counter({'c': 1}), because only positive results remain.\n\ncode:\nfrom collections import Counter\nprint(Counter('abc') - Counter('ab'))  # Counter({'c': 1})\n\nreal example:\nComparing a full set against what was already used."
     },
     {
       "id": 151,
       "question": "What does Counter('aab').most_common(1) return?",
-      "answer": "[('a', 2)]"
+      "answer": "It returns [('a', 2)], the single most common element and its count.\n\ncode:\nfrom collections import Counter\nprint(Counter('aab').most_common(1))  # [('a', 2)]\n\nreal example:\nFinding the winning option in a vote tally."
     },
     {
       "id": 152,
       "question": "What does Counter('aab').most_common(2) return?",
-      "answer": "[('a', 2), ('b', 1)]"
+      "answer": "It returns [('a', 2), ('b', 1)].\n\ncode:\nfrom collections import Counter\nprint(Counter('aab').most_common(2))  # [('a', 2), ('b', 1)]\n\nreal example:\nShowing the top two words in a product review."
     },
     {
       "id": 153,
       "question": "What does list(Counter('aab').elements()) return?",
-      "answer": "['a', 'a', 'b'] (each element repeated by its count)"
+      "answer": "It returns ['a', 'a', 'b'], each element repeated by its count.\n\ncode:\nfrom collections import Counter\nprint(list(Counter('aab').elements()))  # ['a', 'a', 'b']\n\nreal example:\nRebuilding the original items from a frequency tally."
     },
     {
       "id": 154,
       "question": "What does Counter(['a', 'a', 'b'])['c'] return for a missing key?",
-      "answer": "0 (Counter returns 0 for missing keys, not KeyError)"
+      "answer": "It returns 0. Counter returns 0 for missing keys instead of raising KeyError.\n\ncode:\nfrom collections import Counter\nprint(Counter(['a', 'a', 'b'])['c'])  # 0\n\nreal example:\nAsking about a word that never appeared in the text."
     },
     {
       "id": 155,
       "question": "What does Counter({'a': 3, 'b': -1}) + Counter() return?",
-      "answer": "Counter({'a': 3}) (negative and zero counts are dropped)"
+      "answer": "It returns Counter({'a': 3}), because negative and zero counts are dropped.\n\ncode:\nfrom collections import Counter\nc = Counter({'a': 3, 'b': -1}) + Counter()\nprint(c)  # Counter({'a': 3})\n\nreal example:\nCombining tallies while ignoring meaningless negative counts."
     },
     {
       "id": 156,
       "question": "What does Counter()['anything'] return?",
-      "answer": "0"
+      "answer": "It returns 0.\n\ncode:\nfrom collections import Counter\nprint(Counter()['anything'])  # 0\n\nreal example:\nCounting lookups never crash, they simply give zero."
     },
     {
       "id": 157,
       "question": "What does Counter('hello') == {'h': 1, 'e': 1, 'l': 2, 'o': 1} return?",
-      "answer": "True (Counter compares equal to a plain dict with same counts)"
+      "answer": "It returns True, because Counter compares equal to a plain dict with the same counts.\n\ncode:\nfrom collections import Counter\nprint(Counter('hello') == {'h': 1, 'e': 1, 'l': 2, 'o': 1})  # True\n\nreal example:\nTwo sources with the same counts are treated as equal."
     },
     {
       "id": 158,
       "question": "What does sum(Counter('aab').values()) return?",
-      "answer": "3 (total number of elements)"
+      "answer": "It returns 3, the total number of elements counted.\n\ncode:\nfrom collections import Counter\nprint(sum(Counter('aab').values()))  # 3\n\nreal example:\nReporting the total number of letters in a text."
     },
     {
       "id": 159,
       "question": "What does len(Counter('aab')) return?",
-      "answer": "2 (number of distinct keys)"
+      "answer": "It returns 2, the number of distinct keys.\n\ncode:\nfrom collections import Counter\nprint(len(Counter('aab')))  # 2\n\nreal example:\nHow many different items appeared in a tally."
     },
     {
       "id": 160,
       "question": "What does max(Counter('aabc'), key=Counter('aabc').get) return?",
-      "answer": "'a' (the most frequent character key)"
+      "answer": "It returns 'a', the most frequent character.\n\ncode:\nfrom collections import Counter\nc = Counter('aabc')\nprint(max(c, key=c.get))  # 'a'\n\nreal example:\nFinding the most common letter in a word game."
     },
     {
       "id": 161,
       "question": "What does defaultdict(int) return for a missing key access?",
-      "answer": "0 (int() default), and the key is inserted"
+      "answer": "It returns 0 (the result of int()) and inserts the key automatically.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(int)\nprint(d['missing'])  # 0\nprint(d)  # defaultdict(..., {'missing': 0})\n\nreal example:\nCounts start at zero without any manual initialization."
     },
     {
       "id": 162,
       "question": "What does d = defaultdict(list); d['k'].append(1); print(d) produce?",
-      "answer": "defaultdict(<class 'list'>, {'k': [1]})"
+      "answer": "It produces defaultdict(<class 'list'>, {'k': [1]}).\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(list)\nd['k'].append(1)\nprint(d)\n\nreal example:\nAuto-creating an empty list so you can start appending immediately."
     },
     {
       "id": 163,
       "question": "What does d = defaultdict(int); d['x'] += 1; print(d['x']) output?",
-      "answer": "1 (missing key defaulted to 0, then incremented)"
+      "answer": "It outputs 1: the missing key defaulted to 0 and was then incremented.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(int)\nd['x'] += 1\nprint(d['x'])  # 1\n\nreal example:\nCounting visits or clicks per page without setup."
     },
     {
       "id": 164,
       "question": "Does accessing a missing key with defaultdict always insert the key?",
-      "answer": "Yes, __missing__ creates and inserts the default"
+      "answer": "Yes. The __missing__ hook creates and inserts the default value.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(list)\n_ = d['new']\nprint(d)  # defaultdict(..., {'new': []})\n\nreal example:\nEven a plain lookup starts the key with its default value."
     },
     {
       "id": 165,
       "question": "What does d = defaultdict(set); d['s'].add(5); print(d) produce?",
-      "answer": "defaultdict(<class 'set'>, {'s': {5}})"
+      "answer": "It produces defaultdict(<class 'set'>, {'s': {5}}).\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(set)\nd['s'].add(5)\nprint(d)\n\nreal example:\nGrouping unique tags under a key without checking first."
     },
     {
       "id": 166,
       "question": "What does d = defaultdict(lambda: 'go'); print(d['x']) output?",
-      "answer": "'go'"
+      "answer": "It outputs 'go', the value produced by the lambda default.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(lambda: 'go')\nprint(d['x'])  # 'go'\n\nreal example:\nServing a default message for unknown request types."
     },
     {
       "id": 167,
       "question": "Can you pass a function name like int, list, set as the default_factory?",
-      "answer": "Yes, e.g., defaultdict(int), defaultdict(list), defaultdict(set)"
+      "answer": "Yes. int, list, and set work as the default_factory.\n\ncode:\nfrom collections import defaultdict\nprint(defaultdict(int)['a'])    # 0\nprint(defaultdict(list)['a'])   # []\nprint(defaultdict(set)['a'])    # set()\n\nreal example:\nChoosing the right container for each group of data."
     },
     {
       "id": 168,
       "question": "What happens if default_factory is None in a defaultdict?",
-      "answer": "Missing key access raises KeyError like a normal dict"
+      "answer": "Missing-key access raises KeyError, exactly like a normal dict.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(None)\ntry:\n    d['x']\nexcept KeyError as e:\n    print(e)\n\nreal example:\nUseful when you want strict key checking for some mappings."
     },
     {
       "id": 169,
       "question": "What does d = defaultdict(int); print(d[5]) then print(d[5] + 1) output?",
-      "answer": "0 then 1 (each access re-evaluates the default on missing keys only)"
+      "answer": "It outputs 0 then 1, because the default is only used on the first missing access.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(int)\nprint(d[5])       # 0\nprint(d[5] + 1)   # 1\n\nreal example:\nThe first access seeds a counter, later accesses add real data."
     },
     {
       "id": 170,
       "question": "How do you group a list of words by their first letter using defaultdict?",
-      "answer": "d = defaultdict(list); [d[w[0]].append(w) for w in words]"
+      "answer": "Use a defaultdict(list) and append each word to the list for its first letter.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(list)\nfor w in ['apple', 'avocado', 'banana']:\n    d[w[0]].append(w)\nprint(dict(d))  # {'a': ['apple', 'avocado'], 'b': ['banana']}\n\nreal example:\nBuilding an A-Z index for a contact list."
     },
     {
       "id": 171,
       "question": "How do you group employees by department with defaultdict?",
-      "answer": "d = defaultdict(list); d[emp['dept']].append(emp['name'])"
+      "answer": "Use a defaultdict(list) and append each employee's name under their department.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(list)\nemp = [{'dept': 'sales', 'name': 'Ann'}, {'dept': 'sales', 'name': 'Bob'}]\nfor e in emp:\n    d[e['dept']].append(e['name'])\nprint(dict(d))  # {'sales': ['Ann', 'Bob']}\n\nreal example:\nOrganizing a company roster by team."
     },
     {
       "id": 172,
       "question": "What does d = defaultdict(list); d['a'].append(1); d['a'].append(2); d['a'] return?",
-      "answer": "[1, 2]"
+      "answer": "It returns [1, 2].\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(list)\nd['a'].append(1)\nd['a'].append(2)\nprint(d['a'])  # [1, 2]\n\nreal example:\nAccumulating multiple values under a single key."
     },
     {
       "id": 173,
       "question": "What does d = defaultdict(int); for ch in 'aab': d[ch] += 1; print(dict(d)) produce?",
-      "answer": "{'a': 2, 'b': 1}"
+      "answer": "It produces {'a': 2, 'b': 1}.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(int)\nfor ch in 'aab':\n    d[ch] += 1\nprint(dict(d))  # {'a': 2, 'b': 1}\n\nreal example:\nCounting characters in a text with no manual setup."
     },
     {
       "id": 174,
       "question": "Does defaultdict support normal dict methods like pop and update?",
-      "answer": "Yes, it is a dict subclass"
+      "answer": "Yes, because defaultdict is a dict subclass.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(int, a=1)\nd.update({'b': 2})\nx = d.pop('a')\nprint(dict(d))  # {'b': 2}\n\nreal example:\nYou get all normal dict tools plus automatic defaults."
     },
     {
       "id": 175,
       "question": "How do you build a nested defaultdict, e.g., two levels deep?",
-      "answer": "dd = defaultdict(lambda: defaultdict(list))"
+      "answer": "Make the default_factory itself a defaultdict factory: defaultdict(lambda: defaultdict(list)).\n\ncode:\nfrom collections import defaultdict\ndd = defaultdict(lambda: defaultdict(list))\ndd['x']['y'].append(1)\nprint(dict(dd))  # {'x': {'y': [1]}}\n\nreal example:\nBuilding nested structures for a tree or JSON-like data store."
     },
     {
       "id": 176,
       "question": "What does d = defaultdict(lambda: 0); print(d == {'x': 5}) return when d is empty?",
-      "answer": "False (defaultdict compares as a dict; empty is only equal to {})"
+      "answer": "It returns False, because an empty defaultdict only equals {}.\n\ncode:\nfrom collections import defaultdict\nd = defaultdict(lambda: 0)\nprint(d == {'x': 5})  # False\n\nreal example:\nEquality is based on contents, not on the default factory."
     },
     {
       "id": 177,
       "question": "What does sorted({'x': 3, 'a': 1, 'b': 2}.items()) return?",
-      "answer": "[('a', 1), ('b', 2), ('x', 3)] (sorts by key)"
+      "answer": "It returns [('a', 1), ('b', 2), ('x', 3)], sorted by key.\n\ncode:\nprint(sorted({'x': 3, 'a': 1, 'b': 2}.items()))  # [('a', 1), ('b', 2), ('x', 3)]\n\nreal example:\nRendering a dict's rows in alphabetical key order."
     },
     {
       "id": 178,
       "question": "What does sorted({'a': 3, 'b': 1}.items(), key=lambda x: x[1]) return?",
-      "answer": "[('b', 1), ('a', 3)] (sorted by value)"
+      "answer": "It returns [('b', 1), ('a', 3)], sorted by value.\n\ncode:\nprint(sorted({'a': 3, 'b': 1}.items(), key=lambda x: x[1]))  # [('b', 1), ('a', 3)]\n\nreal example:\nRanking items from lightest to heaviest."
     },
     {
       "id": 179,
       "question": "What does sorted({'a': 1, 'b': 2}, key={'a': 1, 'b': 2}.get) return?",
-      "answer": "['a', 'b'] (keys sorted by their values)"
+      "answer": "It returns ['a', 'b'], keys sorted by their values.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(sorted(d, key=d.get))  # ['a', 'b']\n\nreal example:\nListing players in order of their scores."
     },
     {
       "id": 180,
       "question": "How do you sort dict items by value in descending order?",
-      "answer": "sorted(d.items(), key=lambda x: x[1], reverse=True)"
+      "answer": "Sort the items with key=lambda x: x[1] and reverse=True.\n\ncode:\nd = {'a': 1, 'b': 3}\nprint(sorted(d.items(), key=lambda x: x[1], reverse=True))  # [('b', 3), ('a', 1)]\n\nreal example:\nShowing the best sellers at the top of a list."
     },
     {
       "id": 181,
       "question": "What does sorted({'a': 2, 'b': 1}.items(), key=lambda kv: (-kv[1], kv[0])) return?",
-      "answer": "[('a', 2), ('b', 1)] (value desc, then key asc)"
+      "answer": "It returns [('a', 2), ('b', 1)], sorted by value descending then key ascending.\n\ncode:\nprint(sorted({'a': 2, 'b': 1}.items(), key=lambda kv: (-kv[1], kv[0])))  # [('a', 2), ('b', 1)]\n\nreal example:\nSorting by count, with ties broken alphabetically."
     },
     {
       "id": 182,
       "question": "What does sorted({'b': 2, 'a': 2}.items(), key=lambda kv: (-kv[1], kv[0])) return?",
-      "answer": "[('a', 2), ('b', 2)] (ties broken by key ascending)"
+      "answer": "It returns [('a', 2), ('b', 2)], because ties break by key ascending.\n\ncode:\nprint(sorted({'b': 2, 'a': 2}.items(), key=lambda kv: (-kv[1], kv[0])))  # [('a', 2), ('b', 2)]\n\nreal example:\nEqual scores resolve to alphabetical name order."
     },
     {
       "id": 183,
       "question": "How do you return the top 3 keys by value?",
-      "answer": "[k for k, v in sorted(d.items(), key=lambda x: x[1], reverse=True)[:3]]"
+      "answer": "Sort items by value descending, take the first three, and keep the keys.\n\ncode:\nd = {'a': 1, 'b': 3, 'c': 2, 'd': 4}\ntop = [k for k, v in sorted(d.items(), key=lambda x: x[1], reverse=True)[:3]]\nprint(top)  # ['d', 'b', 'c']\n\nreal example:\nFinding the top three hashtags in a feed."
     },
     {
       "id": 184,
       "question": "What does dict(sorted({'b': 1, 'a': 2}.items())) return?",
-      "answer": "{'a': 2, 'b': 1} (a new dict sorted by key)"
+      "answer": "It returns {'a': 2, 'b': 1}, a new dict sorted by key.\n\ncode:\nprint(dict(sorted({'b': 1, 'a': 2}.items())))  # {'a': 2, 'b': 1}\n\nreal example:\nProducing an alphabetically ordered settings dict."
     },
     {
       "id": 185,
       "question": "What does sorted(d.items(), key=lambda x: len(str(x[0]))) do?",
-      "answer": "Sorts items by the length of the string form of each key"
+      "answer": "It sorts the items by the length of each key's string form.\n\ncode:\nd = {'abc': 1, 'xy': 2, 'm': 3}\nprint(sorted(d.items(), key=lambda x: len(str(x[0]))))  # [('m', 3), ('xy', 2), ('abc', 1)]\n\nreal example:\nSorting words by length in a dictionary app."
     },
     {
       "id": 186,
       "question": "What does import operator; sorted(d.items(), key=operator.itemgetter(1)) do?",
-      "answer": "Sorts items by their value (index 1 of each tuple)"
+      "answer": "It sorts items by their value, which sits at index 1 of each tuple.\n\ncode:\nimport operator\nd = {'a': 1, 'b': 3, 'c': 2}\nprint(sorted(d.items(), key=operator.itemgetter(1)))  # [('a', 1), ('c', 2), ('b', 3)]\n\nreal example:\nSorting employees by their salary field."
     },
     {
       "id": 187,
       "question": "What does operator.itemgetter(0) select from an items() tuple?",
-      "answer": "The key part of each (key, value) pair"
+      "answer": "It selects the key part of each (key, value) pair.\n\ncode:\nimport operator\npairs = [('a', 1), ('b', 2)]\nprint([operator.itemgetter(0)(p) for p in pairs])  # ['a', 'b']\n\nreal example:\nExtracting just the names from row tuples."
     },
     {
       "id": 188,
       "question": "What does sorted([{'n': 'b', 'age': 3}, {'n': 'a', 'age': 5}], key=lambda p: p['age']) do?",
-      "answer": "Sorts the list of dicts by the 'age' field ascending"
+      "answer": "It sorts the list of dicts by the 'age' field in ascending order.\n\ncode:\npeople = [{'n': 'b', 'age': 3}, {'n': 'a', 'age': 5}]\nprint(sorted(people, key=lambda p: p['age']))  # [{'n': 'b', 'age': 3}, {'n': 'a', 'age': 5}]\n\nreal example:\nSorting customer records by their age."
     },
     {
       "id": 189,
       "question": "What does sorted([{'a': 2}, {'a': 1}], key=lambda d: d['a']) return?",
-      "answer": "[{'a': 1}, {'a': 2}]"
+      "answer": "It returns [{'a': 1}, {'a': 2}].\n\ncode:\nprint(sorted([{'a': 2}, {'a': 1}], key=lambda d: d['a']))  # [{'a': 1}, {'a': 2}]\n\nreal example:\nOrdering records by a shared numeric field."
     },
     {
       "id": 190,
       "question": "What does {k: v for k, v in sorted({'b': 1, 'a': 2}.items())} return?",
-      "answer": "{'a': 2, 'b': 1}"
+      "answer": "It returns {'a': 2, 'b': 1}.\n\ncode:\nprint({k: v for k, v in sorted({'b': 1, 'a': 2}.items())})  # {'a': 2, 'b': 1}\n\nreal example:\nReordering a dict by key while keeping it a dict."
     },
     {
       "id": 191,
       "question": "What does max({'a': 10, 'b': 20}.items(), key=lambda x: x[1])[0] return?",
-      "answer": "'b'"
+      "answer": "It returns 'b', the key of the max-value item.\n\ncode:\nd = {'a': 10, 'b': 20}\nprint(max(d.items(), key=lambda x: x[1])[0])  # 'b'\n\nreal example:\nFinding the product with the biggest revenue."
     },
     {
       "id": 192,
       "question": "What does d = {'x': 100, 'y': 50}; print(sorted(d, key=d.get, reverse=True)) output?",
-      "answer": "['x', 'y'] (keys sorted by value desc)"
+      "answer": "It outputs ['x', 'y'], the keys sorted by value descending.\n\ncode:\nd = {'x': 100, 'y': 50}\nprint(sorted(d, key=d.get, reverse=True))  # ['x', 'y']\n\nreal example:\nRanking web pages by their traffic."
     },
     {
       "id": 193,
       "question": "How do you keep only key-value pairs where value is not None?",
-      "answer": "{k: v for k, v in d.items() if v is not None}"
+      "answer": "Build a new dict with a comprehension that tests v is not None.\n\ncode:\nd = {'a': 1, 'b': None}\nprint({k: v for k, v in d.items() if v is not None})  # {'a': 1}\n\nreal example:\nDropping unfilled optional settings before saving."
     },
     {
       "id": 194,
       "question": "How do you drop keys that start with an underscore?",
-      "answer": "{k: v for k, v in d.items() if not k.startswith('_')}"
+      "answer": "Filter with not k.startswith('_') in a comprehension.\n\ncode:\nd = {'_id': 1, 'name': 'A'}\nprint({k: v for k, v in d.items() if not k.startswith('_')})  # {'name': 'A'}\n\nreal example:\nHiding private fields before sending data to a client."
     },
     {
       "id": 195,
       "question": "How do you filter a dict to keys in an allowed set?",
-      "answer": "{k: d[k] for k in d if k in allowed}"
+      "answer": "Loop over the keys and keep only those present in the allowed set.\n\ncode:\nd = {'a': 1, 'b': 2, 'c': 3}\nallowed = {'a', 'c'}\nprint({k: d[k] for k in d if k in allowed})  # {'a': 1, 'c': 3}\n\nreal example:\nShowing only the columns a user is permitted to see."
     },
     {
       "id": 196,
       "question": "What does {k: v for k, v in {'a': 1, 'ab': 2}.items() if len(k) == 1} return?",
-      "answer": "{'a': 1}"
+      "answer": "It returns {'a': 1}.\n\ncode:\nprint({k: v for k, v in {'a': 1, 'ab': 2}.items() if len(k) == 1})  # {'a': 1}\n\nreal example:\nKeeping only single-character codes in a lookup."
     },
     {
       "id": 197,
       "question": "What does print({k: v for k, v in {'a': 1, 'b': 2}.items()}.get('c', -1)) output?",
-      "answer": "-1"
+      "answer": "It outputs -1, the default for the missing key 'c'.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint({k: v for k, v in d.items()}.get('c', -1))  # -1\n\nreal example:\nGetting a fallback value for a key that isn't present."
     },
     {
       "id": 198,
       "question": "What does d = {'a': 10, 'b': 20}; print(max(d, key=d.get)) output?",
-      "answer": "'b'"
+      "answer": "It outputs 'b'.\n\ncode:\nd = {'a': 10, 'b': 20}\nprint(max(d, key=d.get))  # 'b'\n\nreal example:\nFinding the student with the highest marks."
     },
     {
       "id": 199,
       "question": "What does d = {'a': 5, 'b': 5}; print(max(d, key=d.get)) typically output?",
-      "answer": "Could be 'a' or 'b' (ties resolve to the first encountered)"
+      "answer": "It could be 'a' or 'b'. Ties resolve to the first key encountered, so 'a' here.\n\ncode:\nd = {'a': 5, 'b': 5}\nprint(max(d, key=d.get))  # 'a' (first of the tied keys)\n\nreal example:\nWith equal scores, the winner depends on key order."
     },
     {
       "id": 200,
       "question": "What does d = {'a': 1, 'b': 2}; print([(k, v) for k, v in d.items() if v == 1]) output?",
-      "answer": "[('a', 1)]"
+      "answer": "It outputs [('a', 1)].\n\ncode:\nd = {'a': 1, 'b': 2}\nprint([(k, v) for k, v in d.items() if v == 1])  # [('a', 1)]\n\nreal example:\nFinding rows whose value matches a specific number."
     },
     {
       "id": 201,
       "question": "What does {v for v in {'a': 1, 'b': 2}.values()} produce?",
-      "answer": "{1, 2} (a set of the values)"
+      "answer": "It produces a set of the values, {1, 2}.\n\ncode:\nprint({v for v in {'a': 1, 'b': 2}.values()})  # {1, 2}\n\nreal example:\nCollecting the unique prices in a price dict."
     },
     {
       "id": 202,
       "question": "What does {k: {} for k in ['a', 'b']} return?",
-      "answer": "{'a': {}, 'b': {}} (each value is a fresh dict)"
+      "answer": "It returns {'a': {}, 'b': {}}, where each value is a fresh dict.\n\ncode:\nprint({k: {} for k in ['a', 'b']})  # {'a': {}, 'b': {}}\n\nreal example:\nGiving each user their own empty preferences dict."
     },
     {
       "id": 203,
       "question": "What does dict.fromkeys(['a', 'b'], []) produce and what is the danger?",
-      "answer": "{'a': [], 'b': []} but both keys share the SAME list object"
+      "answer": "It produces {'a': [], 'b': []}, but both keys share the SAME list object, so mutations leak.\n\ncode:\nd = dict.fromkeys(['a', 'b'], [])\nprint(d['a'] is d['b'])  # True\n\nreal example:\nThe shared-list trap means appending for one key affects every key."
     },
     {
       "id": 204,
       "question": "What does d = dict.fromkeys(['a', 'b'], []); d['a'].append(1); print(d) produce?",
-      "answer": "{'a': [1], 'b': [1]} (the shared list got mutated)"
+      "answer": "It produces {'a': [1], 'b': [1]}, because the shared list got mutated.\n\ncode:\nd = dict.fromkeys(['a', 'b'], [])\nd['a'].append(1)\nprint(d)  # {'a': [1], 'b': [1]}\n\nreal example:\nOne key's data unexpectedly appears under every key."
     },
     {
       "id": 205,
       "question": "How do you safely give each key its own new list?",
-      "answer": "Use a comprehension: {k: [] for k in keys}"
+      "answer": "Use a comprehension so each key builds a brand new list.\n\ncode:\nkeys = ['a', 'b']\nd = {k: [] for k in keys}\nprint(d['a'] is d['b'])  # False\n\nreal example:\nIndependent lists keep each group's data separate."
     },
     {
       "id": 206,
       "question": "What does {'a': []} == {'a': []} return?",
-      "answer": "True (structural equality)"
+      "answer": "It returns True, because dict equality is structural.\n\ncode:\nprint({'a': []} == {'a': []})  # True\n\nreal example:\nTwo empty lists compare equal even though they are distinct objects."
     },
     {
       "id": 207,
       "question": "What does d = {'a': 1, 'b': 2}; print(hash('a') == hash('a')) output?",
-      "answer": "True"
+      "answer": "It outputs True, because hashing is deterministic for equal strings.\n\ncode:\nprint(hash('a') == hash('a'))  # True\n\nreal example:\nThe same word always maps to the same hash bucket."
     },
     {
       "id": 208,
       "question": "What happens if you try to use a list as a dict key?",
-      "answer": "TypeError: unhashable type: 'list'"
+      "answer": "It raises TypeError: unhashable type: 'list'.\n\ncode:\ntry:\n    {[1]: 'x'}\nexcept TypeError as e:\n    print(e)\n\nreal example:\nMutable structures can't be trusted as keys, so Python refuses them."
     },
     {
       "id": 209,
       "question": "Can a tuple be used as a dict key?",
-      "answer": "Yes, tuples are hashable when all elements are hashable"
+      "answer": "Yes. Tuples are hashable when all their elements are hashable.\n\ncode:\nd = {(1, 2): 'point'}\nprint(d[(1, 2)])  # 'point'\n\nreal example:\nUsing (row, column) coordinates as keys for a grid."
     },
     {
       "id": 210,
       "question": "What does {(1, 2): 'point'}[1, 2] return?",
-      "answer": "'point' (d[k] with k=(1,2) matches the tuple key)"
+      "answer": "It returns 'point', because d[k] with k = (1, 2) matches the tuple key.\n\ncode:\nd = {(1, 2): 'point'}\nprint(d[1, 2])  # 'point'\n\nreal example:\nLooking up a map cell by its (row, column) pair."
     },
     {
       "id": 211,
       "question": "Can a dict be used as a key in another dict?",
-      "answer": "No, dicts are unhashable"
+      "answer": "No. Dicts are unhashable, so they cannot be keys.\n\ncode:\ntry:\n    {{'a': 1}: 'x'}\nexcept TypeError as e:\n    print(e)\n\nreal example:\nDicts are mutable, so they can't provide a stable hash."
     },
     {
       "id": 212,
       "question": "Can a set be used as a dict key?",
-      "answer": "No, sets are unhashable"
+      "answer": "No. Sets are unhashable, so they cannot be keys.\n\ncode:\ntry:\n    {{1, 2}: 'x'}\nexcept TypeError as e:\n    print(e)\n\nreal example:\nUse a frozenset instead when you need an immutable group key."
     },
     {
       "id": 213,
       "question": "Can a frozenset be used as a dict key?",
-      "answer": "Yes, frozensets are hashable"
+      "answer": "Yes. Frozensets are immutable and therefore hashable.\n\ncode:\nd = {frozenset([1, 2]): 'pair'}\nprint(d[frozenset([1, 2])])  # 'pair'\n\nreal example:\nCaching results per set of matching tags."
     },
     {
       "id": 214,
       "question": "Can a tuple containing a list be used as a dict key?",
-      "answer": "No, it contains an unhashable (list), so it is unhashable"
+      "answer": "No. It contains an unhashable list, so the whole tuple is unhashable.\n\ncode:\ntry:\n    {(1, [2]): 'x'}\nexcept TypeError as e:\n    print(e)\n\nreal example:\nA tuple is only as hashable as its innermost elements."
     },
     {
       "id": 215,
       "question": "What does hash((1, 2)) != hash((1, 3)) evaluate to?",
-      "answer": "True (different tuples usually hash differently)"
+      "answer": "It evaluates to True, because different tuples usually hash differently.\n\ncode:\nprint(hash((1, 2)) != hash((1, 3)))  # True\n\nreal example:\nUnrelated coordinate pairs normally map to different buckets."
     },
     {
       "id": 216,
       "question": "Are 1 and True the same key in a dict?",
-      "answer": "Yes, because 1 == True and their hashes are equal, they collide to one key"
+      "answer": "Yes. Because 1 == True and their hashes are equal, they collide into one key.\n\ncode:\nd = {1: 'a', True: 'b'}\nprint(d)  # {1: 'b'}\n\nreal example:\nMixing boolean and integer keys can silently overwrite each other."
     },
     {
       "id": 217,
       "question": "What does {1: 'a', True: 'b'} produce?",
-      "answer": "{1: 'b'}"
+      "answer": "It produces {1: 'b'}, since True collapses into the key 1.\n\ncode:\nprint({1: 'a', True: 'b'})  # {1: 'b'}\n\nreal example:\nThe boolean key overwrites the integer key's value."
     },
     {
       "id": 218,
       "question": "What does {0: 'low', False: 'off'} produce?",
-      "answer": "{0: 'off'}"
+      "answer": "It produces {0: 'off'}.\n\ncode:\nprint({0: 'low', False: 'off'})  # {0: 'off'}\n\nreal example:\n0 and False collapse into a single key."
     },
     {
       "id": 219,
       "question": "What does d = {1: 'x'}; print(d[1.0]) output?",
-      "answer": "'x' (1.0 == 1 and hashes equally, so it maps to the same entry)"
+      "answer": "It outputs 'x', because 1.0 == 1 and hashes equally, so it maps to the same entry.\n\ncode:\nd = {1: 'x'}\nprint(d[1.0])  # 'x'\n\nreal example:\nInteger and float forms of the same number share one key."
     },
     {
       "id": 220,
       "question": "What does d = {1: 'x'}; print(d[True]) output?",
-      "answer": "'x'"
+      "answer": "It outputs 'x', because True and 1 are the same key.\n\ncode:\nd = {1: 'x'}\nprint(d[True])  # 'x'\n\nreal example:\nLooking up with True finds the integer 1 key."
     },
     {
       "id": 221,
       "question": "What does d = {'a': 1}; print(d.get(input, 'fallback')) do when input is 'a'?",
-      "answer": "Returns 1"
+      "answer": "It returns 1, because 'a' exists in the dict and the fallback is ignored.\n\ncode:\nd = {'a': 1}\nkey = 'a'\nprint(d.get(key, 'fallback'))  # 1\n\nreal example:\nLooking up a user-chosen key and falling back when missing."
     },
     {
       "id": 222,
       "question": "Can None be a dict key?",
-      "answer": "Yes, None is hashable and can be a key"
+      "answer": "Yes. None is hashable and can be a key.\n\ncode:\nd = {None: 'value'}\nprint(d)  # {None: 'value'}\n\nreal example:\nUsing None as a placeholder key meaning 'no selection'."
     },
     {
       "id": 223,
       "question": "What does {None: 'value'}[None] return?",
-      "answer": "'value'"
+      "answer": "It returns 'value'.\n\ncode:\nprint({None: 'value'}[None])  # 'value'\n\nreal example:\nReading the stored value for the 'no selection' option."
     },
     {
       "id": 224,
       "question": "Can an empty tuple () be a dict key?",
-      "answer": "Yes, () is hashable"
+      "answer": "Yes. An empty tuple is hashable.\n\ncode:\nd = {(): 'empty'}\nprint(d[()])  # 'empty'\n\nreal example:\nRepresenting 'no arguments' as a key in a small mapping."
     },
     {
       "id": 225,
       "question": "What does d = {}; d[()] = 'empty'; print(d) produce?",
-      "answer": "{(): 'empty'}"
+      "answer": "It produces {(): 'empty'}.\n\ncode:\nd = {}\nd[()] = 'empty'\nprint(d)  # {(): 'empty'}\n\nreal example:\nCaching the result for a function called with no arguments."
     },
     {
       "id": 226,
       "question": "Why must dict keys be hashable?",
-      "answer": "Because dicts use hash tables that require a stable hash() for lookup"
+      "answer": "Because dicts use hash tables that need a stable hash() to locate keys quickly.\n\ncode:\nprint(hash('key') % 100)  # a bucket number\n\nreal example:\nHashing gives near-instant lookup without scanning every entry."
     },
     {
       "id": 227,
       "question": "What two methods must an object implement to be usable as a dict key?",
-      "answer": "__hash__ and __eq__"
+      "answer": "It must implement __hash__ and __eq__.\n\ncode:\nclass K:\n    def __hash__(self):\n        return 1\n    def __eq__(self, other):\n        return isinstance(other, K)\n\nprint(hash(K()) is not None)  # True\n\nreal example:\nCustom key types need both to work correctly in dicts."
     },
     {
       "id": 228,
       "question": "If a custom class defines __eq__ but not __hash__, can instances be dict keys?",
-      "answer": "No, defining __eq__ sets __hash__ to None, making instances unhashable"
+      "answer": "No. Defining __eq__ sets __hash__ to None, which makes instances unhashable.\n\ncode:\nclass A:\n    def __eq__(self, other):\n        return True\n\nprint(A.__hash__)  # None\n\nreal example:\nEquality alone isn't enough; buckets need a hash to find things."
     },
     {
       "id": 229,
       "question": "What does class A: pass; {A(): 1} do?",
-      "answer": "Works because default object() provides __hash__ and __eq__"
+      "answer": "It works, because the default object provides __hash__ and __eq__.\n\ncode:\nclass A:\n    pass\n\nd = {A(): 1}\nprint(len(d))  # 1\n\nreal example:\nSimple objects can act as keys based on their identity."
     },
     {
       "id": 230,
       "question": "Does d.get(k) use identity or equality to find keys?",
-      "answer": "It uses __eq__ after matching __hash__; equal objects are treated as the same key"
+      "answer": "It uses __eq__ after matching __hash__, so equal objects are treated as the same key.\n\ncode:\nclass P:\n    def __init__(self, n):\n        self.n = n\n    def __hash__(self):\n        return hash(self.n)\n    def __eq__(self, other):\n        return self.n == other.n\n\nd = {P('a'): 1}\nprint(d[P('a')])  # 1\n\nreal example:\nTwo separate but equal objects address the same entry."
     },
     {
       "id": 231,
       "question": "What does {'abc': 1}.get('abc') return via hash lookup?",
-      "answer": "1"
+      "answer": "It returns 1.\n\ncode:\nprint({'abc': 1}.get('abc'))  # 1\n\nreal example:\nInstant string-key lookups in a cache."
     },
     {
       "id": 232,
       "question": "What is the average-case lookup time complexity of a dict?",
-      "answer": "O(1) average for key lookups, insertions and deletions"
+      "answer": "It is O(1) on average for key lookups, insertions, and deletions.\n\ncode:\nd = {i: i for i in range(100000)}\nprint(99999 in d)  # True, near-instant\n\nreal example:\nEven a million-key store answers each lookup almost instantly."
     },
     {
       "id": 233,
       "question": "What is the worst-case lookup time of a dict under many collisions?",
-      "answer": "O(n) when hash collisions are severe"
+      "answer": "It is O(n) when hash collisions are severe.\n\ncode:\nd = {i: i for i in range(5)}\nprint(len(d))  # collisions can make lookups degrade to a scan\n\nreal example:\nDeliberately colliding keys can force slow scans."
     },
     {
       "id": 234,
       "question": "How many elements can a dict store?",
-      "answer": "Practically limited by memory; there is no hard coded item limit"
+      "answer": "Practically, it is limited only by memory; there is no hard-coded item limit.\n\ncode:\nd = {}\nfor i in range(10 ** 5):\n    d[i] = i\nprint(len(d))  # 100000\n\nreal example:\nBig registries keep growing until the machine runs out of RAM."
     },
     {
       "id": 235,
       "question": "Is dict memory usage larger than list of similar size?",
-      "answer": "Yes, dicts use more memory due to hash table overhead"
+      "answer": "Yes. Dicts use more memory because of the hash table's overhead.\n\ncode:\nimport sys\nprint(sys.getsizeof({'a': 1}) > sys.getsizeof(['a']))  # True\n\nreal example:\nThousands of records trade extra memory for fast lookup."
     },
     {
       "id": 236,
       "question": "Which is faster for lookup: key in dict or x in list?",
-      "answer": "key in dict is O(1) and much faster than list's O(n)"
+      "answer": "That answer is key in dict: O(1) is much faster than a list's O(n).\n\ncode:\nd = {i: i for i in range(100000)}\nlst = list(d)\nprint(99999 in d)    # instant\nprint(99999 in lst)   # scans the whole list\n\nreal example:\nMembership checks on big data strongly prefer dicts."
     },
     {
       "id": 237,
       "question": "Why is checking membership in a dict faster than in a list?",
-      "answer": "Because dict membership uses hashing (O(1)) while list scans O(n)"
+      "answer": "A dict uses hashing for O(1) lookups, while a list scans every element in O(n).\n\ncode:\nd = {'a': 1}\nprint('a' in d)      # hash lookup\nprint('a' in ['a'])  # linear scan\n\nreal example:\nFast login checks need instant username lookups."
     },
     {
       "id": 238,
       "question": "Does creating a dict with many keys rehash/rebuild internally?",
-      "answer": "Yes, dicts resize the hash table as it grows"
+      "answer": "Yes. Dicts resize and rebuild the hash table as it grows.\n\ncode:\nd = {}\nfor i in range(10000):\n    d[i] = i\nprint(len(d))  # 10000\n\nreal example:\nPython automatically grows storage as you add users."
     },
     {
       "id": 239,
       "question": "What does d = {'a': 1}; d['b'] = 2; d['c'] = 3; print(list(d)[-1]) output?",
-      "answer": "'c' (last inserted key)"
+      "answer": "It outputs 'c', the last inserted key.\n\ncode:\nd = {'a': 1}\nd['b'] = 2\nd['c'] = 3\nprint(list(d)[-1])  # 'c'\n\nreal example:\nPicking out the most recently added config key."
     },
     {
       "id": 240,
       "question": "What does d = {'a': 1}; print(-d['a']) output?",
-      "answer": "-1"
+      "answer": "It outputs -1.\n\ncode:\nd = {'a': 1}\nprint(-d['a'])  # -1\n\nreal example:\nNegating a stored value in a calculation."
     },
     {
       "id": 241,
       "question": "What does d = {'a': 1}; print(d.get('b') if 'b' in d else None) output?",
-      "answer": "None"
+      "answer": "It outputs None.\n\ncode:\nd = {'a': 1}\nprint(d.get('b') if 'b' in d else None)  # None\n\nreal example:\nReading an optional value while avoiding KeyErrors."
     },
     {
       "id": 242,
       "question": "What does d = {'a': 1}; d['b'] = d.get('b', 0) + 1; d['a'] += 10; print(d) produce?",
-      "answer": "{'a': 11, 'b': 1}"
+      "answer": "It produces {'a': 11, 'b': 1}.\n\ncode:\nd = {'a': 1}\nd['b'] = d.get('b', 0) + 1\nd['a'] += 10\nprint(d)  # {'a': 11, 'b': 1}\n\nreal example:\nIn-place updates to counters and running totals."
     },
     {
       "id": 243,
       "question": "What does {**{'a': 1}, 'b': 2} return?",
-      "answer": "{'a': 1, 'b': 2}"
+      "answer": "It returns {'a': 1, 'b': 2}.\n\ncode:\nprint({**{'a': 1}, 'b': 2})  # {'a': 1, 'b': 2}\n\nreal example:\nSpreading a base dict and adding extra keys in one literal."
     },
     {
       "id": 244,
       "question": "What does {'b': 2, **{'a': 1}} return?",
-      "answer": "{'b': 2, 'a': 1} (insertion order: b first, then a)"
+      "answer": "It returns {'b': 2, 'a': 1}, with insertion order: b first, then a.\n\ncode:\nprint({'b': 2, **{'a': 1}})  # {'b': 2, 'a': 1}\n\nreal example:\nKey order can matter when you control display output."
     },
     {
       "id": 245,
       "question": "What does {**{'a': 1}, 'a': 99} return?",
-      "answer": "{'a': 99} (later explicit key wins)"
+      "answer": "It returns {'a': 99}, because the later explicit key wins.\n\ncode:\nprint({**{'a': 1}, 'a': 99})  # {'a': 99}\n\nreal example:\nAn explicit override beats the spread default."
     },
     {
       "id": 246,
       "question": "What does 'name' in dict(name='alice') return?",
-      "answer": "True"
+      "answer": "It returns True.\n\ncode:\nprint('name' in dict(name='alice'))  # True\n\nreal example:\nChecking that required fields exist before processing."
     },
     {
       "id": 247,
       "question": "Can you use dict(one=1).['one']?",
-      "answer": "No, that is invalid syntax; use dict(one=1)['one']"
+      "answer": "No, that is invalid syntax. Use dict(one=1)['one'] instead.\n\ncode:\nd = dict(one=1)\nprint(d['one'])  # 1\n\nreal example:\nIndex the constructed dict right after the closing parenthesis."
     },
     {
       "id": 248,
       "question": "What does dict(one=1).keys() return?",
-      "answer": "dict_keys(['one'])"
+      "answer": "It returns dict_keys(['one']).\n\ncode:\nprint(dict(one=1).keys())  # dict_keys(['one'])\n\nreal example:\nSeeing the field names of a constructed profile."
     },
     {
       "id": 249,
       "question": "What does {'a': {'b': {'c': 1}}}['a']['b']['c'] return?",
-      "answer": "1 (chained access into nested dicts)"
+      "answer": "It returns 1, via chained access into nested dicts.\n\ncode:\nd = {'a': {'b': {'c': 1}}}\nprint(d['a']['b']['c'])  # 1\n\nreal example:\nReading deep values from a JSON settings tree."
     },
     {
       "id": 250,
       "question": "What does {'a': {'b': 1}}.get('a', {}).get('c', 0) return?",
-      "answer": "0 (safe nested default)"
+      "answer": "It returns 0, the safe nested default.\n\ncode:\nd = {'a': {'b': 1}}\nprint(d.get('a', {}).get('c', 0))  # 0\n\nreal example:\nSafe lookups that never crash on a missing level."
     },
     {
       "id": 251,
       "question": "What does {'a': {'b': 1}}.get('a').get('b') return?",
-      "answer": "1"
+      "answer": "It returns 1.\n\ncode:\nd = {'a': {'b': 1}}\nprint(d.get('a').get('b'))  # 1\n\nreal example:\nReading a nested config value one level at a time."
     },
     {
       "id": 252,
       "question": "What does {'a': {'b': 1}}.get('x').get('b') do?",
-      "answer": "AttributeError: 'NoneType' object has no attribute 'get'"
+      "answer": "It raises AttributeError: 'NoneType' object has no attribute 'get', because get('x') returned None.\n\ncode:\nd = {'a': {'b': 1}}\ntry:\n    print(d.get('x').get('b'))\nexcept AttributeError as e:\n    print(e)\n\nreal example:\nChaining get calls blindly crashes when an intermediate key is missing."
     },
     {
       "id": 253,
       "question": "How do you safely get nested value with a path like ['a','b','c']?",
-      "answer": "Use a loop: for k in ['a','b','c']: d = d.get(k) or empty; or catch KeyError"
+      "answer": "Loop over the path, replacing the node with .get(k) or an empty dict each step.\n\ncode:\nd = {'a': {'b': {'c': 1}}}\nnode = d\nfor k in ['a', 'b', 'c']:\n    node = node.get(k, {})\nprint(node)  # 1\n\nreal example:\nWalking a JSON path without crashing on missing branches."
     },
     {
       "id": 254,
       "question": "What does d = {'a': {'b': 1}}; print(d['a'].setdefault('c', 2)) output?",
-      "answer": "2"
+      "answer": "It outputs 2.\n\ncode:\nd = {'a': {'b': 1}}\nprint(d['a'].setdefault('c', 2))  # 2\n\nreal example:\nFilling in an optional nested field with a default."
     },
     {
       "id": 255,
       "question": "What does d = {}; d.setdefault('a', {}).setdefault('b', []).append(1); print(d) produce?",
-      "answer": "{'a': {'b': [1]}} (auto-building nested structure)"
+      "answer": "It produces {'a': {'b': [1]}}, auto-building the nested structure.\n\ncode:\nd = {}\nd.setdefault('a', {}).setdefault('b', []).append(1)\nprint(d)  # {'a': {'b': [1]}}\n\nreal example:\nGrowing nested data without checking each level first."
     },
     {
       "id": 256,
       "question": "What does d = {}; d.setdefault('a', []).append(1); d.setdefault('a', []).append(2); print(d['a']) output?",
-      "answer": "[1, 2] (same list reused for the existing key)"
+      "answer": "It outputs [1, 2], because the same list is reused for the existing key.\n\ncode:\nd = {}\nd.setdefault('a', []).append(1)\nd.setdefault('a', []).append(2)\nprint(d['a'])  # [1, 2]\n\nreal example:\nCollecting all events under one key over time."
     },
     {
       "id": 257,
       "question": "What does d = {'a': []}; d['a'].append(1); print(d) produce?",
-      "answer": "{'a': [1]}"
+      "answer": "It produces {'a': [1]}.\n\ncode:\nd = {'a': []}\nd['a'].append(1)\nprint(d)  # {'a': [1]}\n\nreal example:\nStarting with an empty list per key and adding to it."
     },
     {
       "id": 258,
       "question": "What does d = {'a': [1, 2]}; print(sum(d['a'])) output?",
-      "answer": "3"
+      "answer": "It outputs 3.\n\ncode:\nd = {'a': [1, 2]}\nprint(sum(d['a']))  # 3\n\nreal example:\nTotaling the items stored in one list."
     },
     {
       "id": 259,
       "question": "What does {k: sum(v) for k, v in {'a': [1, 2], 'b': [3]}.items()} return?",
-      "answer": "{'a': 3, 'b': 3}"
+      "answer": "It returns {'a': 3, 'b': 3}.\n\ncode:\nprint({k: sum(v) for k, v in {'a': [1, 2], 'b': [3]}.items()})  # {'a': 3, 'b': 3}\n\nreal example:\nPer-category totals in a report."
     },
     {
       "id": 260,
       "question": "What does {k: len(v) for k, v in {'a': [1,2], 'b': []}.items()} return?",
-      "answer": "{'a': 2, 'b': 0}"
+      "answer": "It returns {'a': 2, 'b': 0}.\n\ncode:\nprint({k: len(v) for k, v in {'a': [1, 2], 'b': []}.items()})  # {'a': 2, 'b': 0}\n\nreal example:\nCounting items per category, empty groups included."
     },
     {
       "id": 261,
       "question": "What does {k: max(v) for k, v in {'a': [1, 9], 'b': [3]}.items()} return?",
-      "answer": "{'a': 9, 'b': 3}"
+      "answer": "It returns {'a': 9, 'b': 3}.\n\ncode:\nprint({k: max(v) for k, v in {'a': [1, 9], 'b': [3]}.items()})  # {'a': 9, 'b': 3}\n\nreal example:\nFinding the highest score within each group."
     },
     {
       "id": 262,
       "question": "What does d = {'a': [3, 1]}; d['a'].sort(); print(d) produce?",
-      "answer": "{'a': [1, 3]}"
+      "answer": "It produces {'a': [1, 3]}.\n\ncode:\nd = {'a': [3, 1]}\nd['a'].sort()\nprint(d)  # {'a': [1, 3]}\n\nreal example:\nSorting a stored list in place."
     },
     {
       "id": 263,
       "question": "What does d = {'a': [1, 2, 3]}; d['a'].append(d['a'].pop(0)); print(d) produce?",
-      "answer": "{'a': [2, 3, 1]} (moves first element to the end)"
+      "answer": "It produces {'a': [2, 3, 1]}, moving the first element to the end.\n\ncode:\nd = {'a': [1, 2, 3]}\nd['a'].append(d['a'].pop(0))\nprint(d)  # {'a': [2, 3, 1]}\n\nreal example:\nRotating a queue of jobs or songs."
     },
     {
       "id": 264,
       "question": "What does {k: v * 2 for k, v in {'a': [1]}.items()} return?",
-      "answer": "{'a': [1, 1]}"
+      "answer": "It returns {'a': [1, 1]}.\n\ncode:\nprint({k: v * 2 for k, v in {'a': [1]}.items()})  # {'a': [1, 1]}\n\nreal example:\nRepeating a stored sequence of values."
     },
     {
       "id": 265,
       "question": "What does d = {'a': 1}; try: print(d['b']) except KeyError: print('miss') output?",
-      "answer": "miss"
+      "answer": "It outputs miss, because 'b' is not a key and the KeyError is caught.\n\ncode:\nd = {'a': 1}\ntry:\n    print(d['b'])\nexcept KeyError:\n    print('miss')\n\nreal example:\nCatch and report a missing record instead of crashing."
     },
     {
       "id": 266,
       "question": "What does d = {'a': 1}; print(d.get('b', d.get('a', 0))) output?",
-      "answer": "1 (default evaluated to d.get('a', 0) = 1)"
+      "answer": "It outputs 1, since the default expression d.get('a', 0) evaluates to 1.\n\ncode:\nd = {'a': 1}\nprint(d.get('b', d.get('a', 0)))  # 1\n\nreal example:\nA fallback chain that ends at a real value."
     },
     {
       "id": 267,
       "question": "What does d = {}; print(d.get('k', d.setdefault('k', 5))) output?",
-      "answer": "5 (setdefault runs because get's default is eager)"
+      "answer": "It outputs 5, because get's default is eager and the setdefault runs.\n\ncode:\nd = {}\nprint(d.get('k', d.setdefault('k', 5)))  # 5\nprint(d)  # {'k': 5}\n\nreal example:\nThe default expression executes as a side effect even if unused."
     },
     {
       "id": 268,
       "question": "What does d = {'k': 1}; print(d.get('k', d.setdefault('k', 99))) output?",
-      "answer": "1 (and setdefault does not change k since it exists)"
+      "answer": "It outputs 1, and setdefault does nothing to 'k' because it already exists.\n\ncode:\nd = {'k': 1}\nprint(d.get('k', d.setdefault('k', 99)))  # 1\nprint(d)  # {'k': 1}\n\nreal example:\nExisting values survive eager default expressions."
     },
     {
       "id": 269,
       "question": "What is the result of iterating d.items() while deleting keys inside the loop?",
-      "answer": "RuntimeError: dictionary changed size during iteration"
+      "answer": "It raises RuntimeError: dictionary changed size during iteration.\n\ncode:\nd = {'a': 1, 'b': 2}\ntry:\n    for k in d:\n        del d[k]\nexcept RuntimeError as e:\n    print(e)\n\nreal example:\nChanging the dict's size mid-loop breaks the iteration contract."
     },
     {
       "id": 270,
       "question": "How do you safely remove some keys while iterating?",
-      "answer": "Iterate over a copy: for k in list(d): ... or build a new dict with a comprehension"
+      "answer": "Iterate over a copy (list(d)) or build a new dict with a comprehension.\n\ncode:\nd = {'a': 1, 'b': 2}\nfor k in list(d):\n    if k == 'a':\n        del d[k]\nprint(d)  # {'b': 2}\n\nreal example:\nRemoving expired sessions without RuntimeErrors."
     },
     {
       "id": 271,
       "question": "What does d = {'a': 1, 'b': 2}; for k in list(d): del d[k]; print(d) produce?",
-      "answer": "{}"
+      "answer": "It produces {}.\n\ncode:\nd = {'a': 1, 'b': 2}\nfor k in list(d):\n    del d[k]\nprint(d)  # {}\n\nreal example:\nEmptying a queue safely while looping over it."
     },
     {
       "id": 272,
       "question": "What does d = {'a': 1, 'b': 2}; for k in d: pass; then d.clear() after the loop do?",
-      "answer": "Clears the dict after the loop without error (it ended before clear)"
+      "answer": "It clears the dict after the loop without error, because the loop already ended.\n\ncode:\nd = {'a': 1, 'b': 2}\nfor k in d:\n    pass\nd.clear()\nprint(d)  # {}\n\nreal example:\nClearing after you finish reading items is perfectly safe."
     },
     {
       "id": 273,
       "question": "What does d = {'a': 1, 'b': 2}; [d.pop(k) for k in list(d)] do?",
-      "answer": "Removes all items, returning [1, 2]"
+      "answer": "It removes all items from d, and the comprehension returns [1, 2].\n\ncode:\nd = {'a': 1, 'b': 2}\nprint([d.pop(k) for k in list(d)])  # [1, 2]\nprint(d)  # {}\n\nreal example:\nDraining a dict and collecting the values as you go."
     },
     {
       "id": 274,
       "question": "How do you filter out keys whose value is falsy?",
-      "answer": "{k: v for k, v in d.items() if v}"
+      "answer": "Use a comprehension with if v, which keeps only truthy values.\n\ncode:\nd = {'a': 0, 'b': 1, 'c': ''}\nprint({k: v for k, v in d.items() if v})  # {'b': 1}\n\nreal example:\nDropping empty strings and zeroes from a report."
     },
     {
       "id": 275,
       "question": "What does {k: v for k, v in {'a': 0, 'b': 1}.items() if v} return?",
-      "answer": "{'b': 1}"
+      "answer": "It returns {'b': 1}.\n\ncode:\nprint({k: v for k, v in {'a': 0, 'b': 1}.items() if v})  # {'b': 1}\n\nreal example:\nKeeping only meaningful, non-zero values."
     },
     {
       "id": 276,
       "question": "What does {k: v for k, v in {'a': '', 'b': 'x'}.items() if v} return?",
-      "answer": "{'b': 'x'}"
+      "answer": "It returns {'b': 'x'}.\n\ncode:\nprint({k: v for k, v in {'a': '', 'b': 'x'}.items() if v})  # {'b': 'x'}\n\nreal example:\nRemoving blank fields from a submitted form."
     },
     {
       "id": 277,
       "question": "What does d = {'a': 1, 'b': None}; print({k: v for k, v in d.items() if v is not None}) output?",
-      "answer": "{'a': 1}"
+      "answer": "It outputs {'a': 1}.\n\ncode:\nd = {'a': 1, 'b': None}\nprint({k: v for k, v in d.items() if v is not None})  # {'a': 1}\n\nreal example:\nKeeping only the settings that were actually configured."
     },
     {
       "id": 278,
       "question": "How do you find keys with the value 2 in {'a': 1, 'b': 2, 'c': 2}?",
-      "answer": "[k for k, v in d.items() if v == 2] -> ['b', 'c']"
+      "answer": "Filter items with a comprehension: [k for k, v in d.items() if v == 2] gives ['b', 'c'].\n\ncode:\nd = {'a': 1, 'b': 2, 'c': 2}\nprint([k for k, v in d.items() if v == 2])  # ['b', 'c']\n\nreal example:\nFinding all users who share the same role id."
     },
     {
       "id": 279,
       "question": "What does d = {'a': 1, 'b': 2}; print(d.keys()) output exactly?",
-      "answer": "dict_keys(['a', 'b'])"
+      "answer": "It outputs dict_keys(['a', 'b']).\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(d.keys())\n\nreal example:\nThe printed view shows its keys wrapped in dict_keys."
     },
     {
       "id": 280,
       "question": "What does d = {'a': 1, 'b': 2}; print(type(d)) output?",
-      "answer": "<class 'dict'>"
+      "answer": "It outputs <class 'dict'>.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(type(d))  # <class 'dict'>\n\nreal example:\nConfirming an object is a dict before calling dict methods."
     },
     {
       "id": 281,
       "question": "What does d = {'a': 1}; d['a'] += 1; print(d) produce?",
-      "answer": "{'a': 2}"
+      "answer": "It produces {'a': 2}.\n\ncode:\nd = {'a': 1}\nd['a'] += 1\nprint(d)  # {'a': 2}\n\nreal example:\nIncrementing a counter stored in a dict."
     },
     {
       "id": 282,
       "question": "What does d = {'a': 'x'}; d['a'] *= 3; print(d) produce?",
-      "answer": "{'a': 'xxx'}"
+      "answer": "It produces {'a': 'xxx'}.\n\ncode:\nd = {'a': 'x'}\nd['a'] *= 3\nprint(d)  # {'a': 'xxx'}\n\nreal example:\nRepeating a stored word a fixed number of times."
     },
     {
       "id": 283,
       "question": "What does d = {'a': [1]}; d['a'] *= 2; print(d) produce?",
-      "answer": "{'a': [1, 1]}"
+      "answer": "It produces {'a': [1, 1]}.\n\ncode:\nd = {'a': [1]}\nd['a'] *= 2\nprint(d)  # {'a': [1, 1]}\n\nreal example:\nDuplicating values in a list stored under a key."
     },
     {
       "id": 284,
       "question": "Can you swap two values in a dict with a, b = d['x'], d['y']?",
-      "answer": "No two built-in swap works via tuple reassign? Actually use d['x'], d['y'] = d['y'], d['x']"
+      "answer": "No. That line copies values into new variables a and b; to swap inside the dict use tuple-style assignment on the keys.\n\ncode:\nd = {'x': 1, 'y': 2}\nd['x'], d['y'] = d['y'], d['x']\nprint(d)  # {'x': 2, 'y': 1}\n\nreal example:\nSwapping two saved values like a from/to pair."
     },
     {
       "id": 285,
       "question": "What does d = {'x': 1, 'y': 2}; d['x'], d['y'] = d['y'], d['x']; print(d) produce?",
-      "answer": "{'x': 2, 'y': 1}"
+      "answer": "It produces {'x': 2, 'y': 1}.\n\ncode:\nd = {'x': 1, 'y': 2}\nd['x'], d['y'] = d['y'], d['x']\nprint(d)  # {'x': 2, 'y': 1}\n\nreal example:\nSwapping two stored values such as currency rates."
     },
     {
       "id": 286,
       "question": "How do you rename a key k1 to k2 without changing its value?",
-      "answer": "d[k2] = d.pop(k1)"
+      "answer": "Move the value with d[k2] = d.pop(k1).\n\ncode:\nd = {'k1': 5}\nd['k2'] = d.pop('k1')\nprint(d)  # {'k2': 5}\n\nreal example:\nRenaming a database column without losing its data."
     },
     {
       "id": 287,
       "question": "What does d = {'old': 5}; d['new'] = d.pop('old'); print(d) produce?",
-      "answer": "{'new': 5}"
+      "answer": "It produces {'new': 5}.\n\ncode:\nd = {'old': 5}\nd['new'] = d.pop('old')\nprint(d)  # {'new': 5}\n\nreal example:\nRe-keying a value after an API rename."
     },
     {
       "id": 288,
       "question": "What does d = {'a': 10}; print({k: v for k, v in d.items() if k == 'a' and v > 5}) output?",
-      "answer": "{'a': 10}"
+      "answer": "It outputs {'a': 10}.\n\ncode:\nd = {'a': 10}\nprint({k: v for k, v in d.items() if k == 'a' and v > 5})  # {'a': 10}\n\nreal example:\nFiltering on both the key and the value together."
     },
     {
       "id": 289,
       "question": "What does {x: y for x, y in zip('ab', range(2))} return?",
-      "answer": "{'a': 0, 'b': 1}"
+      "answer": "It returns {'a': 0, 'b': 1}.\n\ncode:\nprint({x: y for x, y in zip('ab', range(2))})  # {'a': 0, 'b': 1}\n\nreal example:\nPairing labels with generated index numbers."
     },
     {
       "id": 290,
       "question": "What does dict((x, x + 1) for x in range(3)) return?",
-      "answer": "{0: 1, 1: 2, 2: 3}"
+      "answer": "It returns {0: 1, 1: 2, 2: 3}.\n\ncode:\nprint(dict((x, x + 1) for x in range(3)))  # {0: 1, 1: 2, 2: 3}\n\nreal example:\nBuilding offset or mapping tables."
     },
     {
       "id": 291,
       "question": "What does {x: x for x in 'ab'} return?",
-      "answer": "{'a': 'a', 'b': 'b'}"
+      "answer": "It returns {'a': 'a', 'b': 'b'}.\n\ncode:\nprint({x: x for x in 'ab'})  # {'a': 'a', 'b': 'b'}\n\nreal example:\nA dict mapping each word to itself for super-fast membership checks."
     },
     {
       "id": 292,
       "question": "What does {x: x.upper() for x in 'ab'} return?",
-      "answer": "{'a': 'A', 'b': 'B'}"
+      "answer": "It returns {'a': 'A', 'b': 'B'}.\n\ncode:\nprint({x: x.upper() for x in 'ab'})  # {'a': 'A', 'b': 'B'}\n\nreal example:\nA normalization table for case-insensitive key handling."
     },
     {
       "id": 293,
       "question": "What does {k: len(k) for k in ['cat', 'elephant']} return?",
-      "answer": "{'cat': 3, 'elephant': 8}"
+      "answer": "It returns {'cat': 3, 'elephant': 8}.\n\ncode:\nprint({k: len(k) for k in ['cat', 'elephant']})  # {'cat': 3, 'elephant': 8}\n\nreal example:\nRecording word lengths for a word game."
     },
     {
       "id": 294,
       "question": "What does {w: w.count('a') for w in ['aa', 'b']} return?",
-      "answer": "{'aa': 2, 'b': 0}"
+      "answer": "It returns {'aa': 2, 'b': 0}.\n\ncode:\nprint({w: w.count('a') for w in ['aa', 'b']})  # {'aa': 2, 'b': 0}\n\nreal example:\nCounting a specific letter across several words."
     },
     {
       "id": 295,
       "question": "What does {c: s.count(c) for c in set(s)} count for s='aab'?",
-      "answer": "Each distinct char's frequency: {'a': 2, 'b': 1} (order varies)"
+      "answer": "It counts each distinct character's frequency: {'a': 2, 'b': 1} (order may vary).\n\ncode:\ns = 'aab'\nprint({c: s.count(c) for c in set(s)})  # {'a': 2, 'b': 1}\n\nreal example:\nComputing a letter-frequency table for a word."
     },
     {
       "id": 296,
       "question": "What does {c: s.count(c) for c in s} return for s='aab'?",
-      "answer": "{'a': 2, 'b': 1} (count recomputed per occurrence)"
+      "answer": "It returns {'a': 2, 'b': 1}, recomputing the count for each occurrence.\n\ncode:\ns = 'aab'\nprint({c: s.count(c) for c in s})  # {'a': 2, 'b': 1}\n\nreal example:\nIt works, but scans the string repeatedly, so it's slower than Counter."
     },
     {
       "id": 297,
       "question": "What does d = {'a': 1}; print({**d}) output?",
-      "answer": "{'a': 1}"
+      "answer": "It outputs {'a': 1}.\n\ncode:\nd = {'a': 1}\nprint({**d})  # {'a': 1}\n\nreal example:\nMaking a quick copy of a dict with unpacking."
     },
     {
       "id": 298,
       "question": "What does {**d, 'b': 2} do when d = {'a': 1}?",
-      "answer": "Returns {'a': 1, 'b': 2}"
+      "answer": "It returns {'a': 1, 'b': 2}.\n\ncode:\nd = {'a': 1}\nprint({**d, 'b': 2})  # {'a': 1, 'b': 2}\n\nreal example:\nExtending a config with additional fields."
     },
     {
       "id": 299,
       "question": "What does d = {'a': 1}; print({**d}.get('b', 0)) output?",
-      "answer": "0"
+      "answer": "It outputs 0.\n\ncode:\nd = {'a': 1}\nprint({**d}.get('b', 0))  # 0\n\nreal example:\nA copied dict behaves just like the original for lookups."
     },
     {
       "id": 300,
       "question": "What does {**{}, **{'a': 1}} return?",
-      "answer": "{'a': 1}"
+      "answer": "It returns {'a': 1}.\n\ncode:\nprint({**{}, **{'a': 1}})  # {'a': 1}\n\nreal example:\nMerging empty sources into the result harmlessly."
     },
     {
       "id": 301,
       "question": "What is the result of d = {'a': 1}; d == {**d}?",
-      "answer": "True (equal content, though a new object)"
+      "answer": "The result is True: the content is equal, even though {**d} is a new object.\n\ncode:\nd = {'a': 1}\nprint(d == {**d})  # True\n\nreal example:\nEquality compares content, not identity."
     },
     {
       "id": 302,
       "question": "How do you represent a sparse matrix with dicts?",
-      "answer": "Use {(r, c): value} for non-zero cells only"
+      "answer": "Use {(r, c): value} for the non-zero cells and store nothing for empty ones.\n\ncode:\nmatrix = {(0, 1): 5, (2, 3): 7}\nprint(matrix.get((2, 3), 0))  # 7\n\nreal example:\nHuge grids store only the populated cells, saving memory."
     },
     {
       "id": 303,
       "question": "How do you get the value of sparse cell (2, 3) or 0 if missing?",
-      "answer": "matrix.get((2, 3), 0)"
+      "answer": "Use matrix.get((2, 3), 0).\n\ncode:\nmatrix = {(0, 1): 5}\nprint(matrix.get((2, 3), 0))  # 0\n\nreal example:\nSpreadsheet cells that are empty read as zero."
     },
     {
       "id": 304,
       "question": "What does sum({(0,0): 1, (1,1): 2}.values()) return?",
-      "answer": "3"
+      "answer": "It returns 3.\n\ncode:\nprint(sum({(0, 0): 1, (1, 1): 2}.values()))  # 3\n\nreal example:\nAdding up all the populated cell values."
     },
     {
       "id": 305,
       "question": "What does d = {(0,0): 1, (1,1): 2}; print(d.get((9,9), 0)) output?",
-      "answer": "0"
+      "answer": "It outputs 0.\n\ncode:\nd = {(0, 0): 1, (1, 1): 2}\nprint(d.get((9, 9), 0))  # 0\n\nreal example:\nMissing matrix cells default to zero in reports."
     },
     {
       "id": 306,
       "question": "How do you build an adjacency list graph?",
-      "answer": "graph = {'A': ['B', 'C'], 'B': ['A']} etc., or graph.setdefault(u, []).append(v)"
+      "answer": "Map each node to a list of neighbors, and use setdefault to add connections.\n\ncode:\ngraph = {}\ngraph.setdefault('A', []).append('B')\ngraph.setdefault('A', []).append('C')\nprint(graph)  # {'A': ['B', 'C']}\n\nreal example:\nModeling a social network as a list of friends per person."
     },
     {
       "id": 307,
       "question": "What does graph.setdefault('A', []).append('B') then graph.setdefault('A', []).append('C') produce?",
-      "answer": "graph['A'] == ['B', 'C']"
+      "answer": "It produces graph['A'] == ['B', 'C'].\n\ncode:\ngraph = {}\ngraph.setdefault('A', []).append('B')\ngraph.setdefault('A', []).append('C')\nprint(graph['A'])  # ['B', 'C']\n\nreal example:\nAdding friends to a person's friend list."
     },
     {
       "id": 308,
       "question": "How do you add an undirected edge to an adjacency dict graph?",
-      "answer": "g.setdefault(u, []).append(v); g.setdefault(v, []).append(u)"
+      "answer": "Add the connection in both directions with setdefault and append.\n\ncode:\ndef add_edge(g, u, v):\n    g.setdefault(u, []).append(v)\n    g.setdefault(v, []).append(u)\n\ng = {}\nadd_edge(g, 'A', 'B')\nprint(g)  # {'A': ['B'], 'B': ['A']}\n\nreal example:\nConnecting two cities in a road map."
     },
     {
       "id": 309,
       "question": "How do you count nodes in an adjacency dict?",
-      "answer": "len(graph)"
+      "answer": "Use len(graph), since each node is a key.\n\ncode:\ngraph = {'A': ['B'], 'B': ['A']}\nprint(len(graph))  # 2\n\nreal example:\nCounting how many people are in a network."
     },
     {
       "id": 310,
       "question": "What does len({'A': ['B'], 'B': ['A', 'C'], 'C': ['B']}) return?",
-      "answer": "3 nodes"
+      "answer": "It returns 3, the number of nodes.\n\ncode:\ngraph = {'A': ['B'], 'B': ['A', 'C'], 'C': ['B']}\nprint(len(graph))  # 3\n\nreal example:\nThe number of users in a friends graph."
     },
     {
       "id": 311,
       "question": "How do you compute the degree of node 'A' in an adjacency list dict?",
-      "answer": "len(graph.get('A', []))"
+      "answer": "Count its neighbors with len(graph.get('A', [])).\n\ncode:\ngraph = {'A': ['B', 'C'], 'B': ['A']}\nprint(len(graph.get('A', [])))  # 2\n\nreal example:\nHow many friends user A has."
     },
     {
       "id": 312,
       "question": "How would you DFS a graph stored as dict-of-lists?",
-      "answer": "Use a stack with visited set starting from a node, extending graph.get(node, [])"
+      "answer": "Use a stack plus a visited set, extending the stack with each node's unvisited neighbors.\n\ncode:\ndef dfs(graph, start):\n    seen = set()\n    stack = [start]\n    while stack:\n        node = stack.pop()\n        if node in seen:\n            continue\n        seen.add(node)\n        stack.extend(graph.get(node, []))\n    return seen\n\nprint(dfs({'A': ['B'], 'B': ['A', 'C']}, 'A'))  # {'A', 'B', 'C'}\n\nreal example:\nSearching a network of pages or friends."
     },
     {
       "id": 313,
       "question": "How do you check if node 'Z' exists in a graph dict?",
-      "answer": "'Z' in graph"
+      "answer": "Test membership with 'Z' in graph.\n\ncode:\ngraph = {'A': ['B']}\nprint('Z' in graph)  # False\n\nreal example:\nChecking whether a user exists before adding a link."
     },
     {
       "id": 314,
       "question": "What does {k: v for k, v in graph.items() if v} mean for a graph?",
-      "answer": "Keeps nodes that have at least one neighbor"
+      "answer": "It keeps only the nodes that have at least one neighbor.\n\ncode:\ngraph = {'A': ['B'], 'Z': []}\nactive = {k: v for k, v in graph.items() if v}\nprint(active)  # {'A': ['B']}\n\nreal example:\nFiltering out isolated accounts with no connections."
     },
     {
       "id": 315,
       "question": "How do you build a character-count lookup table for 'ab' + 'bc'?",
-      "answer": "Counter('ab') + Counter('bc') => {'a':1,'b':2,'c':1}"
+      "answer": "Add two Counters: Counter('ab') + Counter('bc') gives {'a': 1, 'b': 2, 'c': 1}.\n\ncode:\nfrom collections import Counter\nprint(Counter('ab') + Counter('bc'))  # Counter({'b': 2, 'a': 1, 'c': 1})\n\nreal example:\nCombining letter tallies from two documents."
     },
     {
       "id": 316,
       "question": "What is Two-Sum solved with a dict?",
-      "answer": "For each num, check if target - num is in a seen dict, else store num: index"
+      "answer": "For each number, check if target minus the number is already in a seen dict, otherwise store the number with its index.\n\ncode:\ndef two_sum(nums, target):\n    seen = {}\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return [seen[target - n], i]\n        seen[n] = i\n\nprint(two_sum([2, 7, 11, 15], 9))  # [0, 1]\n\nreal example:\nFinding two items whose prices add up to a budget."
     },
     {
       "id": 317,
       "question": "In Two-Sum, what does d = {}; d[2] = 0; then d[7] = 1; represent?",
-      "answer": "A dict mapping each visited value to its index"
+      "answer": "It represents a dict mapping each visited value to the index where it first appeared.\n\ncode:\nd = {}\nd[2] = 0\nd[7] = 1\nprint(d)  # {2: 0, 7: 1}\n\nreal example:\nRemembering where each number was seen so you can pair it later."
     },
     {
       "id": 318,
       "question": "In Two-Sum, why do you check target - num in d before inserting num?",
-      "answer": "To find the complement from earlier elements and avoid matching the same index"
+      "answer": "To find the complement among earlier elements, so the same index is never paired with itself.\n\ncode:\n\ndef two_sum(nums, target):\n    seen = {}\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return [seen[target - n], i]\n        seen[n] = i\n\nreal example:\nEach number only pairs with something seen before it in the list."
     },
     {
       "id": 319,
       "question": "What does Counter('aabc')['d'] return?",
-      "answer": "0"
+      "answer": "It returns 0, because 'd' is not in the counter.\n\ncode:\nfrom collections import Counter\nprint(Counter('aabc')['d'])  # 0\n\nreal example:\nAsk about an unseen word and get zero instead of an error."
     },
     {
       "id": 320,
       "question": "How do you check if one word uses only characters available in another (multiset subset)?",
-      "answer": "Counter(word) <= Counter(available)"
+      "answer": "Compare the word Counters with <= to test a multiset subset.\n\ncode:\nfrom collections import Counter\nword = Counter('ab')\navailable = Counter('aabc')\nprint(word <= available)  # True\n\nreal example:\nScrabble: can the tiles in hand form this word?"
     },
     {
       "id": 321,
       "question": "What does Counter('ab') <= Counter('aabc') return?",
-      "answer": "True"
+      "answer": "It returns True.\n\ncode:\nfrom collections import Counter\nprint(Counter('ab') <= Counter('aabc'))  # True\n\nreal example:\nChecking your letter tiles can form a specific word."
     },
     {
       "id": 322,
       "question": "What does Counter('abc') <= Counter('ab') return?",
-      "answer": "False"
+      "answer": "It returns False, since 'c' is missing from the right side.\n\ncode:\nfrom collections import Counter\nprint(Counter('abc') <= Counter('ab'))  # False\n\nreal example:\nYou can't build 'abc' if you only have the letters a and b."
     },
     {
       "id": 323,
       "question": "What does list(dict.fromkeys(['a', 'a', 'b']).keys()) return?",
-      "answer": "['a', 'b'] (dict preserves first-seen order)"
+      "answer": "It returns ['a', 'b'], since a dict preserves first-seen order.\n\ncode:\nprint(list(dict.fromkeys(['a', 'a', 'b']).keys()))  # ['a', 'b']\n\nreal example:\nEarlier occurrences of an item are kept, later duplicates ignored."
     },
     {
       "id": 324,
       "question": "How do you remove duplicates from a list while preserving order?",
-      "answer": "list(dict.fromkeys(items))"
+      "answer": "Use list(dict.fromkeys(items)), because dict keys keep their first appearance order.\n\ncode:\nitems = [3, 1, 3, 2, 1]\nprint(list(dict.fromkeys(items)))  # [3, 1, 2]\n\nreal example:\nCleaning a list of clicked page ids, keeping the order of first clicks."
     },
     {
       "id": 325,
       "question": "What does dict.fromkeys('banana') return?",
-      "answer": "{'b': None, 'a': None, 'n': None} (unique chars as keys)"
+      "answer": "It returns {'b': None, 'a': None, 'n': None}, the unique characters as keys.\n\ncode:\nprint(dict.fromkeys('banana'))  # {'b': None, 'a': None, 'n': None}\n\nreal example:\nExtracting the distinct letters of a word as keys."
     },
     {
       "id": 326,
       "question": "What does list(dict.fromkeys('banana')) return?",
-      "answer": "['b', 'a', 'n'] (unique chars in order)"
+      "answer": "It returns ['b', 'a', 'n'], the unique characters in first-seen order.\n\ncode:\nprint(list(dict.fromkeys('banana')))  # ['b', 'a', 'n']\n\nreal example:\nGetting the distinct letters of a word in the order they appear."
     },
     {
       "id": 327,
       "question": "What does ''.join(dict.fromkeys('banana')) return?",
-      "answer": "'ban'"
+      "answer": "It returns 'ban'.\n\ncode:\nprint(''.join(dict.fromkeys('banana')))  # 'ban'\n\nreal example:\nCompressing a word down to its distinct letters in order."
     },
     {
       "id": 328,
       "question": "What does {v: k for k, v in {'a': 1, 'b': 1}.items()} return?",
-      "answer": "{1: 'b'} (last key for duplicate value wins on inversion)"
+      "answer": "It returns {1: 'b'}, because the last key for a duplicate value wins on inversion.\n\ncode:\nprint({v: k for k, v in {'a': 1, 'b': 1}.items()})  # {1: 'b'}\n\nreal example:\nInverting a dict loses earlier keys when values repeat."
     },
     {
       "id": 329,
       "question": "How do you invert a dict keeping ALL keys per value?",
-      "answer": "result = defaultdict(list); for k, v in d.items(): result[v].append(k)"
+      "answer": "Use a defaultdict(list) and append each original key to its value group.\n\ncode:\nfrom collections import defaultdict\nd = {'a': 1, 'b': 1}\nresult = defaultdict(list)\nfor k, v in d.items():\n    result[v].append(k)\nprint(dict(result))  # {1: ['a', 'b']}\n\nreal example:\nGrouping all members by their shared role id."
     },
     {
       "id": 330,
       "question": "What does result = defaultdict(list); result[1].append('a'); result[1].append('b'); dict(result) produce?",
-      "answer": "{1: ['a', 'b']}"
+      "answer": "It produces {1: ['a', 'b']}.\n\ncode:\nfrom collections import defaultdict\nresult = defaultdict(list)\nresult[1].append('a')\nresult[1].append('b')\nprint(dict(result))  # {1: ['a', 'b']}\n\nreal example:\nCollecting every name that belongs to the same category."
     },
     {
       "id": 331,
       "question": "How do you find the key of the maximum value in {'a': 3, 'b': 7, 'c': 2}?",
-      "answer": "max(d, key=d.get) returns 'b'"
+      "answer": "Call max(d, key=d.get), which returns 'b'.\n\ncode:\nd = {'a': 3, 'b': 7, 'c': 2}\nprint(max(d, key=d.get))  # 'b'\n\nreal example:\nFinding the item with the largest stock quantity."
     },
     {
       "id": 332,
       "question": "How do you get the value for the smallest key in a dict?",
-      "answer": "d[min(d)]"
+      "answer": "Use d[min(d)].\n\ncode:\nd = {'b': 2, 'a': 1}\nprint(d[min(d)])  # 1\n\nreal example:\nReading the record associated with the earliest key."
     },
     {
       "id": 333,
       "question": "What does d = {'b': 2, 'a': 1}; print(d[min(d)]) output?",
-      "answer": "1 (min key is 'a', its value is 1)"
+      "answer": "It outputs 1, since the min key is 'a' and its value is 1.\n\ncode:\nd = {'b': 2, 'a': 1}\nprint(d[min(d)])  # 1\n\nreal example:\nReading the value stored under the alphabetically first key."
     },
     {
       "id": 334,
       "question": "How do you reverse the order of a dict's items?",
-      "answer": "dict(reversed(d.items()))"
+      "answer": "Use dict(reversed(d.items())).\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(dict(reversed(d.items())))  # {'b': 2, 'a': 1}\n\nreal example:\nFlipping a history so the latest entry comes first."
     },
     {
       "id": 335,
       "question": "What does dict(reversed({'a': 1, 'b': 2}.items())) return?",
-      "answer": "{'b': 2, 'a': 1}"
+      "answer": "It returns {'b': 2, 'a': 1}.\n\ncode:\nprint(dict(reversed({'a': 1, 'b': 2}.items())))  # {'b': 2, 'a': 1}\n\nreal example:\nReversing the display order of log entries."
     },
     {
       "id": 336,
       "question": "How do you move a key to the end of a dict?",
-      "answer": "d[k] = d.pop(k) (delete then re-insert)"
+      "answer": "Re-insert it with d[k] = d.pop(k), which deletes then adds it last.\n\ncode:\nd = {'a': 1, 'b': 2}\nd['a'] = d.pop('a')\nprint(list(d))  # ['b', 'a']\n\nreal example:\nMarking a recently used setting as newest."
     },
     {
       "id": 337,
       "question": "What does d = {'a': 1, 'b': 2}; d['a'] = d.pop('a'); print(list(d)) output?",
-      "answer": "['b', 'a'] (key a moved to the end)"
+      "answer": "It outputs ['b', 'a'], with key a moved to the end.\n\ncode:\nd = {'a': 1, 'b': 2}\nd['a'] = d.pop('a')\nprint(list(d))  # ['b', 'a']\n\nreal example:\n'Recently used' ordering in menus and panels."
     },
     {
       "id": 338,
       "question": "How do you insert a new key at the beginning of a dict?",
-      "answer": "Rebuild: {'new': v, **d} (new dict with the key first)"
+      "answer": "Rebuild with {'new': v, **d} so the new key comes first.\n\ncode:\nd = {'a': 1}\nd = {'new': 0, **d}\nprint(d)  # {'new': 0, 'a': 1}\n\nreal example:\nPinning a highlighted item to the top of a list."
     },
     {
       "id": 339,
       "question": "What does {'z': 99, **{'a': 1}} produce in terms of order?",
-      "answer": "{'z': 99, 'a': 1} (z appears first)"
+      "answer": "It produces {'z': 99, 'a': 1}, with 'z' appearing first.\n\ncode:\nprint({'z': 99, **{'a': 1}})  # {'z': 99, 'a': 1}\n\nreal example:\nOrdering keys deliberately when the display order matters."
     },
     {
       "id": 340,
       "question": "What does d = {'a': 1}; print(list(d)) then print(list(d.keys())) give the same result?",
-      "answer": "Yes, both produce ['a']"
+      "answer": "Yes, both produce ['a'].\n\ncode:\nd = {'a': 1}\nprint(list(d))         # ['a']\nprint(list(d.keys()))  # ['a']\n\nreal example:\nEither spelling gives you the list of keys."
     },
     {
       "id": 341,
       "question": "What does d = {'a': 1}; print(d.pop('a') if 'a' in d else None) output?",
-      "answer": "1"
+      "answer": "It outputs 1.\n\ncode:\nd = {'a': 1}\nprint(d.pop('a') if 'a' in d else None)  # 1\n\nreal example:\nSafely removing an entry only when it exists."
     },
     {
       "id": 342,
       "question": "What does d = {'a': 1}; removed = d.pop('a'); print(d) produce?",
-      "answer": "{}"
+      "answer": "It produces {}, since the only key was removed.\n\ncode:\nd = {'a': 1}\nremoved = d.pop('a')\nprint(d)  # {}\n\nreal example:\nEmptying a user's cart after checkout."
     },
     {
       "id": 343,
       "question": "What does d = {'a': 1}; del d['a']; print(len(d)) output?",
-      "answer": "0"
+      "answer": "It outputs 0.\n\ncode:\nd = {'a': 1}\ndel d['a']\nprint(len(d))  # 0\n\nreal example:\nConfirming a list has no remaining items."
     },
     {
       "id": 344,
       "question": "How do you reset every value to 0 while keeping keys?",
-      "answer": "{k: 0 for k in d}"
+      "answer": "Use a comprehension: {k: 0 for k in d}.\n\ncode:\nd = {'a': 5, 'b': 9}\nprint({k: 0 for k in d})  # {'a': 0, 'b': 0}\n\nreal example:\nResetting all game scores back to zero."
     },
     {
       "id": 345,
       "question": "What does {k: 0 for k in {'a': 5, 'b': 9}} return?",
-      "answer": "{'a': 0, 'b': 0}"
+      "answer": "It returns {'a': 0, 'b': 0}.\n\ncode:\nprint({k: 0 for k in {'a': 5, 'b': 9}})  # {'a': 0, 'b': 0}\n\nreal example:\nReinitializing counters while keeping the same keys."
     },
     {
       "id": 346,
       "question": "What does {k: d.get(k, 0) for k in keys} do for a key missing in d?",
-      "answer": "Maps that key to 0"
+      "answer": "It maps that missing key to 0.\n\ncode:\nd = {'a': 1}\nkeys = ['a', 'b']\nprint({k: d.get(k, 0) for k in keys})  # {'a': 1, 'b': 0}\n\nreal example:\nMissing data defaults to zero in a summary report."
     },
     {
       "id": 347,
       "question": "What does {k: d[k] for k in ['b', 'a']} when d = {'a': 1, 'b': 2} return?",
-      "answer": "{'b': 2, 'a': 1} (reorders based on the list)"
+      "answer": "It returns {'b': 2, 'a': 1}, reordering the dict to match the list.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint({k: d[k] for k in ['b', 'a']})  # {'b': 2, 'a': 1}\n\nreal example:\nReordering fields to match a chosen display order."
     },
     {
       "id": 348,
       "question": "What does len(d) equal after 'a' in d twice?",
-      "answer": "Same as before; membership checks do not modify the dict"
+      "answer": "It stays the same, because membership checks never modify the dict.\n\ncode:\nd = {'a': 1}\n_ = 'a' in d\n_ = 'a' in d\nprint(len(d))  # 1\n\nreal example:\nRepeated checks are side-effect free and safe."
     },
     {
       "id": 349,
       "question": "Does d.get('missing') insert the key into the dict?",
-      "answer": "No, get never modifies the dictionary"
+      "answer": "No. get never modifies the dictionary.\n\ncode:\nd = {'a': 1}\nprint(d.get('missing'))  # None\nprint(d)  # {'a': 1}\n\nreal example:\nProbing for an option won't accidentally add it."
     },
     {
       "id": 350,
       "question": "Does 'k' in d modify the dict?",
-      "answer": "No"
+      "answer": "No. Membership tests only read the dict.\n\ncode:\nd = {'a': 1}\n_ = 'k' in d\nprint(d)  # {'a': 1}\n\nreal example:\nChecking for a value never changes the data store."
     },
     {
       "id": 351,
       "question": "Does d.setdefault('k', 1) on a missing key return and store 1?",
-      "answer": "Yes, it returns 1 and stores {'k': 1}"
+      "answer": "Yes. It returns 1 and stores the pair {'k': 1}.\n\ncode:\nd = {}\nprint(d.setdefault('k', 1))  # 1\nprint(d)  # {'k': 1}\n\nreal example:\nInitializing a counter on its first use."
     },
     {
       "id": 352,
       "question": "What does d = {'name': 'Bob'}; d.setdefault('name', 'Alice') return?",
-      "answer": "'Bob'"
+      "answer": "It returns 'Bob', because the existing value wins over the default.\n\ncode:\nd = {'name': 'Bob'}\nprint(d.setdefault('name', 'Alice'))  # 'Bob'\n\nreal example:\nDon't overwrite a real name with a placeholder."
     },
     {
       "id": 353,
       "question": "What does d = {'name': 'Bob'}; d.setdefault('age', 30); print(d) produce?",
-      "answer": "{'name': 'Bob', 'age': 30}"
+      "answer": "It produces {'name': 'Bob', 'age': 30}.\n\ncode:\nd = {'name': 'Bob'}\nd.setdefault('age', 30)\nprint(d)  # {'name': 'Bob', 'age': 30}\n\nreal example:\nFilling in missing profile fields with defaults."
     },
     {
       "id": 354,
       "question": "How do you get all keys whose value is above average?",
-      "answer": "avg = sum(d.values()) / len(d); [k for k, v in d.items() if v > avg]"
+      "answer": "Compute the average, then filter items with a comprehension.\n\ncode:\nd = {'a': 4, 'b': 6, 'c': 5}\navg = sum(d.values()) / len(d)\nprint([k for k, v in d.items() if v > avg])  # ['b']\n\nreal example:\nFinding students who scored above the class average."
     },
     {
       "id": 355,
       "question": "What does [k for k, v in {'a': 4, 'b': 6, 'c': 5}.items() if v > 5] return?",
-      "answer": "['b']"
+      "answer": "It returns ['b'].\n\ncode:\nprint([k for k, v in {'a': 4, 'b': 6, 'c': 5}.items() if v > 5])  # ['b']\n\nreal example:\nFinding items stored over a threshold quantity."
     },
     {
       "id": 356,
       "question": "How do you compute the total of nested dict values like {'x': {'a': 1, 'b': 2}}?",
-      "answer": "sum(v for inner in d.values() for v in inner.values())"
+      "answer": "Use a nested generator over the inner value dicts: sum(v for inner in d.values() for v in inner.values()).\n\ncode:\nd = {'x': {'a': 1, 'b': 2}}\nprint(sum(v for inner in d.values() for v in inner.values()))  # 3\n\nreal example:\nAdding up nested scores across all topics."
     },
     {
       "id": 357,
       "question": "What does sum(v for inner in {'x': {'a': 1, 'b': 2}, 'y': {'c': 3}}.values() for v in inner.values()) return?",
-      "answer": "6"
+      "answer": "It returns 6.\n\ncode:\nd = {'x': {'a': 1, 'b': 2}, 'y': {'c': 3}}\nprint(sum(v for inner in d.values() for v in inner.values()))  # 6\n\nreal example:\nTotaling every value in a nested report."
     },
     {
       "id": 358,
       "question": "What does {k: sum(v.values()) for k, v in {'x': {'a': 1}, 'y': {'b': 5}}.items()} return?",
-      "answer": "{'x': 1, 'y': 5}"
+      "answer": "It returns {'x': 1, 'y': 5}.\n\ncode:\nprint({k: sum(v.values()) for k, v in {'x': {'a': 1}, 'y': {'b': 5}}.items()})  # {'x': 1, 'y': 5}\n\nreal example:\nComputing subtotals for each category of nested data."
     },
     {
       "id": 359,
       "question": "How do you check if two dicts have the same set of keys?",
-      "answer": "set(d1) == set(d2) or d1.keys() == d2.keys()"
+      "answer": "Compare the key sets: set(d1) == set(d2), or use d1.keys() == d2.keys().\n\ncode:\nd1 = {'a': 1, 'b': 2}\nd2 = {'b': 3, 'a': 4}\nprint(set(d1) == set(d2))  # True\n\nreal example:\nVerifying two records have the same fields."
     },
     {
       "id": 360,
       "question": "What does {'a': 1, 'b': 2}.keys() == {'b': 2, 'a': 3}.keys() return?",
-      "answer": "True (same key set regardless of values)"
+      "answer": "It returns True, because the key sets match regardless of values.\n\ncode:\nprint({'a': 1, 'b': 2}.keys() == {'b': 2, 'a': 3}.keys())  # True\n\nreal example:\nTwo datasets share the same columns even with different data."
     },
     {
       "id": 361,
       "question": "How do you find keys present in dict1 but not dict2?",
-      "answer": "d1.keys() - d2.keys()"
+      "answer": "Subtract the key sets: d1.keys() - d2.keys().\n\ncode:\nd1 = {'a': 1, 'b': 2}\nd2 = {'b': 3}\nprint(d1.keys() - d2.keys())  # {'a'}\n\nreal example:\nFields present in the first record but missing from the second."
     },
     {
       "id": 362,
       "question": "How do you find common keys between two dicts?",
-      "answer": "d1.keys() & d2.keys()"
+      "answer": "Intersect the key sets: d1.keys() & d2.keys().\n\ncode:\nd1 = {'a': 1, 'b': 2}\nd2 = {'b': 3, 'c': 4}\nprint(d1.keys() & d2.keys())  # {'b'}\n\nreal example:\nColumns shared by two datasets."
     },
     {
       "id": 363,
       "question": "What does d1 = {'a': 1, 'b': 2}; d2 = {'b': 3, 'c': 4}; print(d1.keys() & d2.keys()) output?",
-      "answer": "{'b'}"
+      "answer": "It outputs {'b'}.\n\ncode:\nd1 = {'a': 1, 'b': 2}\nd2 = {'b': 3, 'c': 4}\nprint(d1.keys() & d2.keys())  # {'b'}\n\nreal example:\nFinding overlapping fields between two configs."
     },
     {
       "id": 364,
       "question": "What does d1 = {'a': 1}; d2 = {'a': 1, 'b': 2}; print(d1.items() <= d2.items()) output?",
-      "answer": "True"
+      "answer": "It outputs True, since every pair in d1 is also in d2.\n\ncode:\nd1 = {'a': 1}\nd2 = {'a': 1, 'b': 2}\nprint(d1.items() <= d2.items())  # True\n\nreal example:\nChecking that a required sub-record appears inside a larger one."
     },
     {
       "id": 365,
       "question": "How do you get a merged dict with d2 values overriding d1?",
-      "answer": "{**d1, **d2} or d1 | d2"
+      "answer": "Use {**d1, **d2} or the | operator, where the right side wins.\n\ncode:\nd1 = {'a': 1, 'b': 1}\nd2 = {'b': 2}\nprint({**d1, **d2})  # {'a': 1, 'b': 2}\n\nreal example:\nUser overrides take priority over default config."
     },
     {
       "id": 366,
       "question": "How do you deep-merge two nested dicts?",
-      "answer": "Write a recursive function that merges dicts level by level instead of overwriting"
+      "answer": "Write a small recursive function that merges dicts level by level instead of just overwriting.\n\ncode:\ndef deep_merge(a, b):\n    out = dict(a)\n    for k, v in b.items():\n        if k in out and isinstance(out[k], dict) and isinstance(v, dict):\n            out[k] = deep_merge(out[k], v)\n        else:\n            out[k] = v\n    return out\n\nprint(deep_merge({'a': {'x': 1}}, {'a': {'y': 2}}))  # {'a': {'x': 1, 'y': 2}}\n\nreal example:\nMerging layered configs without losing nested defaults."
     },
     {
       "id": 367,
       "question": "In a shallow merge {**a, **b}, what happens to nested dict values?",
-      "answer": "They are replaced wholesale, not merged recursively"
+      "answer": "They are replaced wholesale, not merged recursively.\n\ncode:\na = {'a': {'x': 1}}\nb = {'a': {'y': 2}}\nprint({**a, **b})  # {'a': {'y': 2}}\n\nreal example:\nThe inner 'a' object is swapped out, not combined."
     },
     {
       "id": 368,
       "question": "What does {**{'a': {'x': 1}}, **{'a': {'y': 2}}} return?",
-      "answer": "{'a': {'y': 2}} (nested 'a' is replaced, not merged)"
+      "answer": "It returns {'a': {'y': 2}}, because the nested 'a' is replaced, not merged.\n\ncode:\nprint({**{'a': {'x': 1}}, **{'a': {'y': 2}}})  # {'a': {'y': 2}}\n\nreal example:\nShallow merging drops the older nested data."
     },
     {
       "id": 369,
       "question": "How would you update 'a' inside nested dict d = {'a': {'x': 1}}?",
-      "answer": "d['a']['x'] = 2 or d['a'].update({'x': 2})"
+      "answer": "Reach into the nested dict: d['a']['x'] = 2 or d['a'].update({'x': 2}).\n\ncode:\nd = {'a': {'x': 1}}\nd['a']['x'] = 2\nprint(d)  # {'a': {'x': 2}}\n\nreal example:\nEditing a field inside a nested JSON structure."
     },
     {
       "id": 370,
       "question": "What does d = {'a': {'x': 1}}; d['a'].update({'y': 2}); print(d) produce?",
-      "answer": "{'a': {'x': 1, 'y': 2}}"
+      "answer": "It produces {'a': {'x': 1, 'y': 2}}.\n\ncode:\nd = {'a': {'x': 1}}\nd['a'].update({'y': 2})\nprint(d)  # {'a': {'x': 1, 'y': 2}}\n\nreal example:\nAdding a new field to a nested object."
     },
     {
       "id": 371,
       "question": "How do you count characters in a string case-insensitively with Counter?",
-      "answer": "Counter(s.lower())"
+      "answer": "Lowercase the string first: Counter(s.lower()).\n\ncode:\nfrom collections import Counter\nprint(Counter('AaA'.lower()))  # Counter({'a': 3})\n\nreal example:\nLetter frequency that ignores uppercase and lowercase."
     },
     {
       "id": 372,
       "question": "What does Counter('AaA'.lower()) return?",
-      "answer": "Counter({'a': 3})"
+      "answer": "It returns Counter({'a': 3}).\n\ncode:\nfrom collections import Counter\nprint(Counter('AaA'.lower()))  # Counter({'a': 3})\n\nreal example:\nAll three letters collapse into one key 'a'."
     },
     {
       "id": 373,
       "question": "How do you find the most common word in a list?",
-      "answer": "Counter(words).most_common(1)[0][0]"
+      "answer": "Use Counter(words).most_common(1)[0][0].\n\ncode:\nfrom collections import Counter\nwords = ['cat', 'dog', 'cat']\nprint(Counter(words).most_common(1)[0][0])  # 'cat'\n\nreal example:\nFinding the most used hashtag in a batch of posts."
     },
     {
       "id": 374,
       "question": "How do you get the count of the most frequent word?",
-      "answer": "Counter(words).most_common(1)[0][1]"
+      "answer": "Use Counter(words).most_common(1)[0][1].\n\ncode:\nfrom collections import Counter\nwords = ['cat', 'dog', 'cat']\nprint(Counter(words).most_common(1)[0][1])  # 2\n\nreal example:\nReporting how many times the top term appears."
     },
     {
       "id": 375,
       "question": "What does Counter(['a', 'b', 'a']).most_common(2) return?",
-      "answer": "[('a', 2), ('b', 1)]"
+      "answer": "It returns [('a', 2), ('b', 1)].\n\ncode:\nfrom collections import Counter\nprint(Counter(['a', 'b', 'a']).most_common(2))  # [('a', 2), ('b', 1)]\n\nreal example:\nThe two most frequent tags in a document."
     },
     {
       "id": 376,
       "question": "What does Counter('abab').most_common(3) return?",
-      "answer": "[('a', 2), ('b', 2)] (only two distinct chars exist)"
+      "answer": "It returns [('a', 2), ('b', 2)], because only two distinct characters exist.\n\ncode:\nfrom collections import Counter\nprint(Counter('abab').most_common(3))  # [('a', 2), ('b', 2)]\n\nreal example:\nAsking for more entries than exist simply returns what's there."
     },
     {
       "id": 377,
       "question": "How do you convert a Counter back to a plain dict?",
-      "answer": "dict(counter)"
+      "answer": "Pass the Counter to dict(): dict(counter).\n\ncode:\nfrom collections import Counter\nprint(dict(Counter('aab')))  # {'a': 2, 'b': 1}\n\nreal example:\nFeeding counts into tools that expect an ordinary dict."
     },
     {
       "id": 378,
       "question": "What does dict(Counter('aab')) return?",
-      "answer": "{'a': 2, 'b': 1}"
+      "answer": "It returns {'a': 2, 'b': 1}.\n\ncode:\nfrom collections import Counter\nprint(dict(Counter('aab')))  # {'a': 2, 'b': 1}\n\nreal example:\nNormalizing counts into a plain dictionary format."
     },
     {
       "id": 379,
       "question": "Can Counter values be manually set like counter['a'] = 10?",
-      "answer": "Yes, Counter supports item assignment"
+      "answer": "Yes. Counter supports item assignment.\n\ncode:\nfrom collections import Counter\nc = Counter('a')\nc['a'] = 10\nprint(c)  # Counter({'a': 10})\n\nreal example:\nManually correcting a tally that a sensor got wrong."
     },
     {
       "id": 380,
       "question": "What does c = Counter('a'); c['a'] = 5; sum(c.values()) return?",
-      "answer": "5"
+      "answer": "It returns 5.\n\ncode:\nfrom collections import Counter\nc = Counter('a')\nc['a'] = 5\nprint(sum(c.values()))  # 5\n\nreal example:\nThe total count reflects manual adjustments."
     },
     {
       "id": 381,
       "question": "How do you find the second most common character?",
-      "answer": "Counter(s).most_common(2)[1][0]"
+      "answer": "Use Counter(s).most_common(2)[1][0].\n\ncode:\nfrom collections import Counter\ns = 'abbccc'\nprint(Counter(s).most_common(2)[1][0])  # 'b'\n\nreal example:\nFinding the runner-up word in a popularity poll."
     },
     {
       "id": 382,
       "question": "What does sorted(Counter('banana').items()) return?",
-      "answer": "[('a', 3), ('b', 1), ('n', 2)] (sorted alphabetically)"
+      "answer": "It returns [('a', 3), ('b', 1), ('n', 2)], sorted alphabetically.\n\ncode:\nfrom collections import Counter\nprint(sorted(Counter('banana').items()))  # [('a', 3), ('b', 1), ('n', 2)]\n\nreal example:\nProducing a frequency report in alphabetical order."
     },
     {
       "id": 383,
       "question": "How do you check all values in a dict are unique (for dictionary inversion safety)?",
-      "answer": "len(d) == len(set(d.values()))"
+      "answer": "Compare counts: len(d) == len(set(d.values())).\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(len(d) == len(set(d.values())))  # True\n\nreal example:\nCareful when inverting: duplicate values would overwrite keys."
     },
     {
       "id": 384,
       "question": "What does len({'a': 1, 'b': 1}.values()) == len(set({'a': 1, 'b': 1}.values())) return?",
-      "answer": "False (values not unique)"
+      "answer": "It returns False, because the values are not unique.\n\ncode:\nprint(len({'a': 1, 'b': 1}.values()) == len(set({'a': 1, 'b': 1}.values())))  # False\n\nreal example:\nRepeated values warn you before you try to invert."
     },
     {
       "id": 385,
       "question": "What does set({'a': 1, 'b': 1}.values()) return?",
-      "answer": "{1}"
+      "answer": "It returns {1}.\n\ncode:\nprint(set({'a': 1, 'b': 1}.values()))  # {1}\n\nreal example:\nListing the unique values that appear in a stats dict."
     },
     {
       "id": 386,
       "question": "How do you make a dict where keys are words and values are their first letters?",
-      "answer": "{w: w[0] for w in words}"
+      "answer": "Use a comprehension: {w: w[0] for w in words}.\n\ncode:\nwords = ['apple', 'banana']\nprint({w: w[0] for w in words})  # {'apple': 'a', 'banana': 'b'}\n\nreal example:\nMapping names to their initials for an index."
     },
     {
       "id": 387,
       "question": "What does {w: w[0] for w in ['apple', 'banana']} return?",
-      "answer": "{'apple': 'a', 'banana': 'b'}"
+      "answer": "It returns {'apple': 'a', 'banana': 'b'}.\n\ncode:\nprint({w: w[0] for w in ['apple', 'banana']})  # {'apple': 'a', 'banana': 'b'}\n\nreal example:\nBuilding a quick initial-letter index."
     },
     {
       "id": 388,
       "question": "What does {w: len(w.split()) for w in ['a b', 'c']} return?",
-      "answer": "{'a b': 2, 'c': 1}"
+      "answer": "It returns {'a b': 2, 'c': 1}.\n\ncode:\nprint({w: len(w.split()) for w in ['a b', 'c']})  # {'a b': 2, 'c': 1}\n\nreal example:\nCounting the words inside each phrase."
     },
     {
       "id": 389,
       "question": "How do you count words in a sentence to a dict?",
-      "answer": "for w in sentence.split(): freq[w] = freq.get(w, 0) + 1"
+      "answer": "Split the sentence and add one per word with a .get-based loop.\n\ncode:\nsentence = 'a cat and a dog'\nfreq = {}\nfor w in sentence.split():\n    freq[w] = freq.get(w, 0) + 1\nprint(freq)  # {'a': 2, 'cat': 1, 'and': 1, 'dog': 1}\n\nreal example:\nBuilding a word-frequency report from an article."
     },
     {
       "id": 390,
       "question": "What does freq = {}; for w in 'a cat and a dog'.split(): freq[w] = freq.get(w, 0) + 1; print(freq) produce?",
-      "answer": "{'a': 2, 'cat': 1, 'and': 1, 'dog': 1}"
+      "answer": "It produces {'a': 2, 'cat': 1, 'and': 1, 'dog': 1}.\n\ncode:\nfreq = {}\nfor w in 'a cat and a dog'.split():\n    freq[w] = freq.get(w, 0) + 1\nprint(freq)  # {'a': 2, 'cat': 1, 'and': 1, 'dog': 1}\n\nreal example:\nComputing the most-used words in a sentence."
     },
     {
       "id": 391,
       "question": "What does {w: 'a cat and a dog'.count(w) for w in set('a cat and a dog'.split())} return?",
-      "answer": "Frequencies: {'a': 2, 'cat': 1, 'and': 1, 'dog': 1}"
+      "answer": "It returns the frequencies: {'a': 2, 'cat': 1, 'and': 1, 'dog': 1}.\n\ncode:\ntext = 'a cat and a dog'\nwords = set(text.split())\nprint({w: text.count(w) for w in words})\n\nreal example:\nA comprehension-based alternative to a counting loop."
     },
     {
       "id": 392,
       "question": "What does dict.items() provide for building a new dict with f-strings values?",
-      "answer": "{k: f'val:{v}' for k, v in d.items()}"
+      "answer": "It provides the (key, value) pairs needed to format values, e.g. {k: f'val:{v}' for k, v in d.items()}.\n\ncode:\nd = {'a': 1}\nprint({k: f'val:{v}' for k, v in d.items()})  # {'a': 'val:1'}\n\nreal example:\nPrefixing formatted values into a brand new dict."
     },
     {
       "id": 393,
       "question": "What does {k: f'id_{v}' for k, v in {'a': 1}.items()} return?",
-      "answer": "{'a': 'id_1'}"
+      "answer": "It returns {'a': 'id_1'}.\n\ncode:\nprint({k: f'id_{v}' for k, v in {'a': 1}.items()})  # {'a': 'id_1'}\n\nreal example:\nGenerating tagged ids for each entry in a dict."
     },
     {
       "id": 394,
       "question": "How do you find the key of the smallest value in a dict?",
-      "answer": "min(d, key=d.get)"
+      "answer": "Use min(d, key=d.get).\n\ncode:\nd = {'a': 3, 'b': 1}\nprint(min(d, key=d.get))  # 'b'\n\nreal example:\nFinding the least expensive product's id."
     },
     {
       "id": 395,
       "question": "What does min({'a': 3, 'b': 1}, key={'a': 3, 'b': 1}.get) return?",
-      "answer": "'b'"
+      "answer": "It returns 'b'.\n\ncode:\nd = {'a': 3, 'b': 1}\nprint(min(d, key=d.get))  # 'b'\n\nreal example:\nFinding the lowest-scoring player's name."
     },
     {
       "id": 396,
       "question": "What does d = {'a': 3, 'b': 1}; print(sorted(d, key=d.get)[0]) output?",
-      "answer": "'b'"
+      "answer": "It outputs 'b', the first key when sorted by value.\n\ncode:\nd = {'a': 3, 'b': 1}\nprint(sorted(d, key=d.get)[0])  # 'b'\n\nreal example:\nPicking the smallest-value entry from an ordered list."
     },
     {
       "id": 397,
       "question": "How do you get the 3 lowest-value keys from a dict?",
-      "answer": "[k for k, v in sorted(d.items(), key=lambda x: x[1])[:3]]"
+      "answer": "Sort items by value and slice the first three keys out.\n\ncode:\nd = {'a': 3, 'b': 1, 'c': 2, 'd': 0}\nlow = [k for k, v in sorted(d.items(), key=lambda x: x[1])[:3]]\nprint(low)  # ['d', 'b', 'c']\n\nreal example:\nFinding the three worst-performing students."
     },
     {
       "id": 398,
       "question": "What does print(dict(c for c in [('a', 1), ('b', 2)])) output?",
-      "answer": "{'a': 1, 'b': 2}"
+      "answer": "It outputs {'a': 1, 'b': 2}.\n\ncode:\nprint(dict(c for c in [('a', 1), ('b', 2)]))  # {'a': 1, 'b': 2}\n\nreal example:\nBuilding a dict from a generator of pairs."
     },
     {
       "id": 399,
       "question": "What does dict((k, v) for k, v in [('a', 1)]).get('a') return?",
-      "answer": "1"
+      "answer": "It returns 1.\n\ncode:\nprint(dict((k, v) for k, v in [('a', 1)]).get('a'))  # 1\n\nreal example:\nWrapping a small table as a quick lookup."
     },
     {
       "id": 400,
       "question": "What does {k: [] for k in 'ab'} then d['a'].append(1) produce for d['b']?",
-      "answer": "[] (each key has its own list)"
+      "answer": "It leaves d['b'] as [], because each key has its own list.\n\ncode:\nd = {k: [] for k in 'ab'}\nd['a'].append(1)\nprint(d['b'])  # []\n\nreal example:\nIndependent lists prevent data leaking between keys."
     },
     {
       "id": 401,
       "question": "What does d = {k: [] for k in 'ab'}; d['a'].append(1); print(d) produce?",
-      "answer": "{'a': [1], 'b': []}"
+      "answer": "It produces {'a': [1], 'b': []}.\n\ncode:\nd = {k: [] for k in 'ab'}\nd['a'].append(1)\nprint(d)  # {'a': [1], 'b': []}\n\nreal example:\nEach group starts empty and collects only its own data."
     },
     {
       "id": 402,
       "question": "What does dict.fromkeys('ab') produce for values?",
-      "answer": "{'a': None, 'b': None}"
+      "answer": "It produces {'a': None, 'b': None}.\n\ncode:\nprint(dict.fromkeys('ab'))  # {'a': None, 'b': None}\n\nreal example:\nPlaceholder values that get filled in later."
     },
     {
       "id": 403,
       "question": "What does d = dict.fromkeys('ab', 3); print(d['a'] + d['b']) output?",
-      "answer": "6"
+      "answer": "It outputs 6.\n\ncode:\nd = dict.fromkeys('ab', 3)\nprint(d['a'] + d['b'])  # 6\n\nreal example:\nShared numeric defaults you can add together."
     },
     {
       "id": 404,
       "question": "What does d = dict.fromkeys('ab', []); d['a'].append(1); print(d['b']) output?",
-      "answer": "[1] (same shared list)"
+      "answer": "It outputs [1], because both keys share the same list.\n\ncode:\nd = dict.fromkeys('ab', [])\nd['a'].append(1)\nprint(d['b'])  # [1]\n\nreal example:\nThe fromkeys shared-list gotcha affects every key at once."
     },
     {
       "id": 405,
       "question": "How do you check if a dict d is empty?",
-      "answer": "if not d: ... or len(d) == 0"
+      "answer": "Test its truthiness with if not d, or compare len(d) == 0.\n\ncode:\nd = {}\nif not d:\n    print('empty')\nprint(len(d) == 0)  # True\n\nreal example:\nWarning the user their cart is empty."
     },
     {
       "id": 406,
       "question": "What does not {'a': 1} return?",
-      "answer": "False"
+      "answer": "It returns False, because a non-empty dict is truthy.\n\ncode:\nprint(not {'a': 1})  # False\n\nreal example:\nA populated config should trigger the 'already loaded' branch."
     },
     {
       "id": 407,
       "question": "What does 0 + {'a': 1} do?",
-      "answer": "TypeError: unsupported operand type(s) for +: 'int' and 'dict' (or dict + int)"
+      "answer": "It raises TypeError: unsupported operand type(s) for +.\n\ncode:\ntry:\n    result = 0 + {'a': 1}\nexcept TypeError as e:\n    print(e)\n\nreal example:\nYou can't mix dicts with numbers in arithmetic."
     },
     {
       "id": 408,
       "question": "Can you add two dicts with +?",
-      "answer": "No, use | or {**a, **b} (or update)"
+      "answer": "No. Use the | operator, {**a, **b}, or update instead.\n\ncode:\na = {'a': 1}\nb = {'b': 2}\nprint(a | b)  # {'a': 1, 'b': 2}\n\nreal example:\nMerge operators exist because + doesn't work for dicts."
     },
     {
       "id": 409,
       "question": "What does {'a': 1} + {'b': 2} raise?",
-      "answer": "TypeError: unsupported operand type(s) for +"
+      "answer": "It raises TypeError: unsupported operand type(s) for +.\n\ncode:\ntry:\n    {'a': 1} + {'b': 2}\nexcept TypeError as e:\n    print(e)\n\nreal example:\nThere is no + meaning defined for dicts."
     },
     {
       "id": 410,
       "question": "What does {'a': 1} * 2 do?",
-      "answer": "Raises TypeError (dicts do not support repetition)"
+      "answer": "It raises TypeError, because dicts do not support repetition.\n\ncode:\ntry:\n    {'a': 1} * 2\nexcept TypeError as e:\n    print(e)\n\nreal example:\nMultiplying a mapping has no useful meaning."
     },
     {
       "id": 411,
       "question": "What does d = {'a': 1, 'b': 2}; d['c'] = 3; print(list(d.items())[1]) output?",
-      "answer": "('b', 2)"
+      "answer": "It outputs ('b', 2).\n\ncode:\nd = {'a': 1, 'b': 2}\nd['c'] = 3\nprint(list(d.items())[1])  # ('b', 2)\n\nreal example:\nIndexing into a list of key-value rows."
     },
     {
       "id": 412,
       "question": "What does d = {'a': 1, 'b': 2}; print(list(d.values())[0]) output?",
-      "answer": "1"
+      "answer": "It outputs 1.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(list(d.values())[0])  # 1\n\nreal example:\nGetting the value inserted first."
     },
     {
       "id": 413,
       "question": "Can you index a dict by position like d[0]?",
-      "answer": "No, dicts are not sequence-indexed; d[0] looks up key 0"
+      "answer": "No. Dicts are not sequence-indexed; d[0] looks up the key 0.\n\ncode:\nd = {0: 'zero', 1: 'one'}\nprint(d[0])  # 'zero' (key 0, not a position)\n\nreal example:\nIn a dict, brackets mean key lookup, never position."
     },
     {
       "id": 414,
       "question": "What does d = {0: 'zero', 1: 'one'}; print(d[1]) output?",
-      "answer": "'one' (integer keys, not positions)"
+      "answer": "It outputs 'one', because 1 is an integer key, not a position.\n\ncode:\nd = {0: 'zero', 1: 'one'}\nprint(d[1])  # 'one'\n\nreal example:\nMapping status codes to readable messages."
     },
     {
       "id": 415,
       "question": "What does d = {0: 'z'}; print(d[-0]) output?",
-      "answer": "'z' (-0 == 0)"
+      "answer": "It outputs 'z', because -0 == 0.\n\ncode:\nd = {0: 'z'}\nprint(d[-0])  # 'z'\n\nreal example:\nNegative zero is the same key as zero."
     },
     {
       "id": 416,
       "question": "What happens with d = {1: 'a', 1.0: 'b', True: 'c'}; print(len(d)) output?",
-      "answer": "1 (1, 1.0 and True all collapse to the same key)"
+      "answer": "It outputs 1, because 1, 1.0, and True all collapse into the same key.\n\ncode:\nd = {1: 'a', 1.0: 'b', True: 'c'}\nprint(len(d))  # 1\n\nreal example:\nMixing bool and int keys can silently merge entries."
     },
     {
       "id": 417,
       "question": "What does {1: 'a', 1.0: 'b', True: 'c'} display as?",
-      "answer": "{1: 'c'}"
+      "answer": "It displays as {1: 'c'}.\n\ncode:\nprint({1: 'a', 1.0: 'b', True: 'c'})  # {1: 'c'}\n\nreal example:\nThe last value wins when several keys merge into one."
     },
     {
       "id": 418,
       "question": "What does hash(1) == hash(1.0) == hash(True) evaluate to?",
-      "answer": "True"
+      "answer": "It evaluates to True.\n\ncode:\nprint(hash(1) == hash(1.0) == hash(True))  # True\n\nreal example:\nAll three act like the same number when dict hashing runs."
     },
     {
       "id": 419,
       "question": "What does d = {'x': 1}; print(hash('x') % 10) do?",
-      "answer": "Computes a bucket-style value; hash output varies per run (hash randomization)"
+      "answer": "It prints a bucket-style number, but the exact value varies per run due to hash randomization.\n\ncode:\nprint(hash('x') % 10)  # changes each process\n\nreal example:\nHashes are for internal speed, not stable math."
     },
     {
       "id": 420,
       "question": "Are str hash values identical across different Python runs?",
-      "answer": "No, string hashes are randomized per process (PYTHONHASHSEED)"
+      "answer": "No. String hashes are randomized per process via PYTHONHASHSEED.\n\ncode:\nprint(hash('a') == hash('a'))  # True inside one run\n\nreal example:\nRandomization defends against hash-flooding attacks."
     },
     {
       "id": 421,
       "question": "What does d = {'a': 1}; print(d == {k: v for k, v in d.items()}) output?",
-      "answer": "True"
+      "answer": "It outputs True.\n\ncode:\nd = {'a': 1}\nprint(d == {k: v for k, v in d.items()})  # True\n\nreal example:\nRebuilding a dict from itself keeps it equal."
     },
     {
       "id": 422,
       "question": "What does d = {'a': 1}; print(len({k: v for k, v in d.items()}) == len(d)) output?",
-      "answer": "True"
+      "answer": "It outputs True.\n\ncode:\nd = {'a': 1}\nprint(len({k: v for k, v in d.items()}) == len(d))  # True\n\nreal example:\nRebuilding preserves the number of entries."
     },
     {
       "id": 423,
       "question": "How do you build the same dict as {'a': 1, 'b': 2} using dict.fromkeys then assignment?",
-      "answer": "d = dict.fromkeys(['a', 'b']); d['a'] = 1; d['b'] = 2"
+      "answer": "Create the keys with fromkeys, then assign each value.\n\ncode:\nd = dict.fromkeys(['a', 'b'])\nd['a'] = 1\nd['b'] = 2\nprint(d)  # {'a': 1, 'b': 2}\n\nreal example:\nStarting from a key skeleton and filling values in."
     },
     {
       "id": 424,
       "question": "What does d = dict.fromkeys(['a', 'b']); d['a'] = 1; print(d) produce?",
-      "answer": "{'a': 1, 'b': None}"
+      "answer": "It produces {'a': 1, 'b': None}.\n\ncode:\nd = dict.fromkeys(['a', 'b'])\nd['a'] = 1\nprint(d)  # {'a': 1, 'b': None}\n\nreal example:\nSome defaults are still waiting to be filled in."
     },
     {
       "id": 425,
       "question": "What does {**{'a': 1}, **{'b': 2}, **{'c': 3}} return?",
-      "answer": "{'a': 1, 'b': 2, 'c': 3}"
+      "answer": "It returns {'a': 1, 'b': 2, 'c': 3}.\n\ncode:\nprint({**{'a': 1}, **{'b': 2}, **{'c': 3}})  # {'a': 1, 'b': 2, 'c': 3}\n\nreal example:\nCombining three small settings blocks into one."
     },
     {
       "id": 426,
       "question": "Which operator merges dicts only from Python 3.9 onward?",
-      "answer": "The | (union) operator and |= for in-place"
+      "answer": "The | (union) operator for a new merged dict, and |= for in-place merging.\n\ncode:\nprint({'a': 1} | {'b': 2})  # {'a': 1, 'b': 2}\n\nreal example:\n3.9+ shorthand for combining config files."
     },
     {
       "id": 427,
       "question": "What does print({'a': 1} | {'a': 2} | {'b': 3}) output?",
-      "answer": "{'a': 2, 'b': 3}"
+      "answer": "It outputs {'a': 2, 'b': 3}.\n\ncode:\nprint({'a': 1} | {'a': 2} | {'b': 3})  # {'a': 2, 'b': 3}\n\nreal example:\nLater merges override earlier values."
     },
     {
       "id": 428,
       "question": "What does d = {'a': 1}; d |= {'b': 2}; print(d['b']) output?",
-      "answer": "2"
+      "answer": "It outputs 2.\n\ncode:\nd = {'a': 1}\nd |= {'b': 2}\nprint(d['b'])  # 2\n\nreal example:\nAdding a setting into the current config in place."
     },
     {
       "id": 429,
       "question": "What does d = {'a': 1}; d |= {}; print(d) produce?",
-      "answer": "{'a': 1} (merging the empty dict changes nothing)"
+      "answer": "It produces {'a': 1}, because merging the empty dict changes nothing.\n\ncode:\nd = {'a': 1}\nd |= {}\nprint(d)  # {'a': 1}\n\nreal example:\nIdempotent merges with empty sources are safe."
     },
     {
       "id": 430,
       "question": "What does {**{}, 'z': 1} return?",
-      "answer": "{'z': 1}"
+      "answer": "It returns {'z': 1}.\n\ncode:\nprint({**{}, 'z': 1})  # {'z': 1}\n\nreal example:\nStarting from nothing and adding keys into the literal."
     },
     {
       "id": 431,
       "question": "What type does d have after d = {'a': 1}; type(d) is dict?",
-      "answer": "True"
+      "answer": "True, because d is exactly a dict, not a subclass.\n\ncode:\nd = {'a': 1}\nprint(type(d) is dict)  # True\n\nreal example:\nChecking the exact type before using dict-specific behavior."
     },
     {
       "id": 432,
       "question": "What does isinstance({'a': 1}, dict) return?",
-      "answer": "True"
+      "answer": "It returns True.\n\ncode:\nprint(isinstance({'a': 1}, dict))  # True\n\nreal example:\nisinstance counts subclasses too, unlike type() is."
     },
     {
       "id": 433,
       "question": "What does isinstance(Counter('a'), dict) return?",
-      "answer": "True (Counter subclasses dict)"
+      "answer": "It returns True, because Counter subclasses dict.\n\ncode:\nfrom collections import Counter\nprint(isinstance(Counter('a'), dict))  # True\n\nreal example:\nCounters work wherever an ordinary dict would."
     },
     {
       "id": 434,
       "question": "What does isinstance(defaultdict(int), dict) return?",
-      "answer": "True"
+      "answer": "It returns True.\n\ncode:\nfrom collections import defaultdict\nprint(isinstance(defaultdict(int), dict))  # True\n\nreal example:\ndefaultdict is also a dict subclass, so checks succeed."
     },
     {
       "id": 435,
       "question": "What does OrderedDict({'a': 1}) do in Python 3.7+?",
-      "answer": "Orders keys in insertion order just like a normal dict"
+      "answer": "It orders keys in insertion order, just like a normal dict.\n\ncode:\nfrom collections import OrderedDict\nod = OrderedDict({'a': 1, 'b': 2})\nprint(od)  # OrderedDict([('a', 1), ('b', 2)])\n\nreal example:\nExplicit ordering that also works on older Python versions."
     },
     {
       "id": 436,
       "question": "What extra method does OrderedDict have related to ordering?",
-      "answer": "move_to_end() to change a key's position"
+      "answer": "It has move_to_end() to change a key's position.\n\ncode:\nfrom collections import OrderedDict\nod = OrderedDict({'a': 1, 'b': 2})\nod.move_to_end('a')\nprint(od)  # OrderedDict([('b', 2), ('a', 1)])\n\nreal example:\nMarking an item as recently used."
     },
     {
       "id": 437,
       "question": "What does type(OrderedDict()) return?",
-      "answer": "<class 'collections.OrderedDict'>"
+      "answer": "It returns <class 'collections.OrderedDict'>.\n\ncode:\nfrom collections import OrderedDict\nprint(type(OrderedDict()))\n\nreal example:\nDistinguishing an OrderedDict from a plain dict."
     },
     {
       "id": 438,
       "question": "What does OrderedDict({'b': 1, 'a': 2}).move_to_end('b') do?",
-      "answer": "Moves 'b' to the end so order becomes 'a', 'b'"
+      "answer": "It moves 'b' to the end, so the order becomes 'a', 'b'.\n\ncode:\nfrom collections import OrderedDict\nod = OrderedDict({'b': 1, 'a': 2})\nod.move_to_end('b')\nprint(od)  # OrderedDict([('a', 2), ('b', 1)])\n\nreal example:\nRearranging menu items to put a chosen one last."
     },
     {
       "id": 439,
       "question": "Does a normal dict remember key insertion order?",
-      "answer": "Yes, since Python 3.7 insertion order is guaranteed"
+      "answer": "Yes. Since Python 3.7, insertion order is guaranteed.\n\ncode:\nd = {'a': 1}\nd['b'] = 2\nprint(list(d))  # ['a', 'b']\n\nreal example:\nYou can rely on normal dicts keeping your ordering."
     },
     {
       "id": 440,
       "question": "What does d = {'a': 1}; d['b'] = 2; d.pop('a'); d['c'] = 3; print(list(d)) output?",
-      "answer": "['b', 'c'] (pop of 'a' removes it; order reflects remaining + new)"
+      "answer": "It outputs ['b', 'c']. Popping 'a' removes it, and the order reflects the remaining and new keys.\n\ncode:\nd = {'a': 1}\nd['b'] = 2\nd.pop('a')\nd['c'] = 3\nprint(list(d))  # ['b', 'c']\n\nreal example:\nItem order tracks the full history of adds and deletes."
     },
     {
       "id": 441,
       "question": "What does d = {'a': 1, 'b': 2}; d.pop('b'); d['d'] = 4; print(list(d)) output?",
-      "answer": "['a', 'd']"
+      "answer": "It outputs ['a', 'd'].\n\ncode:\nd = {'a': 1, 'b': 2}\nd.pop('b')\nd['d'] = 4\nprint(list(d))  # ['a', 'd']\n\nreal example:\nDeleting then adding shifts which key ends up last."
     },
     {
       "id": 442,
       "question": "What does d = {'a': 1}; d['b'] = 2; for k in list(d): d[k] += 1; print(d) produce?",
-      "answer": "{'a': 2, 'b': 3}"
+      "answer": "It produces {'a': 2, 'b': 3}.\n\ncode:\nd = {'a': 1}\nd['b'] = 2\nfor k in list(d):\n    d[k] += 1\nprint(d)  # {'a': 2, 'b': 3}\n\nreal example:\nBumping every stored counter by one."
     },
     {
       "id": 443,
       "question": "What does d = {'a': 1}; d.update(d.get('a', 0) + 1) do?",
-      "answer": "TypeError (update expects a mapping or iterable of pairs, not an int)"
+      "answer": "It raises TypeError, because update expects a mapping or a sequence of pairs, not a raw int.\n\ncode:\nd = {'a': 1}\ntry:\n    d.update(d.get('a', 0) + 1)\nexcept TypeError as e:\n    print(e)\n\nreal example:\nYou must pass update something it can convert to key-value pairs."
     },
     {
       "id": 444,
       "question": "What does d = {'a': 1}; d.update({'a': d['a'] + 1}); print(d) produce?",
-      "answer": "{'a': 2}"
+      "answer": "It produces {'a': 2}.\n\ncode:\nd = {'a': 1}\nd.update({'a': d['a'] + 1})\nprint(d)  # {'a': 2}\n\nreal example:\nIncrementing a value by merging an updated mapping in."
     },
     {
       "id": 445,
       "question": "What does d = {}; d.update(a=1, b=2); print(d['a'] + d['b']) output?",
-      "answer": "3"
+      "answer": "It outputs 3.\n\ncode:\nd = {}\nd.update(a=1, b=2)\nprint(d['a'] + d['b'])  # 3\n\nreal example:\nBuilding sums from several keyword updates."
     },
     {
       "id": 446,
       "question": "What does d = {'a': 1}; print(d.setdefault('a', 10) + d.setdefault('b', 10)) output?",
-      "answer": "11 (1 for 'a' existing, 10 for new 'b')"
+      "answer": "It outputs 11: 1 for the existing 'a', plus 10 for the newly created 'b'.\n\ncode:\nd = {'a': 1}\nprint(d.setdefault('a', 10) + d.setdefault('b', 10))  # 11\n\nreal example:\nMixing existing and default values in one total."
     },
     {
       "id": 447,
       "question": "What does d = {'a': 1, 'b': 2}; print(d.get('c', d.pop('a'))) output?",
-      "answer": "1, and it actually removes 'a' because the default is evaluated"
+      "answer": "It outputs 1, and it actually removes 'a' because the default is evaluated eagerly.\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(d.get('c', d.pop('a')))  # 1\nprint(d)  # {'b': 2}\n\nreal example:\nDefault expressions with side effects can surprise you."
     },
     {
       "id": 448,
       "question": "What does d = {'a': 1, 'b': 2}; x = d.get('c', d.pop('a')); print(d) produce?",
-      "answer": "{'b': 2} (get's default eagerly popped 'a')"
+      "answer": "It produces {'b': 2}, because get's default eagerly popped 'a'.\n\ncode:\nd = {'a': 1, 'b': 2}\nx = d.get('c', d.pop('a'))\nprint(d)  # {'b': 2}\n\nreal example:\nEager defaults can mutate the dict unexpectedly."
     },
     {
       "id": 449,
       "question": "How do you avoid the eager-default side effect in d.get?",
-      "answer": "Use if 'k' in d: d['k'] else fallback, or try/except KeyError"
+      "answer": "Check membership first with an if/else, or fall back inside a try/except.\n\ncode:\nd = {'a': 1, 'b': 2}\nif 'c' in d:\n    x = d['c']\nelse:\n    x = d.pop('a')\nprint(x, d)  # 1 {'b': 2}\n\nreal example:\nOnly run the fallback when the key truly is missing."
     },
     {
       "id": 450,
       "question": "What does d = {'a': 1}; print(d.pop('b', d.setdefault('c', 5))) output?",
-      "answer": "5, and it sets d['c'] = 5 as a side effect"
+      "answer": "It outputs 5, and it sets d['c'] = 5 as a side effect.\n\ncode:\nd = {'a': 1}\nprint(d.pop('b', d.setdefault('c', 5)))  # 5\nprint(d)  # {'a': 1, 'c': 5}\n\nreal example:\nFallback expressions that also write to the dict."
     },
     {
       "id": 451,
       "question": "What does d = {'a': 1}; print(d.setdefault('b', []).append('x')) output?",
-      "answer": "None (append returns None; the value stored is ['x'])"
+      "answer": "It outputs None, because append returns None; the stored value becomes ['x'].\n\ncode:\nd = {'a': 1}\nprint(d.setdefault('b', []).append('x'))  # None\nprint(d)  # {'a': 1, 'b': ['x']}\n\nreal example:\nMutating methods like append return None by convention."
     },
     {
       "id": 452,
       "question": "What does d = {}; d.setdefault('b', []).append('x'); print(d) produce?",
-      "answer": "{'b': ['x']}"
+      "answer": "It produces {'b': ['x']}.\n\ncode:\nd = {}\nd.setdefault('b', []).append('x')\nprint(d)  # {'b': ['x']}\n\nreal example:\nCreating a list key and filling it in one step."
     },
     {
       "id": 453,
       "question": "What does {k: d[k] for k in d if len(k) > 1} do for d = {'a': 1, 'ab': 2}?",
-      "answer": "Returns {'ab': 2}"
+      "answer": "It returns {'ab': 2}.\n\ncode:\nd = {'a': 1, 'ab': 2}\nprint({k: d[k] for k in d if len(k) > 1})  # {'ab': 2}\n\nreal example:\nKeeping only multi-letter keys in a mapping."
     },
     {
       "id": 454,
       "question": "How do you convert a dict to a list of (key, value) tuples?",
-      "answer": "list(d.items())"
+      "answer": "Call list(d.items()).\n\ncode:\nd = {'a': 1, 'b': 2}\nprint(list(d.items()))  # [('a', 1), ('b', 2)]\n\nreal example:\nRows ready to be written to a table or CSV."
     },
     {
       "id": 455,
       "question": "What does list({'a': 1, 'b': 2}.items())[0] return?",
-      "answer": "('a', 1)"
+      "answer": "It returns ('a', 1).\n\ncode:\nprint(list({'a': 1, 'b': 2}.items())[0])  # ('a', 1)\n\nreal example:\nThe first row in a dict-based table."
     },
     {
       "id": 456,
       "question": "How do you convert a list of tuples pairs back to a dict?",
-      "answer": "dict(list_of_pairs)"
+      "answer": "Pass the list to dict() directly: dict(list_of_pairs).\n\ncode:\npairs = [('x', 1), ('y', 2)]\nprint(dict(pairs))  # {'x': 1, 'y': 2}\n\nreal example:\nRebuilding a dict from saved row pairs."
     },
     {
       "id": 457,
       "question": "What does dict([('x', 1), ('y', 2)])['x'] return?",
-      "answer": "1"
+      "answer": "It returns 1.\n\ncode:\nprint(dict([('x', 1), ('y', 2)])['x'])  # 1\n\nreal example:\nReading a value back from a constructed mapping."
     },
     {
       "id": 458,
       "question": "How do you build a char-to-count dict for a string without imports?",
-      "answer": "freq = {}; for c in s: freq[c] = freq.get(c, 0) + 1"
+      "answer": "Loop over the characters and add one per character using .get.\n\ncode:\ns = 'aabc'\nfreq = {}\nfor c in s:\n    freq[c] = freq.get(c, 0) + 1\nprint(freq)  # {'a': 2, 'b': 1, 'c': 1}\n\nreal example:\nSimple character-frequency analysis with no extra imports."
     },
     {
       "id": 459,
       "question": "What is the most efficient way to count chars in a long string?",
-      "answer": "collections.Counter(s) (C-optimized)"
+      "answer": "Use collections.Counter(s), which is C-optimized.\n\ncode:\nfrom collections import Counter\nprint(Counter('aabc'))  # Counter({'a': 2, 'b': 1, 'c': 1})\n\nreal example:\nFast, memory-friendly tallies for text analysis."
     },
     {
       "id": 460,
       "question": "What does memo = {}; def fib(n): if n in memo: return memo[n] ... represent?",
-      "answer": "A memoization cache to speed up recursive functions"
+      "answer": "It is a memoization cache that stores each fib result so recursive calls don't recompute it.\n\ncode:\nmemo = {}\ndef fib(n):\n    if n in memo:\n        return memo[n]\n    memo[n] = n if n < 2 else fib(n - 1) + fib(n - 2)\n    return memo[n]\n\nprint(fib(10))  # 55\n\nreal example:\nExplosive recursive math becomes fast with caching."
     },
     {
       "id": 461,
       "question": "In the memoized fib, when is memo[n] stored?",
-      "answer": "After computing fib(n), via memo[n] = result"
+      "answer": "Right after fib(n) is computed, via memo[n] = result.\n\ncode:\nmemo = {0: 0, 1: 1}\ndef fib(n):\n    if n in memo:\n        return memo[n]\n    memo[n] = fib(n - 1) + fib(n - 2)\n    return memo[n]\n\nprint(fib(10))  # 55\n\nreal example:\nEach value is saved the moment it is calculated."
     },
     {
       "id": 462,
       "question": "What lookups does memoization replace?",
-      "answer": "Repeated recursive calls by O(1) dict lookups"
+      "answer": "It replaces repeated recursive calls with O(1) dict lookups.\n\ncode:\nmemo = {0: 0, 1: 1}\ndef fib(n):\n    if n in memo:\n        return memo[n]\n    memo[n] = fib(n - 1) + fib(n - 2)\n    return memo[n]\n\nprint(fib(30))  # 832040, instant\n\nreal example:\nOnce a value is known, every later request hits the cache."
     },
     {
       "id": 463,
       "question": "What does functools.lru_cache use internally?",
-      "answer": "Dict-based caches keyed by the arguments"
+      "answer": "It uses dict-based caches keyed by the function's arguments.\n\ncode:\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef square(x):\n    return x * x\n\nprint(square(4), square(4))  # 16 16\n\nreal example:\nTransparent caching for repeated web-query results."
     },
     {
       "id": 464,
       "question": "How do you group numbers by their remainder mod 3 into a dict?",
-      "answer": "d = {i: [] for i in range(3)}; for x in nums: d[x % 3].append(x)"
+      "answer": "Pre-make three empty lists, then append each number to the list for its remainder.\n\ncode:\nnums = [1, 2, 3, 4, 5]\nd = {i: [] for i in range(3)}\nfor x in nums:\n    d[x % 3].append(x)\nprint(d)  # {0: [3], 1: [1, 4], 2: [2, 5]}\n\nreal example:\nBucketing items by a computed category id."
     },
     {
       "id": 465,
       "question": "What does d = {0: [], 1: [], 2: []}; then d[1].append(10); print(d[1]) output?",
-      "answer": "[10]"
+      "answer": "It outputs [10].\n\ncode:\nd = {0: [], 1: [], 2: []}\nd[1].append(10)\nprint(d[1])  # [10]\n\nreal example:\nAdding an item into its pre-created bucket."
     },
     {
       "id": 466,
       "question": "What does {k: v[::-1] for k, v in {'a': 'xy'}.items()} return?",
-      "answer": "{'a': 'yx'}"
+      "answer": "It returns {'a': 'yx'}.\n\ncode:\nprint({k: v[::-1] for k, v in {'a': 'xy'}.items()})  # {'a': 'yx'}\n\nreal example:\nReversing the stored strings in a dict."
     },
     {
       "id": 467,
       "question": "What does {k: sorted(v) for k, v in {'a': [3, 1, 2]}.items()} return?",
-      "answer": "{'a': [1, 2, 3]}"
+      "answer": "It returns {'a': [1, 2, 3]}.\n\ncode:\nprint({k: sorted(v) for k, v in {'a': [3, 1, 2]}.items()})  # {'a': [1, 2, 3]}\n\nreal example:\nSorting every list held inside a dict."
     },
     {
       "id": 468,
       "question": "What does {k: v for k, v in {'a': 1}.items()} is {'a': 1} return?",
-      "answer": "False (comprehension builds a new dict)"
+      "answer": "It returns False, because the comprehension builds a new dict.\n\ncode:\nd = {'a': 1}\nprint({k: v for k, v in d.items()} is d)  # False\n\nreal example:\nA rebuilt dict is a new object even with equal content."
     },
     {
       "id": 469,
       "question": "What does d = {'a': 1}; print({k: v for k, v in d.items()} == d) output?",
-      "answer": "True"
+      "answer": "It outputs True.\n\ncode:\nd = {'a': 1}\nprint({k: v for k, v in d.items()} == d)  # True\n\nreal example:\nValue equality holds even when identity doesn't."
     },
     {
       "id": 470,
       "question": "How do you build a Trie node structure with dicts?",
-      "answer": "Each node is a dict: {'children': {}, 'is_word': False}"
+      "answer": "Represent each node as a dict with 'children' and 'is_word'.\n\ncode:\nnode = {'children': {}, 'is_word': False}\nnode['children']['a'] = {'children': {}, 'is_word': True}\nprint(node['children']['a']['is_word'])  # True\n\nreal example:\nStoring word prefixes as nested dicts for fast search."
     },
     {
       "id": 471,
       "question": "How do you represent a weighted graph with dicts?",
-      "answer": "graph = {'A': {'B': 5, 'C': 2}} (neighbors map to weights)"
+      "answer": "Map each node to a dict of neighbors and their edge weights.\n\ncode:\ngraph = {'A': {'B': 5, 'C': 2}}\nprint(graph['A']['B'])  # 5\n\nreal example:\nRecording the distance between cities on a map."
     },
     {
       "id": 472,
       "question": "What does graph = {'A': {'B': 5}}; print(graph['A']['B']) output?",
-      "answer": "5 (the weight of edge A-B)"
+      "answer": "It outputs 5, the weight of the edge from A to B.\n\ncode:\ngraph = {'A': {'B': 5}}\nprint(graph['A']['B'])  # 5\n\nreal example:\nReading the cost of a flight between two airports."
     },
     {
       "id": 473,
       "question": "How do you add an edge with weight to a weighted graph dict?",
-      "answer": "if u not in g: g[u] = {}; then g[u][v] = weight"
+      "answer": "Ensure the node's dict exists, then assign the weight to the neighbor key.\n\ncode:\ng = {'A': {}}\ng['A']['B'] = 5\nprint(g)  # {'A': {'B': 5}}\n\nreal example:\nAdding a new road and its length to a map."
     },
     {
       "id": 474,
       "question": "What does g = {}; g.setdefault('A', {}).setdefault('B', []).append(1); print(g) produce?",
-      "answer": "{'A': {'B': [1]}}"
+      "answer": "It produces {'A': {'B': [1]}}.\n\ncode:\ng = {}\ng.setdefault('A', {}).setdefault('B', []).append(1)\nprint(g)  # {'A': {'B': [1]}}\n\nreal example:\nAuto-building nested graph edges as you add data."
     },
     {
       "id": 475,
       "question": "How do you find total cost from node A in a star graph {A: {B: 2, C: 3}}?",
-      "answer": "sum(g['A'].values()) == 5"
+      "answer": "Sum the neighbor weights: sum(g['A'].values()) equals 5.\n\ncode:\ng = {'A': {'B': 2, 'C': 3}}\nprint(sum(g['A'].values()))  # 5\n\nreal example:\nAdding up the total cost of all routes out of A."
     },
     {
       "id": 476,
       "question": "What does sum({'A': {'B': 2, 'C': 3}}['A'].values()) return?",
-      "answer": "5"
+      "answer": "It returns 5.\n\ncode:\nprint(sum({'A': {'B': 2, 'C': 3}}['A'].values()))  # 5\n\nreal example:\nSumming the outgoing edge weights from one node."
     },
     {
       "id": 477,
       "question": "How do you check an edge B->C exists in graph = {'B': {'C': 1}}?",
-      "answer": "'C' in graph.get('B', {})"
+      "answer": "Use 'C' in graph.get('B', {}) to avoid a KeyError when B is missing.\n\ncode:\ngraph = {'B': {'C': 1}}\nprint('C' in graph.get('B', {}))  # True\n\nreal example:\nChecking whether a direct route exists in a map."
     },
     {
       "id": 478,
       "question": "What does graph = {'B': {'C': 1}}; print('C' in graph['B']) output?",
-      "answer": "True"
+      "answer": "It outputs True.\n\ncode:\ngraph = {'B': {'C': 1}}\nprint('C' in graph['B'])  # True\n\nreal example:\nVerifying a link is present in the network."
     },
     {
       "id": 479,
       "question": "How do you implement roman numeral lookup?",
-      "answer": "values = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}"
+      "answer": "Store each symbol and its value in a dict, then read values by symbol.\n\ncode:\nvalues = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}\nprint(values['X'])  # 10\n\nreal example:\nInstant symbol-to-value conversion while parsing Roman numerals."
     },
     {
       "id": 480,
       "question": "In roman-to-int with dict values, when do you subtract?",
-      "answer": "When a smaller symbol precedes a larger one, e.g., IX => 10 - 1"
+      "answer": "Subtract when a smaller symbol precedes a larger one, for example IX is 10 - 1.\n\ncode:\nvalues = {'I': 1, 'V': 5, 'X': 10}\ns = 'IX'\ntotal = 0\nfor i, ch in enumerate(s):\n    if i + 1 < len(s) and values[ch] < values[s[i + 1]]:\n        total -= values[ch]\n    else:\n        total += values[ch]\nprint(total)  # 9\n\nreal example:\nParsing Roman numerals in puzzles and games."
     },
     {
       "id": 481,
       "question": "What does values['X'] return in the roman dict?",
-      "answer": "10"
+      "answer": "It returns 10.\n\ncode:\nvalues = {'I': 1, 'V': 5, 'X': 10}\nprint(values['X'])  # 10\n\nreal example:\nConverting a single Roman symbol to its number."
     },
     {
       "id": 482,
       "question": "What does values.get('Q', 0) return in the roman lookup?",
-      "answer": "0"
+      "answer": "It returns 0, because 'Q' is not a valid symbol.\n\ncode:\nvalues = {'I': 1, 'V': 5, 'X': 10}\nprint(values.get('Q', 0))  # 0\n\nreal example:\nUnknown symbols default to zero instead of crashing."
     },
     {
       "id": 483,
       "question": "How do you map each month number to its name?",
-      "answer": "months = {1: 'Jan', 2: 'Feb', ...} then months[n]"
+      "answer": "Build a dict like months = {1: 'Jan', 2: 'Feb', ...} then read months[n].\n\ncode:\nmonths = {1: 'Jan', 2: 'Feb', 3: 'Mar'}\nprint(months[2])  # 'Feb'\n\nreal example:\nRendering friendly month names in a calendar app."
     },
     {
       "id": 484,
       "question": "What does months = {1: 'Jan', 2: 'Feb'}; print(months.get(3, 'Invalid')) output?",
-      "answer": "'Invalid' (or 'Invalid' default)"
+      "answer": "It outputs 'Invalid', the provided default for the missing key 3.\n\ncode:\nmonths = {1: 'Jan', 2: 'Feb'}\nprint(months.get(3, 'Invalid'))  # 'Invalid'\n\nreal example:\nUnknown month numbers show a fallback message."
     },
     {
       "id": 485,
       "question": "How do you build a config dict from a list of 'key=value' strings?",
-      "answer": "dict(pair.split('=') for pair in lines)"
+      "answer": "Split each line on '=' and feed the pairs to dict().\n\ncode:\nlines = ['host=localhost', 'port=8080']\nprint(dict(pair.split('=') for pair in lines))\n\nreal example:\nParsing simple .env-style configuration files."
     },
     {
       "id": 486,
       "question": "What does dict(p.split('=') for p in ['a=1', 'b=2']) return?",
-      "answer": "{'a': '1', 'b': '2'} (values are strings)"
+      "answer": "It returns {'a': '1', 'b': '2'}, with the values kept as strings.\n\ncode:\nprint(dict(p.split('=') for p in ['a=1', 'b=2']))  # {'a': '1', 'b': '2'}\n\nreal example:\nEnvironment-variable-like settings load as strings."
     },
     {
       "id": 487,
       "question": "What does dict(x.split(':') for x in 'a:1 b:2'.split()) return?",
-      "answer": "{'a': '1', 'b': '2'}"
+      "answer": "It returns {'a': '1', 'b': '2'}.\n\ncode:\nprint(dict(x.split(':') for x in 'a:1 b:2'.split()))  # {'a': '1', 'b': '2'}\n\nreal example:\nParsing colon-separated settings from a single line."
     },
     {
       "id": 488,
       "question": "How do you serialize a dict to JSON?",
-      "answer": "import json; json.dumps(d)"
+      "answer": "Import json and call json.dumps(d).\n\ncode:\nimport json\nd = {'a': 1}\nprint(json.dumps(d))  # '{\"a\": 1}'\n\nreal example:\nSending a config object to a web API."
     },
     {
       "id": 489,
       "question": "What does json.loads(json.dumps({'a': 1})) return?",
-      "answer": "{'a': 1} (JSON keys become string keys)"
+      "answer": "It returns {'a': 1}, with JSON keys becoming Python string keys.\n\ncode:\nimport json\nd = {'a': 1}\nprint(json.loads(json.dumps(d)))  # {'a': 1}\n\nreal example:\nRound-tripping data through JSON for storage or transfer."
     },
     {
       "id": 490,
       "question": "What happens if you json.dumps a dict with an int key?",
-      "answer": "In Python 3, int keys are converted to string keys: {1: 'x'} -> '{\"1\": \"x\"}'"
+      "answer": "In Python 3, int keys are converted to strings, so {1: 'x'} becomes '{\"1\": \"x\"}' or the equivalent JSON text.\n\ncode:\nimport json\nprint(json.dumps({1: 'x'}))  # '{\"1\": \"x\"}'\n\nreal example:\nJSON only supports string keys, so they are coerced automatically."
     },
     {
       "id": 491,
       "question": "What does json.dumps({'a': [1, 2]}) produce?",
-      "answer": "'{\"a\": [1, 2]}'"
+      "answer": "It produces '{\"a\": [1, 2]}'.\n\ncode:\nimport json\nd = {'a': [1, 2]}\nprint(json.dumps(d))  # '{\"a\": [1, 2]}'\n\nreal example:\nSerializing a nested structure such as a cart with item lists."
     },
     {
       "id": 492,
       "question": "Can json.dumps serialize a dict with non-string non-int keys like a tuple?",
-      "answer": "No, it raises TypeError; convert keys first (e.g., str(k))"
+      "answer": "No. It raises TypeError, so you must convert keys first, for example with str(k).\n\ncode:\nimport json\ntry:\n    json.dumps({(1, 2): 'x'})\nexcept TypeError as e:\n    print(e)\n\nreal example:\nTuple keys must be stringified before sending data as JSON."
     },
     {
       "id": 493,
       "question": "How do you convert a JSON string to a Python dict with an int-keyed like structure?",
-      "answer": "import json; d = json.loads(s), then convert string keys with int() as needed"
+      "answer": "Load it with json.loads, then rebuild it, converting the string keys with int() as needed.\n\ncode:\nimport json\ns = '{\"1\": \"a\", \"2\": \"b\"}'\nd = json.loads(s)\nd = {int(k): v for k, v in d.items()}\nprint(d)  # {1: 'a', 2: 'b'}\n\nreal example:\nMarshalling JSON into a numeric-keyed lookup table."
     },
     {
       "id": 494,
       "question": "What does d = {'a': 1, 'b': 2}; result = {}; for k, v in d.items(): result[k.upper()] = v; print(result) produce?",
-      "answer": "{'A': 1, 'B': 2}"
+      "answer": "It produces {'A': 1, 'B': 2}.\n\ncode:\nd = {'a': 1, 'b': 2}\nresult = {}\nfor k, v in d.items():\n    result[k.upper()] = v\nprint(result)  # {'A': 1, 'B': 2}\n\nreal example:\nNormalizing key casing for a record before output."
     },
     {
       "id": 495,
       "question": "How do you uppercases all string values in a dict of strings?",
-      "answer": "{k: v.upper() for k, v in d.items()}"
+      "answer": "Use a comprehension: {k: v.upper() for k, v in d.items()}.\n\ncode:\nd = {'a': 'hi', 'b': 'yo'}\nprint({k: v.upper() for k, v in d.items()})  # {'a': 'HI', 'b': 'YO'}\n\nreal example:\nUppercasing user-entered messages for display."
     },
     {
       "id": 496,
       "question": "What does {k: v.upper() for k, v in {'a': 'hi'}.items()} return?",
-      "answer": "{'a': 'HI'}"
+      "answer": "It returns {'a': 'HI'}.\n\ncode:\nprint({k: v.upper() for k, v in {'a': 'hi'}.items()})  # {'a': 'HI'}\n\nreal example:\nFormatting stored text as all-caps output."
     },
     {
       "id": 497,
       "question": "What does d = {'a': 1, 'b': 2}; d = dict(sorted(d.items(), key=lambda x: -x[1])); print(list(d)) output?",
-      "answer": "['b', 'a'] (keys ordered by value descending)"
+      "answer": "It outputs ['b', 'a'], the keys ordered by value descending.\n\ncode:\nd = {'a': 1, 'b': 2}\nd = dict(sorted(d.items(), key=lambda x: -x[1]))\nprint(list(d))  # ['b', 'a']\n\nreal example:\nRanking by score, highest first."
     },
     {
       "id": 498,
       "question": "What does dict(sorted({'a': 1, 'b': 3}.items(), key=lambda x: x[1])) produce?",
-      "answer": "{'a': 1, 'b': 3}"
+      "answer": "It produces {'a': 1, 'b': 3}.\n\ncode:\nprint(dict(sorted({'a': 1, 'b': 3}.items(), key=lambda x: x[1])))  # {'a': 1, 'b': 3}\n\nreal example:\nRebuilding a dict ordered by ascending value."
     },
     {
       "id": 499,
       "question": "How do you take the cartesian product of keys and values into a dict?",
-      "answer": "{(k, v): k + v for k in keys for v in vals} (uses tuple keys)"
+      "answer": "Use nested loops in a comprehension with tuple keys: {(k, v): value for k in keys for v in vals}.\n\ncode:\nkeys = ['a', 'b']\nvals = [10, 20]\nprint({(k, v): k + v for k in keys for v in vals})\n\nreal example:\nEvery combination of two option lists, keyed by the pair."
     },
     {
       "id": 500,
       "question": "What does {(k, v): k * v for k in range(2) for v in range(2)} return?",
-      "answer": "{(0, 0): 0, (0, 1): 0, (1, 0): 0, (1, 1): 1}"
+      "answer": "It returns {(0, 0): 0, (0, 1): 0, (1, 0): 0, (1, 1): 1}.\n\ncode:\nprint({(k, v): k * v for k in range(2) for v in range(2)})  # {(0, 0): 0, (0, 1): 0, (1, 0): 0, (1, 1): 1}\n\nreal example:\nBuilding a small multiplication lookup table with tuple keys."
     }
   ]
 }

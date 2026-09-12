@@ -1,8 +1,11 @@
 {
   "name": "python-learning",
+  "homepage": "https://ia12imran.github.io/Learn_Python/",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predeploey": "npm run build",
+    "deploy": "gh-pages -d out",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -34,5 +37,8 @@
     "eslint-config-next": "16.3.4",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "allowScripts": {
+  "unrs-resolver": true
+}
 }

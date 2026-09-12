@@ -4,1002 +4,1002 @@
     {
       "id": 1,
       "question": "What is the general syntax of a list comprehension?",
-      "answer": "[expression for item in iterable if condition]"
+      "answer": "It is brackets, an expression, the for clause, and an optional if filter at the end.\n\ncode:\nresult = [x * 2 for x in [1, 2, 3] if x > 1]\nprint(result)  # [4, 6]\n\nreal example:\nTurning a loop that builds a list into one compact expression, like doubling prices above a cutoff."
     },
     {
       "id": 2,
       "question": "What does [x for x in range(5)] return?",
-      "answer": "[0, 1, 2, 3, 4]"
+      "answer": "It collects every number from right after 0 up to but not including 5.\n\ncode:\nprint([x for x in range(5)])  # [0, 1, 2, 3, 4]\n\nreal example:\nGenerating five slot numbers 0 to 4 for a row of checkout counters."
     },
     {
       "id": 3,
       "question": "What does [x * 2 for x in range(5)] return?",
-      "answer": "[0, 2, 4, 6, 8]"
+      "answer": "Each value from the range is doubled before being collected into the list.\n\ncode:\nprint([x * 2 for x in range(5)])  # [0, 2, 4, 6, 8]\n\nreal example:\nComputing double portions for five dinner guests at a catering order."
     },
     {
       "id": 4,
       "question": "What does [x ** 2 for x in range(1, 6)] return?",
-      "answer": "[1, 4, 9, 16, 25]"
+      "answer": "It squares each number from 1 through 5, collecting the results in order.\n\ncode:\nprint([x ** 2 for x in range(1, 6)])  # [1, 4, 9, 16, 25]\n\nreal example:\nPrecomputing the squares of bench positions for a seating layout calculator."
     },
     {
       "id": 5,
       "question": "What does [str(x) for x in range(3)] return?",
-      "answer": "['0', '1', '2']"
+      "answer": "Each integer is converted to a string before being placed in the result list.\n\ncode:\nprint([str(x) for x in range(3)])  # ['0', '1', '2']\n\nreal example:\nConverting numeric order numbers into text so they can be joined into a label."
     },
     {
       "id": 6,
       "question": "What does [len(w) for w in [\"a\", \"ab\", \"abc\"]] return?",
-      "answer": "[1, 2, 3]"
+      "answer": "For each word, its character count is collected, giving 1, 2, and 3.\n\ncode:\nprint([len(w) for w in [\"a\", \"ab\", \"abc\"]])  # [1, 2, 3]\n\nreal example:\nFinding how long each password hint word is to spot unusually short ones."
     },
     {
       "id": 7,
       "question": "What does [x + 1 for x in [1, 2, 3]] return?",
-      "answer": "[2, 3, 4]"
+      "answer": "Each element is increased by 1 and the new values are gathered into a list.\n\ncode:\nprint([x + 1 for x in [1, 2, 3]])  # [2, 3, 4]\n\nreal example:\nConverting 1-based round numbers to 0-based rounds for an internal schedule."
     },
     {
       "id": 8,
       "question": "Does a list comprehension create a new list?",
-      "answer": "Yes, it always returns a brand-new list"
+      "answer": "Yes. Every comprehension builds a brand-new list; the source data is untouched.\n\ncode:\nsource = [1, 2]\nresult = [x * 10 for x in source]\nprint(source)  # [1, 2]  -- unchanged\nprint(result)  # [10, 20]\n\nreal example:\nProducing a discounted price list from a master catalog list without altering the master."
     },
     {
       "id": 9,
       "question": "What does [x for x in \"abc\"] return?",
-      "answer": "['a', 'b', 'c']"
+      "answer": "Looping over a string yields each character, so they are collected one by one.\n\ncode:\nprint([x for x in \"abc\"])  # ['a', 'b', 'c']\n\nreal example:\nSplitting a word into its letters to scramble them for a hangman game."
     },
     {
       "id": 10,
       "question": "What does [i for i in range(2, 11, 2)] return?",
-      "answer": "[2, 4, 6, 8, 10]"
+      "answer": "range(2, 11, 2) steps by 2 from 2 up to before 11, so it collects the even numbers.\n\ncode:\nprint([i for i in range(2, 11, 2)])  # [2, 4, 6, 8, 10]\n\nreal example:\nListing even floor numbers for elevator stops in a building with ten floors."
     },
     {
       "id": 11,
       "question": "What does [0 for _ in range(3)] return?",
-      "answer": "[0, 0, 0]"
+      "answer": "The loop runs three times and each time adds a 0; the underscore just ignores the value.\n\ncode:\nprint([0 for _ in range(3)])  # [0, 0, 0]\n\nreal example:\nInitializing three empty score slots to 0 before a best-of-three match."
     },
     {
       "id": 12,
       "question": "What does [x for x in range(3) if x != 1] return?",
-      "answer": "[0, 2]"
+      "answer": "The if filter drops 1, so only 0 and 2 are kept.\n\ncode:\nprint([x for x in range(3) if x != 1])  # [0, 2]\n\nreal example:\nAssigning queue numbers but skipping the reserved 1 to special guests."
     },
     {
       "id": 13,
       "question": "In a comprehension, what comes first: the for clause or the if clause?",
-      "answer": "The expression, then for, then the optional if condition"
+      "answer": "It starts with the expression, then for, then the optional if filter at the very end.\n\ncode:\nresult = [x for x in range(4) if x % 2 == 0]\nprint(result)  # [0, 2]\n\nreal example:\nReading a comprehension out loud as build a list of x, from the range, keeping only even values."
     },
     {
       "id": 14,
       "question": "What does [x for x in [1, 2, 3] if x > 1] return?",
-      "answer": "[2, 3]"
+      "answer": "The filter keeps only values greater than 1, so 2 and 3 remain.\n\ncode:\nprint([x for x in [1, 2, 3] if x > 1])  # [2, 3]\n\nreal example:\nFiltering a level list to show only levels a player has unlocked (above level 1)."
     },
     {
       "id": 15,
       "question": "What does [x for x in (1, 2, 3)] return (comprehension over a tuple)?",
-      "answer": "[1, 2, 3]"
+      "answer": "Comprehensions work over any iterable, and a tuple iterates by giving its values.\n\ncode:\nprint([x for x in (1, 2, 3)])  # [1, 2, 3]\n\nreal example:\nConverting fixed coordinates from a tuple into a list you can later modify."
     },
     {
       "id": 16,
       "question": "What does [x.upper() for x in [\"hi\"]] return?",
-      "answer": "['HI']"
+      "answer": "Each word is transformed with .upper(), so hi becomes HI.\n\ncode:\nprint([x.upper() for x in [\"hi\"]])  # ['HI']\n\nreal example:\nUppercasing a single shortcut word so the app can match it case-insensitively."
     },
     {
       "id": 17,
       "question": "What does [x for x in range(10) if x % 2 == 0] return?",
-      "answer": "[0, 2, 4, 6, 8] (all even numbers)"
+      "answer": "The filter keeps numbers where x % 2 is 0, meaning the even numbers 0 through 8.\n\ncode:\nprint([x for x in range(10) if x % 2 == 0])  # [0, 2, 4, 6, 8]\n\nreal example:\nGiving parking passes only to even-numbered slots of ten available spaces."
     },
     {
       "id": 18,
       "question": "What does [x for x in range(10) if x % 2 == 1] return?",
-      "answer": "[1, 3, 5, 7, 9] (all odd numbers)"
+      "answer": "The filter keeps numbers where x % 2 equals 1, so all the odd numbers 1 through 9.\n\ncode:\nprint([x for x in range(10) if x % 2 == 1])  # [1, 3, 5, 7, 9]\n\nreal example:\nBooking only the odd-numbered seats so walk-in customers sit apart from reserved ones."
     },
     {
       "id": 19,
       "question": "Can you name the loop variable anything you like in a comprehension?",
-      "answer": "Yes, the variable name is arbitrary, e.g., for n in ..., for w in ..."
+      "answer": "Yes. It is just a variable name; use n, w, or anything that reads clearly.\n\ncode:\nsquares = [n * n for n in range(1, 4)]\nprint(squares)  # [1, 4, 9]\n\nreal example:\nWriting squares with n a developer can read as number, matching their comment style."
     },
     {
       "id": 20,
       "question": "What does [round(x) for x in [1.7, 2.2]] return?",
-      "answer": "[2, 2]"
+      "answer": "round() finds the nearest integer for each value: 1.7 becomes 2 and 2.2 becomes 2.\n\ncode:\nprint([round(x) for x in [1.7, 2.2]])  # [2, 2]\n\nreal example:\nRounding two package weights to whole kilograms for a shipping label."
     },
     {
       "id": 21,
       "question": "What does [x for x in range(4)] return?",
-      "answer": "[0, 1, 2, 3]"
+      "answer": "It collects the four values range produces: 0, 1, 2, 3.\n\ncode:\nprint([x for x in range(4)])  # [0, 1, 2, 3]\n\nreal example:\nNumbering four quiz rounds from 0 to 3 for a game show."
     },
     {
       "id": 22,
       "question": "What does [x * x for x in range(6) if x * x > 10] return?",
-      "answer": "[16, 25] (squares 16 and 25 are greater than 10)"
+      "answer": "It squares each value and keeps squares above 10, which are 16 and 25.\n\ncode:\nprint([x * x for x in range(6) if x * x > 10])  # [16, 25]\n\nreal example:\nListing room areas that are big enough for a large event from a set of room sizes."
     },
     {
       "id": 23,
       "question": "What does [x for x in range(1, 11) if x % 3 == 0] return?",
-      "answer": "[3, 6, 9]"
+      "answer": "The filter keeps numbers from 1 to 10 that divide evenly by 3.\n\ncode:\nprint([x for x in range(1, 11) if x % 3 == 0])  # [3, 6, 9]\n\nreal example:\nMarking which hours (3, 6, 9) get a break in an 11-hour shift schedule."
     },
     {
       "id": 24,
       "question": "What does [x for x in range(5, 0, -1)] return?",
-      "answer": "[5, 4, 3, 2, 1]"
+      "answer": "range(5, 0, -1) counts down from 5 to 1, so the list is those values in that order.\n\ncode:\nprint([x for x in range(5, 0, -1)])  # [5, 4, 3, 2, 1]\n\nreal example:\nBuilding a countdown timer list from 5 down to 1 for a takeoff sequence."
     },
     {
       "id": 25,
       "question": "What does [x ** 3 for x in range(1, 5)] return?",
-      "answer": "[1, 8, 27, 64]"
+      "answer": "Each number from 1 to 4 is cubed, giving 1, 8, 27, and 64.\n\ncode:\nprint([x ** 3 for x in range(1, 5)])  # [1, 8, 27, 64]\n\nreal example:\nPrecomputing cube sizes for four warehouse bins so a layout tool can pick capacities."
     },
     {
       "id": 26,
       "question": "What does [x for x in range(10) if 5 < x < 8] return?",
-      "answer": "[6, 7]"
+      "answer": "The chained comparison keeps numbers strictly between 5 and 8, which are 6 and 7.\n\ncode:\nprint([x for x in range(10) if 5 < x < 8])  # [6, 7]\n\nreal example:\nSelecting sizes 6 and 7 from a size range when only those are in stock."
     },
     {
       "id": 27,
       "question": "What does sum([x for x in range(1, 5)]) return?",
-      "answer": "10"
+      "answer": "The comprehension builds [1, 2, 3, 4], and sum() adds it up to 10.\n\ncode:\ntotal = sum([x for x in range(1, 5)])\nprint(total)  # 10\n\nreal example:\nTotaling the first four routes' distances of a delivery day to plan fuel."
     },
     {
       "id": 28,
       "question": "What does [i for i in range(0, 50, 10)] return?",
-      "answer": "[0, 10, 20, 30, 40]"
+      "answer": "range(0, 50, 10) steps by 10, giving 0, 10, 20, 30, and 40.\n\ncode:\nprint([i for i in range(0, 50, 10)])  # [0, 10, 20, 30, 40]\n\nreal example:\nMarking every 10th page as a chapter start in a 50-page ebook."
     },
     {
       "id": 29,
       "question": "What does [x for x in range(100) if x % 7 == 0] return for the first few values?",
-      "answer": "[0, 7, 14, 21, 28, ...] multiples of 7"
+      "answer": "The filter keeps multiples of 7, starting with 0, 7, 14, 21, 28, and so on.\n\ncode:\nprint([x for x in range(100) if x % 7 == 0])  # [0, 7, 14, 21, 28, ...]\n\nreal example:\nFinding which days of a 100-day tracker fall on a weekly repeat (every 7th day)."
     },
     {
       "id": 30,
       "question": "What does [x for x in range(-3, 3)] return?",
-      "answer": "[-3, -2, -1, 0, 1, 2]"
+      "answer": "Counting from -3 up to before 3 collects negative, zero, and positive values.\n\ncode:\nprint([x for x in range(-3, 3)])  # [-3, -2, -1, 0, 1, 2]\n\nreal example:\nNaming six temperature zones from -3 to +2 for a thermostat calibration."
     },
     {
       "id": 31,
       "question": "What does [bool(x) for x in [0, 1, \"\", [1]]] return?",
-      "answer": "[False, True, False, True]"
+      "answer": "bool() reports truthiness: 0 and empty string are falsy, while 1 and [1] are truthy.\n\ncode:\nprint([bool(x) for x in [0, 1, \"\", [1]]])  # [False, True, False, True]\n\nreal example:\nConverting form answers into pass/fail flags by checking whether each field was filled."
     },
     {
       "id": 32,
       "question": "What does [x % 2 for x in range(5)] return?",
-      "answer": "[0, 1, 0, 1, 0]"
+      "answer": "The remainder of each number divided by 2 alternates 0, 1, 0, 1, 0.\n\ncode:\nprint([x % 2 for x in range(5)])  # [0, 1, 0, 1, 0]\n\nreal example:\nTagging each of five queue slots with an alternator flag to split odd and even servers."
     },
     {
       "id": 33,
       "question": "What does [x // 2 for x in range(0, 6, 3)] return?",
-      "answer": "[0, 1] (0//2=0, 3//2=1)"
+      "answer": "range(0, 6, 3) gives 0 and 3; floor-dividing each by 2 yields 0 and 1.\n\ncode:\nprint([x // 2 for x in range(0, 6, 3)])  # [0, 1]\n\nreal example:\nPairing up the two parking zones into group numbers 0 and 1 for staff assignment."
     },
     {
       "id": 34,
       "question": "How do you get a list of even numbers from 0 to 20?",
-      "answer": "[x for x in range(21) if x % 2 == 0] or list(range(0, 21, 2))"
+      "answer": "Either filter with x % 2 == 0, or step the range by 2 to skip odd numbers directly.\n\ncode:\nprint([x for x in range(21) if x % 2 == 0])\nprint(list(range(0, 21, 2)))  # same [0, 2, ..., 20]\n\nreal example:\nBuilding a menu of even-numbered seats from 0 to 20 for a theater aisle."
     },
     {
       "id": 35,
       "question": "How many elements are in [x for x in range(20) if x % 5 == 0]?",
-      "answer": "4 (0, 5, 10, 15)"
+      "answer": "The multiples of 5 up to before 20 are 0, 5, 10, and 15, so there are 4.\n\ncode:\nprint([x for x in range(20) if x % 5 == 0])  # [0, 5, 10, 15]\nprint(len([x for x in range(20) if x % 5 == 0]))  # 4\n\nreal example:\nCounting the four five-minute break slots in a 20-minute timing schedule."
     },
     {
       "id": 36,
       "question": "What does [x for x in range(10) if x == 7] return?",
-      "answer": "[7]"
+      "answer": "The filter only lets 7 through, so the result is a one-element list [7].\n\ncode:\nprint([x for x in range(10) if x == 7])  # [7]\n\nreal example:\nFinding which single test run number needs a re-check in a batch of ten."
     },
     {
       "id": 37,
       "question": "What does [10 - x for x in range(3)] return?",
-      "answer": "[10, 9, 8]"
+      "answer": "Each value x is subtracted from 10, producing 10, 9, then 8.\n\ncode:\nprint([10 - x for x in range(3)])  # [10, 9, 8]\n\nreal example:\nReversing three starting fuel levels into a descending scale for a gauge."
     },
     {
       "id": 38,
       "question": "What does [x for x in range(2, 20) if all(x % i for i in range(2, x))] produce?",
-      "answer": "All prime numbers less than 20: [2, 3, 5, 7, 11, 13, 17, 19]"
+      "answer": "Numbers with no divisors below them are primes, so it lists every prime under 20.\n\ncode:\nprint([x for x in range(2, 20) if all(x % i for i in range(2, x))])\n# [2, 3, 5, 7, 11, 13, 17, 19]\n\nreal example:\nGenerating prime slot numbers below 20 for a cryptography demo or bingo game."
     },
     {
       "id": 39,
       "question": "What does len([x for x in range(5) if x % 2 == 0]) return?",
-      "answer": "3 (0, 2, 4)"
+      "answer": "The filtered list holds 0, 2, and 4, so its length is 3.\n\ncode:\nevens = [x for x in range(5) if x % 2 == 0]\nprint(evens)  # [0, 2, 4]\nprint(len(evens))  # 3\n\nreal example:\nCounting how many even-numbered hotel keys exist among five rooms."
     },
     {
       "id": 40,
       "question": "What does [x + x for x in range(4)] return?",
-      "answer": "[0, 2, 4, 6]"
+      "answer": "Each value is added to itself, doubling 0, 1, 2, 3 into 0, 2, 4, 6.\n\ncode:\nprint([x + x for x in range(4)])  # [0, 2, 4, 6]\n\nreal example:\nDoubling spring sales figures for four quarters into a projection list."
     },
     {
       "id": 41,
       "question": "What does [x for x in range(10) if x % 3 == 0] return?",
-      "answer": "[0, 3, 6, 9]"
+      "answer": "The filter keeps multiples of 3 below 10: 0, 3, 6, 9.\n\ncode:\nprint([x for x in range(10) if x % 3 == 0])  # [0, 3, 6, 9]\n\nreal example:\nMarking every third hour (9 AM, noon, 3 PM) for hydration breaks in a workday."
     },
     {
       "id": 42,
       "question": "What does [x for x in [-1, 2, -3, 4] if x > 0] return?",
-      "answer": "[2, 4] (filters out negatives)"
+      "answer": "The filter keeps only positive numbers, dropping both negatives.\n\ncode:\nprint([x for x in [-1, 2, -3, 4] if x > 0])  # [2, 4]\n\nreal example:\nKeeping only positive balance changes from a statement to show deposits."
     },
     {
       "id": 43,
       "question": "What does [w for w in [\"cat\", \"dog\", \"ox\"] if len(w) > 3] return?",
-      "answer": "[] (both words have length 3 or less)"
+      "answer": "No word is longer than 3 characters, so the filter leaves an empty list.\n\ncode:\nprint([w for w in [\"cat\", \"dog\", \"ox\"] if len(w) > 3])  # []\n\nreal example:\nSearching a three-letter animal list for a four-letter word returns nothing to show."
     },
     {
       "id": 44,
       "question": "What does [w for w in [\"apple\", \"banana\"] if w.startswith(\"a\")] return?",
-      "answer": "[\"apple\"]"
+      "answer": "startswith() keeps only words beginning with a, so apple survives.\n\ncode:\nprint([w for w in [\"apple\", \"banana\"] if w.startswith(\"a\")])  # ['apple']\n\nreal example:\nFiltering a fruit inventory to show products that start with the letter A."
     },
     {
       "id": 45,
       "question": "What does [x for x in [1, \"a\", 2, \"b\"] if isinstance(x, int)] return?",
-      "answer": "[1, 2]"
+      "answer": "isinstance() keeps only integers, filtering out the two strings.\n\ncode:\nprint([x for x in [1, \"a\", 2, \"b\"] if isinstance(x, int)])  # [1, 2]\n\nreal example:\nSeparating numeric tallies from text notes in an imported spreadsheet column."
     },
     {
       "id": 46,
       "question": "What does [c for c in \"hello123\" if c.isalpha()] return?",
-      "answer": "['h', 'e', 'l', 'l', 'o']"
+      "answer": "isalpha() keeps only letters, so the digits 1, 2, 3 are removed.\n\ncode:\nprint([c for c in \"hello123\" if c.isalpha()])  # ['h', 'e', 'l', 'l', 'o']\n\nreal example:\nExtracting just the name letters from a username like user123."
     },
     {
       "id": 47,
       "question": "What does [c for c in \"hello123\" if c.isdigit()] return?",
-      "answer": "['1', '2', '3']"
+      "answer": "isdigit() keeps only numeric characters, dropping all the letters.\n\ncode:\nprint([c for c in \"hello123\" if c.isdigit()])  # ['1', '2', '3']\n\nreal example:\nPulling the pin digits out of a mixed code like upgrade456."
     },
     {
       "id": 48,
       "question": "What does [c for c in \"banana\" if c in \"aeiou\"] return?",
-      "answer": "['a', 'a', 'a'] (all the vowels in order)"
+      "answer": "Each vowel in the word is kept in order; banana has three a characters.\n\ncode:\nprint([c for c in \"banana\" if c in \"aeiou\"])  # ['a', 'a', 'a']\n\nreal example:\nCollecting the vowels from a word as hints for a spelling game."
     },
     {
       "id": 49,
       "question": "What does [w for w in [\"apple\", \"pear\"] if \"p\" in w] return?",
-      "answer": "[\"apple\", \"pear\"]"
+      "answer": "Both words contain the letter p, so neither is filtered out.\n\ncode:\nprint([w for w in [\"apple\", \"pear\"] if \"p\" in w])  # ['apple', 'pear']\n\nreal example:\nFiltering a food list to show dishes that mention a selected ingredient letter."
     },
     {
       "id": 50,
       "question": "What does [x for x in [1, None, 3, None] if x is not None] return?",
-      "answer": "[1, 3]"
+      "answer": "The filter drops every None, keeping only the real values 1 and 3.\n\ncode:\nprint([x for x in [1, None, 3, None] if x is not None])  # [1, 3]\n\nreal example:\nCleaning a survey result list by removing questions the user skipped (None)."
     },
     {
       "id": 51,
       "question": "What does [x for x in [\"\", \"hi\", \"\"] if x] return?",
-      "answer": "[\"hi\"] (empty strings are falsy and are removed)"
+      "answer": "Empty strings are falsy, so the filter removes them and keeps only \"hi\".\n\ncode:\nprint([x for x in [\"\", \"hi\", \"\"] if x])  # ['hi']\n\nreal example:\nStripping blank lines out of a pasted text before counting its real words."
     },
     {
       "id": 52,
       "question": "What does [x for x in [0, 1, \"\", 2, None] if x] return?",
-      "answer": "[1, 2] (falsy values removed)"
+      "answer": "0, empty string, and None are all falsy, so only 1 and 2 remain.\n\ncode:\nprint([x for x in [0, 1, \"\", 2, None] if x])  # [1, 2]\n\nreal example:\nFiltering a settings list to show only enabled, meaningful options."
     },
     {
       "id": 53,
       "question": "What does [x for x in range(20) if x % 2 == 0 and x % 3 == 0] return?",
-      "answer": "[0, 6, 12, 18] (multiples of 6)"
+      "answer": "Both conditions must hold, meaning numbers divisible by both 2 and 3, i.e. multiples of 6.\n\ncode:\nprint([x for x in range(20) if x % 2 == 0 and x % 3 == 0])\n# [0, 6, 12, 18]\n\nreal example:\nFinding which appointment slots suit both a 2-hour team and a 3-hour client, meaning 6-hour gaps."
     },
     {
       "id": 54,
       "question": "What does [n for n in range(1, 11) if n % 2 == 0 or n % 5 == 0] return?",
-      "answer": "[2, 4, 5, 6, 8, 10]"
+      "answer": "Either condition passes, so even numbers and multiples of 5 are all kept.\n\ncode:\nprint([n for n in range(1, 11) if n % 2 == 0 or n % 5 == 0])\n# [2, 4, 5, 6, 8, 10]\n\nreal example:\nLetting cars park in slots that meet either a 2-car-wide or 5-car-length rule."
     },
     {
       "id": 55,
       "question": "What does [x for x in [1, 2, 3] if x in [2, 3, 4]] return?",
-      "answer": "[2, 3] (list intersection)"
+      "answer": "It keeps values that appear in the second list, computing an intersection of the two.\n\ncode:\nprint([x for x in [1, 2, 3] if x in [2, 3, 4]])  # [2, 3]\n\nreal example:\nFinding which of your skills are also required by a job posting."
     },
     {
       "id": 56,
       "question": "What does [x for x in range(1, 31) if x % 2 and x % 3] return?",
-      "answer": "Numbers not divisible by 2 or 3: e.g., [1, 5, 7, 11, 13, 17, 19, 23, 25, 29]"
+      "answer": "The remainders must both be truthy, meaning x is not divisible by 2 or by 3.\n\ncode:\nprint([x for x in range(1, 31) if x % 2 and x % 3])\n# [1, 5, 7, 11, 13, 17, 19, 23, 25, 29]\n\nreal example:\nFinding the days of the month that are neither market days (every 2nd) nor sale days (every 3rd)."
     },
     {
       "id": 57,
       "question": "How do you keep words with at least one vowel?",
-      "answer": "[w for w in words if any(c in \"aeiou\" for c in w)]"
+      "answer": "Use any() in the condition to keep a word when some character is a vowel.\n\ncode:\nwords = [\"sky\", \"cat\", \"nth\"]\nprint([w for w in words if any(c in \"aeiou\" for c in w)])  # ['cat']\n\nreal example:\nFiltering candidate codenames so only pronounceable ones (with a vowel) are proposed."
     },
     {
       "id": 58,
       "question": "What does [num for num in [2, 8, 5, 9] if num > sum([2, 8, 5, 9]) / 4] return?",
-      "answer": "[8, 9] (above the average of 6)"
+      "answer": "The average is 6, and the numbers above it are 8 and 9.\n\ncode:\nnums = [2, 8, 5, 9]\nprint([num for num in nums if num > sum(nums) / len(nums)])  # [8, 9]\n\nreal example:\nSpotting which daily steps exceeded the week's average step count."
     },
     {
       "id": 59,
       "question": "How do you remove duplicates while preserving order?",
-      "answer": "seen = set()\n[x for x in data if not (x in seen or seen.add(x))]"
+      "answer": "Track seen items in a set inside the condition, keeping only the first of each kind.\n\ncode:\ndata = [3, 1, 3, 2, 1]\nseen = set()\nunique = [x for x in data if not (x in seen or seen.add(x))]\nprint(unique)  # [3, 1, 2]\n\nreal example:\nDeduplicating a click log while keeping the order clicks first happened."
     },
     {
       "id": 60,
       "question": "What does [day for day in [\"Mon\", \"Sat\", \"Sun\"] if day in (\"Sat\", \"Sun\")] return?",
-      "answer": "[\"Sat\", \"Sun\"]"
+      "answer": "The filter keeps only weekend days, dropping Monday.\n\ncode:\ndays = [\"Mon\", \"Sat\", \"Sun\"]\nprint([day for day in days if day in (\"Sat\", \"Sun\")])  # ['Sat', 'Sun']\n\nreal example:\nShowing only weekend delivery days on an express shipping option."
     },
     {
       "id": 61,
       "question": "What does [t for t in [25, 35, 28, 40] if t > 30] return?",
-      "answer": "[35, 40]"
+      "answer": "The filter keeps only temperatures above 30 degrees, which are 35 and 40.\n\ncode:\nprint([t for t in [25, 35, 28, 40] if t > 30])  # [35, 40]\n\nreal example:\nFlagging which recorded oven temperatures went above the 30-degree danger point."
     },
     {
       "id": 62,
       "question": "How do you keep only passing scores (>= 60)?",
-      "answer": "[s for s in scores if s >= 60]"
+      "answer": "Filter with s >= 60 inside the comprehension to keep meeting scores.\n\ncode:\nscores = [45, 70, 88, 55]\nprint([s for s in scores if s >= 60])  # [70, 88]\n\nreal example:\nBuilding a list of students who passed a test from a full grade list."
     },
     {
       "id": 63,
       "question": "What does [c for c in \"a b c\" if c != \" \"] return?",
-      "answer": "['a', 'b', 'c']"
+      "answer": "Spaces are filtered out, leaving just the letters a, b, and c.\n\ncode:\nprint([c for c in \"a b c\" if c != \" \"])  # ['a', 'b', 'c']\n\nreal example:\nRemoving spaces from a license code before validating its letters."
     },
     {
       "id": 64,
       "question": "What does [x for i, x in enumerate([10, 20, 30, 40]) if i % 2 == 0] return?",
-      "answer": "[10, 30] (items at even indices)"
+      "answer": "enumerate gives positions, and the filter keeps even indices 0 and 2, so the values 10 and 30.\n\ncode:\nlst = [10, 20, 30, 40]\nprint([x for i, x in enumerate(lst) if i % 2 == 0])  # [10, 30]\n\nreal example:\nSelecting the 1st and 3rd playlist tracks (positions 0 and 2) for a preview medley."
     },
     {
       "id": 65,
       "question": "What does [x for x in [6, 12, 18, 24] if 6 <= x <= 18] return?",
-      "answer": "[6, 12, 18]"
+      "answer": "The chained comparison keeps values from 6 through 18 inclusive.\n\ncode:\nprint([x for x in [6, 12, 18, 24] if 6 <= x <= 18])  # [6, 12, 18]\n\nreal example:\nShowing toys in the recommended 6-to-18 age range from a catalog list."
     },
     {
       "id": 66,
       "question": "How do you select only strings from a mixed list?",
-      "answer": "[x for x in data if isinstance(x, str)]"
+      "answer": "Use isinstance(x, str) in the filter to keep only text values.\n\ncode:\ndata = [1, \"hi\", 3.5, \"bye\"]\nprint([x for x in data if isinstance(x, str)])  # ['hi', 'bye']\n\nreal example:\nPulling the text entries out of a mixed spreadsheet column with numbers and notes."
     },
     {
       "id": 67,
       "question": "What does [x for x in [1, 2, 3, 4, 5] if x % 2] return?",
-      "answer": "[1, 3, 5] (truthy remainders are the odd numbers)"
+      "answer": "A remainder of 1 is truthy, so odd numbers pass and evens (remainder 0) are dropped.\n\ncode:\nprint([x for x in [1, 2, 3, 4, 5] if x % 2])  # [1, 3, 5]\n\nreal example:\nSelecting odd-numbered lockers for a contest giveaway."
     },
     {
       "id": 68,
       "question": "What does [x for x in [50, 60, 70] if x >= 60 and x < 70] return?",
-      "answer": "[60]"
+      "answer": "Both bounds are inclusive at 60 and exclusive at 70, so only 60 passes.\n\ncode:\nprint([x for x in [50, 60, 70] if x >= 60 and x < 70])  # [60]\n\nreal example:\nChoosing the one exam score that lands right in the 60-to-69 grade band."
     },
     {
       "id": 69,
       "question": "How do you get a list of numbers greater than the first element?",
-      "answer": "[x for x in nums if x > nums[0]]"
+      "answer": "Compare each element to nums[0] in the filter, keeping those above it.\n\ncode:\nnums = [5, 8, 2, 9]\nprint([x for x in nums if x > nums[0]])  # [8, 9]\n\nreal example:\nFinding every bid higher than the starting bid in an auction item list."
     },
     {
       "id": 70,
       "question": "What does [x for x in \"Mississippi\" if x == \"s\"] return?",
-      "answer": "['s', 's', 's', 's']"
+      "answer": "Every s character is kept, and Mississippi contains four of them.\n\ncode:\nprint([x for x in \"Mississippi\" if x == \"s\"])  # ['s', 's', 's', 's']\n\nreal example:\nCounting how many times the letter s appears in a state name for a puzzle."
     },
     {
       "id": 71,
       "question": "What does [x if x % 2 == 0 else \"odd\" for x in range(4)] return?",
-      "answer": "[0, 'odd', 2, 'odd']"
+      "answer": "The expression picks x for even values and the word odd for odd ones.\n\ncode:\nprint([x if x % 2 == 0 else \"odd\" for x in range(4)])  # [0, 'odd', 2, 'odd']\n\nreal example:\nLabeling queue slots as usable or \"odd\" in a craft fair layout."
     },
     {
       "id": 72,
       "question": "What does [\"even\" if x % 2 == 0 else \"odd\" for x in range(4)] return?",
-      "answer": "['even', 'odd', 'even', 'odd']"
+      "answer": "Each value maps to the word even or odd depending on its remainder.\n\ncode:\nprint([\"even\" if x % 2 == 0 else \"odd\" for x in range(4)])\n# ['even', 'odd', 'even', 'odd']\n\nreal example:\nTurning four parking spots into labels even/odd for alternate-side rules."
     },
     {
       "id": 73,
       "question": "What does [x if x > 0 else 0 for x in [-1, 2, -3, 4]] return?",
-      "answer": "[0, 2, 0, 4] (clamps negatives to 0)"
+      "answer": "Positive values stay, negatives are clamped down to 0.\n\ncode:\nprint([x if x > 0 else 0 for x in [-1, 2, -3, 4]])  # [0, 2, 0, 4]\n\nreal example:\nShowing balances as 0 instead of negative numbers on a customer statement."
     },
     {
       "id": 74,
       "question": "What does [\"+\" if x > 0 else \"-\" for x in [1, -1, 2, -2]] return?",
-      "answer": "['+', '-', '+', '-']"
+      "answer": "Each value becomes a plus or minus sign based on whether it is positive.\n\ncode:\nprint([\"+\" if x > 0 else \"-\" for x in [1, -1, 2, -2]])  # ['+', '-', '+', '-']\n\nreal example:\nMarking transactions as money in (+/out (-) on a bank statement row."
     },
     {
       "id": 75,
       "question": "What does [\"small\" if x < 10 else \"big\" for x in [5, 15, 20]] return?",
-      "answer": "['small', 'big', 'big']"
+      "answer": "Values under 10 are labeled small, and 15 and 20 are labeled big.\n\ncode:\nprint([\"small\" if x < 10 else \"big\" for x in [5, 15, 20]])\n# ['small', 'big', 'big']\n\nreal example:\nTagging package sizes as small or big for warehouse shelf routing."
     },
     {
       "id": 76,
       "question": "What does [\"A\" if s >= 90 else \"B\" if s >= 80 else \"C\" for s in [95, 85, 70]] return?",
-      "answer": "['A', 'B', 'C']"
+      "answer": "Scores map to grades by checking the bands in order: 95 is A, 85 is B, 70 is C.\n\ncode:\nprint([\"A\" if s >= 90 else \"B\" if s >= 80 else \"C\" for s in [95, 85, 70]])\n# ['A', 'B', 'C']\n\nreal example:\nAuto-grading three exam scores into letter grades for a report card."
     },
     {
       "id": 77,
       "question": "What does [x * 2 if x % 2 else x * 3 for x in range(1, 5)] return?",
-      "answer": "[2, 6, 6, 12] (odd*2, even*3)"
+      "answer": "Odd numbers are doubled, even numbers tripled: 1,3 double; 2,4 triple.\n\ncode:\nprint([x * 2 if x % 2 else x * 3 for x in range(1, 5)])\n# [2, 6, 6, 12]\n\nreal example:\nApplying a double discount to odd rows and a triple one to even rows of a price sheet."
     },
     {
       "id": 78,
       "question": "What does [x if x != \"\" else \"N/A\" for x in [\"a\", \"\", \"b\"]] return?",
-      "answer": "['a', 'N/A', 'b']"
+      "answer": "Empty strings are swapped for N/A and real values stay unchanged.\n\ncode:\nprint([x if x != \"\" else \"N/A\" for x in [\"a\", \"\", \"b\"]])\n# ['a', 'N/A', 'b']\n\nreal example:\nFilling missing middle names with N/A on a contact export."
     },
     {
       "id": 79,
       "question": "What does [x if x % 5 == 0 else None for x in range(1, 11)] return?",
-      "answer": "[None, None, None, None, 5, None, None, None, None, 10]"
+      "answer": "Multiples of 5 keep their value; everything else becomes None.\n\ncode:\nprint([x if x % 5 == 0 else None for x in range(1, 11)])\n# [None, None, None, None, 5, None, None, None, None, 10]\n\nreal example:\nMarking car maintenance checkpoints every 5,000 km with the real value, and None between."
     },
     {
       "id": 80,
       "question": "What does [c.upper() if c.islower() else c for c in \"Py\"] return?",
-      "answer": "['P', 'Y']"
+      "answer": "The lowercase p is uppercased; the already-uppercase P stays as it is.\n\ncode:\nprint([c.upper() if c.islower() else c for c in \"Py\"])  # ['P', 'Y']\n\nreal example:\nNormalizing mixed-case initials so every letter displays uppercase."
     },
     {
       "id": 81,
       "question": "What does [x if isinstance(x, int) else 0 for x in [1, \"a\", 2]] return?",
-      "answer": "[1, 0, 2]"
+      "answer": "Integers keep their value and the string is replaced with 0.\n\ncode:\nprint([x if isinstance(x, int) else 0 for x in [1, \"a\", 2]])  # [1, 0, 2]\n\nreal example:\nConverting a messy quantity column by zeroing out any non-numeric saves."
     },
     {
       "id": 82,
       "question": "What does [1 if x > 0 else -1 if x < 0 else 0 for x in [5, -5, 0]] return?",
-      "answer": "[1, -1, 0]"
+      "answer": "The nested condition maps positives to 1, negatives to -1, and zero to 0.\n\ncode:\nprint([1 if x > 0 else -1 if x < 0 else 0 for x in [5, -5, 0]])\n# [1, -1, 0]\n\nreal example:\nTurning profit changes into trend signs up/down/flat for a dashboard."
     },
     {
       "id": 83,
       "question": "What does [str(x) if x % 2 else x for x in range(4)] return?",
-      "answer": "[0, '1', 2, '3'] (odd numbers become strings)"
+      "answer": "Even numbers stay numbers; odd ones become strings.\n\ncode:\nprint([str(x) if x % 2 else x for x in range(4)])  # [0, '1', 2, '3']\n\nreal example:\nPreparing odd room numbers as text labels while keeping even ones numeric for math."
     },
     {
       "id": 84,
       "question": "What does [x if x in \"aeiou\" else \"_\" for x in \"hello\"] return?",
-      "answer": "['_', 'e', '_', '_', 'o']"
+      "answer": "Vowels are kept and consonants are replaced with underscores.\n\ncode:\nprint([x if x in \"aeiou\" else \"_\" for x in \"hello\"])\n# ['_', 'e', '_', '_', 'o']\n\nreal example:\nBuilding a hangman-style clue board that hides the consonants of a word."
     },
     {
       "id": 85,
       "question": "What does [len(w) if len(w) > 3 else 0 for w in [\"hi\", \"world\"]] return?",
-      "answer": "[0, 5]"
+      "answer": "Short words map to 0, long words to their length: hi gives 0, world gives 5.\n\ncode:\nprint([len(w) if len(w) > 3 else 0 for w in [\"hi\", \"world\"]])  # [0, 5]\n\nreal example:\nCounting only hashtags longer than three characters and ignoring short tags."
     },
     {
       "id": 86,
       "question": "What does [p if p > 100 else p * 2 for p in [50, 150]] return?",
-      "answer": "[100, 150]"
+      "answer": "50 is not above 100 so it doubles to 100; 150 already is, so it stays.\n\ncode:\nprint([p if p > 100 else p * 2 for p in [50, 150]])  # [100, 150]\n\nreal example:\nRaising small order quantities to a minimum of 2x to meet bulk pricing."
     },
     {
       "id": 87,
       "question": "What does [\"Fizz\" if x % 3 == 0 else x for x in range(1, 6)] return?",
-      "answer": "[1, 2, 'Fizz', 4, 5]"
+      "answer": "Multiples of 3 become Fizz, and the other numbers keep their value.\n\ncode:\nprint([\"Fizz\" if x % 3 == 0 else x for x in range(1, 6)])\n# [1, 2, 'Fizz', 4, 5]\n\nreal example:\nTagging every third seat as Fizz for a row-numbering game at an event."
     },
     {
       "id": 88,
       "question": "What does [x if x > 5 else x + 10 for x in [3, 7]] return?",
-      "answer": "[13, 7]"
+      "answer": "3 is small so it gains 10 to become 13; 7 is above 5 so it stays 7.\n\ncode:\nprint([x if x > 5 else x + 10 for x in [3, 7]])  # [13, 7]\n\nreal example:\nBoosting small donation amounts to a 10-dollar minimum while big gifts stay."
     },
     {
       "id": 89,
       "question": "What does [x * 2 if x == 0 else x for x in [0, 1]] return?",
-      "answer": "[0, 1]"
+      "answer": "0 doubles to 0, and 1 stays as 1.\n\ncode:\nprint([x * 2 if x == 0 else x for x in [0, 1]])  # [0, 1]\n\nreal example:\nZeroing out a starting counter value specially while keeping the running total."
     },
     {
       "id": 90,
       "question": "What does [\"even\" if x % 2 == 0 else \"odd\" for x in range(6) if x > 2] return?",
-      "answer": "['odd', 'even', 'odd'] (for x = 3, 4, 5)"
+      "answer": "The filter only lets 3, 4, 5 through, which become odd, even, odd.\n\ncode:\nprint([\"even\" if x % 2 == 0 else \"odd\" for x in range(6) if x > 2])\n# ['odd', 'even', 'odd']\n\nreal example:\nLabeling blocks 3, 4, and 5 of a six-block street with their parity rule."
     },
     {
       "id": 91,
       "question": "What does [abs(x) for x in [-3, 5, -1]] return?",
-      "answer": "[3, 5, 1]"
+      "answer": "abs() removes the sign from each value, yielding 3, 5, and 1.\n\ncode:\nprint([abs(x) for x in [-3, 5, -1]])  # [3, 5, 1]\n\nreal example:\nMeasuring how far each stock price moved, ignoring direction, from a changes list."
     },
     {
       "id": 92,
       "question": "What does [x % 2 == 0 for x in [1, 2, 3]] return?",
-      "answer": "[False, True, False]"
+      "answer": "Each value becomes a True/False answer to the question is it even.\n\ncode:\nprint([x % 2 == 0 for x in [1, 2, 3]])  # [False, True, False]\n\nreal example:\nBuilding an even/odd checklist for three parking spaces to print stickers."
     },
     {
       "id": 93,
       "question": "What does [x * 10 if x < 3 else x for x in [1, 2, 4]] return?",
-      "answer": "[10, 20, 4]"
+      "answer": "Values below 3 are multiplied by 10; 4 is not, so it stays.\n\ncode:\nprint([x * 10 if x < 3 else x for x in [1, 2, 4]])  # [10, 20, 4]\n\nreal example:\nScaling small error codes to flag them before larger codes."
     },
     {
       "id": 94,
       "question": "What does [sum(range(1, x + 1)) for x in range(1, 5)] return?",
-      "answer": "[1, 3, 6, 10] (first four triangular numbers)"
+      "answer": "Each x sums 1 through x, giving the triangular numbers 1, 3, 6, 10.\n\ncode:\nprint([sum(range(1, x + 1)) for x in range(1, 5)])  # [1, 3, 6, 10]\n\nreal example:\nComputing how many total invites each of four people needs if person x tells everyone before them."
     },
     {
       "id": 95,
       "question": "What does [type(x).__name__ for x in [1, \"a\", 1.5]] return?",
-      "answer": "['int', 'str', 'float']"
+      "answer": "type().__name__ returns the lowercase type name of each element.\n\ncode:\nprint([type(x).__name__ for x in [1, \"a\", 1.5]])  # ['int', 'str', 'float']\n\nreal example:\nWriting each value's data type as a label when exporting a mixed column."
     },
     {
       "id": 96,
       "question": "What does [\".\" if x in \"aeiou\" else x for x in \"ae\"] return?",
-      "answer": "['.', '.'] (both are vowels, replaced by '.')"
+      "answer": "Both letters are vowels, so both are replaced by a dot.\n\ncode:\nprint([\".\" if x in \"aeiou\" else x for x in \"ae\"])  # ['.', '.']\n\nreal example:\nBlurring revealing vowels into dots before a quiz reveals word hints."
     },
     {
       "id": 97,
       "question": "What does [x if x < 0 else x ** 2 for x in [-2, 3]] return?",
-      "answer": "[-2, 9]"
+      "answer": "The negative stays as itself, and the positive 3 is squared to 9.\n\ncode:\nprint([x if x < 0 else x ** 2 for x in [-2, 3]])  # [-2, 9]\n\nreal example:\nKeeping loss amounts negative while squaring positive area measurements."
     },
     {
       "id": 98,
       "question": "What does [\"high\" if i >= len([0, 1, 2]) // 2 else \"low\" for i in range(4)] return?",
-      "answer": "['low', 'high', 'high', 'high'] (len // 2 == 1)"
+      "answer": "len // 2 is 1, so index 0 is low and indices 1, 2, 3 are high.\n\ncode:\nprint([\"high\" if i >= len([0, 1, 2]) // 2 else \"low\" for i in range(4)])\n# ['low', 'high', 'high', 'high']\n\nreal example:\nDividing a four-row table into a low zone for the first row and high zones above."
     },
     {
       "id": 99,
       "question": "What does [max(x, 0) for x in [-5, 3, -1, 7]] return?",
-      "answer": "[0, 3, 0, 7]"
+      "answer": "max(x, 0) picks the larger of each value and 0, clamping negatives up to 0.\n\ncode:\nprint([max(x, 0) for x in [-5, 3, -1, 7]])  # [0, 3, 0, 7]\n\nreal example:\nReporting account balances with overdrafts shown as 0 instead of negative."
     },
     {
       "id": 100,
       "question": "What does [x if x > 2 else 2 for x in range(4)] return?",
-      "answer": "[2, 2, 2, 3] (ensures a minimum of 2)"
+      "answer": "Values over 2 stay; values 0, 1, 2 are raised to a minimum of 2.\n\ncode:\nprint([x if x > 2 else 2 for x in range(4)])  # [2, 2, 2, 3]\n\nreal example:\nEnforcing a two-star minimum rating before showing reviews."
     },
     {
       "id": 101,
       "question": "What does [w.strip() for w in [\"  hi \", \"  we \"]] return?",
-      "answer": "['hi', 'we']"
+      "answer": "strip() removes surrounding spaces from every string, yielding clean words.\n\ncode:\nprint([w.strip() for w in [\"  hi \", \"  we \"]])  # ['hi', 'we']\n\nreal example:\nCleaning accidental spaces off usernames imported from a signup file."
     },
     {
       "id": 102,
       "question": "What does [w[::-1] for w in [\"abc\", \"de\"]] return?",
-      "answer": "['cba', 'ed']"
+      "answer": "Each word is reversed with a backward slice: abc becomes cba, de becomes ed.\n\ncode:\nprint([w[::-1] for w in [\"abc\", \"de\"]])  # ['cba', 'ed']\n\nreal example:\nAnagram-style word puzzles reverse each clue word for players to solve."
     },
     {
       "id": 103,
       "question": "What does [c for c in \"hello\" if c in \"aeiou\"] return?",
-      "answer": "['e', 'o']"
+      "answer": "Only the vowels in hello remain, in their original order: e then o.\n\ncode:\nprint([c for c in \"hello\" if c in \"aeiou\"])  # ['e', 'o']\n\nreal example:\nMining the vowels out of a customer's name for a screen-name generator."
     },
     {
       "id": 104,
       "question": "What does [w.upper() for w in [\"python\", \"is\", \"cool\"]] return?",
-      "answer": "['PYTHON', 'IS', 'COOL']"
+      "answer": ".upper() converts every word to ALL CAPS in the result list.\n\ncode:\nprint([w.upper() for w in [\"python\", \"is\", \"cool\"]])\n# ['PYTHON', 'IS', 'COOL']\n\nreal example:\nShouting-style notifications uppercase each word of an alert message."
     },
     {
       "id": 105,
       "question": "What does [len(w) for w in \"a big fish\".split()] return?",
-      "answer": "[1, 3, 4]"
+      "answer": "split() gives the words a, big, fish, then each length is measured.\n\ncode:\nprint([len(w) for w in \"a big fish\".split()])  # [1, 3, 4]\n\nreal example:\nComputing the length of each word in a sentence to find its formatting width."
     },
     {
       "id": 106,
       "question": "What does [w[0] for w in [\"apple\", \"banana\"]] return?",
-      "answer": "['a', 'b']"
+      "answer": "Index 0 grabs the first letter of each word, a and b.\n\ncode:\nprint([w[0] for w in [\"apple\", \"banana\"]])  # ['a', 'b']\n\nreal example:\nGenerating initials for two attendee names on a name badge."
     },
     {
       "id": 107,
       "question": "What does [w.title() for w in [\"hello world\"]] return?",
-      "answer": "['Hello World']"
+      "answer": "title() capitalizes the start of each word, so hello world becomes Hello World.\n\ncode:\nprint([w.title() for w in [\"hello world\"]])  # ['Hello World']\n\nreal example:\nFormatting raw article titles so every word is properly capitalized for display."
     },
     {
       "id": 108,
       "question": "What does [c + c for c in \"ab\"] return?",
-      "answer": "['aa', 'bb']"
+      "answer": "Each character is concatenated with itself, a+a and b+b.\n\ncode:\nprint([c + c for c in \"ab\"])  # ['aa', 'bb']\n\nreal example:\nBuilding doubled letter pairs for a tap-to-repeat memory game."
     },
     {
       "id": 109,
       "question": "What does [c * 2 for c in \"ab\"] return?",
-      "answer": "['aa', 'bb']"
+      "answer": "Multiplying a string by 2 repeats it, so a becomes aa and b becomes bb.\n\ncode:\nprint([c * 2 for c in \"ab\"])  # ['aa', 'bb']\n\nreal example:\nMessage-boost codes that duplicate each puzzle character for a new level."
     },
     {
       "id": 110,
       "question": "What does [\"\".join(c for c in w if c not in \"aeiou\") for w in [\"hello\", \"world\"]] return?",
-      "answer": "['hll', 'wrld'] (vowels removed)"
+      "answer": "Each word is filtered of vowels and re-joined, so hello sheds its e and o.\n\ncode:\nprint([\"\".join(c for c in w if c not in \"aeiou\") for w in [\"hello\", \"world\"]])\n# ['hll', 'wrld']\n\nreal example:\nCreating short URL aliases by stripping vowels from readable words."
     },
     {
       "id": 111,
       "question": "What does [w.replace(\"a\", \"@\") for w in [\"apple\"]] return?",
-      "answer": "['@pple']"
+      "answer": "replace() swaps every a for @ inside each word, so apple becomes @pple.\n\ncode:\nprint([w.replace(\"a\", \"@\") for w in [\"apple\"]])  # ['@pple']\n\nreal example:\nBuilding leetspeak-style nicknames by swapping letters for symbols."
     },
     {
       "id": 112,
       "question": "What does [w.count(\"e\") for w in [\"tree\", \"apple\"]] return?",
-      "answer": "[2, 1]"
+      "answer": "count() tallies the e letters in each word: tree has 2, apple has 1.\n\ncode:\nprint([w.count(\"e\") for w in [\"tree\", \"apple\"]])  # [2, 1]\n\nreal example:\nScoring how e-heavy each candidate word is in a typing drill picker."
     },
     {
       "id": 113,
       "question": "What does [ch.isdigit() for ch in \"a1\"] return?",
-      "answer": "[False, True]"
+      "answer": "Each character answers is this a digit: a is not, 1 is.\n\ncode:\nprint([ch.isdigit() for ch in \"a1\"])  # [False, True]\n\nreal example:\nChecking each character of a password field for the presence of digits."
     },
     {
       "id": 114,
       "question": "What does [int(x) for x in [\"1\", \"2\", \"3\"]] return?",
-      "answer": "[1, 2, 3]"
+      "answer": "int() converts each string number into an actual integer.\n\ncode:\nprint([int(x) for x in [\"1\", \"2\", \"3\"]])  # [1, 2, 3]\n\nreal example:\nConverting user-typed quantities from text inputs into numbers for math."
     },
     {
       "id": 115,
       "question": "What does [float(x) for x in [\"1.5\", \"2\"]] return?",
-      "answer": "[1.5, 2.0]"
+      "answer": "float() parses each text value into a decimal number, including 2 becoming 2.0.\n\ncode:\nprint([float(x) for x in [\"1.5\", \"2\"]])  # [1.5, 2.0]\n\nreal example:\nConverting price strings from a spreadsheet into decimals to add up the total."
     },
     {
       "id": 116,
       "question": "What does [str(n) for n in [1, 2, 3]] return?",
-      "answer": "['1', '2', '3']"
+      "answer": "str() converts each integer into a text representation.\n\ncode:\nprint([str(n) for n in [1, 2, 3]])  # ['1', '2', '3']\n\nreal example:\nTurning numeric seat numbers into strings so they can be written on tickets."
     },
     {
       "id": 117,
       "question": "matrix = [[1, 2], [3, 4]]. What does [x for row in matrix for x in row] return?",
-      "answer": "[1, 2, 3, 4] (flattening)"
+      "answer": "The first loop takes each row, the second takes each value, flattening all rows together.\n\ncode:\nmatrix = [[1, 2], [3, 4]]\nprint([x for row in matrix for x in row])  # [1, 2, 3, 4]\n\nreal example:\nFlattening a spreadsheet's rows of cells into one searchable list of all values."
     },
     {
       "id": 118,
       "question": "What does [x * y for x in range(1, 4) for y in range(1, 4)] return?",
-      "answer": "[1, 2, 3, 2, 4, 6, 3, 6, 9] (9 products)"
+      "answer": "The inner loop runs fully for each outer x, so the outer stays fixed while y varies.\n\ncode:\nprint([x * y for x in range(1, 4) for y in range(1, 4)])\n# [1, 2, 3, 2, 4, 6, 3, 6, 9]\n\nreal example:\nComputing all price combos of 3 items by 3 tax rates for a pricing table."
     },
     {
       "id": 119,
       "question": "What does [(x, y) for x in range(2) for y in range(2)] return?",
-      "answer": "[(0, 0), (0, 1), (1, 0), (1, 1)]"
+      "answer": "The outer x is fixed while y covers 0 and 1, producing four coordinate pairs.\n\ncode:\nprint([(x, y) for x in range(2) for y in range(2)])\n# [(0, 0), (0, 1), (1, 0), (1, 1)]\n\nreal example:\nListing every cell in a 2 by 2 tic-tac-toe corner for coordinate input."
     },
     {
       "id": 120,
       "question": "In a nested comprehension, which loop runs first: the outer or the inner?",
-      "answer": "The first for is the outer loop; the second for is the inner loop"
+      "answer": "The first for is the outer loop and runs slowest; later fors are the inner loops.\n\ncode:\npairs = [(x, y) for x in \"ab\" for y in \"12\"]\nprint(pairs)  # [('a', '1'), ('a', '2'), ('b', '1'), ('b', '2')]\n\nreal example:\nAn outer loop fixing the day while an inner loop fills every time slot of that day."
     },
     {
       "id": 121,
       "question": "What does [[i * j for j in range(1, 4)] for i in range(1, 4)] produce?",
-      "answer": "[[1, 2, 3], [2, 4, 6], [3, 6, 9]] (a multiplication table)"
+      "answer": "The inner comprehension builds one row per i, resulting in a 3 by 3 multiplication grid.\n\ncode:\nprint([[i * j for j in range(1, 4)] for i in range(1, 4)])\n# [[1, 2, 3], [2, 4, 6], [3, 6, 9]]\n\nreal example:\nGenerating a multiplication table for a kids' practice worksheet."
     },
     {
       "id": 122,
       "question": "What does [[row[i] for row in [[1, 2, 3], [4, 5, 6]]] for i in range(3)] produce?",
-      "answer": "[[1, 4], [2, 5], [3, 6]] (a transposed matrix)"
+      "answer": "Each outer i gathers column i across both rows, swapping rows and columns.\n\ncode:\nm = [[1, 2, 3], [4, 5, 6]]\nprint([[row[i] for row in m] for i in range(3)])\n# [[1, 4], [2, 5], [3, 6]]\n\nreal example:\nTransposing a spreadsheet so columns become rows for a different report view."
     },
     {
       "id": 123,
       "question": "matrix = [[1, 2], [3, 4]]. What does [x for row in matrix for x in row if x % 2 == 0] return?",
-      "answer": "[2, 4] (evens from the flattened matrix)"
+      "answer": "After flattening, the filter keeps only even values 2 and 4.\n\ncode:\nmatrix = [[1, 2], [3, 4]]\nprint([x for row in matrix for x in row if x % 2 == 0])  # [2, 4]\n\nreal example:\nScanning a grid of days to find all even-numbered days in a schedule."
     },
     {
       "id": 124,
       "question": "How do you count the total number of elements in a matrix with a comprehension?",
-      "answer": "len([x for row in matrix for x in row])"
+      "answer": "Flatten with a nested comprehension and wrap it in len() to count every element.\n\ncode:\nmatrix = [[1, 2], [3, 4]]\nprint(len([x for row in matrix for x in row]))  # 4\n\nreal example:\nCounting how many seats exist across all rows of a cinema grid."
     },
     {
       "id": 125,
       "question": "What does sum([x for row in [[1, 2], [3, 4]] for x in row]) return?",
-      "answer": "10"
+      "answer": "The flattened list is [1, 2, 3, 4], and sum() adds those to 10.\n\ncode:\nprint(sum([x for row in [[1, 2], [3, 4]] for x in row]))  # 10\n\nreal example:\nTotaling every click count across all weeks stored as rows of weekly data."
     },
     {
       "id": 126,
       "question": "What does [x for x in range(10) for y in range(1) if x % 4 == 0] return?",
-      "answer": "[0, 4, 8]"
+      "answer": "The inner loop runs once per x, and the filter keeps multiples of 4.\n\ncode:\nprint([x for x in range(10) for y in range(1) if x % 4 == 0])  # [0, 4, 8]\n\nreal example:\nChoosing the 0th, 4th, and 8th levels that unlock a special boss in a game."
     },
     {
       "id": 127,
       "question": "What does [[0] * 3 for _ in range(3)] produce?",
-      "answer": "[[0, 0, 0], [0, 0, 0], [0, 0, 0]]"
+      "answer": "Each iteration builds its own fresh row of three zeros, creating three separate rows.\n\ncode:\nprint([[0] * 3 for _ in range(3)])\n# [[0, 0, 0], [0, 0, 0], [0, 0, 0]]\n\nreal example:\nInitializing a clean 3 by 3 grid of empty cells for a board game."
     },
     {
       "id": 128,
       "question": "Why use [[0] * 3 for _ in range(3)] instead of [[0] * 3] * 3?",
-      "answer": "The comprehension creates 3 separate rows; [*] * 3 makes 3 references to one row"
+      "answer": "The comprehension makes three independent rows, while *3 repeats one shared row object.\n\ncode:\na = [[0] * 3 for _ in range(3)]\na[0][0] = 1\nprint(a)  # [[1, 0, 0], [0, 0, 0], [0, 0, 0]]\nb = [[0] * 3] * 3\nb[0][0] = 1\nprint(b)  # [[1, 0, 0], [1, 0, 0], [1, 0, 0]]\n\nreal example:\nMarking a cell in a schedule must not change the whole column, so independent rows are essential."
     },
     {
       "id": 129,
       "question": "What does [[x, y] for x in [1, 2] for y in [3, 4]] return?",
-      "answer": "[[1, 3], [1, 4], [2, 3], [2, 4]]"
+      "answer": "For each outer x, the inner y takes both values, giving four pair lists.\n\ncode:\nprint([[x, y] for x in [1, 2] for y in [3, 4]])\n# [[1, 3], [1, 4], [2, 3], [2, 4]]\n\nreal example:\nMatching two shirt sizes with two colors to list every size and color combo."
     },
     {
       "id": 130,
       "question": "What does [x for x in range(3) for _ in range(2)] return?",
-      "answer": "[0, 0, 1, 1, 2, 2] (each value repeated twice)"
+      "answer": "Each x is visited by the inner loop twice, so every value repeats.\n\ncode:\nprint([x for x in range(3) for _ in range(2)])  # [0, 0, 1, 1, 2, 2]\n\nreal example:\nDuplicating each coupon code so loyal customers get two copies to share."
     },
     {
       "id": 131,
       "question": "What does [x + y for x in [10, 20] for y in [1, 2]] return?",
-      "answer": "[11, 12, 21, 22]"
+      "answer": "For each x, y takes 1 and 2, adding both combos: 11, 12 then 21, 22.\n\ncode:\nprint([x + y for x in [10, 20] for y in [1, 2]])  # [11, 12, 21, 22]\n\nreal example:\nAdding each shipping fee option to two base prices to show all possible totals."
     },
     {
       "id": 132,
       "question": "What does [x for row in [[1, 2], [3]] for x in row] return?",
-      "answer": "[1, 2, 3] (flattens uneven rows too)"
+      "answer": "Flattening works even when rows have different lengths, so all values line up.\n\ncode:\nprint([x for row in [[1, 2], [3]] for x in row])  # [1, 2, 3]\n\nreal example:\nPadding ragged survey answer rows into one flat list for analysis."
     },
     {
       "id": 133,
       "question": "What does [letter for word in [\"ab\", \"cd\"] for letter in word] return?",
-      "answer": "['a', 'b', 'c', 'd']"
+      "answer": "Each word is split into its letters, then all letters are chained in order.\n\ncode:\nprint([letter for word in [\"ab\", \"cd\"] for letter in word])\n# ['a', 'b', 'c', 'd']\n\nreal example:\nFlattening a list of word spellings into individual letters for a boggle board."
     },
     {
       "id": 134,
       "question": "What does [[x, y] for y in range(3) for x in range(2)] return?",
-      "answer": "[[0, 0], [1, 0], [0, 1], [1, 1], [0, 2], [1, 2]] (y is the outer loop)"
+      "answer": "Here y is the outer loop, so y stays fixed while x cycles 0 and 1.\n\ncode:\nprint([[x, y] for y in range(3) for x in range(2)])\n# [[0, 0], [1, 0], [0, 1], [1, 1], [0, 2], [1, 2]]\n\nreal example:\nWhere the outer dimension is the floor and inner is the room, listing rooms floor by floor."
     },
     {
       "id": 135,
       "question": "How do you build a list of each row's sum for a matrix?",
-      "answer": "[sum(row) for row in matrix]"
+      "answer": "Loop over rows and call sum() on each one to collect totals by row.\n\ncode:\nmatrix = [[1, 2], [3, 4]]\nprint([sum(row) for row in matrix])  # [3, 7]\n\nreal example:\nAdding up each day's sales rows to get a total per day."
     },
     {
       "id": 136,
       "question": "matrix = [[1, 2], [3, 4]]. What does [max(row) for row in matrix] return?",
-      "answer": "[2, 4]"
+      "answer": "max() picks the biggest value in each row: 2 from [1, 2] and 4 from [3, 4].\n\ncode:\nmatrix = [[1, 2], [3, 4]]\nprint([max(row) for row in matrix])  # [2, 4]\n\nreal example:\nFinding each team's top scorer from score rows in a stats table."
     },
     {
       "id": 137,
       "question": "How do you extract the second column of [[1, 2], [3, 4], [5, 6]]?",
-      "answer": "[row[1] for row in matrix] -> [2, 4, 6]"
+      "answer": "Access index 1 of each row with row[1], collecting the second column values.\n\ncode:\nmatrix = [[1, 2], [3, 4], [5, 6]]\nprint([row[1] for row in matrix])  # [2, 4, 6]\n\nreal example:\nReading all Tuesday temperatures from a week matrix where day 1 is each row's second cell."
     },
     {
       "id": 138,
       "question": "What does [[c for c in w] for w in [\"ab\", \"cd\"]] return?",
-      "answer": "[['a', 'b'], ['c', 'd']]"
+      "answer": "Each inner comprehension splits a word into letters, so words become letter lists.\n\ncode:\nprint([[c for c in w] for w in [\"ab\", \"cd\"]])\n# [['a', 'b'], ['c', 'd']]\n\nreal example:\nConverting a list of words into a letter-grid puzzle, one list per word."
     },
     {
       "id": 139,
       "question": "How do you create a 3x3 identity-like 2D list of (i, j) pairs?",
-      "answer": "[[(i, j) for j in range(3)] for i in range(3)]"
+      "answer": "Nest one comprehension inside another so each cell holds its own (i, j) coordinate.\n\ncode:\ngrid = [[(i, j) for j in range(3)] for i in range(3)]\nprint(grid)\n# [[(0, 0), (0, 1), (0, 2)], [(1, 0), (1, 1), (1, 2)], [(2, 0), (2, 1), (2, 2)]]\n\nreal example:\nPreparing a 3 by 3 whack-a-mole board where each cell knows its own position."
     },
     {
       "id": 140,
       "question": "What does [n for row in [[1, 2], [3, 4]] for n in row if n > 2] return?",
-      "answer": "[3, 4]"
+      "answer": "After flattening, the filter keeps only values above 2, namely 3 and 4.\n\ncode:\ngrid = [[1, 2], [3, 4]]\nprint([n for row in grid for n in row if n > 2])  # [3, 4]\n\nreal example:\nFinding all over-budget expenses across month rows in a budget table."
     },
     {
       "id": 141,
       "question": "How do you add two matrices element-wise with comprehensions?",
-      "answer": "[[a + b for a, b in zip(r1, r2)] for r1, r2 in zip(m1, m2)]"
+      "answer": "Zip the rows, then zip pairs of cells inside, adding each matched pair.\n\ncode:\nm1 = [[1, 2], [3, 4]]\nm2 = [[10, 20], [30, 40]]\nresult = [[a + b for a, b in zip(r1, r2)] for r1, r2 in zip(m1, m2)]\nprint(result)  # [[11, 22], [33, 44]]\n\nreal example:\nCombining two years of monthly totals into a grand total matrix row by row."
     },
     {
       "id": 142,
       "question": "What does [i for i, v in enumerate([\"a\", \"b\", \"a\"]) if v == \"a\"] return?",
-      "answer": "[0, 2] (indices where the value is \"a\")"
+      "answer": "enumerate provides positions, and the filter keeps indices where the value is a.\n\ncode:\nlst = [\"a\", \"b\", \"a\"]\nprint([i for i, v in enumerate(lst) if v == \"a\"])  # [0, 2]\n\nreal example:\nFinding all positions where the digit a appears in a sequence of inputs."
     },
     {
       "id": 143,
       "question": "What does [x * 2 for row in [[1, 2], [3, 4]] for x in row] return?",
-      "answer": "[2, 4, 6, 8]"
+      "answer": "Each flattened value is doubled in order: 1, 2, 3, 4 become 2, 4, 6, 8.\n\ncode:\ngrid = [[1, 2], [3, 4]]\nprint([x * 2 for row in grid for x in row])  # [2, 4, 6, 8]\n\nreal example:\nDoubling every price in a two-row price grid before applying a sale factor."
     },
     {
       "id": 144,
       "question": "How do you get a list of (index, value) for a list using a comprehension?",
-      "answer": "[(i, v) for i, v in enumerate(lst)]"
+      "answer": "Loop with enumerate() and build a tuple of i and v for each item.\n\ncode:\nlst = [\"x\", \"y\"]\nprint([(i, v) for i, v in enumerate(lst)])  # [(0, 'x'), (1, 'y')]\n\nreal example:\nPairing each question with its position for a multiple-choice answer key."
     },
     {
       "id": 145,
       "question": "What does [[0, 0], [0, 0]] == [[0] * 2 for _ in range(2)] evaluate to?",
-      "answer": "True (both are a 2x2 matrix of zeros)"
+      "answer": "Both are 2 by 2 grids of zeros with equal contents, so == compares as True.\n\ncode:\nprint([[0, 0], [0, 0]] == [[0] * 2 for _ in range(2)])  # True\n\nreal example:\nConfirming two empty 2 by 2 forms have the same default state before one is filled."
     },
     {
       "id": 146,
       "question": "What is the difference between a list comprehension and a dictionary comprehension syntax?",
-      "answer": "List uses [expr ...]; dict uses {key: value ...}"
+      "answer": "A list uses square brackets with one expression, while a dict uses braces with key: value.\n\ncode:\nsquares_list = [x * x for x in [1, 2]]\nsquares_dict = {x: x * x for x in [1, 2]}\nprint(squares_list)  # [1, 4]\nprint(squares_dict)  # {1: 1, 2: 4}\n\nreal example:\nUse the list form for an ordered checklist and the dict form for number-to-square lookups."
     },
     {
       "id": 147,
       "question": "What does {x: x ** 2 for x in range(4)} return?",
-      "answer": "{0: 0, 1: 1, 2: 4, 3: 9}"
+      "answer": "For each number, the dict stores the number as key and its square as value.\n\ncode:\nprint({x: x ** 2 for x in range(4)})  # {0: 0, 1: 1, 2: 4, 3: 9}\n\nreal example:\nBuilding a lookup so a calculator finds a number's quick square by key."
     },
     {
       "id": 148,
       "question": "What does {x for x in [1, 1, 2]} return?",
-      "answer": "{1, 2} (set comprehension removes duplicates)"
+      "answer": "Curly braces with a bare expression build a set, which drops the duplicate 1.\n\ncode:\nprint({x for x in [1, 1, 2]})  # {1, 2}\n\nreal example:\nCollecting the unique payment methods used across many transactions."
     },
     {
       "id": 149,
       "question": "What does [(x, x % 2) for x in range(3)] return?",
-      "answer": "[(0, 0), (1, 1), (2, 0)]"
+      "answer": "Each pair holds a number and its remainder when divided by 2.\n\ncode:\nprint([(x, x % 2) for x in range(3)])  # [(0, 0), (1, 1), (2, 0)]\n\nreal example:\nTagging three queue numbers with 0 or 1 to route them between two registers."
     },
     {
       "id": 150,
       "question": "How do you zip two lists into a dictionary with a comprehension?",
-      "answer": "{k: v for k, v in zip(keys, values)}"
+      "answer": "zip() pairs the lists, and the comprehension turns each pair into a key and value.\n\ncode:\nkeys = [\"name\", \"age\"]\nvalues = [\"Ava\", 30]\nd = {k: v for k, v in zip(keys, values)}\nprint(d)  # {'name': 'Ava', 'age': 30}\n\nreal example:\nCombining a header row with a data row from a spreadsheet into one record dict."
     },
     {
       "id": 151,
       "question": "What does {w: len(w) for w in [\"a\", \"bb\"]} return?",
-      "answer": "{'a': 1, 'bb': 2}"
+      "answer": "Each word becomes a key and its character count the value.\n\ncode:\nprint({w: len(w) for w in [\"a\", \"bb\"]})  # {'a': 1, 'bb': 2}\n\nreal example:\nBuilding a quick word-length dictionary to look up the size of each code word."
     },
     {
       "id": 152,
       "question": "How do you invert a dictionary with a comprehension?",
-      "answer": "{v: k for k, v in d.items()}"
+      "answer": "Swap key and value by writing {v: k for k, v in d.items()}.\n\ncode:\nd = {\"a\": 1, \"b\": 2}\ninv = {v: k for k, v in d.items()}\nprint(inv)  # {1: 'a', 2: 'b'}\n\nreal example:\nTurning a name-to-ID map into an ID-to-name map for reverse lookups."
     },
     {
       "id": 153,
       "question": "What does {i: x for i, x in enumerate([\"a\", \"b\"])} return?",
-      "answer": "{0: 'a', 1: 'b'}"
+      "answer": "enumerate pairs each index with its value, which become key and value.\n\ncode:\nprint({i: x for i, x in enumerate([\"a\", \"b\"])})  # {0: 'a', 1: 'b'}\n\nreal example:\nStoring survey responses by their question numbers as dict keys."
     },
     {
       "id": 154,
       "question": "What does {k: v * 2 for k, v in {\"a\": 1, \"b\": 2}.items()} return?",
-      "answer": "{'a': 2, 'b': 4}"
+      "answer": "Each value is doubled while keys stay the same.\n\ncode:\nd = {\"a\": 1, \"b\": 2}\nprint({k: v * 2 for k, v in d.items()})  # {'a': 2, 'b': 4}\n\nreal example:\nApplying a double points bonus to every member's current points."
     },
     {
       "id": 155,
       "question": "What does {x.upper(): x for x in [\"cat\", \"dog\"]} return?",
-      "answer": "{'CAT': 'cat', 'DOG': 'dog'}"
+      "answer": "The uppercased word is the key and the original word the value.\n\ncode:\nprint({x.upper(): x for x in [\"cat\", \"dog\"]})\n# {'CAT': 'cat', 'DOG': 'dog'}\n\nreal example:\nBuilding a case-insensitive lookup so CAT finds cat in a pet registry."
     },
     {
       "id": 156,
       "question": "What is (x for x in range(3))?",
-      "answer": "A generator expression, NOT a tuple (use tuple() to materialize it)"
+      "answer": "It is a generator expression, not a tuple; it produces values lazily when iterated.\n\ncode:\ng = (x for x in range(3))\nprint(type(g))        # <class 'generator'>\nprint(list(g))        # [0, 1, 2]\n\nreal example:\nStreaming a huge number range one item at a time instead of building it all in memory."
     },
     {
       "id": 157,
       "question": "What does list(x for x in range(3)) return?",
-      "answer": "[0, 1, 2]"
+      "answer": "Passing a generator to list() exhausts it and gathers every yielded value.\n\ncode:\nprint(list(x for x in range(3)))  # [0, 1, 2]\n\nreal example:\nTuring a lazy stream of IDs into a snapshot list a report can reuse."
     },
     {
       "id": 158,
       "question": "What does sum(x * x for x in range(4)) return?",
-      "answer": "0 + 1 + 4 + 9 = 14"
+      "answer": "The squares 0, 1, 4, 9 are summed up as 0 + 1 + 4 + 9 = 14.\n\ncode:\nprint(sum(x * x for x in range(4)))  # 14\n\nreal example:\nAdding up the squared sizes of four photos to estimate file-space usage."
     },
     {
       "id": 159,
       "question": "What does [k for k, v in {\"a\": 1, \"b\": 2}.items() if v > 1] return?",
-      "answer": "['b']"
+      "answer": "Only keys whose values exceed 1 survive; \"a\" has value 1 so only \"b\" remains.\n\ncode:\nd = {\"a\": 1, \"b\": 2}\nprint([k for k, v in d.items() if v > 1])  # ['b']\n\nreal example:\nListing which account names are over their free-tier limit of 1 service."
     },
     {
       "id": 160,
       "question": "What does [v for k, v in {\"a\": 1, \"b\": 2}.items() if k != \"a\"] return?",
-      "answer": "[2]"
+      "answer": "It keeps values except when the key is \"a\", so only the value 2 remains.\n\ncode:\nd = {\"a\": 1, \"b\": 2}\nprint([v for k, v in d.items() if k != \"a\"])  # [2]\n\nreal example:\nReading scores for all students except the excluded \"a\" group."
     },
     {
       "id": 161,
       "question": "What does {x % 3 for x in range(5)} return?",
-      "answer": "{0, 1, 2} (a set of remainders)"
+      "answer": "Braces make a set, and the remainders 0, 1, 2, 0, 1 collapse to {0, 1, 2}.\n\ncode:\nprint({x % 3 for x in range(5)})  # {0, 1, 2}\n\nreal example:\nSeeing which bucket numbers (0, 1, 2) are actually used by five queue items."
     },
     {
       "id": 162,
       "question": "What does {k: 0 for k in [\"a\", \"b\", \"c\"]} return?",
-      "answer": "{'a': 0, 'b': 0, 'c': 0}"
+      "answer": "Each key is assigned the default value 0.\n\ncode:\nprint({k: 0 for k in [\"a\", \"b\", \"c\"]})  # {'a': 0, 'b': 0, 'c': 0}\n\nreal example:\nSeeding a vote counter dictionary with zero for every candidate name."
     },
     {
       "id": 163,
       "question": "How do you count word lengths with a dict comprehension?",
-      "answer": "{w: len(w) for w in words}"
+      "answer": "Map each word to len(word) inside braces, making words the keys.\n\ncode:\nprint({w: len(w) for w in [\"hi\", \"hey\"]})  # {'hi': 2, 'hey': 3}\n\nreal example:\nMeasuring each tag's length quickly before a layout decides font handling."
     },
     {
       "id": 164,
       "question": "What does [v for v in {\"a\": 5, \"b\": 3}.values() if v >= 5] return?",
-      "answer": "[5]"
+      "answer": "Looking at values only, 5 passes the filter but 3 does not.\n\ncode:\nd = {\"a\": 5, \"b\": 3}\nprint([v for v in d.values() if v >= 5])  # [5]\n\nreal example:\nExporting only the monthly scores that met the threshold of 5 points."
     },
     {
       "id": 165,
       "question": "What does {c: \"vowel\" if c in \"aeiou\" else \"consonant\" for c in \"aez\"} return?",
-      "answer": "{'a': 'vowel', 'e': 'vowel', 'z': 'consonant'}"
+      "answer": "Each character maps to a label, with a and e vowels and z a consonant.\n\ncode:\nprint({c: \"vowel\" if c in \"aeiou\" else \"consonant\" for c in \"aez\"})\n# {'a': 'vowel', 'e': 'vowel', 'z': 'consonant'}\n\nreal example:\nClassifying letters of a name into a quick vowel/consonant lookup."
     },
     {
       "id": 166,
       "question": "What does print([x for x in range(3) if x % 2 == 0]) output?",
-      "answer": "[0, 2]"
+      "answer": "The filter keeps even numbers from 0, 1, 2, so it prints [0, 2].\n\ncode:\nprint([x for x in range(3) if x % 2 == 0])  # [0, 2]\n\nreal example:\nChoosing even floors 0 and 2 from a three-floor building for the fast elevator."
     },
     {
       "id": 167,
       "question": "What does print([len(x) for x in [\"ab\", \"c\"]]) output?",
-      "answer": "[2, 1]"
+      "answer": "The two words have lengths 2 and 1, printed as a list.\n\ncode:\nprint([len(x) for x in [\"ab\", \"c\"]])  # [2, 1]\n\nreal example:\nReporting the sizes of two uploaded file names for display."
     },
     {
       "id": 168,
       "question": "What does print([x for x in [1, 2, 3] if x > 1]) output?",
-      "answer": "[2, 3]"
+      "answer": "The filter keeps values greater than 1, printing 2 and 3.\n\ncode:\nprint([x for x in [1, 2, 3] if x > 1])  # [2, 3]\n\nreal example:\nShowing ticket tiers priced above the base tier of 1."
     },
     {
       "id": 169,
       "question": "What does print([x * x for x in range(5) if x % 2]) output?",
-      "answer": "[1, 9] (squares of 1 and 3)"
+      "answer": "Odd numbers 1 and 3 are kept and squared, printing 1 and 9.\n\ncode:\nprint([x * x for x in range(5) if x % 2])  # [1, 9]\n\nreal example:\nListing the square areas of odd-sized painting canvases."
     },
     {
       "id": 170,
       "question": "What does print([x % 3 for x in range(5)]) output?",
-      "answer": "[0, 1, 2, 0, 1]"
+      "answer": "The remainders cycle through 0, 1, 2, 0, 1 as x grows.\n\ncode:\nprint([x % 3 for x in range(5)])  # [0, 1, 2, 0, 1]\n\nreal example:\nAssigning five visitors to three rotating welcome desks by remainder."
     },
     {
       "id": 171,
       "question": "What does print([\"yes\" if x else \"no\" for x in [1, 0, \"\"]]) output?",
-      "answer": "['yes', 'no', 'no']"
+      "answer": "1 is truthy, while 0 and empty string are falsy, giving yes, no, no.\n\ncode:\nprint([\"yes\" if x else \"no\" for x in [1, 0, \"\"]])  # ['yes', 'no', 'no']\n\nreal example:\nConverting filled/blank answer fields into a yes or no review checklist."
     },
     {
       "id": 172,
       "question": "What does print([x for x in \"hello\" if x == \"l\"]) output?",
-      "answer": "['l', 'l']"
+      "answer": "Every l in hello is kept, and hello has two of them.\n\ncode:\nprint([x for x in \"hello\" if x == \"l\"])  # ['l', 'l']\n\nreal example:\nCounting how many times the letter l appears in a guessed word."
     },
     {
       "id": 173,
       "question": "What does print([[1, 2], [3]][0]) output?",
-      "answer": "[1, 2]"
+      "answer": "Index 0 picks the first inner list, so the print shows [1, 2].\n\ncode:\nprint([[1, 2], [3]][0])  # [1, 2]\n\nreal example:\nDisplaying the first row of a two-row mini schedule."
     },
     {
       "id": 174,
       "question": "What does print([x for x in range(6) if x not in (2, 4)]) output?",
-      "answer": "[0, 1, 3, 5]"
+      "answer": "The filter drops 2 and 4, leaving 0, 1, 3, 5.\n\ncode:\nprint([x for x in range(6) if x not in (2, 4)])  # [0, 1, 3, 5]\n\nreal example:\nChoosing floor levels that are not maintenance floors 2 and 4."
     },
     {
       "id": 175,
       "question": "What does print([c.upper() for c in \"cat\"]) output?",
-      "answer": "['C', 'A', 'T']"
+      "answer": "Each character is uppercased separately, printing C, A, T.\n\ncode:\nprint([c.upper() for c in \"cat\"])  # ['C', 'A', 'T']\n\nreal example:\nTurning a spelling word into big individual letters for a banner."
     },
     {
       "id": 176,
       "question": "What does print([x + 10 for x in [1, 2]]) output?",
-      "answer": "[11, 12]"
+      "answer": "Each value gains 10, so it prints the new list [11, 12].\n\ncode:\nprint([x + 10 for x in [1, 2]])  # [11, 12]\n\nreal example:\nAdding a 10-point bonus to the top two raw scores of a contest."
     },
     {
       "id": 177,
       "question": "What does print([x for x in range(1, 6) if x % 2 == 0] + [x for x in range(1, 6) if x % 2 == 1]) output?",
-      "answer": "[2, 4, 1, 3, 5] (evens then odds)"
+      "answer": "The even list [2, 4] is joined with the odd list [1, 3, 5], keeping evens first.\n\ncode:\nevens = [x for x in range(1, 6) if x % 2 == 0]\nodds = [x for x in range(1, 6) if x % 2 == 1]\nprint(evens + odds)  # [2, 4, 1, 3, 5]\n\nreal example:\nSorting five raffle numbers so even tickets print before odd ones on a list."
     },
     {
       "id": 178,
       "question": "What does print([x for x in range(10) if x // 5 == 1]) output?",
-      "answer": "[5, 6, 7, 8, 9]"
+      "answer": "x // 5 equals 1 for numbers 5 through 9, so those are the only ones kept.\n\ncode:\nprint([x for x in range(10) if x // 5 == 1])  # [5, 6, 7, 8, 9]\n\nreal example:\nSelecting the second half (levels 5-9) of a ten-level tutorial."
     },
     {
       "id": 179,
       "question": "What does print([w[1:] for w in [\"ab\", \"cd\"]]) output?",
-      "answer": "['b', 'd']"
+      "answer": "Slicing each word from index 1 drops its first letter, leaving b and d.\n\ncode:\nprint([w[1:] for w in [\"ab\", \"cd\"]])  # ['b', 'd']\n\nreal example:\nCreating truncated display names by dropping the first letter of each codename."
     },
     {
       "id": 180,
       "question": "What does print(sum([x for x in range(1, 8) if x % 2 == 0])) output?",
-      "answer": "12 (2 + 4 + 6)"
+      "answer": "The evens 2, 4, 6 are filtered out, and their sum is 12.\n\ncode:\nprint(sum([x for x in range(1, 8) if x % 2 == 0]))  # 12\n\nreal example:\nTotaling the even-numbered bus stops served on a morning route."
     },
     {
       "id": 181,
       "question": "What does print(len([x for x in range(100) if x % 9 == 0])) output?",
-      "answer": "12 (0, 9, 18, ..., 99)"
+      "answer": "Multiples of 9 below 100 run from 0 to 99, a total of 12 values.\n\ncode:\nprint([x for x in range(100) if x % 9 == 0])\nprint(len([x for x in range(100) if x % 9 == 0]))  # 12\n\nreal example:\nCounting how many milestones land on 9-byte boundaries in a 100-byte file."
     },
     {
       "id": 182,
       "question": "What does print([x for x in range(-2, 3) if x != 0]) output?",
-      "answer": "[-2, -1, 1, 2]"
+      "answer": "The filter removes 0, leaving the negatives -2, -1 and positives 1, 2.\n\ncode:\nprint([x for x in range(-2, 3) if x != 0])  # [-2, -1, 1, 2]\n\nreal example:\nListing nonzero temperature changes so only real moves show in a log."
     },
     {
       "id": 183,
       "question": "What does print([n for n in range(1, 10) if n % 2 == 0 or n % 3 == 0]) output?",
-      "answer": "[2, 3, 4, 6, 8, 9]"
+      "answer": "Numbers divisible by 2 or by 3 are kept, giving 2, 3, 4, 6, 8, 9.\n\ncode:\nprint([n for n in range(1, 10) if n % 2 == 0 or n % 3 == 0])\n# [2, 3, 4, 6, 8, 9]\n\nreal example:\nOpening shops on days divisible by 2 or 3 of a nine-day market cycle."
     },
     {
       "id": 184,
       "question": "What does print([x * 2 for x in range(3)] == [0, 2, 4]) output?",
-      "answer": "True"
+      "answer": "The comprehension builds exactly [0, 2, 4], so the equality is True.\n\ncode:\nprint([x * 2 for x in range(3)] == [0, 2, 4])  # True\n\nreal example:\nVerifying a generated doubling table matches the expected values in a test."
     },
     {
       "id": 185,
       "question": "What does print([i for i in [10, 20, 30] if i >= 20]) output?",
-      "answer": "[20, 30]"
+      "answer": "Values of 20 or more pass, so 20 and 30 are printed.\n\ncode:\nprint([i for i in [10, 20, 30] if i >= 20])  # [20, 30]\n\nreal example:\nShowing only stock levels at or above the 20-unit reorder threshold."
     },
     {
       "id": 186,
       "question": "What does print([x % 2 for x in [3, 4, 5]]) output?",
-      "answer": "[1, 0, 1]"
+      "answer": "The remainders are 1, 0, 1 for the values 3, 4, 5.\n\ncode:\nprint([x % 2 for x in [3, 4, 5]])  # [1, 0, 1]\n\nreal example:\nTagging three packages as odd or even by their tracking numbers."
     },
     {
       "id": 187,
       "question": "What does print([x for x in \"abac\" if x != \"a\" and x != \"c\"]) output?",
-      "answer": "['b']"
+      "answer": "Letters a and c are filtered out, leaving only the single b.\n\ncode:\nprint([x for x in \"abac\" if x != \"a\" and x != \"c\"])  # ['b']\n\nreal example:\nKeeping only the middle allowed character when removing blocked ones from a code."
     },
     {
       "id": 188,
       "question": "What does print([f\"{x}{y}\" for x in \"12\" for y in \"ab\"]) output?",
-      "answer": "['1a', '1b', '2a', '2b']"
+      "answer": "Each x combines with both y letters, producing four two-char strings.\n\ncode:\nprint([f\"{x}{y}\" for x in \"12\" for y in \"ab\"])\n# ['1a', '1b', '2a', '2b']\n\nreal example:\nGenerating row-column labels like 1a, 1b, 2a, 2b for a seating map."
     },
     {
       "id": 189,
       "question": "What does print([x for x in range(1, 4)] * 2) output?",
-      "answer": "[1, 2, 3, 1, 2, 3]"
+      "answer": "Multiplying the comprehension's list by 2 repeats it once more.\n\ncode:\nprint([x for x in range(1, 4)] * 2)  # [1, 2, 3, 1, 2, 3]\n\nreal example:\nDuplicating a gift-card number list so each card prints twice for two copies."
     },
     {
       "id": 190,
       "question": "What does print([x for x in [5, 1, 3] if x not in [2, 3]]) output?",
-      "answer": "[5, 1] (order is preserved)"
+      "answer": "Values not in [2, 3] are kept in original order, giving 5 and 1.\n\ncode:\nprint([x for x in [5, 1, 3] if x not in [2, 3]])  # [5, 1]\n\nreal example:\nShowing only items not on the blocked sale list, in their entry order."
     },
     {
       "id": 191,
       "question": "What does print([x for x in range(5) if x in (0, 2, 4)]) output?",
-      "answer": "[0, 2, 4]"
+      "answer": "Only values in the tuple pass, matching the even numbers 0, 2, 4.\n\ncode:\nprint([x for x in range(5) if x in (0, 2, 4)])  # [0, 2, 4]\n\nreal example:\nSelecting exactly the three lucky door numbers 0, 2, 4 for a giveaway."
     },
     {
       "id": 192,
       "question": "What does print([w.upper() if len(w) > 2 else w for w in [\"a\", \"abc\"]]) output?",
-      "answer": "['a', 'ABC']"
+      "answer": "The word abc is long so it uppercases; the short word a stays as is.\n\ncode:\nprint([w.upper() if len(w) > 2 else w for w in [\"a\", \"abc\"]])  # ['a', 'ABC']\n\nreal example:\nUppercasing long hashtags while keeping short tag names lowercase for style."
     },
     {
       "id": 193,
       "question": "What does print([len(s) for s in [\"\", \"x\", \"xyz\"]]) output?",
-      "answer": "[0, 1, 3]"
+      "answer": "Empty string is 0 characters, x is 1, and xyz is 3.\n\ncode:\nprint([len(s) for s in [\"\", \"x\", \"xyz\"]])  # [0, 1, 3]\n\nreal example:\nReporting the width of three text messages to fit them into a UI."
     },
     {
       "id": 194,
       "question": "What does print([x for x in \"abc\" if x > \"b\"]) output?",
-      "answer": "['c']"
+      "answer": "Letters compare alphabetically, and c is the only one greater than b.\n\ncode:\nprint([x for x in \"abc\" if x > \"b\"])  # ['c']\n\nreal example:\nFiltering a username to letters that sort after the letter b."
     },
     {
       "id": 195,
       "question": "What does print(bool([x for x in range(3) if x == 9])) output?",
-      "answer": "False (the comprehension is empty)"
+      "answer": "No value equals 9, so the comprehension is empty and empty lists are falsy.\n\ncode:\nfound = [x for x in range(3) if x == 9]\nprint(found)   # []\nprint(bool(found))  # False\n\nreal example:\nChecking whether any order matches order number 9 in a small batch, which reports no match."
     },
     {
       "id": 196,
       "question": "What does print([k for k in {\"a\": 1, \"b\": 2}]) output?",
-      "answer": "['a', 'b'] (iterating a dict gives its keys)"
+      "answer": "Iterating a dict directly yields its keys, so the list holds a and b.\n\ncode:\nd = {\"a\": 1, \"b\": 2}\nprint([k for k in d])  # ['a', 'b']\n\nreal example:\nListing all team member names from a name-to-ID dictionary."
     },
     {
       "id": 197,
       "question": "What does print([x for x in range(1, 5) if x < 3 or x > 3]) output?",
-      "answer": "[1, 2, 4] (3 is excluded)"
+      "answer": "Values below 3 or above 3 pass, and only 3 is excluded.\n\ncode:\nprint([x for x in range(1, 5) if x < 3 or x > 3])  # [1, 2, 4]\n\nreal example:\nSelecting every tier except the excluded third tier of a pricing plan."
     },
     {
       "id": 198,
       "question": "What does print([x for x in range(3, 0, -1) if x % 2]) output?",
-      "answer": "[3, 1] (odd numbers in reverse)"
+      "answer": "Counting down 3, 2, 1, the truthy remainders keep the odds 3 and 1.\n\ncode:\nprint([x for x in range(3, 0, -1) if x % 2])  # [3, 1]\n\nreal example:\nListing odd penalty points in reverse order for a scoring review."
     },
     {
       "id": 199,
       "question": "What does print([w for w in \"one two three\".split() if len(w) <= 3]) output?",
-      "answer": "['one', 'two']"
+      "answer": "The words are one, two, three, and only one and two are short enough.\n\ncode:\nprint([w for w in \"one two three\".split() if len(w) <= 3])  # ['one', 'two']\n\nreal example:\nFiltering a phrase down to the words that fit inside a tiny button label."
     },
     {
       "id": 200,
       "question": "What does print([x for x in range(1, 11) if x % 2 == 0][:2]) output?",
-      "answer": "[2, 4] (the first two even numbers)"
+      "answer": "The evens are 2, 4, 6, 8, 10, and slicing the first two gives just 2 and 4.\n\ncode:\nprint([x for x in range(1, 11) if x % 2 == 0][:2])  # [2, 4]\n\nreal example:\nShowing only the first two even-numbered seats on a booking screen."
     }
   ]
 }

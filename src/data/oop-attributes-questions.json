@@ -4,502 +4,502 @@
     {
       "id": 1,
       "question": "class A: x = 1. Where does x live?",
-      "answer": "In the class's namespace (A.__dict__) as a class attribute"
+      "answer": "class A: x = 1. x lives in the class's namespace, stored in A.__dict__ as a class attribute. All instances share this one value.\n\ncode:\nclass A:\n    x = 1\n\nprint('x' in A.__dict__)\n\nreal example:\nShared settings like a tax rate live on the class, not on each object."
     },
     {
       "id": 2,
       "question": "class A: def __init__(self): self.y = 2. Where does y live?",
-      "answer": "In each instance's own __dict__ as an instance attribute"
+      "answer": "class A: def __init__(self): self.y = 2. y lives in each instance's own __dict__ as an instance attribute. Each object gets its own copy.\n\ncode:\nclass A:\n    def __init__(self):\n        self.y = 2\n\nprint(A().__dict__)\n\nreal example:\nEach user account stores its own password hash in its instance dictionary."
     },
     {
       "id": 3,
       "question": "What is the main difference between a class attribute and an instance attribute?",
-      "answer": "Class attribute is shared by all instances; instance attribute belongs to one object"
+      "answer": "A class attribute is shared by all instances, while an instance attribute belongs to just one object. Assigning on the instance shadows the class value.\n\ncode:\nclass A:\n    x = 1\n\na = A()\na.y = 2\n\nreal example:\nA shared app theme versus per-user preferences."
     },
     {
       "id": 4,
       "question": "class A: x = 1. a = A(); b = A(). print(a.x == b.x) outputs?",
-      "answer": "True (both read the shared class attribute)"
+      "answer": "class A: x = 1. a = A(); b = A(). print(a.x == b.x) outputs True. Both instances read the same shared class attribute, so the values match.\n\ncode:\nclass A:\n    x = 1\n\na = A()\nb = A()\nprint(a.x == b.x)\n\nreal example:\nAll employees read the same company holiday list."
     },
     {
       "id": 5,
       "question": "class A: x = 1. a = A(); b = A(). print(a.x is b.x) outputs?",
-      "answer": "True (same object in memory)"
+      "answer": "class A: x = 1. a = A(); b = A(). print(a.x is b.x) outputs True. Both resolve to the very same class attribute object in memory.\n\ncode:\nclass A:\n    x = 1\n\na = A()\nb = A()\nprint(a.x is b.x)\n\nreal example:\nShared immutable constants are truly one object across all instances."
     },
     {
       "id": 6,
       "question": "class A: def __init__(self): self.x = 1. a=A(); b=A(). print(a.x is b.x) outputs?",
-      "answer": "True for ints (interning), but conceptually each instance stores its own x"
+      "answer": "class A: def __init__(self): self.x = 1. print(a.x is b.x) outputs True for small ints because Python interns them, but each instance conceptually owns its own x.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n\na = A()\nb = A()\nprint(a.x is b.x)\n\nreal example:\nTreat values with ==, not is, except when you mean shared singletons."
     },
     {
       "id": 7,
       "question": "class A: x = 1. a = A(); a.x = 2. What does a.x return now?",
-      "answer": "2 (instance attribute shadows the class attribute)"
+      "answer": "class A: x = 1. a = A(); a.x = 2. a.x returns 2. The new instance attribute shadows the class attribute for that object only.\n\ncode:\nclass A:\n    x = 1\n\na = A()\na.x = 2\nprint(a.x)\n\nreal example:\nA user's custom nickname overrides the default username just for them."
     },
     {
       "id": 8,
       "question": "In the setup above, what does A.x return?",
-      "answer": "1 (unchanged)"
+      "answer": "class A: x = 1. a = A(); a.x = 2. A.x returns 1. Assigning on the instance never touches the class attribute itself.\n\ncode:\nclass A:\n    x = 1\n\na = A()\na.x = 2\nprint(A.x)\n\nreal example:\nOne person's theme override does not change the app-wide default."
     },
     {
       "id": 9,
       "question": "class A: x = 1. a=A(); a.x = 2; del a.x. What does a.x return?",
-      "answer": "1 (deleting re-exposes the class attribute)"
+      "answer": "class A: x = 1. a=A(); a.x = 2; del a.x. a.x returns 1. Deleting the instance attribute re-exposes the class attribute underneath.\n\ncode:\nclass A:\n    x = 1\n\na = A()\na.x = 2\ndel a.x\nprint(a.x)\n\nreal example:\nClearing a temporary override restores the platform default."
     },
     {
       "id": 10,
       "question": "class A: x = 1. a=A(); a.x = 2; del a.x. What does A.x return?",
-      "answer": "1"
+      "answer": "class A: x = 1. a=A(); a.x = 2; del a.x. A.x returns 1. The class attribute was never modified by instance operations.\n\ncode:\nclass A:\n    x = 1\n\na = A()\na.x = 2\ndel a.x\nprint(A.x)\n\nreal example:\nDeleting a user preference does not affect the stored global default."
     },
     {
       "id": 11,
       "question": "class A: x = 1. a=A(); del a.x. What happens?",
-      "answer": "AttributeError: 'x' is only a class attribute, so there's nothing in the instance to delete"
+      "answer": "class A: x = 1. a=A(); del a.x raises AttributeError. Since x is only a class attribute, there is nothing on the instance to delete.\n\ncode:\nclass A:\n    x = 1\n\na = A()\ndel a.x\n\nreal example:\nTrying to remove a non-existent override errors rather than silently passing."
     },
     {
       "id": 12,
       "question": "class A: data = []. a=A(); b=A(). a.data.append(5); print(b.data) outputs?",
-      "answer": "[5] (mutable class attribute is genuinely shared)"
+      "answer": "class A: data = []. a=A(); b=A(). a.data.append(5); print(b.data) outputs [5]. A mutable class attribute is genuinely shared by all instances.\n\ncode:\nclass A:\n    data = []\n\na = A()\na.data.append(5)\nprint(A().data)\n\nreal example:\nA shared to-do list visible across all team members updates for everyone."
     },
     {
       "id": 13,
       "question": "class A: data = []. a=A(); a.data = [9]; b=A(). print(b.data) outputs?",
-      "answer": "[] (a rebinding only touches a's instance, b still sees the class list)"
+      "answer": "class A: data = []. a=A(); a.data = [9]; b=A(). print(b.data) outputs []. Rebinding only touches a's instance; others still see the class list.\n\ncode:\nclass A:\n    data = []\n\na = A()\na.data = [9]\nprint(A().data)\n\nreal example:\nGiving one team its own list does not change the shared company list."
     },
     {
       "id": 14,
       "question": "class A: data = []. a=A(); a.data.append(1); print(a.data is A.data) outputs?",
-      "answer": "True (no shadowing happened; same list)"
+      "answer": "class A: data = []. a=A(); a.data.append(1); print(a.data is A.data) outputs True. Appending mutates the same list without creating a new one.\n\ncode:\nclass A:\n    data = []\n\na = A()\na.data.append(1)\nprint(a.data is A.data)\n\nreal example:\nEditing a shared spreadsheet cell updates the same file all views point to."
     },
     {
       "id": 15,
       "question": "class A: data = []. a=A(); a.data = a.data + [1]; print(a.data is A.data) outputs?",
-      "answer": "False (the + rebinds a to a new list)"
+      "answer": "class A: data = []. a=A(); a.data = a.data + [1]; print(a.data is A.data) outputs False. The + operator builds a new list and rebinds a.data.\n\ncode:\nclass A:\n    data = []\n\na = A()\na.data = a.data + [1]\nprint(a.data is A.data)\n\nreal example:\nCreating a revised copy of a document leaves the original untouched."
     },
     {
       "id": 16,
       "question": "How do you read an attribute whose name is in a string variable?",
-      "answer": "getattr(obj, name)"
+      "answer": "Use getattr(obj, name) to read an attribute whose name is held in a string variable. It performs the normal attribute lookup by name.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n\nname = 'x'\nprint(getattr(A(), name))\n\nreal example:\nForms map column names sent as strings onto object fields."
     },
     {
       "id": 17,
       "question": "How do you set an attribute whose name is computed at runtime?",
-      "answer": "setattr(obj, name, value)"
+      "answer": "Use setattr(obj, name, value) to set an attribute computed at runtime. The name arrives as a string and the value is stored dynamically.\n\ncode:\nclass A:\n    pass\n\na = A()\nsetattr(a, 'color', 'red')\nprint(a.color)\n\nreal example:\nImporters write unknown fields directly from the data header names."
     },
     {
       "id": 18,
       "question": "How do you check if an object has an attribute?",
-      "answer": "hasattr(obj, 'attr')"
+      "answer": "Use hasattr(obj, 'attr') to check whether an object has an attribute. It returns True when the name resolves anywhere in the lookup chain.\n\ncode:\nclass A:\n    x = 1\n\nprint(hasattr(A(), 'x'))\n\nreal example:\nChecking for optional metadata before printing it to a report."
     },
     {
       "id": 19,
       "question": "What does getattr(obj, 'missing', 42) return when missing isn't present?",
-      "answer": "42 (the default)"
+      "answer": "getattr(obj, 'missing', 42) returns 42 when the attribute is absent. The supplied default is returned instead of raising AttributeError.\n\ncode:\nclass A:\n    pass\n\nprint(getattr(A(), 'missing', 42))\n\nreal example:\nMissing settings fall back to a sensible default instead of crashing."
     },
     {
       "id": 20,
       "question": "What does hasattr(obj, 'missing') return when missing isn't present?",
-      "answer": "False"
+      "answer": "hasattr(obj, 'missing') returns False when the attribute is absent. The name cannot be found anywhere in the lookup chain.\n\ncode:\nclass A:\n    pass\n\nprint(hasattr(A(), 'missing'))\n\nreal example:\nDeciding which UI sections to show based on which data exists."
     },
     {
       "id": 21,
       "question": "class A: pass. a=A(). What does getattr(a, 'x', 'n/a') return?",
-      "answer": "'n/a'"
+      "answer": "class A: pass. a=A(). getattr(a, 'x', 'n/a') returns 'n/a'. There is no x anywhere, so the default value is handed back.\n\ncode:\nclass A:\n    pass\n\nprint(getattr(A(), 'x', 'n/a'))\n\nreal example:\nA profile page shows n/a when the preferred name has never been set."
     },
     {
       "id": 22,
       "question": "class A: x = 10. a = A(). What does getattr(a, 'x') return?",
-      "answer": "10 (getattr also sees class attributes)"
+      "answer": "class A: x = 10. a = A(). getattr(a, 'x') returns 10. getattr also sees class attributes during its lookup.\n\ncode:\nclass A:\n    x = 10\n\nprint(getattr(A(), 'x'))\n\nreal example:\nReading shared config from an instance works transparently."
     },
     {
       "id": 23,
       "question": "How do you delete an attribute at runtime?",
-      "answer": "delattr(obj, 'attr') or del obj.attr"
+      "answer": "Use delattr(obj, 'attr') or del obj.attr to delete an attribute at runtime. Both remove the named attribute from the object.\n\ncode:\nclass A:\n    pass\n\na = A()\na.x = 1\ndelattr(a, 'x')\nprint(hasattr(a, 'x'))\n\nreal example:\nClearing cached results from an object before recomputing them."
     },
     {
       "id": 24,
       "question": "What does delattr(a, 'missing') raise?",
-      "answer": "AttributeError"
+      "answer": "delattr(a, 'missing') raises AttributeError. There is no such attribute to delete, so Python reports it.\n\ncode:\nclass A:\n    pass\n\na = A()\ndelattr(a, 'missing')\n\nreal example:\nClean-up code checks hasattr before attempting a deletion."
     },
     {
       "id": 25,
       "question": "What does a.__dict__ show for an object with only instance attributes?",
-      "answer": "A dictionary mapping attribute names to values"
+      "answer": "a.__dict__ shows a dictionary mapping attribute names to their values for a given instance. Only instance-level data appears there.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n\nprint(A().__dict__)\n\nreal example:\nSerializers read __dict__ to dump objects to JSON."
     },
     {
       "id": 26,
       "question": "class A: def __init__(self): self.name = 'x'; self.age = 2. print(sorted(A().__dict__)) outputs?",
-      "answer": "['age', 'name']"
+      "answer": "class A: def __init__(self): self.name = 'x'; self.age = 2. print(sorted(A().__dict__)) outputs ['age', 'name']. Sorting the dict keys alphabetically gives age then name.\n\ncode:\nclass A:\n    def __init__(self):\n        self.name = 'x'\n        self.age = 2\n\nprint(sorted(A().__dict__))\n\nreal example:\nGenerating a stable, sorted list of a record's fields for reports."
     },
     {
       "id": 27,
       "question": "Can you set an attribute directly via the instance __dict__?",
-      "answer": "Yes: a.__dict__['attr'] = value (equivalent to setattr)"
+      "answer": "Yes, you can set an attribute directly via the instance __dict__: a.__dict__['attr'] = value. This is equivalent to setattr.\n\ncode:\nclass A:\n    pass\n\na = A()\na.__dict__['attr'] = 1\nprint(a.attr)\n\nreal example:\nLow-level tools manipulate object storage directly for speed."
     },
     {
       "id": 28,
       "question": "class A: pass. a=A(); a.__dict__['z'] = 1; print(a.z) outputs?",
-      "answer": "1"
+      "answer": "class A: pass. a=A(); a.__dict__['z'] = 1; print(a.z) outputs 1. The dictionary entry becomes an ordinary attribute.\n\ncode:\nclass A:\n    pass\n\na = A()\na.__dict__['z'] = 1\nprint(a.z)\n\nreal example:\nDecoding a flat map row into object attributes."
     },
     {
       "id": 29,
       "question": "What does vars(a) return?",
-      "answer": "The same dictionary as a.__dict__"
+      "answer": "vars(a) returns the same dictionary as a.__dict__. Both expose the instance's attribute storage.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n\na = A()\nprint(vars(a) == a.__dict__)\n\nreal example:\nDebugging helpers use vars to snapshot an object's current state."
     },
     {
       "id": 30,
       "question": "Does the instance __dict__ contain class attributes or methods?",
-      "answer": "No, only instance-level data attributes"
+      "answer": "No, the instance __dict__ does not contain class attributes or methods. Those live on the class, keeping each instance dict focused on data.\n\ncode:\nclass A:\n    x = 1\n\n    def m(self):\n        return 2\n\nprint(A().__dict__)\n\nreal example:\nConfirming instance memory stays small and focused on that object's own data."
     },
     {
       "id": 31,
       "question": "What is the attribute lookup order for obj.name?",
-      "answer": "obj.__dict__, then the class, then each parent class in MRO, then an exception"
+      "answer": "For obj.name, Python checks obj.__dict__ first, then the class, then each parent class in the MRO, then raises AttributeError.\n\ncode:\nclass A:\n    x = 1\n\na = A()\nprint(a.x)\n\nreal example:\nThis search order is why instance overrides shadow inherited defaults."
     },
     {
       "id": 32,
       "question": "class A: def method(self): return 1. What is A.Method?",
-      "answer": "A plain function stored in A.__dict__"
+      "answer": "class A: def method(self): return 1. A.Method is a plain function stored in A.__dict__. In Python 3, no binding happens at class level.\n\ncode:\nclass A:\n    def method(self):\n        return 1\n\nprint(type(A.__dict__['method']).__name__)\n\nreal example:\nLow-level code can reach the raw function to call it with an explicit self."
     },
     {
       "id": 33,
       "question": "class A: def method(self): return 1. What does A().method return (without call)?",
-      "answer": "A bound method (function wrapped with the instance)"
+      "answer": "class A: def method(self): return 1. A().method (without calling it) is a bound method. Instance access wraps the function with the object.\n\ncode:\nclass A:\n    def method(self):\n        return 1\n\nprint(type(A().method).__name__)\n\nreal example:\nHanding a bound method to a UI callback keeps its instance attached."
     },
     {
       "id": 34,
       "question": "What does A.__dict__ contain for a class with method m and class attr x?",
-      "answer": "mappingproxy with keys including 'm' (function) and 'x'"
+      "answer": "A.__dict__ is a mappingproxy containing keys for the method m and the class attribute x. Methods and class attributes both live in the class namespace.\n\ncode:\nclass A:\n    x = 1\n\n    def m(self):\n        return 2\n\nprint('x' in A.__dict__, 'm' in A.__dict__)\n\nreal example:\nReflection tools inspect the class namespace to list its members."
     },
     {
       "id": 35,
       "question": "What does the @property decorator turn a method into?",
-      "answer": "A read-only 'attribute-like' accessor: obj.prop returns the method's result"
+      "answer": "The @property decorator turns a method into a read-only attribute-like accessor. Reading obj.prop calls the getter and returns its result without parentheses.\n\ncode:\nclass A:\n    @property\n    def v(self):\n        return 1\n\nprint(A().v)\n\nreal example:\nA full name computed from first and last reads like a plain attribute."
     },
     {
       "id": 36,
       "question": "class A: def __init__(self): self._v = 1; @property def v(self): return self._v. What does A().v return?",
-      "answer": "1 (property getter)"
+      "answer": "class A: def __init__(self): self._v = 1; @property def v(self): return self._v. A().v returns 1 from the property getter.\n\ncode:\nclass A:\n    def __init__(self):\n        self._v = 1\n\n    @property\n    def v(self):\n        return self._v\n\nprint(A().v)\n\nreal example:\nAn account balance read-only through a getter for safe reporting."
     },
     {
       "id": 37,
       "question": "With @property only (no setter), what does a.v = 5 do?",
-      "answer": "AttributeError: can't set attribute (read-only property)"
+      "answer": "With a property that has only a getter, a.v = 5 raises AttributeError: can't set attribute. The property is read-only without a setter.\n\ncode:\nclass A:\n    @property\n    def v(self):\n        return 1\n\nA().v = 5\n\nreal example:\nFields that must never change, like creation timestamps, stay read-only."
     },
     {
       "id": 38,
       "question": "class A: def __init__(self): self._v = 1; @property def v(self): return self._v; @v.setter def v(self, val): self._v = val * 2. What does a = A(); a.v = 5; a._v return?",
-      "answer": "10 (the setter ran)"
+      "answer": "class A with @v.setter storing val * 2. a = A(); a.v = 5; a._v returns 10. The setter transformed 5 into 10 before storing it.\n\ncode:\nclass A:\n    def __init__(self):\n        self._v = 1\n\n    @property\n    def v(self):\n        return self._v\n\n    @v.setter\n    def v(self, val):\n        self._v = val * 2\n\na = A()\na.v = 5\nprint(a._v)\n\nreal example:\nStoring user dollars as cents by multiplying in the setter."
     },
     {
       "id": 39,
       "question": "What does @v.setter allow you to add?",
-      "answer": "Validation/transformation logic on assignment to the property"
+      "answer": "@v.setter lets you add validation and transformation logic that runs on every assignment. Unwanted values can be rejected or converted.\n\ncode:\nclass A:\n    @property\n    def age(self):\n        return self._age\n\n    @age.setter\n    def age(self, v):\n        if v < 0:\n            raise ValueError('no negative age')\n        self._age = v\n\na = A()\na.age = 30\n\nreal example:\nAn age field refuses negative numbers typed by a user."
     },
     {
       "id": 40,
       "question": "class A: @property def v(self): return 42; @v.deleter def v(self): raise Exception('no'). What happens on del a.v?",
-      "answer": "The deleter runs and raises Exception('no')"
+      "answer": "The @v.deleter runs on del a.v and raises Exception('no'). Deleting a property goes through the deleter you define.\n\ncode:\nclass A:\n    @property\n    def v(self):\n        return 42\n\n    @v.deleter\n    def v(self):\n        raise Exception('no')\n\ndel A().v\n\nreal example:\nProtecting critical fields from being deleted accidentally."
     },
     {
       "id": 41,
       "question": "What is the underscore convention _name for?",
-      "answer": "A soft 'protected' signal: internal, but not enforced"
+      "answer": "The underscore convention _name is a soft 'protected' signal. It marks an attribute as internal, but nothing enforces it.\n\ncode:\nclass A:\n    def __init__(self):\n        self._secret = 1\n\nreal example:\nLibraries mark private helpers with an underscore to warn users away."
     },
     {
       "id": 42,
       "question": "What does double-underscore __name do to attribute names?",
-      "answer": "Name mangling: __name becomes _ClassName__name inside the class"
+      "answer": "Double-underscore __name triggers name mangling: inside the class, __name becomes _ClassName__name. This keeps private names from colliding.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 1\n\nprint(A().__dict__)\n\nreal example:\nTwo mixins each defining __data will not overwrite each other thanks to mangling."
     },
     {
       "id": 43,
       "question": "class A: def __init__(self): self.__x = 1. What key is in a.__dict__ for an instance a?",
-      "answer": "'_A__x' (mangled)"
+      "answer": "class A: def __init__(self): self.__x = 1. The key stored in a.__dict__ is '_A__x' because the name was mangled.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 1\n\nprint(A().__dict__)\n\nreal example:\nInspecting an object shows the mangled key where the hidden value lives."
     },
     {
       "id": 44,
       "question": "For the setup above, what does a.__x raise?",
-      "answer": "AttributeError (mangled lookup looks for _A__x only inside class scope)"
+      "answer": "a.__x raises AttributeError outside the class. Outside the body, __x is not mangled, and no such attribute exists.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 1\n\nprint(A().__x)\n\nreal example:\nAccidental attempts to reach private state fail, nudging you toward accessors."
     },
     {
       "id": 45,
       "question": "Can you still access the mangled attribute from outside?",
-      "answer": "Yes, via the full mangled name: a._A__x"
+      "answer": "Yes, you can still access the mangled attribute from outside using the full mangled name a._A__x. Mangling is a convention, not real security.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__x = 1\n\nprint(A()._A__x)\n\nreal example:\nDebuggers and tests peek at mangled names to inspect internal state."
     },
     {
       "id": 46,
       "question": "class A: __x = 5. What does A._A__x return?",
-      "answer": "5"
+      "answer": "class A: __x = 5. A._A__x returns 5. Class-level private attributes are mangled the same way instance ones are.\n\ncode:\nclass A:\n    __x = 5\n\nprint(A._A__x)\n\nreal example:\nClass-level private counters stay hidden behind mangled names."
     },
     {
       "id": 47,
       "question": "class A: def __init__(self): self._v = 1. @property def v(self): return self._v. Is the property on the instance or the class?",
-      "answer": "On the class (A.__dict__['v'])"
+      "answer": "The property lives on the class, stored at A.__dict__['v']. Instances simply find it through the normal lookup chain.\n\ncode:\nclass A:\n    @property\n    def v(self):\n        return 1\n\nprint('v' in A.__dict__)\n\nreal example:\nBecause the property is class-level, all instances share its single definition."
     },
     {
       "id": 48,
       "question": "class A: x = 1. print(hasattr(A, 'x')) outputs?",
-      "answer": "True (classes can be queried too)"
+      "answer": "class A: x = 1. print(hasattr(A, 'x')) outputs True. Classes expose their attributes to hasattr just like instances do.\n\ncode:\nclass A:\n    x = 1\n\nprint(hasattr(A, 'x'))\n\nreal example:\nFramework checks whether a model class declares a particular field."
     },
     {
       "id": 49,
       "question": "class A: x = 1. print(hasattr(A(), 'x')) outputs?",
-      "answer": "True (instance sees inherited class attribute)"
+      "answer": "class A: x = 1. print(hasattr(A(), 'x')) outputs True. Instances see the inherited class attribute during lookup.\n\ncode:\nclass A:\n    x = 1\n\nprint(hasattr(A(), 'x'))\n\nreal example:\nOptional-presence checks work identically for instances and classes."
     },
     {
       "id": 50,
       "question": "class A: x = 1. print(getattr(A, 'x')) outputs?",
-      "answer": "1"
+      "answer": "class A: x = 1. print(getattr(A, 'x')) outputs 1. getattr also works on classes to read class attributes by name.\n\ncode:\nclass A:\n    x = 1\n\nprint(getattr(A, 'x'))\n\nreal example:\nReading a config class attribute whose name comes from a string variable."
     },
     {
       "id": 51,
       "question": "What does dir(A()) list?",
-      "answer": "All accessible attribute/method names, including inherited and dunder ones"
+      "answer": "dir(A()) lists every accessible attribute and method name, including inherited ones and dunder methods, sorted as a list. It is the object's complete public surface.\n\ncode:\nclass A:\n    x = 1\n\nprint('x' in dir(A()))\n\nreal example:\nAuto-discovering the capabilities of an imported object."
     },
     {
       "id": 52,
       "question": "class A: x = 1. print(sorted([a for a in dir(A()) if not a.startswith('_')])) outputs?",
-      "answer": "['x'] (only public attr in this class)"
+      "answer": "print(sorted([a for a in dir(A()) if not a.startswith('_')])) outputs ['x']. Filtering out private and dunder names leaves only x.\n\ncode:\nclass A:\n    x = 1\n\nprint([a for a in dir(A()) if not a.startswith('_')])\n\nreal example:\nGenerating an API endpoint list from public method names."
     },
     {
       "id": 53,
       "question": "Can two instances of the same class have different sets of attributes?",
-      "answer": "Yes, attributes can be added per instance"
+      "answer": "Yes, two instances of the same class can have different sets of attributes. New attributes can be added to any instance independently.\n\ncode:\nclass A:\n    pass\n\na = A()\na.z = 1\nprint(hasattr(a, 'z'), hasattr(A(), 'z'))\n\nreal example:\nSome sessions need extra fields, so only those objects get them."
     },
     {
       "id": 54,
       "question": "class A: pass. a=A(); b=A(). a.z = 1; print('z' in b.__dict__) outputs?",
-      "answer": "False (z exists only on a)"
+      "answer": "class A: pass. a=A(); b=A(). a.z = 1; print('z' in b.__dict__) outputs False. The z attribute exists only on a, not on b.\n\ncode:\nclass A:\n    pass\n\na = A()\nb = A()\na.z = 1\nprint('z' in b.__dict__)\n\nreal example:\nPer-instance annotations stay isolated between records."
     },
     {
       "id": 55,
       "question": "class A: pass. a=A(); print(len(a.__dict__)) outputs?",
-      "answer": "0"
+      "answer": "class A: pass. a=A(); print(len(a.__dict__)) outputs 0. No attributes were ever set, so the instance dictionary is empty.\n\ncode:\nclass A:\n    pass\n\nprint(len(A().__dict__))\n\nreal example:\nAn unconfigured object holds no state until something assigns it."
     },
     {
       "id": 56,
       "question": "What does __slots__ = ['x', 'y'] do?",
-      "answer": "Declares fixed attributes and gives the class no __dict__, saving memory"
+      "answer": "__slots__ = ['x', 'y'] declares a fixed set of attributes and removes the per-instance __dict__, saving memory. Only listed names may exist.\n\ncode:\nclass A:\n    __slots__ = ['x', 'y']\n\na = A()\na.x = 1\nprint(hasattr(a, '__dict__'))\n\nreal example:\nMillions of lightweight records fit in memory when each skips a dict."
     },
     {
       "id": 57,
       "question": "class A: __slots__ = ['x']. a=A(); a.x = 1; print(a.x) outputs?",
-      "answer": "1"
+      "answer": "class A: __slots__ = ['x']. a=A(); a.x = 1; print(a.x) outputs 1. Attributes listed in __slots__ work like normal attributes.\n\ncode:\nclass A:\n    __slots__ = ['x']\n\na = A()\na.x = 1\nprint(a.x)\n\nreal example:\nSpeed-critical game entities store attributes in fixed slots."
     },
     {
       "id": 58,
       "question": "class A: __slots__ = ['x']. a=A(); a.z = 1 raises what?",
-      "answer": "AttributeError: 'A' object has no attribute 'z' (slots restrict attributes)"
+      "answer": "class A: __slots__ = ['x']. a.z = 1 raises AttributeError: 'A' object has no attribute 'z'. z is not allowed and there is no dict for it.\n\ncode:\nclass A:\n    __slots__ = ['x']\n\na = A()\na.z = 1\n\nreal example:\nRestricting fields catches typos like witdth instead of width early."
     },
     {
       "id": 59,
       "question": "class A: __slots__ = ['x']. print(hasattr(A(), '__dict__')) outputs?",
-      "answer": "False (no instance dict when slots are used)"
+      "answer": "class A: __slots__ = ['x']. print(hasattr(A(), '__dict__')) outputs False. A slots class does not get a per-instance dictionary.\n\ncode:\nclass A:\n    __slots__ = ['x']\n\nprint(hasattr(A(), '__dict__'))\n\nreal example:\nSaving memory on millions of small objects by dropping dicts."
     },
     {
       "id": 60,
       "question": "class A: __slots__ = ['x']. print(a.x) before setting returns? (via class default)",
-      "answer": "It raises AttributeError unless a class-level default exists"
+      "answer": "Before being set, a.x raises AttributeError unless a class-level default exists. Slots do not lazily default to None.\n\ncode:\nclass A:\n    __slots__ = ['x']\n\nprint(A().x)\n\nreal example:\nA required field will not silently read as None before being assigned."
     },
     {
       "id": 61,
       "question": "How do you give reasonable defaults to a slots class?",
-      "answer": "Set values in __init__: self.x = default"
+      "answer": "Give slots their defaults inside __init__, for example self.x = default. __init__ runs for every instance and fills the slots.\n\ncode:\nclass A:\n    __slots__ = ['x']\n\n    def __init__(self):\n        self.x = 0\n\nprint(A().x)\n\nreal example:\nEvery new game character starts with default health set in __init__."
     },
     {
       "id": 62,
       "question": "class A: __slots__ = ['x']; def __init__(self): self.x = 0. What does A().x return?",
-      "answer": "0"
+      "answer": "class A: __slots__ = ['x']; def __init__(self): self.x = 0. A().x returns 0. __init__ stored a 0 into the slot.\n\ncode:\nclass A:\n    __slots__ = ['x']\n\n    def __init__(self):\n        self.x = 0\n\nprint(A().x)\n\nreal example:\nA counter object begins at zero for every fresh instance."
     },
     {
       "id": 63,
       "question": "What are the two main reasons to use __slots__?",
-      "answer": "Smaller memory footprint and faster attribute access"
+      "answer": "The two main reasons for __slots__ are a smaller memory footprint and faster attribute access. Skipping the dict makes objects leaner.\n\ncode:\nclass Point:\n    __slots__ = ['x', 'y']\n\nreal example:\nGraphics pipelines create millions of points; slots keep RAM low."
     },
     {
       "id": 64,
       "question": "What does a property prevent at Python level?",
-      "answer": "Direct accidental assignment to a validated/derived attribute"
+      "answer": "A property prevents direct accidental assignment to validated or derived attributes. Writes go through the setter, which can reject bad values.\n\ncode:\nclass A:\n    @property\n    def v(self):\n        return self._v\n\n    @v.setter\n    def v(self, val):\n        if val < 0:\n            raise ValueError('positive only')\n        self._v = val\n\na = A()\na.v = 5\n\nreal example:\nBank accounts block negative balance assignments through the setter."
     },
     {
       "id": 65,
       "question": "class A: x = 1. A.x = 100; print(A().x) outputs?",
-      "answer": "100 (class-wide change affects all unshadowed instances)"
+      "answer": "class A: x = 1. A.x = 100; print(A().x) outputs 100. Changing the class attribute instantly affects every unshadowed instance.\n\ncode:\nclass A:\n    x = 1\n\nA.x = 100\nprint(A().x)\n\nreal example:\nRaising the global tax rate updates all unpaid invoices at once."
     },
     {
       "id": 66,
       "question": "class A: def __init__(self): self.x = 1; self.x += 1. What does A().x return?",
-      "answer": "2"
+      "answer": "class A: def __init__(self): self.x = 1; self.x += 1. A().x returns 2. The value is stored then incremented during initialization.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n        self.x += 1\n\nprint(A().x)\n\nreal example:\nA counter field increments once at record creation time."
     },
     {
       "id": 67,
       "question": "class A: pass. a=A(); setattr(a, 'name', 'n'); print(a.name) outputs?",
-      "answer": "'n'"
+      "answer": "class A: pass. a=A(); setattr(a, 'name', 'n'); print(a.name) outputs 'n'. setattr assigns the attribute under the string name.\n\ncode:\nclass A:\n    pass\n\na = A()\nsetattr(a, 'name', 'n')\nprint(a.name)\n\nreal example:\nData loaders assign fields whose names arrive as strings."
     },
     {
       "id": 68,
       "question": "class A: pass. a=A(); key = 'k'; setattr(a, key, 5); print(a.__dict__) outputs?",
-      "answer": "{'k': 5}"
+      "answer": "class A: pass. a=A(); key = 'k'; setattr(a, key, 5); print(a.__dict__) outputs {'k': 5}. The dynamic assignment lands in the instance dict.\n\ncode:\nclass A:\n    pass\n\na = A()\nkey = 'k'\nsetattr(a, key, 5)\nprint(a.__dict__)\n\nreal example:\nParsing CSV headers into object attributes by name."
     },
     {
       "id": 69,
       "question": "class A: x = 1. a=A(). What does a.__getattribute__('x') do?",
-      "answer": "Runs the default attribute lookup and returns 1"
+      "answer": "a.__getattribute__('x') runs the default attribute lookup and returns 1. __getattribute__ is the machinery behind all attribute access.\n\ncode:\nclass A:\n    x = 1\n\nprint(A().__getattribute__('x'))\n\nreal example:\nFramework internals call __getattribute__ to reuse the default lookup safely."
     },
     {
       "id": 70,
       "question": "What hook is called when an attribute is NOT found normally?",
-      "answer": "__getattr__, if defined on the class"
+      "answer": "The hook called when an attribute is NOT found normally is __getattr__ (if the class defines it). It runs only after the normal lookup fails.\n\ncode:\nclass A:\n    def __getattr__(self, name):\n        return 'missing'\n\nprint(A().nope)\n\nreal example:\nProxy objects forward unknown attribute names to a remote service."
     },
     {
       "id": 71,
       "question": "class A: def __getattr__(self, name): return f'missing:{name}'. a=A(); print(a.anything) outputs?",
-      "answer": "'missing:anything'"
+      "answer": "class A: def __getattr__(self, name): return f'missing:{name}'. a=A(); print(a.anything) outputs 'missing:anything'. Any unknown name reaches __getattr__.\n\ncode:\nclass A:\n    def __getattr__(self, name):\n        return f'missing:{name}'\n\nprint(A().anything)\n\nreal example:\nA settings object reports which key the caller misspelled."
     },
     {
       "id": 72,
       "question": "In the setup above, print(a.x) with no attribute x defined outputs?",
-      "answer": "'missing:x' (because __getattr__ handles it)"
+      "answer": "print(a.x) with no attribute x defined outputs 'missing:x'. Because x is genuinely absent, __getattr__ handles it.\n\ncode:\nclass A:\n    def __getattr__(self, name):\n        return f'missing:{name}'\n\nprint(A().x)\n\nreal example:\nFallback defaults appear for any unset option name."
     },
     {
       "id": 73,
       "question": "class A: x = 1; def __getattr__(self, name): return 0. a=A(); print(a.x) outputs?",
-      "answer": "1 (real attributes are found before __getattr__ runs)"
+      "answer": "class A: x = 1; def __getattr__(self, name): return 0. a=A(); print(a.x) outputs 1. Real attributes are found before __getattr__ ever runs.\n\ncode:\nclass A:\n    x = 1\n\n    def __getattr__(self, name):\n        return 0\n\nprint(A().x)\n\nreal example:\nReal data always takes priority over generated fallbacks."
     },
     {
       "id": 74,
       "question": "What does __setattr__ hook do?",
-      "answer": "Intercepts every attribute assignment for the instance"
+      "answer": "__setattr__ intercepts every attribute assignment made on the instance. It runs for each and every write, including inside __init__.\n\ncode:\nclass A:\n    def __setattr__(self, name, value):\n        print('setting', name)\n\na = A()\na.x = 1\n\nreal example:\nAudit frameworks log every change made to tracked objects."
     },
     {
       "id": 75,
       "question": "class A: def __setattr__(self, name, value): raise AttributeError('locked'). a=A(); a.x = 1 raises?",
-      "answer": "AttributeError('locked')"
+      "answer": "class A: def __setattr__(self, name, value): raise AttributeError('locked'). a.x = 1 raises AttributeError('locked'). The hook blocks the write.\n\ncode:\nclass A:\n    def __setattr__(self, name, value):\n        raise AttributeError('locked')\n\na = A()\na.x = 1\n\nreal example:\nState guards forbid changes once an object is finalized."
     },
     {
       "id": 76,
       "question": "In a custom __setattr__, what must you call to actually store an attribute?",
-      "answer": "object.__setattr__(self, name, value) (or super().__setattr__)"
+      "answer": "In a custom __setattr__, you must call object.__setattr__(self, name, value) (or super().__setattr__) to actually store the attribute. Otherwise nothing is saved.\n\ncode:\nclass A:\n    def __setattr__(self, name, value):\n        object.__setattr__(self, name, value)\n\na = A()\na.x = 1\nprint(a.x)\n\nreal example:\nA logger wraps __setattr__ by delegating and then recording the change."
     },
     {
       "id": 77,
       "question": "class A: def __init__(self): self.x = 1 (plain). Does __getattr__ run for the missing attribute y?",
-      "answer": "Yes, if __getattr__ is defined, it handles missing y"
+      "answer": "Yes, if __getattr__ is defined it handles the missing attribute y. Plain __init__ assignments do not stop the fallback hook for absent names.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n\n    def __getattr__(self, name):\n        return 'dynamic'\n\nprint(A().y)\n\nreal example:\nAdding dynamic defaults without changing __init__."
     },
     {
       "id": 78,
       "question": "class A: def __delattr__(self, name): raise Exception('blocked'). a=A(); a.x=1; del a.x raises?",
-      "answer": "Exception('blocked')"
+      "answer": "class A: def __delattr__(self, name): raise Exception('blocked'). a.x=1; del a.x raises Exception('blocked'). Deletion flows through __delattr__.\n\ncode:\nclass A:\n    def __delattr__(self, name):\n        raise Exception('blocked')\n\na = A()\na.x = 1\ndel a.x\n\nreal example:\nProtecting critical attributes from being removed accidentally."
     },
     {
       "id": 79,
       "question": "How do you compute a derived attribute on the fly?",
-      "answer": "Use a @property that computes the value from other attributes"
+      "answer": "Use a @property that computes the value from other attributes. The getter runs on every read, so derived data stays in sync.\n\ncode:\nclass A:\n    def __init__(self):\n        self.v = 10\n\n    @property\n    def double(self):\n        return self.v * 2\n\nprint(A().double)\n\nreal example:\nTotal price derived from quantity times unit price, always fresh."
     },
     {
       "id": 80,
       "question": "class A: def __init__(self): self.v = 10; @property def double(self): return self.v * 2. print(A().double) outputs?",
-      "answer": "20 (no parentheses needed for a property)"
+      "answer": "class A: def __init__(self): self.v = 10; @property def double(self): return self.v * 2. print(A().double) outputs 20. Properties are read without parentheses.\n\ncode:\nclass A:\n    def __init__(self):\n        self.v = 10\n\n    @property\n    def double(self):\n        return self.v * 2\n\nprint(A().double)\n\nreal example:\nA rectangle's area reads like data but is computed on demand."
     },
     {
       "id": 81,
       "question": "Why call the private-store attribute _v when using a property v?",
-      "answer": "To avoid infinite recursion (self.v = ... inside the getter would loop)"
+      "answer": "The backing attribute is named _v so the property can safely read and write it. If the getter used self.v it would call itself forever.\n\ncode:\nclass A:\n    def __init__(self):\n        self._v = 1\n\n    @property\n    def v(self):\n        return self._v\n\nprint(A().v)\n\nreal example:\nThe underscore storage keeps property logic free of recursion."
     },
     {
       "id": 82,
       "question": "class A: def __init__(self): self.__v = 1; @property def v(self): return self.__v. print(A().v) outputs?",
-      "answer": "1"
+      "answer": "class A: def __init__(self): self.__v = 1; @property def v(self): return self.__v. print(A().v) outputs 1. The mangled store works fine inside the property.\n\ncode:\nclass A:\n    def __init__(self):\n        self.__v = 1\n\n    @property\n    def v(self):\n        return self.__v\n\nprint(A().v)\n\nreal example:\nPrivate backing storage stays tidy behind a public property."
     },
     {
       "id": 83,
       "question": "What does 'x' in dir(A) return for a class attribute x?",
-      "answer": "True"
+      "answer": "'x' in dir(A) returns True for a class attribute x. dir on the class lists its members too.\n\ncode:\nclass A:\n    x = 1\n\nprint('x' in dir(A))\n\nreal example:\nDocumenting class members by inspecting dir on the class."
     },
     {
       "id": 84,
       "question": "class A: x = 1; def m(self): return 2. print('m' in dir(A), 'x' in dir(A)) outputs?",
-      "answer": "True True"
+      "answer": "class A: x = 1; def m(self): return 2. print('m' in dir(A), 'x' in dir(A)) outputs True True. Both the method and attribute are listed.\n\ncode:\nclass A:\n    x = 1\n\n    def m(self):\n        return 2\n\nprint('m' in dir(A), 'x' in dir(A))\n\nreal example:\nDeprecation checks confirm old members still exist on a class."
     },
     {
       "id": 85,
       "question": "class A: x = 1. print('x' in A.__dict__) outputs?",
-      "answer": "True"
+      "answer": "class A: x = 1. print('x' in A.__dict__) outputs True. The class-body assignment placed x into the class dictionary.\n\ncode:\nclass A:\n    x = 1\n\nprint('x' in A.__dict__)\n\nreal example:\nReflection enumerates a model's declared fields."
     },
     {
       "id": 86,
       "question": "class A: def m(self): return 1. print('m' in A.__dict__) outputs?",
-      "answer": "True (methods are class attributes)"
+      "answer": "class A: def m(self): return 1. print('m' in A.__dict__) outputs True. Methods are stored as values in the class dictionary.\n\ncode:\nclass A:\n    def m(self):\n        return 1\n\nprint('m' in A.__dict__)\n\nreal example:\nORMs discover methods stored on model classes dynamically."
     },
     {
       "id": 87,
       "question": "What does A.__name__, A.__qualname__ refer to?",
-      "answer": "Strings holding the class's name/qualified name"
+      "answer": "A.__name__ and A.__qualname__ are strings holding the class's name and qualified name. They describe the class itself, not instances.\n\ncode:\nclass A:\n    pass\n\nprint(A.__name__)\n\nreal example:\nLogging uses the class name to show which class produced an event."
     },
     {
       "id": 88,
       "question": "class A: pass. What does A.__dict__.keys() result show?",
-      "answer": "Class members plus dunders like __module__, __doc__, __dict__, __weakref__"
+      "answer": "A.__dict__.keys() shows your members plus built-in entries like __module__, __doc__, __dict__, and __weakref__. Every class dict carries those.\n\ncode:\nclass A:\n    pass\n\nprint('__module__' in A.__dict__)\n\nreal example:\nIntrospection tools skip leading-underscore entries when scanning an API."
     },
     {
       "id": 89,
       "question": "class A: x = 1. a=A(). What does getattr type manipulation a.__dict__.update({'y': 2}) do?",
-      "answer": "Adds attribute y to the instance: a.y becomes 2"
+      "answer": "a.__dict__.update({'y': 2}) adds attribute y to the instance, so a.y becomes 2. Updating the dict is direct manipulation of storage.\n\ncode:\nclass A:\n    x = 1\n\na = A()\na.__dict__.update({'y': 2})\nprint(a.y)\n\nreal example:\nBulk-merging a row of data into an object."
     },
     {
       "id": 90,
       "question": "class A: x = 1. Can you read a class attribute through an instance?",
-      "answer": "Yes, a.x works if no instance x shadows it"
+      "answer": "Yes, you can read a class attribute through an instance. a.x works when no instance attribute shadows it.\n\ncode:\nclass A:\n    x = 1\n\nprint(A().x)\n\nreal example:\nReading shared defaults from any instance of the class."
     },
     {
       "id": 91,
       "question": "class A: x = [1]. a = A(); a.x[0] = 99. print(A.x) outputs?",
-      "answer": "[99] (mutating, not rebinding, affects the shared list)"
+      "answer": "class A: x = [1]. a = A(); a.x[0] = 99; print(A.x) outputs [99]. Item assignment mutates the shared list without rebinding it.\n\ncode:\nclass A:\n    x = [1]\n\na = A()\na.x[0] = 99\nprint(A.x)\n\nreal example:\nEditing a shared settings list updates it for every reader."
     },
     {
       "id": 92,
       "question": "class A: x = {'k': 1}. a=A(); a.x['k'] = 2. print(A().x) outputs?",
-      "answer": "{'k': 2} (shared dict mutated)"
+      "answer": "class A: x = {'k': 1}. a=A(); a.x['k'] = 2. print(A().x) outputs {'k': 2}. Key assignment mutates the shared dict for all instances.\n\ncode:\nclass A:\n    x = {'k': 1}\n\na = A()\na.x['k'] = 2\nprint(A().x)\n\nreal example:\nOne shared feature-flag dict is updated by admins for all users."
     },
     {
       "id": 93,
       "question": "class A: def __init__(self): self.x = 1. a=A(); print(sorted(vars(a))) outputs?",
-      "answer": "['x']"
+      "answer": "class A: def __init__(self): self.x = 1. a=A(); print(sorted(vars(a))) outputs ['x']. vars returns the instance dict, and its single key sorts to ['x'].\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n\na = A()\nprint(sorted(vars(a)))\n\nreal example:\nBuilding stable field lists for serialization output."
     },
     {
       "id": 94,
       "question": "What does a class attribute update do to existing instances?",
-      "answer": "They see the new value unless they have their own shadowing instance attribute"
+      "answer": "A class attribute update is seen by existing instances unless they have their own shadowing instance attribute. Shadowed ones keep the old value.\n\ncode:\nclass A:\n    x = 1\n\nA.x = 5\nprint(A().x)\n\nreal example:\nPushing a new default version to all users at once."
     },
     {
       "id": 95,
       "question": "class A: x = 1. a=A(); a.x = 2; A.x = 99. print(a.x, A().x) outputs?",
-      "answer": "2 99 (a is shadowed; new instance uses class value)"
+      "answer": "class A: x = 1. a=A(); a.x = 2; A.x = 99. print(a.x, A().x) outputs 2 99. a keeps its shadow; a fresh instance reads the new class value.\n\ncode:\nclass A:\n    x = 1\n\na = A()\na.x = 2\nA.x = 99\nprint(a.x, A().x)\n\nreal example:\nA personalized setting sticks while the global default changes for others."
     },
     {
       "id": 96,
       "question": "class A: x = 1. What is the safest way to add validation to x assignments?",
-      "answer": "Make x a property with a setter and store the raw value in _x"
+      "answer": "Make x a property with a setter and store the raw value in _x. Writes then go through validation safely.\n\ncode:\nclass A:\n    @property\n    def x(self):\n        return self._x\n\n    @x.setter\n    def x(self, v):\n        if v < 0:\n            raise ValueError('positive only')\n        self._x = v\n\na = A()\na.x = 5\n\nreal example:\nAn age field rejects negative numbers entered by the user."
     },
     {
       "id": 97,
       "question": "class A: def __init__(self): self.x = 1. print(A().__dict__ == {'x': 1}) outputs?",
-      "answer": "True"
+      "answer": "class A: def __init__(self): self.x = 1. print(A().__dict__ == {'x': 1}) outputs True. After __init__, the dict contains exactly {'x': 1}.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = 1\n\nprint(A().__dict__ == {'x': 1})\n\nreal example:\nUnit tests assert the exact stored state of created objects."
     },
     {
       "id": 98,
       "question": "How do you detect that an attribute exists on the class but not the instance?",
-      "answer": "'x' in type(obj).__dict__ and 'x' not in obj.__dict__"
+      "answer": "Check both sides: 'x' in type(obj).__dict__ and 'x' not in obj.__dict__. Comparing the two dicts reveals where the value actually lives.\n\ncode:\nclass A:\n    x = 1\n\na = A()\nprint('x' in type(a).__dict__, 'x' not in a.__dict__)\n\nreal example:\nDiagnosing whether data is shared at class level or per instance."
     },
     {
       "id": 99,
       "question": "class A: x = 1. a=A(). print('x' in a.__dict__, 'x' in type(a).__dict__) outputs?",
-      "answer": "False True"
+      "answer": "class A: x = 1. a=A(). print('x' in a.__dict__, 'x' in type(a).__dict__) outputs False True. x is stored on the class, not copied to the instance.\n\ncode:\nclass A:\n    x = 1\n\na = A()\nprint('x' in a.__dict__, 'x' in type(a).__dict__)\n\nreal example:\nConfirming a shared constant is not duplicated per instance."
     },
     {
       "id": 100,
       "question": "class A: def __init__(self): self.x = [1]. a=A(); b=A(). Are a.x and b.x the same object?",
-      "answer": "No, the constructor creates a fresh list for each instance"
+      "answer": "No, a.x and b.x are not the same object. __init__ builds a fresh list for each new instance, so each cart owns its own list.\n\ncode:\nclass A:\n    def __init__(self):\n        self.x = [1]\n\na = A()\nb = A()\nprint(a.x is b.x)\n\nreal example:\nEach shopping cart gets its own item list, so carts never mix."
     }
   ]
 }

@@ -4,502 +4,502 @@
     {
       "id": 1,
       "question": "Predict the output:\n```python\nclass Duck:\n    def quack(self):\n        return 'duck quack'\nclass Person:\n    def quack(self):\n        return 'person quacking'\ndef make_noise(thing):\n    return thing.quack()\nprint(make_noise(Duck()))\nprint(make_noise(Person()))\n```",
-      "answer": "duck quack\nperson quacking\nThis is duck typing: make_noise never checks the declared or runtime type of `thing`; it only calls `thing.quack()` at the last moment. As long as an object exposes a callable quack attribute, the function accepts it, so both Duck and Person work despite having no common base class."
+      "answer": "Output: duck quack then person quacking. This is duck typing: make_noise only calls thing.quack() and never checks the type, so any object with a quack method works.\n\ncode:\nclass Duck:\n    def quack(self): return 'duck quack'\n\nclass Person:\n    def quack(self): return 'person quacking'\n\ndef make_noise(thing):\n    return thing.quack()\n\nprint(make_noise(Duck()))\nprint(make_noise(Person()))\n\nreal example:\nA logging system calls log() on anything, and each logger object formats its own line."
     },
     {
       "id": 2,
       "question": "Predict the output:\n```python\nclass Squad:\n    def __init__(self, members):\n        self.members = members\n    def __len__(self):\n        return len(self.members)\nprint(len(Squad([1, 2, 3])))\n```",
-      "answer": "3\nlen(x) is syntactic sugar for calling the protocol method x.__len__(). Built-in len() looks up __len__ in the instance's type and requires it to return a non-negative integer; here it delegates to the list's own length of 3."
+      "answer": "Output: 3. len(x) is sugar for calling x.__len__(), and Squad's __len__ delegates to the list's length.\n\ncode:\nclass Squad:\n    def __init__(self, members):\n        self.members = members\n    def __len__(self):\n        return len(self.members)\n\nprint(len(Squad([1, 2, 3])))  # 3\n\nreal example:\nA custom team class supports len() so code can measure it like a normal collection."
     },
     {
       "id": 3,
       "question": "What error, if any, does this raise and why?\n```python\nclass Squad:\n    def __init__(self, members):\n        self.members = members\nprint(len(Squad([1, 2])))\n```",
-      "answer": "TypeError: object of type 'Squad' has no len()\nlen() goes through CPython's C-level tp_as_sequence peephole and only accepts a __len__ method. Unlike iteration, it does NOT fall back to __getitem__; since Squad defines neither, the TypeError fires even though the object holds a list whose length could be inferred."
+      "answer": "It raises TypeError: object of type 'Squad' has no len(). len() requires a __len__ method and will not guess the length from a stored list.\n\ncode:\nclass Squad:\n    def __init__(self, members):\n        self.members = members\n\nprint(len(Squad([1, 2])))  # TypeError\n\nreal example:\nCalling len() on a wrapper that forgot to implement the length protocol fails loudly."
     },
     {
       "id": 4,
       "question": "Fill in the missing dunder so this prints `Point(3)` three times. Then predict the output:\n```python\nclass Point:\n    def __init__(self, x):\n        self.x = x\n    def ____(self):\n        return f'Point({self.x})'\np = Point(3)\nprint(p)\nprint(str(p))\nprint(repr(p))\n```",
-      "answer": "Fill in `__repr__`. Output:\nPoint(3)\nPoint(3)\nPoint(3)\nWhen __str__ is missing, str() and print() fall back to __repr__, so all three calls resolve to the same source. Defining __repr__ alone is enough to give the object a readable textual form everywhere."
+      "answer": "Fill in __repr__. Output: Point(3) printed three times, because str() and print() fall back to __repr__ when __str__ is missing.\n\ncode:\nclass Point:\n    def __init__(self, x):\n        self.x = x\n    def __repr__(self):\n        return f'Point({self.x})'\n\np = Point(3)\nprint(p)\nprint(str(p))\nprint(repr(p))\n\nreal example:\nDefining just __repr__ gives every object a readable text form for logs and debugging."
     },
     {
       "id": 5,
       "question": "Predict the output (memory address varies):\n```python\nclass A:\n    def __repr__(self):\n        return 'A-repr'\nclass B:\n    def __str__(self):\n        return 'B-str'\nprint([A(), B()])\nprint(A())\nprint(B())\n```",
-      "answer": "[A-repr, <__main__.B object at 0x...>]\nA-repr\nB-str\nContainers format each element with repr(), so B() inside the list shows the default object repr because B never defines __repr__; A() shows 'A-repr'. Standalone print() calls str(), which prefers __str__ (B) and falls back to __repr__ (A). The two dunders are dispatched in different contexts."
+      "answer": "Output: [A-repr, <__main__.B object at 0x...>] then A-repr then B-str. Containers format items with repr(), while print()/str() prefer __str__.\n\ncode:\nclass A:\n    def __repr__(self): return 'A-repr'\n\nclass B:\n    def __str__(self): return 'B-str'\n\nprint([A(), B()])\nprint(A())\nprint(B())\n\nreal example:\nUser-facing text uses __str__, while debugging lists show the __repr__ form of each item."
     },
     {
       "id": 6,
       "question": "Predict the output:\n```python\nclass Vector:\n    def __init__(self, x):\n        self.x = x\n    def __add__(self, other):\n        return Vector(self.x + other.x)\nprint((Vector(1) + Vector(2)).x)\nprint(Vector(1) + Vector(2))\n```",
-      "answer": "3\n<__main__.Vector object at 0x...>\na + b is dispatched as type(a).__add__(a, b), so the left operand's __add__ builds a new Vector(3), and the first print shows 3. The second line prints the new object, but Vector defines neither __repr__ nor __str__, so repr falls back to object's identity-based default."
+      "answer": "Output: 3 then <__main__.Vector object at 0x...>. The first print sees .x, the second prints the object, which lacks both __repr__ and __str__.\n\ncode:\nclass Vector:\n    def __init__(self, x):\n        self.x = x\n    def __add__(self, other):\n        return Vector(self.x + other.x)\n\nprint((Vector(1) + Vector(2)).x)  # 3\nprint(Vector(1) + Vector(2))      # default object repr\n\nreal example:\nVector math classes rarely print nicely unless they define __repr__ themselves."
     },
     {
       "id": 7,
       "question": "Predict the output and error:\n```python\nclass V:\n    def __add__(self, other):\n        return 'v-add'\nv = V()\nprint(v + 1)\nprint(1 + v)\n```",
-      "answer": "v-add\nTypeError: unsupported operand type(s) for +: 'int' and 'V'\nFor v + 1 the left operand V owns __add__, which happily ignores the int and returns 'v-add'. For 1 + v Python first calls int.__add__(1, v); int cannot handle V so it returns NotImplemented, and the reflected V.__radd__ is then looked up - but V has none, so the addition degrades to TypeError."
+      "answer": "Output: v-add then TypeError: unsupported operand type(s) for +: 'int' and 'V'. v + 1 uses V.__add__, but 1 + v fails because int cannot handle V and V has no __radd__.\n\ncode:\nclass V:\n    def __add__(self, other):\n        return 'v-add'\n\nv = V()\nprint(v + 1)   # v-add\nprint(1 + v)   # TypeError\n\nreal example:\nReflected methods matter when numbers appear on the left, like writing 0 + money."
     },
     {
       "id": 8,
       "question": "Predict the output:\n```python\nclass Money:\n    def __init__(self, a):\n        self.a = a\n    def __add__(self, other):\n        if isinstance(other, Money):\n            return Money(self.a + other.a)\n        return NotImplemented\n    def __radd__(self, other):\n        return Money(other + self.a)\nM = Money\nprint((5 + M(10)).a)\nprint(sum([M(2), M(3)]).a)\nprint((M(1) + M(2)).a)\n```",
-      "answer": "15\n5\n3\nWhen the left operand lacks the operation, Python invokes the right operand's reflected __radd__: int.__add__(5, M) fails, so M.__radd__(5) runs and yields Money(15). sum() starts from int 0, so 0 + M(2) likewise bounces to __radd__ twice, giving Money(5). A homogeneous Money + Money uses the forward __add__ directly and returns Money(3)."
+      "answer": "Output: 15, 5, 3. int.__add__ fails on Money, so Python calls the reflected __radd__ for reversed operands; a Money + Money uses __add__ directly.\n\ncode:\nclass Money:\n    def __init__(self, a): self.a = a\n    def __add__(self, other):\n        if isinstance(other, Money):\n            return Money(self.a + other.a)\n        return NotImplemented\n    def __radd__(self, other):\n        return Money(other + self.a)\n\nM = Money\nprint((5 + M(10)).a)  # 15\nprint(sum([M(2), M(3)]).a)  # 5\n\nreal example:\nAdding currency works whichever side an int appears on, including inside sum()."
     },
     {
       "id": 9,
       "question": "Predict the output:\n```python\nclass Vec:\n    def __init__(self, x):\n        self.x = x\n    def __add__(self, other):\n        return Vec(self.x + other.x)\nv = Vec(1)\nbefore = v\nv += Vec(2)\nprint(v.x)\nprint(v is before)\n```",
-      "answer": "3\nFalse\nClass Vec defines only __add__, not __iadd__. The augmented assignment v += o therefore desugars to v = v.__add__(o), which constructs a brand-new Vec(3) and rebinds the name, so `v is before` is False. A real __iadd__ would mutate the object in place and return self, keeping identity."
+      "answer": "Output: 3 then False. Vec has no __iadd__, so v += Vec(2) becomes v = v + Vec(2), creating a brand-new object.\n\ncode:\nclass Vec:\n    def __init__(self, x): self.x = x\n    def __add__(self, other):\n        return Vec(self.x + other.x)\n\nv = Vec(1)\nbefore = v\nv += Vec(2)\nprint(v.x)\nprint(v is before)  # False\n\nreal example:\nImmutables safely rebind on +=, like strings, without changing what other aliases see."
     },
     {
       "id": 10,
       "question": "Predict the output:\n```python\nclass Num:\n    def __init__(self, v):\n        self.v = v\n    def __lt__(self, other):\n        return self.v < other.v\nprint(Num(4) > Num(3))\nprint(Num(1) > Num(2))\n```",
-      "answer": "True\nFalse\nThere is no __gt__, but a > b first tries type(b).__lt__(b, a) as a mirror. For Num(4) > Num(3) the reflected call runs 3 < 4, which is True; for Num(1) > Num(2) it runs 2 < 1, which is False. Any rich comparison that cannot be done forwards is attempted with swapped operands before raising TypeError."
+      "answer": "Output: True then False. There is no __gt__, so a > b mirrors to type(b).__lt__(b, a): 3 < 4 is True, 2 < 1 is False.\n\ncode:\nclass Num:\n    def __init__(self, v): self.v = v\n    def __lt__(self, other):\n        return self.v < other.v\n\nprint(Num(4) > Num(3))  # True\nprint(Num(1) > Num(2))  # False\n\nreal example:\nScore ranking works with only __lt__ because Python mirrors > through it."
     },
     {
       "id": 11,
       "question": "Predict the output:\n```python\nclass Plate:\n    def __init__(self, n):\n        self.n = n\n    def __eq__(self, other):\n        return isinstance(other, Plate) and self.n == other.n\nprint(Plate.__hash__ is None)\ntry:\n    hash(Plate(1))\nexcept TypeError as e:\n    print(e)\n```",
-      "answer": "True\nunhashable type: 'Plate'\nDefining __eq__ without also defining __hash__ implicitly sets the class attribute __hash__ to None. This makes instances unhashable by design - they can no longer be set elements or dict keys - and hash(Plate(1)) raises TypeError. Re-add __hash__ only when equal objects must hash equally."
+      "answer": "Output: True then unhashable type: 'Plate'. Defining __eq__ without __hash__ sets __hash__ to None, making instances unhashable on purpose.\n\ncode:\nclass Plate:\n    def __init__(self, n): self.n = n\n    def __eq__(self, other):\n        return isinstance(other, Plate) and self.n == other.n\n\nprint(Plate.__hash__ is None)  # True\nhash(Plate(1))  # TypeError\n\nreal example:\nObjects whose equality is custom should not become dict keys unless they opt into hashing."
     },
     {
       "id": 12,
       "question": "Predict the output:\n```python\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n    def __eq__(self, other):\n        return isinstance(other, Animal) and self.name == other.name\nclass Dog(Animal):\n    pass\nclass Cat(Animal):\n    pass\nprint(Dog('rex') == Cat('rex'))\nprint(Cat('rex') == object())\n```",
-      "answer": "True\nFalse\nThe custom __eq__ is written with isinstance(other, Animal) rather than type equality, so a Dog and a Cat that share the name compare equal - the two classes never say otherwise because Python tries Dog's and then Cat's inherited __eq__. object() is not an Animal, so the isinstance check fails and the whole expression is False."
+      "answer": "Output: True then False. The inherited __eq__ compares via isinstance(other, Animal), so a Dog('rex') and Cat('rex') claim equality, while object() fails the check.\n\ncode:\nclass Animal:\n    def __init__(self, name): self.name = name\n    def __eq__(self, other):\n        return isinstance(other, Animal) and self.name == other.name\n\nclass Dog(Animal): pass\n\nclass Cat(Animal): pass\n\nprint(Dog('rex') == Cat('rex'))  # True\n\nreal example:\nA registry matching animals by name treats same-named members as equal across types."
     },
     {
       "id": 13,
       "question": "Fix the bug so that dict lookup by an equal key works:\n```python\nclass Key:\n    def __init__(self, v):\n        self.v = v\n    def __eq__(self, other):\n        return self.v == other.v\nk = Key('a')\nd = {k: 1}\nprint(d[Key('a')])   # currently raises\n```",
-      "answer": "Add `def __hash__(self): return hash(self.v)` to Key.\nThen the print shows 1. A dict hashes keys first and only then applies __eq__ to resolve hash collisions; once __eq__ is defined without __hash__, the class is unhashable and even constructing the dict from Key('a') raises TypeError. Equal objects must also produce equal hashes, which hash(self.v) guarantees for equal strings."
+      "answer": "Add def __hash__(self): return hash(self.v) to Key. Then print(d[Key('a')]) shows 1; equal keys must hash equally for dict lookup.\n\ncode:\nclass Key:\n    def __init__(self, v): self.v = v\n    def __eq__(self, other): return self.v == other.v\n    def __hash__(self): return hash(self.v)\n\nk = Key('a')\nd = {k: 1}\nprint(d[Key('a')])  # 1\n\nreal example:\nCustom ID classes serve as dict keys once they provide matching hash and equality."
     },
     {
       "id": 14,
       "question": "Predict the output:\n```python\nclass Greeter:\n    def greet(self):\n        return 'Hello'\nclass LoudGreeter(Greeter):\n    def greet(self):\n        return super().greet().upper() + '!'\nprint(LoudGreeter().greet())\n```",
-      "answer": "HELLO!\nLoudGreeter overrides greet, but the zero-argument super() forwards the call to the next class in the instance's MRO after LoudGreeter - here Greeter - whose greet returns 'Hello'. The subclass then uppercases and appends '!' before returning the joined result."
+      "answer": "Output: HELLO!. super() forwards to Greeter.greet returning 'Hello', then LoudGreeter uppercases and appends '!'.\n\ncode:\nclass Greeter:\n    def greet(self): return 'Hello'\n\nclass LoudGreeter(Greeter):\n    def greet(self):\n        return super().greet().upper() + '!'\n\nprint(LoudGreeter().greet())  # HELLO!\n\nreal example:\nSubclasses extend a base greeting with extra formatting instead of rewriting it."
     },
     {
       "id": 15,
       "question": "Predict the output:\n```python\nclass A:\n    def f(self):\n        return 'A'\nclass B(A):\n    def f(self):\n        return 'B' + super().f()\nclass C(A):\n    def f(self):\n        return 'C' + super().f()\nclass D(B, C):\n    def f(self):\n        return 'D' + super().f()\nprint(D().f())\n```",
-      "answer": "DBCA\nsuper() walks a cooperative chain, not just the direct parent. C3 linearization orders D, B, C, A (D inherits B before C, and both share A), so D calls B.f, B chains to C.f, C chains to A.f, and the prefix concatenation produces 'DBCA'."
+      "answer": "Output: DBCA. super() follows the cooperative MRO D, B, C, A, so D calls B, B chains to C, C chains to A.\n\ncode:\nclass A:\n    def f(self): return 'A'\n\nclass B(A):\n    def f(self): return 'B' + super().f()\n\nclass C(A):\n    def f(self): return 'C' + super().f()\n\nclass D(B, C):\n    def f(self): return 'D' + super().f()\n\nprint(D().f())  # DBCA\n\nreal example:\nDiamond hierarchies chain prefixes through each branch once, in MRO order."
     },
     {
       "id": 16,
       "question": "Predict the output:\n```python\nclass Base:\n    def __init__(self):\n        print('Base init')\nclass Left(Base):\n    def __init__(self):\n        super().__init__()\n        print('Left init')\nclass Right(Base):\n    def __init__(self):\n        super().__init__()\n        print('Right init')\nclass Child(Left, Right):\n    def __init__(self):\n        super().__init__()\n        print('Child init')\nChild()\n```",
-      "answer": "Base init\nRight init\nLeft init\nChild init\nThe zero-argument super() in the diamond follows the MRO Child, Left, Right, Base. Each __init__ defers its own print until after super().__init__() returns, so control sinks to Base first and boomerangs back up: Base, then Right, then Left, and finally Child. This is the cooperative super() pattern in action."
+      "answer": "Output: Base init, Right init, Left init, Child init. Each __init__ prints after super().__init__() returns, so control sinks to Base and boomerangs back.\n\ncode:\nclass Base:\n    def __init__(self):\n        print('Base init')\n\nclass Left(Base):\n    def __init__(self):\n        super().__init__()\n        print('Left init')\n\nclass Right(Base):\n    def __init__(self):\n        super().__init__()\n        print('Right init')\n\nclass Child(Left, Right):\n    def __init__(self):\n        super().__init__()\n        print('Child init')\n\nChild()\n\nreal example:\nCooperative super() ensures every base initializer runs once in layered frameworks."
     },
     {
       "id": 17,
       "question": "Predict the output:\n```python\nimport abc\nclass NoiseMaker(metaclass=abc.ABCMeta):\n    @abc.abstractmethod\n    def make(self):\n        ...\nNoiseMaker.register(int)\nprint(issubclass(int, NoiseMaker))\nprint(isinstance(5, NoiseMaker))\n```",
-      "answer": "True\nTrue\nregister() installs int as a virtual subclass: isinstance and issubclass consult the ABC registry, so int qualifies structurally without inheriting from NoiseMaker. Careful: registration is one-way and permanent, and int still lacks a real make() method, so calling NoiseMaker.make on 5 would fail even though isinstance says True."
+      "answer": "Output: True then True. register(int) installs int as a virtual subclass, so isinstance and issubclass consult the registry even though int never inherits.\n\ncode:\nimport abc\n\nclass NoiseMaker(metaclass=abc.ABCMeta):\n    @abc.abstractmethod\n    def make(self): ...\n\nNoiseMaker.register(int)\nprint(issubclass(int, NoiseMaker))  # True\nprint(isinstance(5, NoiseMaker))    # True\n\nreal example:\nThird-party types can present as a known interface without editing their source."
     },
     {
       "id": 18,
       "question": "Predict the output:\n```python\nclass Mallard:\n    def swim(self):\n        return 'swimming'\nclass ToyDuck:\n    def swim(self):\n        return 'toy swimming'\ndef take_to_water(d):\n    return d.swim()\nprint(take_to_water(Mallard()))\nprint(isinstance(ToyDuck(), Mallard))\n```",
-      "answer": "swimming\nFalse\nThe function runs fine on both objects because duck typing only demands swim() at call time. isInstance is a different, structural check: ToyDuck does not appear in Mallard's inheritance tree and is not a registered virtual subclass, so it evaluates to False even though it is perfectly quackable in the functional sense."
+      "answer": "Output: swimming then False. Duck typing accepts any object with swim(), but isinstance checks the real class hierarchy, and ToyDuck is unrelated to Mallard.\n\ncode:\nclass Mallard:\n    def swim(self): return 'swimming'\n\nclass ToyDuck:\n    def swim(self): return 'toy swimming'\n\ndef take_to_water(d):\n    return d.swim()\n\nprint(take_to_water(Mallard()))\nprint(isinstance(ToyDuck(), Mallard))  # False\n\nreal example:\nSimulation code lets plastic and real ducks float, yet only real ones count as ducks."
     },
     {
       "id": 19,
       "question": "Fix the bug so all entries can join the duck party:\n```python\nclass Cat:\n    def meow(self):\n        return 'meow'\ndef duck_party(ducks):\n    return [d.quack() for d in ducks]\nprint(duck_party([Cat()]))   # currently raises\n```",
-      "answer": "The code raises AttributeError: 'Cat' object has no attribute 'quack'; fix it by giving Cat a quack method, e.g. `def quack(self): return self.meow()`, or by handling the missing attribute. iterating calls d.quack() on each element, and duck typing means the object itself must supply the method there is no interface to enforce it. With quack() present, the list comp prints ['meow']."
+      "answer": "It raises AttributeError: 'Cat' object has no attribute 'quack'. Fix: give Cat a quack method, e.g. def quack(self): return self.meow(); then the list comp prints ['meow'].\n\ncode:\nclass Cat:\n    def meow(self): return 'meow'\n    def quack(self): return self.meow()\n\ndef duck_party(ducks):\n    return [d.quack() for d in ducks]\n\nprint(duck_party([Cat()]))  # ['meow']\n\nreal example:\nDuck-typed callers break unless every passed object truly implements the needed method."
     },
     {
       "id": 20,
       "question": "Predict the output:\n```python\nclass Seq:\n    def __init__(self, items):\n        self.items = items\n    def __len__(self):\n        return len(self.items)\n    def __getitem__(self, i):\n        return self.items[i]\ns = Seq([10, 20, 30])\nprint(len(s))\nprint(list(s))\nprint(s[1])\n```",
-      "answer": "3\n[10, 20, 30]\n20\nlen() finds the dedicated __len__ protocol and returns 3. Since Seq defines no __iter__, CPython falls back to the sequence protocol: list(s) repeatedly calls __getitem__ with index 0, 1, 2 and stops at IndexError, collecting [10, 20, 30]. The subscript s[1] is a direct __getitem__ call returning 20."
+      "answer": "Output: 3, [10, 20, 30], 20. len uses __len__, list(s) falls back to the sequence protocol via __getitem__, and s[1] is a direct subscript.\n\ncode:\nclass Seq:\n    def __init__(self, items): self.items = items\n    def __len__(self): return len(self.items)\n    def __getitem__(self, i): return self.items[i]\n\ns = Seq([10, 20, 30])\nprint(len(s))       # 3\nprint(list(s))      # [10, 20, 30]\nprint(s[1])         # 20\n\nreal example:\nWrapper classes stay compatible with len(), iteration, and indexing by implementing the sequence protocol."
     },
     {
       "id": 21,
       "question": "Predict the output:\n```python\nclass Down:\n    def __init__(self, n):\n        self.n = n\n    def __iter__(self):\n        return self\n    def __next__(self):\n        if self.n == 0:\n            raise StopIteration\n        self.n -= 1\n        return self.n + 1\nit = iter(Down(3))\nprint(next(it), next(it), next(it))\n```",
-      "answer": "3 2 1\niter() requires a __iter__ to produce an iterator; Down.__iter__ returns self, making the object its own iterator. Each next() call sends next(it) to __next__, which counts the payload down 3, 2, 1 and would raise StopIteration on the fourth call."
+      "answer": "Output: 3 2 1. iter(Down(3)) returns the object itself as its own iterator, and each next() decrements the stored n.\n\ncode:\nclass Down:\n    def __init__(self, n): self.n = n\n    def __iter__(self): return self\n    def __next__(self):\n        if self.n == 0:\n            raise StopIteration\n        self.n -= 1\n        return self.n + 1\n\nit = iter(Down(3))\nprint(next(it), next(it), next(it))  # 3 2 1\n\nreal example:\nA custom countdown iterator can feed a for loop or list comprehension directly."
     },
     {
       "id": 22,
       "question": "What error does this raise and why?\n```python\nclass Bad:\n    def __iter__(self):\n        return [1, 2, 3]\nprint(list(Bad()))\n```",
-      "answer": "TypeError: iter() returned non-iterator of type 'list'\n__iter__ must hand back an object that itself implements the iterator protocol (a __next__ method). A plain list is a re-iterable container, not an iterator, so CPython rejects the return value at the C level before list() can digest it. Returning self from __iter__ is the canonical fix."
+      "answer": "It raises TypeError: iter() returned non-iterator of type 'list'. __iter__ must return an iterator (an object with __next__), not a plain iterable list.\n\ncode:\nclass Bad:\n    def __iter__(self):\n        return [1, 2, 3]\n\nprint(list(Bad()))  # TypeError\n\nreal example:\nA miswritten iterator protocol leaves for loops unable to consume the object."
     },
     {
       "id": 23,
       "question": "Predict the output:\n```python\nclass NumSet:\n    def __init__(self, n):\n        self.n = n\n    def __contains__(self, x):\n        return 0 <= x < self.n\nr = NumSet(5)\nprint(3 in r)\nprint(7 in r)\n```",
-      "answer": "True\nFalse\nThe `in` operator dispatches to type(r).__contains__(r, 3); the predicate 0 <= 3 < 5 is True, while 0 <= 7 < 5 is False. __contains__ takes priority during membership tests; it is only skipped in favor of __iter__ or __getitem__ when the method is absent."
+      "answer": "Output: True then False. The in operator calls __contains__, and 0 <= 3 < 5 is True while 0 <= 7 < 5 is False.\n\ncode:\nclass NumSet:\n    def __init__(self, n): self.n = n\n    def __contains__(self, x):\n        return 0 <= x < self.n\n\nr = NumSet(5)\nprint(3 in r)  # True\nprint(7 in r)  # False\n\nreal example:\nA range class can answer membership questions directly without storing every value."
     },
     {
       "id": 24,
       "question": "Predict the output:\n```python\nclass R:\n    def __getitem__(self, i):\n        if i >= 3:\n            raise IndexError\n        return i * 10\nprint(20 in R())\nprint(99 in R())\n```",
-      "answer": "True\nFalse\nR defines no __contains__, so `in` falls back to iterating via the sequence protocol: __getitem__(0), __getitem__(1), ... until IndexError. The yielded values are 0, 10, 20 - 20 matches, 99 never appears. The outward polymorphism is identical to a real container, even though membership is ultimately a linear scan."
+      "answer": "Output: True then False. With no __contains__, in falls back to __getitem__: 0, 10, 20. The value 20 matches; 99 is never produced.\n\ncode:\nclass R:\n    def __getitem__(self, i):\n        if i >= 3:\n            raise IndexError\n        return i * 10\n\nprint(20 in R())  # True\nprint(99 in R())  # False\n\nreal example:\nSequence-like objects can be searched by in because iteration falls back to indexing."
     },
     {
       "id": 25,
       "question": "Predict the output:\n```python\nclass A:\n    def __bool__(self):\n        return False\nclass B:\n    def __len__(self):\n        return 5\nclass C:\n    pass\nprint(bool(A()), bool(B()), bool(C()))\n```",
-      "answer": "False True True\nTruthiness is the polymorphic protocol bool(): type(A) declares __bool__ returning False, so A is falsy. B provides only __len__, so CPython falls back to it and treats a length of 5 as truthy. C has neither dunder, so it defaults to the always-truthy object identity rule."
+      "answer": "Output: False True True. bool uses __bool__ first (A is False), then __len__ (B length 5 is truthy), and default object truthiness for C.\n\ncode:\nclass A:\n    def __bool__(self): return False\n\nclass B:\n    def __len__(self): return 5\n\nclass C:\n    pass\n\nprint(bool(A()), bool(B()), bool(C()))  # False True True\n\nreal example:\nEmpty containers report falsy via __len__ while non-empty ones report truthy."
     },
     {
       "id": 26,
       "question": "Predict the output:\n```python\nclass Proxy:\n    def __getattribute__(self, name):\n        if name == 'secret':\n            raise AttributeError(name)\n        return object.__getattribute__(self, name)\n    def __getattr__(self, name):\n        return f'default:{name}'\np = Proxy()\nprint(p.secret)\nprint(p.missing)\n```",
-      "answer": "default:secret\ndefault:missing\n__getattribute__ is consulted for every attribute access; for 'secret' it raises AttributeError, and that exception hands control to the fallback hook __getattr__, which fabricates the string. 'missing' never reaches __getattribute__'s happy path for a real attribute but is caught by the same fallback. Only when __getattribute__ raises AttributeError does __getattr__ run."
+      "answer": "Output: default:secret then default:missing. __getattribute__ intercepts every access; raising AttributeError hands control to __getattr__, which fabricates a string.\n\ncode:\nclass Proxy:\n    def __getattribute__(self, name):\n        if name == 'secret':\n            raise AttributeError(name)\n        return object.__getattribute__(self, name)\n    def __getattr__(self, name):\n        return f'default:{name}'\n\np = Proxy()\nprint(p.secret)   # default:secret\nprint(p.missing)  # default:missing\n\nreal example:\nVirtual wrappers synthesize fallback attributes for anything not found normally."
     },
     {
       "id": 27,
       "question": "Predict the output:\n```python\nclass Enemy:\n    @classmethod\n    def spawn(cls):\n        return cls()\nclass Goblin(Enemy):\n    pass\nclass Dragon(Enemy):\n    pass\ndef teleport(enemy_cls):\n    return enemy_cls.spawn()\nprint(type(teleport(Goblin)).__name__)\nprint(type(teleport(Dragon)).__name__)\n```",
-      "answer": "Goblin\nDragon\nA classmethod receives the actual invoking class; Enemy.spawn calls cls() with cls bound to Goblin or Dragon respectively. Allowing any class to be passed and invoking its spawn makes teleport polymorphic over enemy classes without a switch statement, using late-bound cls to construct the right kind."
+      "answer": "Output: Goblin then Dragon. A classmethod receives the actual invoking class, so Enemy.spawn creates a Goblin or a Dragon based on which class called it.\n\ncode:\nclass Enemy:\n    @classmethod\n    def spawn(cls):\n        return cls()\n\nclass Goblin(Enemy):\n    pass\n\nclass Dragon(Enemy):\n    pass\n\ndef teleport(enemy_cls):\n    return enemy_cls.spawn()\n\nprint(type(teleport(Goblin)).__name__)  # Goblin\nprint(type(teleport(Dragon)).__name__)  # Dragon\n\nreal example:\nA game factory creates the right enemy type just by passing the class, no switch statement."
     },
     {
       "id": 28,
       "question": "Predict the output:\n```python\nclass Counter:\n    def total(self):\n        return 10\nc = Counter()\nprint(c.total())\nc.total = 99\nprint(c.total)\nprint(Counter.total(c))\n```",
-      "answer": "10\n99\n10\nc.total() first dispatches to the bound method and prints 10. Assigning c.total = 99 installs an instance attribute that shadows the class method for instance access, so print(c.total) shows the int 99 without calling anything. Counter.total(c) reaches the class attribute directly and calls the original function with c as self, restoring 10."
+      "answer": "Output: 10, 99, 10. c.total() calls the method; c.total = 99 shadows it with an instance attribute; Counter.total(c) reaches the class function directly.\n\ncode:\nclass Counter:\n    def total(self): return 10\n\nc = Counter()\nprint(c.total())      # 10\nc.total = 99\nprint(c.total)        # 99\nprint(Counter.total(c))  # 10\n\nreal example:\nAccidentally assigning to a method name turns it into a plain value, breaking calls."
     },
     {
       "id": 29,
       "question": "Predict the output:\n```python\nclass Person:\n    def __init__(self, name, age):\n        self.name, self.age = name, age\n    def __repr__(self):\n        return self.name\npeople = [Person('bob', 30), Person('alice', 25), Person('carol', 25)]\nprint(sorted(people, key=lambda p: p.age))\nprint(sorted(people, key=lambda p: (p.age, p.name)))\n```",
-      "answer": "[alice, carol, bob]\n[alice, carol, bob]\nsorted() never inspects the objects' types; it extracts the key from each element by calling the lambda and sorts those keys. With the bare age key both Person(25) entries are stable in input order (alice, carol). The tuple key (age, name) ties-broken by name produces the same order because alice < carol; duck typing lets one sort routine handle any object exposing the needed attributes."
+      "answer": "Output: [alice, carol, bob] both times. sorted() extracts a key from each element via the lambda, so it never cares about the objects' types.\n\ncode:\nclass Person:\n    def __init__(self, name, age):\n        self.name, self.age = name, age\n    def __repr__(self):\n        return self.name\n\npeople = [Person('bob', 30), Person('alice', 25), Person('carol', 25)]\nprint(sorted(people, key=lambda p: p.age))\nprint(sorted(people, key=lambda p: (p.age, p.name)))\n\nreal example:\nSorting customer records by age or by name works on any object exposing those keys."
     },
     {
       "id": 30,
       "question": "Predict the output:\n```python\nclass Grade:\n    def __init__(self, v):\n        self.v = v\n    def __lt__(self, other):\n        return self.v < other.v\n    def __repr__(self):\n        return str(self.v)\nprint(sorted([Grade(3), Grade(1), Grade(2)]))\n```",
-      "answer": "[1, 2, 3]\nWith no key argument, sort falls back to comparing elements directly, dispatching to Grade.__lt__ for each pair. Only __lt__ is needed for Timsort's comparisons, and the repr gives the readable [1, 2, 3] output; the objects themselves never leave their class."
+      "answer": "Output: [1, 2, 3]. Without a key, sort compares elements with __lt__ (plus the required comparisons) and prints them via __repr__.\n\ncode:\nclass Grade:\n    def __init__(self, v): self.v = v\n    def __lt__(self, other): return self.v < other.v\n    def __repr__(self): return str(self.v)\n\nprint(sorted([Grade(3), Grade(1), Grade(2)]))  # [1, 2, 3]\n\nreal example:\nSorting events by time works once each event knows how to compare itself to another."
     },
     {
       "id": 31,
       "question": "Predict the output:\n```python\nclass Money:\n    def __init__(self, v):\n        self.v = v\n    def __add__(self, other):\n        if isinstance(other, Money):\n            return Money(self.v + other.v)\n        return NotImplemented\n    def __radd__(self, other):\n        return Money(other + self.v)\n    def __repr__(self):\n        return f'Money({self.v})'\nprint(sum([Money(1), Money(2), Money(40)]))\n```",
-      "answer": "Money(43)\nsum() accumulates with + starting from the integer 0 even for non-numeric types. The first addition 0 + Money(1) fails in int.__add__, bounces into Money.__radd__, and every subsequent step is a forward Money + Money; without __radd__ the very first element would raise TypeError instead."
+      "answer": "Output: Money(43). sum starts from int 0; 0 + Money uses __radd__, and every following step is a normal Money + Money.\n\ncode:\nclass Money:\n    def __init__(self, v): self.v = v\n    def __add__(self, other):\n        if isinstance(other, Money):\n            return Money(self.v + other.v)\n        return NotImplemented\n    def __radd__(self, other):\n        return Money(other + self.v)\n    def __repr__(self):\n        return f'Money({self.v})'\n\nprint(sum([Money(1), Money(2), Money(40)]))  # Money(43)\n\nreal example:\nTotaling a basket of custom currency objects works with sum thanks to __radd__."
     },
     {
       "id": 32,
       "question": "What error does this raise and why?\n```python\nclass Odd:\n    def __str__(self):\n        return 123\nprint(f'{Odd()}')\n```",
-      "answer": "TypeError: __str__ returned non-string (type int)\nBoth f-string formatting and str() first call __str__ and then demand the precise str result. Returning any other type, here the int 123, is rejected with a TypeError thrown by the format slot. repr() remains unaffected and would still succeed separately."
+      "answer": "It raises TypeError: __str__ returned non-string (type int). __str__ must return exactly a str, so returning the int 123 is rejected by f-string formatting.\n\ncode:\nclass Odd:\n    def __str__(self):\n        return 123\n\nprint(f'{Odd()}')  # TypeError\n\nreal example:\nString conversion methods must hand back real text or formatting crashes."
     },
     {
       "id": 33,
       "question": "Predict the output:\n```python\nclass Money:\n    def __init__(self, v):\n        self.v = v\n    def __format__(self, spec):\n        return f'${self.v:.{spec}f}' if spec else f'${self.v}'\nm = Money(12.345)\nprint(f'{m}')\nprint(f'{m:2}')\n```",
-      "answer": "$12.345\n$12.35\nAn f-string passes the format specification (the text after the colon, else '') straight to the object's __format__. The empty spec takes the plain branch and yields $12.345; the spec '2' is spliced into the float mini-spec to round to two decimals, $12.35."
+      "answer": "Output: $12.345 then $12.35. f-strings pass the format spec to __format__; empty spec prints plainly, and spec '2' rounds to two decimals.\n\ncode:\nclass Money:\n    def __init__(self, v): self.v = v\n    def __format__(self, spec):\n        return f'${self.v:.{spec}f}' if spec else f'${self.v}'\n\nm = Money(12.345)\nprint(f'{m}')    # $12.345\nprint(f'{m:2}')  # $12.35\n\nreal example:\nCustom currency objects adapt labels to any precision the caller requests."
     },
     {
       "id": 34,
       "question": "What error does this raise and why?\n```python\nclass Bad:\n    def __len__(self):\n        return 2.7\ntry:\n    len(Bad())\nexcept TypeError as e:\n    print(e)\n```",
-      "answer": "'float' object cannot be interpreted as an integer\nThe builtin len() validates the return of __len__ through the integer conversion machinery, so a float result is rejected before it can propagate. A correct __len__ must yield a non-negative int (or an object with __index__), even though len() affects truthiness and iteration behavior too."
+      "answer": "It raises TypeError: 'float' object cannot be interpreted as an integer. len() validates the __len__ result and requires a non-negative int.\n\ncode:\nclass Bad:\n    def __len__(self):\n        return 2.7\n\nlen(Bad())  # TypeError\n\nreal example:\nA broken length method crashes len(), warning the developer to return a proper count."
     },
     {
       "id": 35,
       "question": "Predict the error:\n```python\nclass Weird:\n    def __index__(self):\n        return 3\nw = Weird()\ntry:\n    print(w * 3)\nexcept TypeError as e:\n    print(e)\n```",
-      "answer": "unsupported operand type(s) for *: 'Weird' and 'int'\n__index__ is the protocol for integer-lookalike operations (indexing, slicing, bin/hex/oct, range), NOT for arithmetic. Multiplication dispatches to __mul__/__rmul__; neither exists, so the left slot fails, the type lookup yields no reflected method, and the expression collapses to TypeError. Adding __mul__ would fix it."
+      "answer": "It raises TypeError: unsupported operand type(s) for *: 'Weird' and 'int'. __index__ handles integer-like conversions for indexing and range, not arithmetic like *.\n\ncode:\nclass Weird:\n    def __index__(self):\n        return 3\n\nprint(Weird() * 3)  # TypeError\n\nreal example:\nDefining __index__ gives you slicing and range support, but you still need __mul__ for multiplication."
     },
     {
       "id": 36,
       "question": "Predict the output:\n```python\nclass Idx:\n    def __index__(self):\n        return 2\ni = Idx()\nprint([10, 20, 30, 40][i])\nprint(list(range(Idx())))\n```",
-      "answer": "30\n[0, 1]\nSubscripting and range() demand an integral index, resolved via the __index__ protocol rather than __int__ or float conversion. The list lookup converts i to 2 and pulls 30; range(Idx()) respects its new-style integer conversion to produce 0 and 1. This lets custom types behave like integers wherever positions are required."
+      "answer": "Output: 30 then [0, 1]. Subscript and range() resolve positions through __index__, converting Idx() to the integer 2.\n\ncode:\nclass Idx:\n    def __index__(self):\n        return 2\n\ni = Idx()\nprint([10, 20, 30, 40][i])  # 30\nprint(list(range(Idx())))   # [0, 1]\n\nreal example:\nA custom index wrapper can be used in list lookups and slicing wherever integers are expected."
     },
     {
       "id": 37,
       "question": "Predict the output:\n```python\nclass F(float):\n    def __mul__(self, other):\n        return F(float(self) * float(other))\nf = F(2.5)\na = f * 3\nb = 3 * f\nprint(a, type(a).__name__)\nprint(b, type(b).__name__)\n```",
-      "answer": "7.5 F\n7.5 float\nWhen the left operand is the float subclass, its overridden __mul__ runs and the result is F. When int is on the left, int.__mul__ successfully performs the int-float coercion before any subclass hook is consulted, so the reflected F.__rmul__ is never reached and a plain float comes back. Dispatch symmetry is therefore not guaranteed for mixed built-in arithmetic."
+      "answer": "Output: 7.5 F then 7.5 float. When F is on the left its __mul__ runs; when int is on the left, int.__mul__ handles it first and returns a plain float.\n\ncode:\nclass F(float):\n    def __mul__(self, other):\n        return F(float(self) * float(other))\n\nf = F(2.5)\na = f * 3\nb = 3 * f\nprint(a, type(a).__name__)  # 7.5 F\nprint(b, type(b).__name__)  # 7.5 float\n\nreal example:\nMixed built-in math does not always preserve the subclass type, so order matters."
     },
     {
       "id": 38,
       "question": "Predict the output:\n```python\nclass TinyInt(int):\n    def __add__(self, other):\n        return TinyInt(int(self) + int(other))\nt = TinyInt(2)\nprint(t + 3, type(t + 3).__name__)\nprint(3 + t, type(3 + t).__name__)\n```",
-      "answer": "5 TinyInt\n5 int\nTinyInt on the left gets first crack, its __add__ wraps the sum back into TinyInt, and print shows '5 TinyInt'. With int on the left, int.__add__ accepts the TinyInt operand natively during the built-in numeric path and returns an ordinary int 5; the reflected right-side method is only an option if the base type reports NotImplemented."
+      "answer": "Output: 5 TinyInt then 5 int. TinyInt on the left uses its __add__; int on the left completes the addition natively and returns an ordinary int.\n\ncode:\nclass TinyInt(int):\n    def __add__(self, other):\n        return TinyInt(int(self) + int(other))\n\nt = TinyInt(2)\nprint(t + 3, type(t + 3).__name__)  # 5 TinyInt\nprint(3 + t, type(3 + t).__name__)  # 5 int\n\nreal example:\nArithmetic with ints on the left bypasses subclass overrides, an easy surprise."
     },
     {
       "id": 39,
       "question": "Predict the output:\n```python\nclass L:\n    def __init__(self):\n        self.data = [1, 2, 3]\n    def __getitem__(self, k):\n        if isinstance(k, slice):\n            return self.data[k]\n        return self.data[k] * 10\nl = L()\nprint(l[-1], l[0:2])\n```",
-      "answer": "30\n[1, 2]\n__getitem__ is handed either a plain int or a slice object depending on the subscript syntax. The integer branch transforms index -1 into 3 * 10 = 30, while slice objects are detected with isinstance and passed straight to the underlying list so l[0:2] is [1, 2]. The single protocol entry point dispatches on the key's own type."
+      "answer": "Output: 30 then [1, 2]. __getitem__ receives an int for l[-1] (scaled by 10) and a slice object for l[0:2], passed through to the list.\n\ncode:\nclass L:\n    def __init__(self): self.data = [1, 2, 3]\n    def __getitem__(self, k):\n        if isinstance(k, slice):\n            return self.data[k]\n        return self.data[k] * 10\n\nl = L()\nprint(l[-1], l[0:2])  # 30 [1, 2]\n\nreal example:\nA database-backed list can treat index lookups and slices differently inside one protocol."
     },
     {
       "id": 40,
       "question": "Predict the output:\n```python\nclass Box:\n    def __init__(self):\n        self.data = {}\n    def __getitem__(self, k):\n        return self.data[k]\n    def __setitem__(self, k, v):\n        self.data[k] = v\n    def __delitem__(self, k):\n        del self.data[k]\nb = Box()\nb['name'] = 'zed'\nprint(b['name'])\ndel b['name']\ntry:\n    print(b['name'])\nexcept KeyError:\n    print('KeyError')\n```",
-      "answer": "zed\nKeyError\nSubscript assignment translates to __setitem__, subscript read to __getitem__, and `del b[k]` to __delitem__. After deletion the underlying dict is empty, so __getitem__ re-raises the dict's KeyError and the except block emits 'KeyError'. The same bracket syntax is polymorphic across all three verbs."
+      "answer": "Output: zed then KeyError. Bracket read, write, and delete map to __getitem__, __setitem__, and __delitem__.\n\ncode:\nclass Box:\n    def __init__(self): self.data = {}\n    def __getitem__(self, k): return self.data[k]\n    def __setitem__(self, k, v): self.data[k] = v\n    def __delitem__(self, k): del self.data[k]\n\nb = Box()\nb['name'] = 'zed'\nprint(b['name'])  # zed\ndel b['name']\nprint(b['name'])  # KeyError\n\nreal example:\nA settings store can support d['key'] syntax for reading and writing."
     },
     {
       "id": 41,
       "question": "Predict the output:\n```python\nclass Calc:\n    ops = {'add': lambda a, b: a + b,\n           'mul': lambda a, b: a * b}\n    def run(self, op, a, b):\n        return self.ops[op](a, b)\nprint(Calc().run('add', 2, 4))\nprint(Calc().run('mul', 2, 4))\n```",
-      "answer": "6\n8\nDictionary dispatch treats operation names as polymorphic selectors: run looks up a name in the mapping and uniformly invokes whatever callable it finds. This avoids long chains of if/elif branches and makes it trivial to append new strategies. The lambdas share one calling convention, so run stays fixed while behavior varies behind the key."
+      "answer": "Output: 6 then 8. Dictionary dispatch uses a callable stored under a name, avoiding long if/elif chains when choosing behavior.\n\ncode:\nclass Calc:\n    ops = {'add': lambda a, b: a + b,\n           'mul': lambda a, b: a * b}\n    def run(self, op, a, b):\n        return self.ops[op](a, b)\n\nprint(Calc().run('add', 2, 4))  # 6\nprint(Calc().run('mul', 2, 4))  # 8\n\nreal example:\nRouting HTTP request methods to handler functions by name is classic dict dispatch."
     },
     {
       "id": 42,
       "question": "Predict the output:\n```python\nclass Doubler:\n    def __call__(self, x):\n        return x * 2\nclass Squarer:\n    def __call__(self, x):\n        return x * x\ndef apply(fn, x):\n    return fn(x)\nprint(apply(Doubler(), 5))\nprint(apply(Squarer(), 5))\nprint(callable(Doubler()))\n```",
-      "answer": "10\n25\nTrue\nObjects that implement __call__ become instances that are also callable, so they can be passed wherever a plain function is expected and invoked with the same () syntax. callable() confirms this by reporting True. The apply helper is stimulus-agnostic: it never distinguishes functions from callable objects."
+      "answer": "Output: 10, 25, True. Objects with __call__ can be invoked like functions and passed wherever a callable is expected.\n\ncode:\nclass Doubler:\n    def __call__(self, x): return x * 2\n\nclass Squarer:\n    def __call__(self, x): return x * x\n\ndef apply(fn, x):\n    return fn(x)\n\nprint(apply(Doubler(), 5))  # 10\nprint(apply(Squarer(), 5))  # 25\nprint(callable(Doubler()))  # True\n\nreal example:\nCallable objects bundle state and behavior, like a counter that is also invocable."
     },
     {
       "id": 43,
       "question": "Predict the output:\n```python\nclass logged:\n    def __init__(self, fn):\n        self._fn = fn\n    def __call__(self, *a):\n        print('log: enter')\n        return self._fn(*a)\n@logged\ndef total(a, b):\n    return a + b\nprint(total(2, 3))\n```",
-      "answer": "log: enter\n5\nThe decorator @logged rewires the name total onto a logged instance whose __init__ captured the original function. Calling total(2, 3) therefore triggers logged.__call__, which logs and then delegates to the stored function. Because __call__ duck-types as a callable, the decorated result is transparently usable exactly like the original function."
+      "answer": "Output: log: enter then 5. The decorator replaces total with a logged instance; calling total(2, 3) runs its __call__, which logs and delegates.\n\ncode:\nclass logged:\n    def __init__(self, fn): self._fn = fn\n    def __call__(self, *a):\n        print('log: enter')\n        return self._fn(*a)\n\n@logged\ndef total(a, b):\n    return a + b\n\nprint(total(2, 3))\n\nreal example:\nDecorators like logging, timing, or caching are often implemented as __call__ objects."
     },
     {
       "id": 44,
       "question": "Predict and fix:\n```python\nclass RangeGen:\n    def __init__(self, n):\n        self.n = n\n    def __iter__(self):\n        return self\n    def __next__(self):\n        if self.n <= 0:\n            raise StopIteration\n        self.n -= 1\n        return self.n\nr = RangeGen(2)\nprint(list(r))\nprint(list(r))\n```",
-      "answer": "[1, 0]\n[]\nThe design is a self-iterator: __iter__ returns self and __next__ maintains state on the same object, so after the first list(r) the counter is exhausted and the second attempt immediately raises StopIteration. Fix by keeping __iter__ stateless - e.g. have it return `iter(range(self.n))` or reset counter - so each iteration starts fresh and the object is re-iterable."
+      "answer": "Output: [1, 0] then []. The iterator is the object itself and consumes its own state; the second list(r) immediately hits StopIteration. Fix by making __iter__ return a fresh iterator.\n\ncode:\nclass RangeGen:\n    def __init__(self, n): self.n = n\n    def __iter__(self): return iter(range(self.n))\n\nr = RangeGen(2)\nprint(list(r))  # [1, 0]\nprint(list(r))  # [1, 0]\n\nreal example:\nOne-shot generators are fine for single loops but re-iterable collections need fresh iterators."
     },
     {
       "id": 45,
       "question": "Predict the output:\n```python\nclass Base:\n    def who(self):\n        return 'Base'\nclass Sub(Base):\n    def who(self):\n        return 'Sub'\ns = Sub()\nprint(super(Sub, s).who())\ntry:\n    print(super(Base, s).who())\nexcept AttributeError as e:\n    print(type(e).__name__)\n```",
-      "answer": "Base\nAttributeError\nThe two-argument form super(Sub, s) starts the MRO search immediately after Sub on s's type chain, landing on Base.who and printing 'Base'. super(Base, s) begins after Base, and with only object left in the MRO there is no who attribute, so the call raises AttributeError."
+      "answer": "Output: Base then AttributeError. super(Sub, s) starts after Sub and finds Base.who; super(Base, s) starts after Base, leaving only object, which has no who.\n\ncode:\nclass Base:\n    def who(self): return 'Base'\n\nclass Sub(Base):\n    def who(self): return 'Sub'\n\ns = Sub()\nprint(super(Sub, s).who())  # Base\nprint(super(Base, s).who())  # AttributeError\n\nreal example:\nTwo-argument super is useful when you must reach an exact ancestor explicitly."
     },
     {
       "id": 46,
       "question": "Predict the output:\n```python\nclass Base:\n    pass\nclass Child(Base):\n    pass\nc = Child()\nprint(isinstance(c, Base))\nprint(isinstance(c, Child))\nprint(issubclass(Child, Base))\nprint(isinstance(Base, Child))\nprint(isinstance(c, (Base, str)))\n```",
-      "answer": "True\nTrue\nTrue\nFalse\nTrue\nisinstance answers 'is this object an instance of that class, any of its subclasses, or a registered virtual subclass', while issubclass asks about inheritance between classes themselves. Base is a class, never an instance of Child, hence False. A tuple in the second argument is an OR over the listed types, so Child instance qualifies through Base."
+      "answer": "Output: True, True, True, False, True. isinstance checks subclasses and registered types; issubclass checks class inheritance; tuples mean OR over the types.\n\ncode:\nclass Base:\n    pass\n\nclass Child(Base):\n    pass\n\nc = Child()\nprint(isinstance(c, Base))            # True\nprint(isinstance(c, Child))           # True\nprint(issubclass(Child, Base))        # True\nprint(isinstance(Base, Child))        # False\nprint(isinstance(c, (Base, str)))     # True\n\nreal example:\nTuple isinstance allows an API to accept any of several related types at once."
     },
     {
       "id": 47,
       "question": "Predict the output:\n```python\nclass Tag:\n    def __eq__(self, other):\n        return True\nprint(Tag() != Tag())\nprint(Tag() != 5)\n```",
-      "answer": "False\nFalse\n!= has its own dunder __ne__, but when a class omits it the default object.__ne__ simply negates the result of __eq__. Both comparisons invoke the unconditional __eq__, which returns True, so both != checks report False regardless of the other operand's type."
+      "answer": "Output: False then False. With no __ne__, the default negates __eq__, and this __eq__ always returns True, so != is always False.\n\ncode:\nclass Tag:\n    def __eq__(self, other):\n        return True\n\nprint(Tag() != Tag())  # False\nprint(Tag() != 5)      # False\n\nreal example:\nDefault != stays consistent with ==, so overriding only __eq__ usually suffices."
     },
     {
       "id": 48,
       "question": "What error does this raise and why?\n```python\nclass Blob:\n    def __init__(self, v):\n        self.v = v\n    def __eq__(self, other):\n        return self.v == other.v\ntry:\n    s = {Blob(1), Blob(1)}\nexcept TypeError as e:\n    print(e)\n```",
-      "answer": "cannot use 'Blob' as a set element (unhashable type: 'Blob')\nDefining __eq__ without __hash__ silently laminates the class as unhashable (__hash__ = None). Set and dict operations hash every member first, so the TypeError fires before __eq__ can ever run, even though the two instances would compare equal. Restore a matching __hash__ to satisfy both protocols."
+      "answer": "It raises TypeError: cannot use 'Blob' as a set element (unhashable type: 'Blob'). __eq__ without __hash__ makes the class unhashable, so sets fail before comparing.\n\ncode:\nclass Blob:\n    def __init__(self, v): self.v = v\n    def __eq__(self, other): return self.v == other.v\n\nprint({Blob(1), Blob(1)})  # TypeError\n\nreal example:\nCustom equality without hash disables putting those objects in sets or dict keys."
     },
     {
       "id": 49,
       "question": "Fill the blank so the first expression raises TypeError but the second works:\n```python\nclass Num:\n    def __init__(self, v):\n        self.v = v\n    def __add__(self, other):\n        if isinstance(other, Num):\n            return Num(self.v + other.v)\n        return ____\n    def __radd__(self, other):\n        return Num(other + self.v)\nprint(Num(2) + 1)   # raises\nprint(1 + Num(2))    # works\n```",
-      "answer": "Fill in `NotImplemented`. Then: TypeError: unsupported operand type(s) for +: 'Num' and 'int', followed by Num(3). Returning NotImplemented tells the runtime 'I cannot combine with this type, try the right operand's reflected method'. For Num(2) + 1 that is int.__radd__, which also refuses Num, so the whole operation degrades to TypeError; for 1 + Num(2) the reflected Num.__radd__ rescues the sum into Num(3)."
+      "answer": "Fill in NotImplemented. Then Num(2) + 1 raises the unsupported-operand TypeError while 1 + Num(2) returns Num(3) via __radd__.\n\ncode:\nclass Num:\n    def __init__(self, v): self.v = v\n    def __add__(self, other):\n        if isinstance(other, Num):\n            return Num(self.v + other.v)\n        return NotImplemented\n    def __radd__(self, other):\n        return Num(other + self.v)\n\nprint(Num(2) + 1)  # TypeError\nprint(1 + Num(2))  # Num(3)\n\nreal example:\nReturning NotImplemented lets Python try the other operand for mixed-type math."
     },
     {
       "id": 50,
       "question": "Predict the output:\n```python\nclass Celsius:\n    def __init__(self, c):\n        self._c = c\n    @property\n    def temp(self):\n        return self._c * 1.8 + 32\nclass Fahrenheit:\n    def __init__(self, f):\n        self._f = f\n    @property\n    def temp(self):\n        return self._f\ndef report(t):\n    return f'{t.temp:.0f} degrees'\nprint(report(Celsius(100)))\nprint(report(Fahrenheit(212)))\n```",
-      "answer": "212 degrees\n212 degrees\nA property is a data descriptor, so t.temp transparently executes the getter for whichever class supplies it. The report function only demands the temp attribute and never cares about the concrete type, giving it full duck-typed polymorphism without shared inheritance. Both temperature classes expose the identical attribute protocol and therefore produce the same output."
+      "answer": "Output: 212 degrees twice. A property is a data descriptor, so t.temp runs the correct getter per class; report never cares which class t is.\n\ncode:\nclass Celsius:\n    def __init__(self, c): self._c = c\n    @property\n    def temp(self):\n        return self._c * 1.8 + 32\n\nclass Fahrenheit:\n    def __init__(self, f): self._f = f\n    @property\n    def temp(self):\n        return self._f\n\ndef report(t):\n    return f'{t.temp:.0f} degrees'\n\nprint(report(Celsius(100)))     # 212 degrees\nprint(report(Fahrenheit(212)))  # 212 degrees\n\nreal example:\nA weather app displays temperature from different sensor classes through one uniform attribute."
     },
     {
       "id": 51,
       "question": "Predict the error. class Vec: def __init__(self, x, y): self.x, self.y = x, y / def __add__(self, other): return Vec(self.x + other.x, self.y + other.y). v = Vec(1, 2); then evaluate v + (3, 4). What happens, and what is the fix?",
-      "answer": "AttributeError: 'tuple' object has no attribute 'x'. Vec.__add__ blindly reads other.x, but the right operand is a plain tuple, and Python never falls back to a reflected operation because __add__ raised instead of returning NotImplemented. Fix: make __add__ return NotImplemented for unknown types and add __radd__(self, other) that unpacks tuples, e.g. def __radd__(self, other): return Vec(other[0] + self.x, other[1] + self.y). Only when the left operator returns NotImplemented does Python consult the right operand's reflected methods."
+      "answer": "It raises AttributeError: 'tuple' object has no attribute 'x'. Vec.__add__ reads other.x blindly instead of returning NotImplemented. Fix: return NotImplemented for unknowns and add __radd__ to unpack tuples.\n\ncode:\nclass Vec:\n    def __init__(self, x, y): self.x, self.y = x, y\n    def __add__(self, other):\n        if not isinstance(other, Vec):\n            return NotImplemented\n        return Vec(self.x + other.x, self.y + other.y)\n    def __radd__(self, other):\n        return Vec(other[0] + self.x, other[1] + self.y)\n\nprint(Vec(1, 2) + (3, 4))  # Vec(4, 6)\n\nreal example:\nReflected addition lets vector objects combine with plain tuple coordinates."
     },
     {
       "id": 52,
       "question": "Predict the output. class SuperNum: / def __radd__(self, other): return f'{other} + radd'. print(1 + SuperNum())",
-      "answer": "1 + radd. For 1 + obj, Python first tries int.__add__(1, SuperNum()), which does not know how to combine with this class and returns NotImplemented. Python then falls back to the reflected SuperNum.__radd__(1), whose other receives the int, producing '1 + radd'. This right-hand dispatch is what lets you support int + MyClass without touching int."
+      "answer": "Output: 1 + radd. int.__add__(1, SuperNum()) returns NotImplemented, so Python falls back to SuperNum.__radd__, whose other is the int 1.\n\ncode:\nclass SuperNum:\n    def __radd__(self, other):\n        return f'{other} + radd'\n\nprint(1 + SuperNum())  # 1 + radd\n\nreal example:\nSupporting int + Money works without modifying int, thanks to reflected methods."
     },
     {
       "id": 53,
       "question": "Predict the output. class Left: def __add__(self, other): return 'left'. class Right: def __radd__(self, other): return 'right'. print(Left() + Right())",
-      "answer": "left. For a normal binary operation the left operand is always consulted first; only if Left.__add__ is missing or explicitly returns NotImplemented does Python try Right.__radd__. Both methods exist here, but Left.__add__ is tried first and returns 'left', so the reflected method is never reached. This is the symmetric-dispatch priority rule: forward before reflected, and left operand before right operand when both define the same slot."
+      "answer": "Output: left. The left operand is always tried first; since Left.__add__ exists and returns 'left', Right.__radd__ is never reached.\n\ncode:\nclass Left:\n    def __add__(self, other): return 'left'\n\nclass Right:\n    def __radd__(self, other): return 'right'\n\nprint(Left() + Right())  # left\n\nreal example:\nForward methods take priority, so when both sides define the operation the left side wins."
     },
     {
       "id": 54,
       "question": "Predict the output. class Great: / def __init__(self): self.nums = [] / def __iadd__(self, other): self.nums.append(other); return self. x = Great(); y = x; x += 10; print(y.nums)",
-      "answer": "[10]. The augmented assignment invokes x.__iadd__(10), which mutates the shared self.nums list in place and returns self, and Python rebinds x to that returned object. Because x and y alias the same instance, y sees the appended 10. The key point: __iadd__ must return the object to keep the target bound to the (possibly mutated) instance; returning a copy would break aliasing assumptions."
+      "answer": "Output: [10]. __iadd__ mutates the shared instance and returns self, so x and y alias the same object and both observe the appended value.\n\ncode:\nclass Great:\n    def __init__(self): self.nums = []\n    def __iadd__(self, other):\n        self.nums.append(other)\n        return self\n\nx = Great()\ny = x\nx += 10\nprint(y.nums)  # [10]\n\nreal example:\nIn-place operators on mutable objects update all aliases pointing to that object."
     },
     {
       "id": 55,
       "question": "Find the bug. class Weird: / def __init__(self, v): self.v = v / def __iadd__(self, other): self.v += other  # note: no return. a = Weird(1); a += 1; print(a.v). Why does this crash?",
-      "answer": "AttributeError: 'NoneType' object has no attribute 'v'. The augmented assignment operator does not ignore the return value of __iadd__: after calling it, a is rebinding to whatever __iadd__ returned, which is None because no return statement is present. The print then reads None.v. Fix: return self (or return the new value) from __iadd__. The invocation-time contract is that Python uses the method's return value, regardless of any in-place side effect."
+      "answer": "It crashes with AttributeError: 'NoneType' object has no attribute 'v'. += rebinds to whatever __iadd__ returns, and without a return statement that is None. Fix: return self.\n\ncode:\nclass Weird:\n    def __init__(self, v): self.v = v\n    def __iadd__(self, other):\n        self.v += other\n        return self\n\na = Weird(1)\na += 1\nprint(a.v)  # 2\n\nreal example:\nIn-place methods must return the instance; forgetting the return breaks every += use."
     },
     {
       "id": 56,
       "question": "Predict the output. class Point: / def __init__(self, x): self.x = x / def __add__(self, other): return Point(self.x + other). q = Point(4); r = q; q += 3; print(r.x, q.x)",
-      "answer": "4 7. Point defines no __iadd__, so q += 3 falls back to q = q + 3, i.e. it calls Point.__add__(q, 3), which builds a brand-new Point(7), and q is rebound to it. The original instance still reachable through r keeps x = 4. Contrast this with an __iadd__ implementation that mutates and returns self: there every alias would observe 7. This fallback means += is semantics-preserving even for immutable-ish classes."
+      "answer": "Output: 4 7. With no __iadd__, q += 3 becomes q = q + 3, building a new Point(7); r still points to the original Point(4).\n\ncode:\nclass Point:\n    def __init__(self, x): self.x = x\n    def __add__(self, other):\n        return Point(self.x + other)\n\nq = Point(4)\nr = q\nq += 3\nprint(r.x, q.x)  # 4 7\n\nreal example:\nRebinding on += keeps old aliases unchanged, like += on an immutable number."
     },
     {
       "id": 57,
       "question": "Predict the output. class Num: / def __init__(self, v): self.v = v / def __iadd__(self, o): return self.v + o. n = Num(3); n += 4; print(n, type(n).__name__)",
-      "answer": "7 int. __iadd__ may legally return any object at all; Python does not require it to return the same type or even an instance of the class. Here __iadd__ returns a plain int 7, and the += statement rebinds n to that int. This shows why in-place operators are ultimately just 'call a dunder and rebind to its return value', which is why libraries returning NotImplemented deliberately break the chain."
+      "answer": "Output: 7 int. __iadd__ may legally return any object; here it returns the plain int 7, and += rebinds n to that int.\n\ncode:\nclass Num:\n    def __init__(self, v): self.v = v\n    def __iadd__(self, o):\n        return self.v + o\n\nn = Num(3)\nn += 4\nprint(n, type(n).__name__)  # 7 int\n\nreal example:\nIn-place operators always use the return value, even when it changes the type."
     },
     {
       "id": 58,
       "question": "Predict the error. class NoNeg: pass. What happens when you evaluate -NoNeg()?",
-      "answer": "TypeError: bad operand type for unary -: 'NoNeg'. Python looks up the nb_negative slot (the __neg__ dunder); since the class defines no __neg__ (and no __pos__/__abs__ equivalents to fall back on for sign), there is nothing to dispatch to, so a TypeError is raised. Every unary numeric operator in PyNumber_Negative requires its slot: -x needs __neg__, abs(x) needs __abs__, ~x needs __invert__, and none of them is synthesized from the others."
+      "answer": "It raises TypeError: bad operand type for unary -: 'NoNeg'. Unary operators require their own slot, and NoNeg defines no __neg__.\n\ncode:\nclass NoNeg:\n    pass\n\nprint(-NoNeg())  # TypeError\n\nreal example:\nNegation, abs, and invert are separate protocols; a class must define each it wants to support."
     },
     {
       "id": 59,
       "question": "Predict the output. class Empty: / def __len__(self): return 0. print(bool(Empty()), not Empty())",
-      "answer": "False True. bool(x) first consults __bool__; since Empty lacks it, Python falls back to __len__ and treats a non-zero length as true, zero length as false. Empty() truthiness therefore equals 0, so bool() is False and not Empty() is True. This __len__ fallback is why any class implementing the sequence protocol automatically gains meaningful truthiness for free."
+      "answer": "Output: False True. bool() falls back to __len__ when __bool__ is absent; length 0 is falsy, so bool() is False and not is True.\n\ncode:\nclass Empty:\n    def __len__(self): return 0\n\nprint(bool(Empty()))   # False\nprint(not Empty())     # True\n\nreal example:\nSlice wrappers and buffers gain truthiness automatically from their length method."
     },
     {
       "id": 60,
       "question": "Predict the output. class Mix: / def __bool__(self): return False / def __len__(self): return 5. print(bool(Mix()))",
-      "answer": "False. Precedence rule: __bool__ wins whenever it is defined, before __len__ is ever consulted, so the len of 5 is irrelevant. The bool slot is checked first; only if it is absent does PbPyNumber_True follow the __len__ path. Here __bool__ explicitly returns False, so all truthiness evaluations of Mix() short-circuit to False."
+      "answer": "Output: False. __bool__ always wins when defined, so the length of 5 is never consulted.\n\ncode:\nclass Mix:\n    def __bool__(self): return False\n    def __len__(self): return 5\n\nprint(bool(Mix()))  # False\n\nreal example:\nA flag class can force falsiness regardless of any length it also exposes."
     },
     {
       "id": 61,
       "question": "Predict the output. class SameSame: / def __eq__(self, other): return 'same'. print(SameSame() == SameSame())",
-      "answer": "same. Rich comparison operators are dispatched through the __eq__ slot and their result is returned verbatim; unlike < and >, == performs no coercion of the returned value to bool in pure-Python terms when you print it. So a non-bool literal like the string 'same' propagates straight out of the == expression. (Beware: using this == result in an if or and/or works because Python then applies truthiness to whatever was returned.)"
+      "answer": "Output: same. == returns whatever __eq__ returns verbatim; nothing forces it to a bool in pure Python, so the string 'same' prints as-is.\n\ncode:\nclass SameSame:\n    def __eq__(self, other): return 'same'\n\nprint(SameSame() == SameSame())  # same\n\nreal example:\nTruthiness still applies when the result is used in an if, since any value is converted."
     },
     {
       "id": 62,
       "question": "Predict the output. class R: / def __eq__(self, other): return 'yes'. print(R() != R())",
-      "answer": "False. R defines no __ne__, so != is computed from ==: R() == R() returns 'yes' (truthy) and the != operator returns the boolean negation of that truthiness, i.e. False. This is why a class that only overrides __eq__ still behaves correctly with !=. If __eq__ had returned NotImplemented, != would have continued to the reflected side and eventually defaulted to identity/inverse semantics."
+      "answer": "Output: False. With no __ne__, != negates the truthiness of __eq__, and 'yes' is truthy, so the negated result is False.\n\ncode:\nclass R:\n    def __eq__(self, other): return 'yes'\n\nprint(R() != R())  # False\n\nreal example:\nOverriding just __eq__ keeps != sensible for free, which most classes rely on."
     },
     {
       "id": 63,
       "question": "Predict the output. class Price: / def __init__(self, v): self.v = v / def __eq__(self, o): return self.v == o.v. p1, p2 = Price(1), Price(2); print(p1 == p2, p1 != p2)",
-      "answer": "False True. __eq__ compares value fields, so Price(1) is not equal to Price(2). The != operator has no __ne__ of its own and is synthesized as the negation of the value-level __eq__ result, so it returns True. The critical subtlety: even if __eq__ returned a falsy-but-not-None sentinel, != would invert that, so the two operators stay logically consistent."
+      "answer": "Output: False True. __eq__ compares the stored values 1 and 2, and != is the negation of that, so it returns True.\n\ncode:\nclass Price:\n    def __init__(self, v): self.v = v\n    def __eq__(self, o): return self.v == o.v\n\np1, p2 = Price(1), Price(2)\nprint(p1 == p2, p1 != p2)  # False True\n\nreal example:\nPrice comparison in shopping carts works because equality looks at the value field."
     },
     {
       "id": 64,
       "question": "Predict the error. class F: / def __lt__(self, o): return True. What happens for 5 < F()?",
-      "answer": "TypeError: '<' not supported between instances of 'int' and 'F'. int.__lt__(5, F()) returns NotImplemented, so Python tries the reflected F().__gt__(5); F defines no __gt__ and returns NotImplemented as well, so the comparison fails with a TypeError. Merely defining __lt__ on one operand is not enough when the other operand is the one being compared; both sides of the < relation must be supported somewhere in the MRO."
+      "answer": "It raises TypeError: '<' not supported between instances of 'int' and 'F'. int.__lt__ returns NotImplemented, and F defines no __gt__ to mirror <, so both sides fail.\n\ncode:\nclass F:\n    def __lt__(self, o): return True\n\nprint(5 < F())  # TypeError\n\nreal example:\nComparisons need support on the involved operand; defining one method is often not enough."
     },
     {
       "id": 65,
       "question": "Predict the output. class Box: / def __init__(self, v): self.v = v / def __gt__(self, o): return self.v > o. print(5 < Box(3), 5 < Box(8))",
-      "answer": "False True. For 5 < Box(...) the int side has no comparison, so Python swaps the operator to the reflected form: it calls Box(value).__gt__(5), evaluating value > 5. For Box(3) that is 3 > 5 = False; for Box(8) it is 8 > 5 = True. This shows __gt__ doing double duty: it is both the > method and the reflected half of < when the right operand is foreign."
+      "answer": "Output: False then True. For 5 < Box(x), Python mirrors to Box.__gt__(x), evaluating x > 5 for each operand.\n\ncode:\nclass Box:\n    def __init__(self, v): self.v = v\n    def __gt__(self, o): return self.v > o\n\nprint(5 < Box(3))  # False\nprint(5 < Box(8))  # True\n\nreal example:\nReflected comparisons let foreign types on the left still be compared correctly."
     },
     {
       "id": 66,
       "question": "Predict the output. class Mat: / def __matmul__(self, other): return 'matmul OK'. print(Mat() @ Mat(), Mat() @ 5)",
-      "answer": "matmul OK matmul OK. The @ operator binds to Matrix.MATMUL semantics and dispatches to parameterized Python object's __matmul__ slot whenever it is defined, regardless of operand types on the right. The array-multiplication semantics of @ come only from user classes; that is why Mat() @ Mat() and Mat() @ 5 both reach the same method and echo the message. This is the operator Python introduced (PEP 465) precisely so matrix types could be polymorphic without overloading *."
+      "answer": "Output: matmul OK matmul OK. The @ operator dispatches to __matmul__ whenever defined, regardless of the right operand type.\n\ncode:\nclass Mat:\n    def __matmul__(self, other): return 'matmul OK'\n\nprint(Mat() @ Mat())  # matmul OK\nprint(Mat() @ 5)      # matmul OK\n\nreal example:\nMatrix libraries use @ for multiplication so it never conflicts with element-wise *."
     },
     {
       "id": 67,
       "question": "Predict the output. class Foo: / def __rmatmul__(self, other): return 'rm'. print(2 @ Foo())",
-      "answer": "rm. 2 is an int, and int defines no __matmul__ (unlike __add__), so the int's slot is missing entirely rather than returning NotImplemented; Python goes straight to the right operand transition. It calls Foo.__rmatmul__(2), other has the value 2, and the method returns 'rm'. This is the reflected variant used when the left operand (or the operator itself) can't handle the right type."
+      "answer": "Output: rm. int defines no __matmul__, so Python skips forward dispatch and calls Foo.__rmatmul__ with other = 2.\n\ncode:\nclass Foo:\n    def __rmatmul__(self, other): return 'rm'\n\nprint(2 @ Foo())  # rm\n\nreal example:\nReflected @ lets numbers appear on the left while the custom type still handles it."
     },
     {
       "id": 68,
       "question": "Predict the output. class P: / def __pow__(self, o): return f'p({o})'. print(P() ** 2); then evaluate 2 ** P()",
-      "answer": "p(2) then TypeError: unsupported operand type(s) for ** or pow(): 'int' and 'P'. P() ** 2 calls P.__pow__(2) and interpolates it, giving 'p(2)'. For 2 ** P() the int side has no handling, and since P defines no __rpow__, both operands' slots end in NotImplemented, so Python cannot assemble a result and raises the unsupported-operand TypeError. This is standard power fallback: forward __pow__, then reflected __rpow__, then error."
+      "answer": "Output: p(2) then TypeError: unsupported operand type(s) for ** or pow(): 'int' and 'P'. P has __pow__ but no __rpow__, so the reversed case fails.\n\ncode:\nclass P:\n    def __pow__(self, o): return f'p({o})'\n\nprint(P() ** 2)  # p(2)\nprint(2 ** P())  # TypeError\n\nreal example:\nAdd __rpow__ if your type must support a builtin number raised to a custom exponent."
     },
     {
       "id": 69,
       "question": "Predict the error (fixable bug). class P: / def __pow__(self, other): return 1. What happens with pow(P(), 2, 3)?",
-      "answer": "TypeError: P.__pow__() takes 2 positional arguments but 3 were given. The three-argument built-in pow(x, y, z) is implemented by calling x.__pow__(y, z), passing the modulus as a third positional argument. P.__pow__ only accepts self and other, so Python raises the arity TypeError. Fix: define __pow__(self, other, mod=None) (and optionally __rpow__(self, other, mod=None)) to honor the three-argument form, e.g. return pow(self.v, other, mod)."
+      "answer": "It raises TypeError: P.__pow__() takes 2 positional arguments but 3 were given. pow(x, y, z) calls x.__pow__(y, z), so __pow__ must accept the modulus as a third argument.\n\ncode:\nclass P:\n    def __pow__(self, other, mod=None):\n        if mod is None:\n            return 1\n        return pow(1, other, mod)\n\nprint(pow(P(), 2, 3))  # 1\n\nreal example:\nThree-argument pow() is used in cryptography for safe modular exponentiation."
     },
     {
       "id": 70,
       "question": "Predict the output. class Idx: / def __index__(self): return 2. l = [10, 20, 30, 40, 50]; print(l[Idx()], 'ab' * Idx(), list(range(Idx())))",
-      "answer": "30 abab [0, 1]. Every place that needs an integer index or size first consults the __index__ slot: list indexing uses it for the subscript, str.__mul__ (and other sizes) converts via operator.index, and range(Idx()) demands an int index. All three resolve Idx() to the int 2, so the subscript lands on 30, the string repeats twice into 'abab', and the range holds 0, 1. Since Python 3, __index__ (not __int__) is the single source of truth for all integer-entrance contexts."
+      "answer": "Output: 30, abab, [0, 1]. Every integer-entrance context consults __index__: list indexing, string repetition, and range all resolve to 2.\n\ncode:\nclass Idx:\n    def __index__(self): return 2\n\nl = [10, 20, 30, 40, 50]\nprint(l[Idx()])         # 30\nprint('ab' * Idx())     # abab\nprint(list(range(Idx())))  # [0, 1]\n\nreal example:\nCustom enumerators work in slicing and size computations because they define __index__."
     },
     {
       "id": 71,
       "question": "Predict the output. class Idx: / def __index__(self): return 15. print(hex(Idx()))",
-      "answer": "0xf. hex() and bin(), oct(), and the format specifiers all convert their argument via the __index__ slot rather than __int__. Idx().__index__ returns 15, which is then rendered in base 16 as 0xf. If __index__ were missing, hex() would raise TypeError instead of silently falling back to __int__."
+      "answer": "Output: 0xf. hex() and its cousins convert through __index__, not __int__, so Idx() maps to 15 and renders in base 16.\n\ncode:\nclass Idx:\n    def __index__(self): return 15\n\nprint(hex(Idx()))  # 0xf\n\nreal example:\nCustom types can feed hex, bin, and oct outputs once they implement __index__."
     },
     {
       "id": 72,
       "question": "Predict the output. class Twice: / def __int__(self): return 6. print(bool(Twice()))",
-      "answer": "True. bool() does NOT consult __int__; its conversion order is __bool__, then __len__, then fallback to plain truthy identity semantics. Twice provides none of those, so bool(Twice()) defaults to True even though int(twice) would be 6. This is the classic polymorphism trap: a class that converts cleanly to int is still 'truthy' in an if statement."
+      "answer": "Output: True. bool() ignores __int__; its order is __bool__, then __len__, then plain truthy identity, so Twice defaults to True.\n\ncode:\nclass Twice:\n    def __int__(self): return 6\n\nprint(bool(Twice()))  # True\n\nreal example:\nA class convertible to int is still truthy in if statements unless it defines bool or len."
     },
     {
       "id": 73,
       "question": "Predict the output. class Twice: / def __int__(self): return 6. print(int(Twice()))",
-      "answer": "6. The int() constructor follows the numeric conversion ladder: try __int__, then __index__ (and __trunc__-style fallbacks for float-related conversions) until an integer is produced. Twice.__int__ returns 6 immediately, so int(Twice()) is 6. This is why __int__ is the right hook for user classes intended to be coerced manually with int(), while slices, len, and indexing insist on __index__ instead."
+      "answer": "Output: 6. int() follows the conversion ladder and calls __int__ first, returning the stored 6 immediately.\n\ncode:\nclass Twice:\n    def __int__(self): return 6\n\nprint(int(Twice()))  # 6\n\nreal example:\nWrap a measurement class with __int__ so int(wrapper) gives a rounded whole number."
     },
     {
       "id": 74,
       "question": "Predict the output. class Odd: / def __getitem__(self, i): / if i > 2: raise IndexError / return 2 * i + 1. print(list(Odd()))",
-      "answer": "[1, 3, 5]. Odd defines no __iter__, but the iterator protocol has a legacy fallback: if an object lacks __iter__, Python tries the sequence protocol by calling __getitem__ with incrementing integer keys 0, 1, 2, ... until an IndexError is raised. Here key 0 gives 1, key 1 gives 3, key 2 gives 5, and key 3 raises IndexError, ending the iteration. This is duck-typed iteration: no explicit iterator was written, only the subscript-style sequence lookup."
+      "answer": "Output: [1, 3, 5]. With no __iter__, list() uses the sequence protocol: __getitem__(0), 1, 2, then IndexError ends the iteration.\n\ncode:\nclass Odd:\n    def __getitem__(self, i):\n        if i > 2:\n            raise IndexError\n        return 2 * i + 1\n\nprint(list(Odd()))  # [1, 3, 5]\n\nreal example:\nLegacy sequence-style classes become iterable without ever writing an iterator."
     },
     {
       "id": 75,
       "question": "Predict the output. class Down: / def __len__(self): return 3 / def __getitem__(self, i): / if 0 <= i < 3: return i + 1 / raise IndexError. print(list(reversed(Down())))",
-      "answer": "[3, 2, 1]. reversed() has the same duck policy as the iterator fallback: without __reversed__ it uses len() to learn the width, then calls __getitem__ with decreasing indices i = 2, 1, 0 and wraps up when an IndexError surfaces. Down() therefore yields its items backwards. The whole traversal is polymorphic: any object honoring __len__ + __getitem__ becomes reversible with zero extra code."
+      "answer": "Output: [3, 2, 1]. reversed() uses len() for the width, then __getitem__ with descending indices until IndexError.\n\ncode:\nclass Down:\n    def __len__(self): return 3\n    def __getitem__(self, i):\n        if 0 <= i < 3:\n            return i + 1\n        raise IndexError\n\nprint(list(reversed(Down())))  # [3, 2, 1]\n\nreal example:\nAny class implementing len plus getitem can be reversed with no extra code."
     },
     {
       "id": 76,
       "question": "Predict the output. class Both: / def __iter__(self): return iter([9]) / def __getitem__(self, i): return i. print(list(Both()))",
-      "answer": "[9]. When __iter__ is defined, it completely replaces the legacy __getitem__ iteration path; the subscript-based fallback is only consulted if __iter__ is absent. Both is iterable through its __iter__, which yields a single element 9, so list(Both()) is [9] despite __getitem__ being available. Precedence: modern iterator protocol wins over the old sequence protocol."
+      "answer": "Output: [9]. When __iter__ exists, it fully replaces the legacy __getitem__ iteration path, so the list holds just the single yielded value.\n\ncode:\nclass Both:\n    def __iter__(self): return iter([9])\n    def __getitem__(self, i): return i\n\nprint(list(Both()))  # [9]\n\nreal example:\nModern iterators take priority, so a custom sequence should prefer __iter__."
     },
     {
       "id": 77,
       "question": "Predict the error. class OnlyNext: / def __next__(self): return 42. What happens with list(OnlyNext())?",
-      "answer": "TypeError: 'OnlyNext' object is not iterable. Merely having __next__ does not make an object iterable: the iter() protocol requires __iter__ to return an iterator (an object that itself implements __next__ and returns itself from __iter__), otherwise Python falls back to __getitem__, which is absent here too. So list() can never start consuming it. Fix: add def __iter__(self): return self to make OnlyNext a proper iterator."
+      "answer": "It raises TypeError: 'OnlyNext' object is not iterable. Having __next__ alone does not make an object iterable; __iter__ (or __getitem__) is required.\n\ncode:\nclass OnlyNext:\n    def __next__(self): return 42\n\nprint(list(OnlyNext()))  # TypeError: not iterable\n\nreal example:\nIterators must implement both __iter__ and __next__ to work in for loops safely."
     },
     {
       "id": 78,
       "question": "Predict the output. class FuzzySet: / def __contains__(self, item): return item % 2 == 0. print(2 in FuzzySet(), 3 in FuzzySet())",
-      "answer": "True False. The in operator dispatches to __contains__ before ever trying iteration: Python asks FuzzySet.__contains__(2) and __contains__(3). The method simply checks parity, so 2 yields True and 3 yields False. This shows how membership polymorphism overrides the default scan behavior; without __contains__, `in` would have fallen back to calling __getitem__/__iter__ and searching element-wise."
+      "answer": "Output: True False. The in operator calls __contains__ before any iteration, and the parity check decides membership.\n\ncode:\nclass FuzzySet:\n    def __contains__(self, item):\n        return item % 2 == 0\n\nprint(2 in FuzzySet())  # True\nprint(3 in FuzzySet())  # False\n\nreal example:\nMembership rules like \"is this IP allowed\" can be computed on demand instead of stored."
     },
     {
       "id": 79,
       "question": "Predict the output. class Upper(dict): / def __missing__(self, key): return key.upper(). d = Upper(); print(d['hi'], d.get('hi'))",
-      "answer": "HI None. The __missing__ hook is polymorphic over the mapping protocol: when a dict subclass's __getitem__ fails to find a key, Python invokes d.__missing__(key), whose return value becomes the result of d['hi']; here it uppercases to 'HI'. But d.get('hi') does NOT go through __getitem__, so __missing__ is never called, and the plain .get() returns None. This asymmetry between d[k] and d.get(k) is a classic surprise."
+      "answer": "Output: HI then None. d['hi'] triggers the __missing__ hook, which uppercases; d.get('hi') skips __getitem__, so no __missing__ and it returns None.\n\ncode:\nclass Upper(dict):\n    def __missing__(self, key):\n        return key.upper()\n\nd = Upper()\nprint(d['hi'])     # HI\nprint(d.get('hi')) # None\n\nreal example:\nDefault-value dicts customize bracket reads but leave .get() behavior untouched."
     },
     {
       "id": 80,
       "question": "Predict the output. class Managed: / def __enter__(self): return 'resource' / def __exit__(self, t, v, tb): print('cleaned up'). with Managed() as r: print(r)",
-      "answer": "resource\ncleaned up. The with statement is polymorphic over the context-manager protocol: it calls __enter__ and binds its return value to the as variable, and when the block finishes normally it calls __exit__. Here __enter__ returns 'resource', which r prints, and then __exit__ runs at scope exit to print 'cleaned up'. Because the exception triple arrives as (None, None, None) for a clean block, __exit__ can use it to decide whether to swallow errors."
+      "answer": "Output: resource then cleaned up. __enter__ returns the value bound to the as variable, and __exit__ runs when the block finishes.\n\ncode:\nclass Managed:\n    def __enter__(self): return 'resource'\n    def __exit__(self, t, v, tb):\n        print('cleaned up')\n\nwith Managed() as r:\n    print(r)\n\nreal example:\nFile and database handles use __enter__/__exit__ so resources always close automatically."
     },
     {
       "id": 81,
       "question": "Predict the output. class Swallow: / def __enter__(self): return 'ok' / def __exit__(self, t, v, tb): return True. with Swallow(): print(1 / 0) ; print('survived')",
-      "answer": "survived. The ZeroDivisionError raised inside the block is passed to Swallow.__exit__(ZeroDivisionError, exception, traceback); because __exit__ returns a truthy True, the with machinery treats the exception as handled, suppresses propagation, and execution continues at the following line. Note that 'inside' was never printed because 1 / 0 blew up before the print statement. Returning True from __exit__ is how a context manager deliberately catches and swallows raised exceptions."
+      "answer": "Output: survived. When __exit__ returns True, the exception raised in the block is treated as handled and suppressed, so execution continues.\n\ncode:\nclass Swallow:\n    def __enter__(self): return 'ok'\n    def __exit__(self, t, v, tb): return True\n\nwith Swallow():\n    print(1 / 0)\nprint('survived')\n\nreal example:\nContext managers can deliberately absorb certain errors, like closing a connection despite failures."
     },
     {
       "id": 82,
       "question": "Predict the output. class NonData: / def __get__(self, obj, typ=None): return 'PROXY'. class C: x = NonData(). c = C(); c.x = 'local'; print(c.x)",
-      "answer": "local. NonData is a non-data descriptor, i.e. it defines __get__ but no __set__ (or __delete__). During lookup, an instance-__dict__ entry takes priority over a non-data descriptor, so c.x='local' shadows the class-level descriptor and reads back 'local'. This is the exact mechanism behind method binding vs attribute assignment: ordinary functions are non-data descriptors, so assigning self.method = x works."
+      "answer": "Output: local. NonData defines __get__ but no __set__, so an instance __dict__ entry shadows the class-level descriptor during lookup.\n\ncode:\nclass NonData:\n    def __get__(self, obj, typ=None): return 'PROXY'\n\nclass C:\n    x = NonData()\n\nc = C()\nc.x = 'local'\nprint(c.x)  # local\n\nreal example:\nThis is why you can assign to a method name; plain functions are non-data descriptors."
     },
     {
       "id": 83,
       "question": "Predict the output. class Data: / def __get__(self, obj, typ=None): return 'PROXY' / def __set__(self, obj, value): obj.__dict__['x'] = value. class D: x = Data(). d = D(); d.x = 'local'; print(d.x, d.__dict__['x'])",
-      "answer": "PROXY local. Data is a data descriptor (it owns both __get__ and __set__), and data descriptors take precedence over the instance dictionary on every access. So d.x always routes through Data.__get__, which abandons the stored value and returns 'PROXY'; the assignment d.x='local' still fires __set__, which parks 'local' inside d.__dict__['x']. This is the descriptor-precedence rule that makes property/slots work: the __set__ presence flips normal attribute-shadowing behavior."
+      "answer": "Output: PROXY then local. Data owns both __get__ and __set__, so it outranks the instance dict; d.x always goes through the getter.\n\ncode:\nclass Data:\n    def __get__(self, obj, typ=None): return 'PROXY'\n    def __set__(self, obj, value): obj.__dict__['x'] = value\n\nclass D:\n    x = Data()\n\nd = D()\nd.x = 'local'\nprint(d.x, d.__dict__['x'])  # PROXY local\n\nreal example:\nProperties and slots rely on this precedence to intercept every attribute access."
     },
     {
       "id": 84,
       "question": "Predict the output. class Field: / def __set_name__(self, owner, name): self.name = '_' + name / def __get__(self, obj, typ=None): / return self.name if obj is None else getattr(obj, self.name, None) / def __set__(self, obj, value): setattr(obj, self.name, value). class User: name = Field() / def __init__(self, n): self.name = n. u = User('ann'); print(u.name, u._name, User.name)",
-      "answer": "ann ann _name. When the class is created, Python calls __set_name__ on each descriptor with the class and the attribute name, so the Field learns it is called 'name' and stores '_name' as its backing key. u.name = 'ann' routes through __set__ and writes u._name = 'ann', so both u.name and u._name are 'ann'. Accessing User.name on the class (obj is None) hits the guarded branch and returns the stored descriptor label '_name'. __set_name__ is how descriptors become attribute-name-aware without hardcoding field names."
+      "answer": "Output: ann ann then _name. __set_name__ tells the descriptor its field name; __set__ stores '_name', and class access returns the descriptor label.\n\ncode:\nclass Field:\n    def __set_name__(self, owner, name):\n        self.name = '_' + name\n    def __get__(self, obj, typ=None):\n        return self.name if obj is None else getattr(obj, self.name, None)\n    def __set__(self, obj, value):\n        setattr(obj, self.name, value)\n\nclass User:\n    name = Field()\n    def __init__(self, n): self.name = n\n\nu = User('ann')\nprint(u.name, u._name, User.name)  # ann ann _name\n\nreal example:\nDataclass-style frameworks use __set_name__ to build validated fields automatically."
     },
     {
       "id": 85,
       "question": "Predict the output. class Color: / def __init__(self, c): self.c = c / def __eq__(self, o): return isinstance(o, Color) and self.c == o.c / def __hash__(self): return hash(self.c). d = {Color('red'): 'hot'}; print(d[Color('red')])",
-      "answer": "hot. The dict uses the hash to find the bucket, then calls == to confirm equality of the probe key with each candidate inside that bucket. Color('red') hashes identically — hash('red') — and Color.__eq__ compares the payload strings, so the lookup matches the stored key and returns 'hot'. This is polymorphic key hashing: any class that agrees on hash and eq can serve as a dictionary key."
+      "answer": "Output: hot. The dict hashes Color('red') via __hash__, confirms equality with __eq__, and finds the stored value 'hot'.\n\ncode:\nclass Color:\n    def __init__(self, c): self.c = c\n    def __eq__(self, o): return isinstance(o, Color) and self.c == o.c\n    def __hash__(self): return hash(self.c)\n\nd = {Color('red'): 'hot'}\nprint(d[Color('red')])  # hot\n\nreal example:\nCustom objects like colors or coordinates can be dict keys when hash and eq agree."
     },
     {
       "id": 86,
       "question": "Predict the error. class E: / def __eq__(self, o): return True. try: {E(): 1} except TypeError as e: print(e). Why?",
-      "answer": "TypeError: cannot use 'E' as a dict key (unhashable type: 'E'). Merely defining __eq__ installs __hash__ = None on the class, because Python assumes eq-able objects that did not opt in to hashing should not be hashable. Since E never redefines __hash__, its instances have no hash function and cannot enter a dict or set. The fix is to define __hash__ as well; the two must stay consistent."
+      "answer": "It raises TypeError: cannot use 'E' as a dict key (unhashable type: 'E'). Defining __eq__ alone sets __hash__ to None, so the class becomes unhashable.\n\ncode:\nclass E:\n    def __eq__(self, o): return True\n\nprint({E(): 1})  # TypeError\n\nreal example:\nReuse-equal objects must opt into hashing; forgetting that blocks them from sets and dict keys."
     },
     {
       "id": 87,
       "question": "Predict the output. class Maybe: / def __init__(self, i): self.i = i / def __eq__(self, o): return True / def __hash__(self): return self.i. d = {Maybe(1): 'A'}; print(d.get(Maybe(2)), d.get(Maybe(1)))",
-      "answer": "None A. The stored key hashes to 1, so it lives in bucket 1. Looking up Maybe(2) hashes to 2, lands in bucket 2, finds nothing there, and returns None even though Maybe(1) == Maybe(2) would be True: the dict never compares objects in different buckets. Maybe(1) searches bucket 1, collides on the equal/hash-matched entry, and returns 'A'. This demonstrates why __hash__ and __eq__ must be mutually consistent, or dict lookups silently break."
+      "answer": "Output: None then A. The dict never compares objects in different hash buckets, so Maybe(2) finds nothing at bucket 2 despite equality with Maybe(1).\n\ncode:\nclass Maybe:\n    def __init__(self, i): self.i = i\n    def __eq__(self, o): return True\n    def __hash__(self): return self.i\n\nd = {Maybe(1): 'A'}\nprint(d.get(Maybe(2)))  # None\nprint(d.get(Maybe(1)))  # A\n\nreal example:\nInconsistent hash and equality silently break dict lookups, a classic debugging trap."
     },
     {
       "id": 88,
       "question": "Predict the output. import collections.abc as abc. class Rounded: / def __len__(self): return 4 / def __getitem__(self, i): return i. abc.Sequence.register(Rounded); print(isinstance(Rounded(), abc.Sequence))",
-      "answer": "True. isinstance check is polymorphic through ABC registration: abc.Sequence.register(Rounded) declares Rounded a virtual subclass with zero code changes, so isinstance(Rounded(), abc.Sequence) returns True even though Rounded never inherits from the ABC. The check is satisfied by the registration table rather than the MRO. (The same would be true for issubclass.) This is how third-party types retroactively present as 'sequences' to generic functions guarded by isinstance."
+      "answer": "Output: True. register(Rounded) makes Rounded a virtual subclass, so isinstance succeeds through the ABC registry with zero code changes.\n\ncode:\nimport collections.abc as abc\n\nclass Rounded:\n    def __len__(self): return 4\n    def __getitem__(self, i): return i\n\nabc.Sequence.register(Rounded)\nprint(isinstance(Rounded(), abc.Sequence))  # True\n\nreal example:\nRegistering third-party types lets generic functions recognize them without inheritance."
     },
     {
       "id": 89,
       "question": "Predict the output. import collections.abc as abc. class Iter: / def __iter__(self): return iter(()). print(isinstance(Iter(), abc.Iterable)). Explain why no register() is needed.",
-      "answer": "True. collections.abc.Iterable defines __subclasshook__, an alternative to registration: when the normal MRO check fails, C implementation of isinstance consults the ABC's __subclasshook__ method, which here inspects the actual structure of the candidate and sees the __iter__ method. Since Iter implements __iter__, the hook returns True, so isinstance succeeds without any isinstance/register call. This is structural (duck-typed) polymorphism built into the ABC machinery."
+      "answer": "Output: True. collections.abc.Iterable defines __subclasshook__, which inspects the class structure and sees the __iter__ method, so no register() is needed.\n\ncode:\nimport collections.abc as abc\n\nclass Iter:\n    def __iter__(self): return iter(())\n\nprint(isinstance(Iter(), abc.Iterable))  # True\n\nreal example:\nStructural checks automatically recognize any class implementing the needed protocol methods."
     },
     {
       "id": 90,
       "question": "Predict the output. class Animal: pass. class Cat(Animal): pass. for k in (Cat(), Animal(), 'x'): print(type(k) is Animal, isinstance(k, Animal))",
-      "answer": "False True\nTrue True\nFalse False. type(k) is Animal requires the exact, identical type object, so Cat() fails that identity check (False) while Animal() passes. isinstance(k, Animal) is polymorphic: it accepts Cat instances, Animal instances, and their subclasses as instances of Animal, so the first two lines end True; the string 'x' shares no relation, giving False False. The lesson: isinstance is the polymorphic test, type() is the exact-match test, and reachable code should prefer isinstance."
+      "answer": "Output: False True then True True then False False. type(k) demands the exact class; isinstance accepts subclasses too.\n\ncode:\nclass Animal:\n    pass\n\nclass Cat(Animal):\n    pass\n\nfor k in (Cat(), Animal(), 'x'):\n    print(type(k) is Animal, isinstance(k, Animal))\n\n# False True / True True / False False\n\nreal example:\nPrefer isinstance in APIs so subclasses are accepted just like the base class."
     },
     {
       "id": 91,
       "question": "Predict the output. class A: pass. class B(A): pass. class C(A): pass. class D(B, C): pass. print(D.__mro__)",
-      "answer": "(<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>). The C3 linearization for the diamond D(B, C) merges the base lists into D, B, C, A, object, guaranteeing that each class appears after all its direct bases and that the ordering respects the left-to-right base tuple. This exact MRO is what super() walks: starting at D, super() positions land on the next class down this list. Method resolution is then a sequential scan of the MRO."
+      "answer": "Output: (D, B, C, A, object). C3 linearization merges the diamond so every parent comes after its children, and that tuple is what super() walks.\n\ncode:\nclass A:\n    pass\n\nclass B(A):\n    pass\n\nclass C(A):\n    pass\n\nclass D(B, C):\n    pass\n\nprint(D.__mro__)\n\nreal example:\nKnowing the MRO predicts which method wins in multi-inheritance class libraries."
     },
     {
       "id": 92,
       "question": "Predict the output. class A: def m(self): print('A', end=''). class B(A): def m(self): super().m(); print('B', end=''). class C(A): def m(self): super().m(); print('C', end=''). class D(B, C): pass. D().m()",
-      "answer": "ACB. D has no m, so B.m runs first; B's super() no longer means 'A' directly, it means 'the next class in D's MRO after B', which is C. C.m then calls super() which, next in the MRO, is A, printing A first, then C prints, then B prints: ACB. This is super() cooperation: linearization plus super() chaining produces exactly one call to each method along the full diamond, and A is visited only once."
+      "answer": "Output: ACB. Inside B, super() means the next class in D's MRO, which is C, so C prints first, then B.\n\ncode:\nclass A:\n    def m(self): print('A', end='')\n\nclass B(A):\n    def m(self): super().m(); print('B', end='')\n\nclass C(A):\n    def m(self): super().m(); print('C', end='')\n\nclass D(B, C):\n    pass\n\nD().m()  # ACB\n\nreal example:\nCooperative super() in diamonds calls each layer exactly once in MRO order."
     },
     {
       "id": 93,
       "question": "Predict the error. class X: pass. class Y: pass. class Z(X, Y): pass. class W(Y, X): pass. class V(Z, W): pass. What is raised when defining V?",
-      "answer": "TypeError: Cannot create a consistent method resolution order (MRO) for bases X, Y. Z(X, Y) demands X before Y while W(Y, X) demands Y before X; merging them for V(Z, W) would require X ahead of Y (from Z's list) and Y ahead of X (from W's list) at the same time. C3 cannot linearize such a conflict as a topological order, so Python refuses to build the class. This is what happens when two parallel inheritance branches impose contradictory base orderings."
+      "answer": "It raises TypeError: Cannot create a consistent method resolution order (MRO) for bases X, Y. Z demands X before Y while W demands Y before X, so C3 cannot linearize V.\n\ncode:\nclass X:\n    pass\n\nclass Y:\n    pass\n\nclass Z(X, Y):\n    pass\n\nclass W(Y, X):\n    pass\n\nclass V(Z, W):\n    pass  # TypeError\n\nreal example:\nConflicting base orders across branches make a class impossible to build reasonably."
     },
     {
       "id": 94,
       "question": "Predict the error. def make_sound(animal): return animal.speak(). What happens with make_sound(['list']) — why is the failure at call time?",
-      "answer": "AttributeError: 'list' object has no attribute 'speak'. Nothing is checked when make_sound is defined or when the list is passed in; the method resolution for .speak happens lazily inside the function body at the exact moment of the attribute access. Python looks up 'speak' on list's class and its bases, finds nothing, and only then raises AttributeError. This lazy lookup is duck typing's pitfall: any object may be handed to the function, and correctness is verified the moment the real method is needed."
+      "answer": "It raises AttributeError: 'list' object has no attribute 'speak'. Nothing is checked until the attribute access inside the function; lists simply lack speak.\n\ncode:\ndef make_sound(animal):\n    return animal.speak()\n\nmake_sound(['list'])  # AttributeError\n\nreal example:\nDuck-typed functions fail at call time when a wrong object slips in, not at definition."
     },
     {
       "id": 95,
       "question": "Predict the output. class Proxy: / def __init__(self, obj): self._obj = obj / def __getattr__(self, name): return getattr(self._obj, name). class Greeter: / def hi(self): return 'hello' / def bye(self): return 'goodbye'. p = Proxy(Greeter()); print(p.hi(), p.bye())",
-      "answer": "hello goodbye. __getattr__ runs only when normal attribute lookup fails, so p.hi first searches Proxy for 'hi', finds none, and falls into __getattr__('hi'), which forwards getattr(self._obj, 'hi') to the wrapped Greeter. Both hi and bye are resolved by delegation, letting the Proxy polymorphically stand in for whatever object it wraps. Note that self._obj is reachable directly because it lives in the instance dict, so __getattr__ never swallows it."
+      "answer": "Output: hello goodbye. __getattr__ runs only when normal lookup fails, so p.hi and p.bye forward to the wrapped Greeter.\n\ncode:\nclass Greeter:\n    def hi(self): return 'hello'\n    def bye(self): return 'goodbye'\n\nclass Proxy:\n    def __init__(self, obj): self._obj = obj\n    def __getattr__(self, name):\n        return getattr(self._obj, name)\n\np = Proxy(Greeter())\nprint(p.hi(), p.bye())\n\nreal example:\nProxy objects forward unknown attributes to a hidden target, like lazy-loaded libraries."
     },
     {
       "id": 96,
       "question": "Find the bug. class Bad: / def __getattr__(self, name): return self.missing. What happens when you evaluate Bad().anything?",
-      "answer": "RecursionError: maximum recursion depth exceeded. Accessing Bad().anything fails normal lookup and calls Bad.__getattr__('anything'), whose body then accesses self.missing; 'missing' is not in the instance dict, so lookup fails again and re-enters __getattr__. Each recursion spins back into the same method until the interpreter exhausts its guard and raises RecursionError. Fix: guard the fallback, e.g. if name == 'missing': return None, or consult self.__dict__, or raise AttributeError instead of recursing."
+      "answer": "It raises RecursionError: maximum recursion depth exceeded. Every failed lookup re-enters __getattr__, which keeps accessing self.missing and recursing forever.\n\ncode:\nclass Bad:\n    def __getattr__(self, name):\n        return self.missing\n\nprint(Bad().anything)  # RecursionError\n\nreal example:\nFaulty fallback attribute code must consult __dict__ or raise AttributeError to avoid loops."
     },
     {
       "id": 97,
       "question": "Predict the output. class Tracer: / def __getattribute__(self, name): print('GET', name); return super().__getattribute__(name). t = Tracer(); t.x = 1; print(t.x)",
-      "answer": "GET x\n1. __getattribute__ is invoked for EVERY attribute access, even successful ones, so t.x triggers it, prints 'GET x', and delegates to super().__getattribute__ to get the stored 1. Unlike __getattr__, which only runs on failures, __getattribute__ is the unconditional hook. If the method forgets to call super(), every read — including reads of internal state — will fail or recurse."
+      "answer": "Output: GET x then 1. __getattribute__ runs on every access, even successful ones, then delegates to super for the real value.\n\ncode:\nclass Tracer:\n    def __getattribute__(self, name):\n        print('GET', name)\n        return super().__getattribute__(name)\n\nt = Tracer()\nt.x = 1\nprint(t.x)\n\nreal example:\nProfiling or access logs use __getattribute__ to spy on every attribute read."
     },
     {
       "id": 98,
       "question": "Predict the output. class CountDown: / def __init__(self, n): self.n = n / def __call__(self): self.n -= 1; return self.n. c = CountDown(3); print(c(), c(), c())",
-      "answer": "2 1 0. Defining __call__ turns CountDown instances into callable objects: invoking c() dispatches to c.__call__(), which decrements and returns the new n. Each call mutates shared state, so the three calls emit 2, then 1, then 0. This callable-object polymorphism is what closures and functors use to bundle behavior plus state in a single callable entity."
+      "answer": "Output: 2 1 0. __call__ makes the instance a callable functor that decrements and returns its stored n on each invocation.\n\ncode:\nclass CountDown:\n    def __init__(self, n): self.n = n\n    def __call__(self):\n        self.n -= 1\n        return self.n\n\nc = CountDown(3)\nprint(c(), c(), c())  # 2 1 0\n\nreal example:\nCallable state holders replace closures when behavior and state belong together."
     },
     {
       "id": 99,
       "question": "Predict the output. class Printer: / def __init__(self, fmt): self.format = fmt. def upper(s): return s.upper(). def lower(s): return s.lower(). print(Printer(upper).format('hi'), Printer(lower).format('hi'))",
-      "answer": "HI hi. Polymorphism here is exercised through stored functions: Printer stores whichever callable was injected in its constructor, and calling .format('hi') dispatches to that function. Printer(upper) formats to 'HI' while Printer(lower) formats to 'hi', the same API yielding different behavior. This strategy-pattern style achieves polymorphism without subclasses — any callable object works, since Python functions are ordinary first-class attributes."
+      "answer": "Output: HI hi. Printer stores an injected callable and dispatches to it, achieving behavior variation without subclasses.\n\ncode:\nclass Printer:\n    def __init__(self, fmt): self.format = fmt\n\ndef upper(s): return s.upper()\n\ndef lower(s): return s.lower()\n\nprint(Printer(upper).format('hi'))  # HI\nprint(Printer(lower).format('hi'))  # hi\n\nreal example:\nStrategy objects passed into a class let one API produce many different behaviors."
     },
     {
       "id": 100,
       "question": "Predict the output. class Money: / def __init__(self, v): self.v = v / def __format__(self, spec): return f'{self.v}{spec} credits'. print(f'{Money(42):}'); print(format(Money(42), 'X'))",
-      "answer": "42 credits\n42X credits. The f-string and format() both hand their format specification to Money.__format__(spec): the empty spec (f'{...:}') yields '42 credits', while spec 'X' is appended verbatim to the value, producing '42X credits'. __format__ is the polymorphic hook that lets every class define how it renders inside f-strings and format(). Without it, f'{obj}' would fall back to str(obj) instead."
+      "answer": "Output: 42 credits then 42X credits. Both f-strings and format() pass their spec to __format__, which appends it verbatim to the value.\n\ncode:\nclass Money:\n    def __init__(self, v): self.v = v\n    def __format__(self, spec):\n        return f'{self.v}{spec} credits'\n\nprint(f'{Money(42):}')        # 42 credits\nprint(format(Money(42), 'X')) # 42X credits\n\nreal example:\nCustom types control their own appearance inside f-strings and format() calls."
     }
   ]
 }

@@ -7,6 +7,60 @@ import { ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
 
+function AnswerBlock({ answer }: { answer: string }) {
+  const lines = answer.split("\n");
+  const nodes: React.ReactNode[] = [];
+  let i = 0;
+  let key = 0;
+
+  while (i < lines.length) {
+    const trimmed = lines[i].trim();
+
+    if (trimmed === "code:" || trimmed === "real example:") {
+      const label = trimmed === "code:" ? "Code Example" : "Real-World Example";
+      i++;
+      const block: string[] = [];
+      while (i < lines.length) {
+        const t = lines[i].trim();
+        if (t === "code:" || t === "real example:") break;
+        block.push(lines[i]);
+        i++;
+      }
+      const content = block.join("\n").trim();
+      if (trimmed === "code:") {
+        nodes.push(
+          <div key={key++} className="mt-3">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-1">
+              {label}
+            </div>
+            <pre className="bg-slate-900 text-emerald-100 text-[12.5px] leading-relaxed rounded-lg p-3 overflow-x-auto whitespace-pre-wrap break-words font-mono">
+              {content}
+            </pre>
+          </div>
+        );
+      } else {
+        nodes.push(
+          <div key={key++} className="mt-3">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-1">
+              {label}
+            </div>
+            <p className="text-emerald-800">{content}</p>
+          </div>
+        );
+      }
+    } else {
+      if (trimmed.length > 0) {
+        nodes.push(<p key={key++} className="text-emerald-800">{lines[i]}</p>);
+      } else {
+        nodes.push(<div key={key++} className="h-2" />);
+      }
+      i++;
+    }
+  }
+
+  return <div>{nodes}</div>;
+}
+
 function EditorPlaceholder({ height }: { height: number }) {
   return (
     <div
@@ -94,7 +148,7 @@ export default function PracticeQA({ questions }: PracticeQAProps) {
           <div className="flex-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <div className="flex-1 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
               <div className="text-xs text-emerald-600 font-semibold mb-1 uppercase tracking-wider">Answer</div>
-              <p className="text-emerald-800">{q.answer}</p>
+              <AnswerBlock answer={q.answer} />
             </div>
             <button
               type="button"

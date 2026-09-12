@@ -4,1002 +4,1002 @@
     {
       "id": 1,
       "question": "How do you write a Python string using single quotes?",
-      "answer": "'hello'"
+      "answer": "Wrap the text in single quote characters, like 'hello'. The quotes mark where the text begins and ends.\n\ncode:\ns = 'hello'\nprint(s)  # hello\n\nreal example:\nStoring everyday text such as 'Good morning' in a variable."
     },
     {
       "id": 2,
       "question": "How do you write a Python string using double quotes?",
-      "answer": "\"hello\""
+      "answer": "Wrap the text in double quote characters, like \"hello\". Double-quoted strings behave exactly like single-quoted ones.\n\ncode:\ns = \"hello\"\nprint(s)  # hello\n\nreal example:\nStoring a greeting message in a program."
     },
     {
       "id": 3,
       "question": "When should you wrap a string in double quotes?",
-      "answer": "When it contains single quotes, e.g. \"It's nice\""
+      "answer": "Use double quotes when your text contains a single quote (apostrophe), so the quote does not end the string early.\n\ncode:\nmessage = \"It's a sunny day\"\nprint(message)  # It's a sunny day\n\nreal example:\nSentences with apostrophes, like \"Bob's project\"."
     },
     {
       "id": 4,
       "question": "When should you use single quotes?",
-      "answer": "When the string contains double quotes, e.g. 'She said \"hi\"'"
+      "answer": "Use single quotes when your text itself contains double quotes, such as quoted speech.\n\ncode:\nreply = 'She said \"hi\"'\nprint(reply)  # She said \"hi\"\n\nreal example:\nQuoting someones words inside a chat message or caption."
     },
     {
       "id": 5,
       "question": "What is the value of 'a' + 'b'?",
-      "answer": "'ab'"
+      "answer": "The + operator joins two strings end to end, so 'a' plus 'b' becomes the single string 'ab'.\n\ncode:\nprint('a' + 'b')  # ab\n\nreal example:\nBuilding a full name by joining a first name and a last name."
     },
     {
       "id": 6,
       "question": "What is the result of the adjacent literals 'py' 'thon'?",
-      "answer": "'python' (adjacent literals are concatenated)"
+      "answer": "When two string literals sit right next to each other, Python joins them into one string.\n\ncode:\nprint('py' 'thon')  # python\n\nreal example:\nSplitting a very long line of text across two source lines."
     },
     {
       "id": 7,
       "question": "How do you create an empty string?",
-      "answer": "'' or \"\""
+      "answer": "A pair of quotes with nothing between them creates an empty string, which contains zero characters.\n\ncode:\nempty = ''\nprint(len(empty))  # 0\n\nreal example:\nStarting a variable as blank text before appending to it."
     },
     {
       "id": 8,
       "question": "What does str(123) return?",
-      "answer": "'123'"
+      "answer": "str() converts a number into its text form, so str(123) becomes the string '123' instead of the integer 123.\n\ncode:\nprint(str(123))  # 123\nprint(type(str(123)))  # <class 'str'>\n\nreal example:\nTurning a price number into text so it can be shown in a label."
     },
     {
       "id": 9,
       "question": "What does str(3.14) return?",
-      "answer": "'3.14'"
+      "answer": "str() converts a decimal number into its text form while keeping the digits and the dot.\n\ncode:\nprint(str(3.14))  # 3.14\n\nreal example:\nDisplaying a temperature or measurement value on screen."
     },
     {
       "id": 10,
       "question": "What does str(True) return?",
-      "answer": "'True'"
+      "answer": "str() converts the boolean True into the four-character string 'True'.\n\ncode:\nprint(str(True))  # True\nprint(type(str(True)))  # <class 'str'>\n\nreal example:\nTurning a yes/no flag into text for a report line."
     },
     {
       "id": 11,
       "question": "What does str(None) return?",
-      "answer": "'None'"
+      "answer": "str() converts the special value None into the four-character string 'None'.\n\ncode:\nprint(str(None))  # None\n\nreal example:\nPrinting a placeholder when a value has not been set yet."
     },
     {
       "id": 12,
       "question": "What is the type of 'python'?",
-      "answer": "<class 'str'>"
+      "answer": "Single-quoted 'python' is a string, and its type is str, which is short for string.\n\ncode:\nprint(type('python'))  # <class 'str'>\n\nreal example:\nChecking that user input came through as text before processing it."
     },
     {
       "id": 13,
       "question": "Are single-quoted and double-quoted strings different in behavior?",
-      "answer": "No, they are completely identical"
+      "answer": "Single-quoted and double-quoted strings behave exactly the same; the choice is just style.\n\ncode:\nprint('hi' == \"hi\")  # True\n\nreal example:\nPicking whichever quote style lets you avoid escaping characters in a message."
     },
     {
       "id": 14,
       "question": "Can you write a string with triple single quotes?",
-      "answer": "Yes: '''hello'''"
+      "answer": "Three single quotes in a row create a string that can hold multiple lines of text.\n\ncode:\ns = '''hello\nworld'''\nprint(s)\n\nreal example:\nStoring a multi-line note, address block, or paragraph."
     },
     {
       "id": 15,
       "question": "Can you write a string with triple double quotes?",
-      "answer": "Yes: \"\"\"hello\"\"\""
+      "answer": "Three double quotes can also create a string, and inside them both quote characters can appear freely.\n\ncode:\ns = '''hello\nworld'''\nprint(s)  # the same works with three double quotes\n\nreal example:\nWriting a long message that contains both ' and \" characters."
     },
     {
       "id": 16,
       "question": "What is the value of 'A' + ' ' + 'B'?",
-      "answer": "'A B'"
+      "answer": "Concatenating the three pieces 'A', a space, and 'B' gives the single string 'A B' with a space between.\n\ncode:\nprint('A' + ' ' + 'B')  # A B\n\nreal example:\nJoining two initials with a space to make a name badge."
     },
     {
       "id": 17,
       "question": "What does '$' * 0 + 'x' evaluate to?",
-      "answer": "'x'"
+      "answer": "'$' * 0 produces an empty string, so adding 'x' to it leaves just 'x'.\n\ncode:\nprint('$' * 0 + 'x')  # x\n\nreal example:\nBuilding a label where the repeated part is zero, leaving only the suffix."
     },
     {
       "id": 18,
       "question": "How would you create a string containing 10 dashes?",
-      "answer": "'-' * 10"
+      "answer": "Multiplying a string by a number repeats it that many times, so '-' * 10 makes ten dashes.\n\ncode:\nprint('-' * 10)  # ----------\n\nreal example:\nDrawing a divider line in a printed receipt or report."
     },
     {
       "id": 19,
       "question": "What is the value of str(1) + str(2)?",
-      "answer": "'12'"
+      "answer": "str() turns each number into text, and then + concatenates them into the string '12'.\n\ncode:\nprint(str(1) + str(2))  # 12\n\nreal example:\nCombining separately entered digits into one text string."
     },
     {
       "id": 20,
       "question": "Which built-in converts any object to a string?",
-      "answer": "str(object)"
+      "answer": "str(object) converts any value (number, boolean, text) into its string form.\n\ncode:\nprint(str(42))  # 42\nprint(str(3.5))  # 3.5\n\nreal example:\nConverting a number so it can be written into a text field or file."
     },
     {
       "id": 21,
       "question": "What does 'Hello, ' + 'World!' evaluate to?",
-      "answer": "'Hello, World!'"
+      "answer": "Concatenation joins the two strings end to end, keeping the comma and the space in between.\n\ncode:\nprint('Hello, ' + 'World!')  # Hello, World!\n\nreal example:\nBuilding a greeting by adding a name onto the fixed start 'Hello, '."
     },
     {
       "id": 22,
       "question": "Can you concatenate a string and an integer with +?",
-      "answer": "No, it raises a TypeError"
+      "answer": "No, adding a string and an integer raises a TypeError because Python will not combine different types by guessing.\n\ncode:\n# print('x' + 5)  # TypeError: can only concatenate str\n\nreal example:\nConvert the number first, for example 'x' + str(5), before joining."
     },
     {
       "id": 23,
       "question": "How do you join a number into a string?",
-      "answer": "str(number) + text, or use an f-string/format"
+      "answer": "Convert the number to text first with str() or an f-string, then combine it with the rest of the text.\n\ncode:\nage = 25\nprint('Age: ' + str(age))  # Age: 25\nprint(f'Age: {age}')  # Age: 25\n\nreal example:\nShowing a player's score or age as part of a text message."
     },
     {
       "id": 24,
       "question": "What does 'py' + 'thon' produce?",
-      "answer": "'python'"
+      "answer": "The + operator links the two strings into one, so 'py' plus 'thon' becomes 'python'.\n\ncode:\nprint('py' + 'thon')  # python\n\nreal example:\nAssembling a word or identifier from its parts."
     },
     {
       "id": 25,
       "question": "What does 'a' + '' + 'b' produce?",
-      "answer": "'ab'"
+      "answer": "The empty string adds no characters, so only 'a' and 'b' remain joined together.\n\ncode:\nprint('a' + '' + 'b')  # ab\n\nreal example:\nAdding an optional middle word that might be blank without breaking the join."
     },
     {
       "id": 26,
       "question": "What does 'go' * 4 produce?",
-      "answer": "'gogogogo'"
+      "answer": "Multiplying repeats the whole text four times, so 'go' copied four times becomes 'gogogogo'.\n\ncode:\nprint('go' * 4)  # gogogogo\n\nreal example:\nRepeating a chant or slogan in a fun notification."
     },
     {
       "id": 27,
       "question": "What does '-=' * 3 produce?",
-      "answer": "'-=-=-='"
+      "answer": "Each repetition is the two-character '-=', so three copies give '-=-=-='.\n\ncode:\nprint('-=' * 3)  # -=-=-=\n\nreal example:\nBuilding a repeating zigzag pattern for a text separator."
     },
     {
       "id": 28,
       "question": "What does 'ha ' * 2 + '!' produce?",
-      "answer": "'ha ha !'"
+      "answer": "'ha ' multiplied by 2 gives 'ha ha ', and adding '!' on the end finishes with 'ha ha !'.\n\ncode:\nprint('ha ' * 2 + '!')  # ha ha !\n\nreal example:\nWriting a quick laugh effect in a playful reply."
     },
     {
       "id": 29,
       "question": "Is '5' + 5 valid Python?",
-      "answer": "No, it raises TypeError"
+      "answer": "No, '5' + 5 raises a TypeError because you cannot mix a string and an integer with +.\n\ncode:\n# '5' + 5  # TypeError\nprint(int('5') + 5)  # 10  (convert first)\n\nreal example:\nAdding numbers typed by the user requires converting them with int() first."
     },
     {
       "id": 30,
       "question": "What does '0' * 5 produce?",
-      "answer": "'00000'"
+      "answer": "Multiplying repeats the zero five times, making a string of five zeros.\n\ncode:\nprint('0' * 5)  # 00000\n\nreal example:\nPadding a number so it always displays with leading zeros."
     },
     {
       "id": 31,
       "question": "What does 'a' * 3 * 2 produce?",
-      "answer": "'aaaaaa'"
+      "answer": "'a' * 3 makes 'aaa', and multiplying by 2 again gives six letters in total.\n\ncode:\nprint('a' * 3 * 2)  # aaaaaa\n\nreal example:\nCreating repeated bars in a plain-text bar chart."
     },
     {
       "id": 32,
       "question": "What does ('a' * 2) + ('b' * 2) produce?",
-      "answer": "'aabb'"
+      "answer": "Two 'a' characters plus two 'b' characters concatenate into 'aabb'.\n\ncode:\nprint(('a' * 2) + ('b' * 2))  # aabb\n\nreal example:\nBuilding a status code from repeated parts of an identifier."
     },
     {
       "id": 33,
       "question": "Can you repeat a string with a float such as 'a' * 2.0?",
-      "answer": "No, it raises a TypeError"
+      "answer": "No, repeating needs a whole number; using a float like 2.0 raises a TypeError.\n\ncode:\n# 'a' * 2.0  # TypeError: can't multiply sequence by non-int\nprint('a' * 2)  # aa\n\nreal example:\nPreventing accidental repetition by decimals when formatting output."
     },
     {
       "id": 34,
       "question": "What does ' ' * 3 produce?",
-      "answer": "'   ' (three spaces)"
+      "answer": "Multiplying a single space by 3 creates exactly three space characters in a row.\n\ncode:\nprint(repr(' ' * 3))  # '   '\n\nreal example:\nIndenting lines of text by a fixed number of spaces."
     },
     {
       "id": 35,
       "question": "What does 'x' * 1 produce?",
-      "answer": "'x'"
+      "answer": "Multiplying by 1 copies the string exactly once, so the result is unchanged.\n\ncode:\nprint('x' * 1)  # x\n\nreal example:\nRepeating a character once when the repeat count happens to equal one."
     },
     {
       "id": 36,
       "question": "How do you repeat a string N times in one expression?",
-      "answer": "s * N"
+      "answer": "Use s * N; Python duplicates the whole string N times in a single expression.\n\ncode:\ns = 'ab'\nprint(s * 3)  # ababab\n\nreal example:\nTripling a separator like '-=' for a decorated heading."
     },
     {
       "id": 37,
       "question": "What does len('Python') return?",
-      "answer": "6"
+      "answer": "len() counts the number of characters, and 'Python' has six letters, so it returns 6.\n\ncode:\nprint(len('Python'))  # 6\n\nreal example:\nChecking how long a username or label is."
     },
     {
       "id": 38,
       "question": "What does len('hello world') return?",
-      "answer": "11"
+      "answer": "The space counts as a character too, so 5 letters + 1 space + 5 letters gives 11.\n\ncode:\nprint(len('hello world'))  # 11\n\nreal example:\nMeasuring a message length before sending or storing it."
     },
     {
       "id": 39,
       "question": "Does len() count spaces?",
-      "answer": "Yes, spaces are characters"
+      "answer": "Yes, spaces are characters just like letters, so len() includes them.\n\ncode:\nprint(len('a b'))  # 3\n\nreal example:\nCounting characters in a post that may contain spaces."
     },
     {
       "id": 40,
       "question": "What does len('   ') return?",
-      "answer": "3"
+      "answer": "Three spaces means the string holds exactly three characters.\n\ncode:\nprint(len('   '))  # 3\n\nreal example:\nChecking whether input contains only blank spaces."
     },
     {
       "id": 41,
       "question": "What does len('a\\nb') return?",
-      "answer": "3"
+      "answer": "The \\n inside the quotes is one newline character, so the string is 'a', newline, and 'b', giving 3.\n\ncode:\ntext = 'a\\nb'\nprint(len(text))  # 3\n\nreal example:\nCounting characters in text that has line breaks built in."
     },
     {
       "id": 42,
       "question": "What does len('') return?",
-      "answer": "0"
+      "answer": "An empty string has no characters at all, so its length is 0.\n\ncode:\nprint(len(''))  # 0\n\nreal example:\nChecking if a text input field was left blank."
     },
     {
       "id": 43,
       "question": "What does len('a' * 10) return?",
-      "answer": "10"
+      "answer": "'a' * 10 creates ten 'a' characters, so the length of the result is 10.\n\ncode:\nprint(len('a' * 10))  # 10\n\nreal example:\nVerifying how many times a pattern was repeated."
     },
     {
       "id": 44,
       "question": "What does len('12345') return?",
-      "answer": "5"
+      "answer": "Each digit is one character, so the five digits '12345' give a length of 5.\n\ncode:\nprint(len('12345'))  # 5\n\nreal example:\nValidating a five-digit postal code."
     },
     {
       "id": 45,
       "question": "What does len(str(100)) return?",
-      "answer": "3"
+      "answer": "str(100) is the text '100', which contains three characters, so the length is 3.\n\ncode:\nprint(len(str(100)))  # 3\n\nreal example:\nCounting how many digits a number has when written as text."
     },
     {
       "id": 46,
       "question": "What does len('') * 5 return?",
-      "answer": "0"
+      "answer": "len('') is 0, and multiplying 0 by anything keeps it 0.\n\ncode:\nprint(len('') * 5)  # 0\n\nreal example:\nScaling up a count that starts at zero always stays zero."
     },
     {
       "id": 47,
       "question": "What does len('hello') > 4 evaluate to?",
-      "answer": "True"
+      "answer": "len('hello') is 5, and 5 is greater than 4, so the comparison returns True.\n\ncode:\nprint(len('hello') > 4)  # True\n\nreal example:\nEnforcing a minimum length for a password field."
     },
     {
       "id": 48,
       "question": "What does len(' ') + len('') equal?",
-      "answer": "1"
+      "answer": "One space has length 1 and an empty string has length 0, so 1 plus 0 equals 1.\n\ncode:\nprint(len(' ') + len(''))  # 1\n\nreal example:\nAdding up character counts from separate text fields."
     },
     {
       "id": 49,
       "question": "What does len('python') - 2 return?",
-      "answer": "4"
+      "answer": "'python' has 6 characters, and 6 minus 2 is 4.\n\ncode:\nprint(len('python') - 2)  # 4\n\nreal example:\nRemoving two padding characters from a total length calculation."
     },
     {
       "id": 50,
       "question": "Does len() work on an empty variable?",
-      "answer": "Yes, it returns 0"
+      "answer": "Yes, an empty string variable still responds to len() and returns 0 without an error.\n\ncode:\ns = ''\nprint(len(s))  # 0\n\nreal example:\nSafely measuring possibly-empty user input before processing."
     },
     {
       "id": 51,
       "question": "What is the index of the first character of a string?",
-      "answer": "0"
+      "answer": "Counting starts at zero in Python, so the first character of a string is always at index 0.\n\ncode:\nprint('abc'[0])  # a\n\nreal example:\nTaking the initial letter of a name."
     },
     {
       "id": 52,
       "question": "What does 'Python'[0] return?",
-      "answer": "'P'"
+      "answer": "Index 0 selects the very first character, so 'Python'[0] is 'P'.\n\ncode:\nprint('Python'[0])  # P\n\nreal example:\nReading the leading letter of an airport code."
     },
     {
       "id": 53,
       "question": "What does 'Python'[1] return?",
-      "answer": "'y'"
+      "answer": "Index 1 picks the second character because Python counts starting from zero.\n\ncode:\nprint('Python'[1])  # y\n\nreal example:\nGrabbing the second letter of a three-letter abbreviation."
     },
     {
       "id": 54,
       "question": "What does 'Python'[-1] return?",
-      "answer": "'n'"
+      "answer": "Negative indexes count from the end, and -1 always means the last character.\n\ncode:\nprint('Python'[-1])  # n\n\nreal example:\nFinding the last letter of a word without needing its length."
     },
     {
       "id": 55,
       "question": "What does 'Python'[-2] return?",
-      "answer": "'o'"
+      "answer": "Index -2 is two from the end, which is the character 'o' in 'Python'.\n\ncode:\nprint('Python'[-2])  # o\n\nreal example:\nTaking the next-to-last character of a shortened code."
     },
     {
       "id": 56,
       "question": "What does 'Python'[-6] return?",
-      "answer": "'P'"
+      "answer": "Counting from the end, -6 reaches back all the way to the first character, 'P'.\n\ncode:\nprint('Python'[-6])  # P\n\nreal example:\nReaching the start of a string using only negative indexing."
     },
     {
       "id": 57,
       "question": "What is -0 equal to in Python?",
-      "answer": "0, so s[-0] is s[0]"
+      "answer": "In Python, -0 equals 0, so s[-0] and s[0] both select the first character.\n\ncode:\ns = 'abc'\nprint(s[-0])  # a  (same as s[0])\n\nreal example:\nBe aware that negative zero does not grab the last character."
     },
     {
       "id": 58,
       "question": "What does 'abc'[2] return?",
-      "answer": "'c'"
+      "answer": "Index 2 picks the third character of the string, which is 'c'.\n\ncode:\nprint('abc'[2])  # c\n\nreal example:\nReading the third letter of a three-letter word."
     },
     {
       "id": 59,
       "question": "What happens at 'abc'[3]?",
-      "answer": "IndexError: string index out of range"
+      "answer": "'abc' has only indexes 0, 1, and 2, so index 3 is out of range and raises IndexError.\n\ncode:\n# 'abc'[3]  # IndexError: string index out of range\n\nreal example:\nCheck the string length before indexing to avoid an IndexError."
     },
     {
       "id": 60,
       "question": "What happens at 'abc'[-4]?",
-      "answer": "IndexError: string index out of range"
+      "answer": "'abc' has length 3, so -4 is further back than the first character and raises IndexError.\n\ncode:\n# 'abc'[-4]  # IndexError: string index out of range\n\nreal example:\nValidate that a string is long enough before using negative indexing."
     },
     {
       "id": 61,
       "question": "What does 'hello'[1] + 'hello'[4] give?",
-      "answer": "'eo'"
+      "answer": "'hello'[1] is 'e' and 'hello'[4] is 'o'; joining them with + gives the string 'eo'.\n\ncode:\ns = 'hello'\nprint(s[1] + s[4])  # eo\n\nreal example:\nCombining selected letters into a short abbreviation."
     },
     {
       "id": 62,
       "question": "What does ('hello'[0]).upper() return?",
-      "answer": "'H'"
+      "answer": "'hello'[0] is 'h', and calling .upper() on it converts it to the uppercase 'H'.\n\ncode:\nprint(('hello')[0].upper())  # H\n\nreal example:\nCapitalising the first letter of a name for display."
     },
     {
       "id": 63,
       "question": "What does 'abc'[1] * 3 return?",
-      "answer": "'bbb'"
+      "answer": "'abc'[1] is 'b', and multiplying it by 3 repeats it into 'bbb'.\n\ncode:\nprint('abc'[1] * 3)  # bbb\n\nreal example:\nStretching a highlight or placeholder character in output."
     },
     {
       "id": 64,
       "question": "How do you get the last character of any string s?",
-      "answer": "s[-1]"
+      "answer": "Use index -1, which always means the last character, regardless of string length.\n\ncode:\ns = 'cat'\nprint(s[-1])  # t\n\nreal example:\nReading the last letter of a file extension."
     },
     {
       "id": 65,
       "question": "How do you get the second-to-last character of s?",
-      "answer": "s[-2]"
+      "answer": "Use index -2, which is one position before the last character.\n\ncode:\ns = 'cat'\nprint(s[-2])  # a\n\nreal example:\nTaking the second letter from the end of a word."
     },
     {
       "id": 66,
       "question": "What does 'python'[0] + 'python'[1] + 'python'[2] return?",
-      "answer": "'pyt'"
+      "answer": "Taking characters 0, 1, and 2 from 'python' gives 'p', 'y', 't', joined as 'pyt'.\n\ncode:\ns = 'python'\nprint(s[0] + s[1] + s[2])  # pyt\n\nreal example:\nManually selecting the first three letters of a country code."
     },
     {
       "id": 67,
       "question": "Can you modify a character with s[0] = 'X'?",
-      "answer": "No, strings are immutable (TypeError)"
+      "answer": "No, strings are immutable, so assigning a new value to an index raises a TypeError.\n\ncode:\ns = 'cat'\n# s[0] = 'X'  # TypeError: 'str' object does not support item assignment\n\nreal example:\nBuild a new string instead, for example 'X' + s[1:] to change the first letter."
     },
     {
       "id": 68,
       "question": "What does 'abcd'[1] return?",
-      "answer": "'b'"
+      "answer": "'abcd'[1] is the second character, which is 'b'.\n\ncode:\nprint('abcd'[1])  # b\n\nreal example:\nReading a specific letter from a colour code."
     },
     {
       "id": 69,
       "question": "What type is the result of 'abc'[0]?",
-      "answer": "str (a one-character string)"
+      "answer": "Even a single character is still a full string; Python has no separate 'character' type.\n\ncode:\nprint(type('abc'[0]))  # <class 'str'>\n\nreal example:\nTreating each digit of a phone number as an individual string."
     },
     {
       "id": 70,
       "question": "What does 'hello'[1 + 1] return?",
-      "answer": "'l'"
+      "answer": "The expression 1 + 1 evaluates to 2, and 'hello'[2] is the letter 'l'.\n\ncode:\nprint('hello'[1 + 1])  # l\n\nreal example:\nComputing an index value before using it in a bracket."
     },
     {
       "id": 71,
       "question": "What does 'hello'[5 - 3] return?",
-      "answer": "'l'"
+      "answer": "5 minus 3 is 2, and 'hello'[2] is the letter 'l'.\n\ncode:\nprint('hello'[5 - 3])  # l\n\nreal example:\nUsing a calculated distance from the end as an index."
     },
     {
       "id": 72,
       "question": "What does 'Pythonic'[7] return?",
-      "answer": "'c'"
+      "answer": "'Pythonic' has 8 characters (indexes 0-7), so index 7 is the final character 'c'.\n\ncode:\nprint('Pythonic'[7])  # c\n\nreal example:\nSelecting the last character of a longer string by its positive index."
     },
     {
       "id": 73,
       "question": "What does 'abcdef'[5] return?",
-      "answer": "'f'"
+      "answer": "'abcdef' has 6 characters with indexes 0 to 5, so index 5 is the last character 'f'.\n\ncode:\nprint('abcdef'[5])  # f\n\nreal example:\nReading the trailing letter of a sequence."
     },
     {
       "id": 74,
       "question": "What does 'abcdef'[-3] return?",
-      "answer": "'d'"
+      "answer": "Counting from the end, -3 lands on the character three positions back, which is 'd'.\n\ncode:\nprint('abcdef'[-3])  # d\n\nreal example:\nTaking a character a few positions from the end of a code."
     },
     {
       "id": 75,
       "question": "What is the last valid index for len(s)?",
-      "answer": "len(s) - 1"
+      "answer": "Indexes start at 0 and the last valid one is always len(s) - 1.\n\ncode:\ns = 'abc'\nprint(len(s) - 1)  # 2  (last valid index)\n\nreal example:\nLooping through string indexes safely without going out of range."
     },
     {
       "id": 76,
       "question": "What does list('abc')[1] return?",
-      "answer": "'b'"
+      "answer": "list('abc') turns the string into a list ['a', 'b', 'c'], and index 1 selects 'b'.\n\ncode:\nprint(list('abc')[1])  # b\n\nreal example:\nBreaking text into a list to inspect individual positions."
     },
     {
       "id": 77,
       "question": "What does '123'[2] return?",
-      "answer": "'3'"
+      "answer": "'123'[2] is the third character, which is '3'.\n\ncode:\nprint('123'[2])  # 3\n\nreal example:\nReading the last digit of a three-digit code."
     },
     {
       "id": 78,
       "question": "What does int('123'[0]) return?",
-      "answer": "1"
+      "answer": "'123'[0] is the character '1', and int() turns it into the number 1.\n\ncode:\nprint(int('123'[0]))  # 1\n\nreal example:\nExtracting the leading digit of a code as a number."
     },
     {
       "id": 79,
       "question": "What does 'Hi there'[8] return?",
-      "answer": "'e'"
+      "answer": "'Hi there' has 8 characters with valid indexes 0 to 7, so index 8 is out of range and raises IndexError.\n\ncode:\n# 'Hi there'[8]  # IndexError: string index out of range\n\nreal example:\nAlways check the string length before indexing near the end."
     },
     {
       "id": 80,
       "question": "What does 'Hi there'[-1] return?",
-      "answer": "'e'"
+      "answer": "Index -1 counts from the end, so it selects the last character, 'e'.\n\ncode:\nprint('Hi there'[-1])  # e\n\nreal example:\nGetting the final letter of a greeting or word."
     },
     {
       "id": 81,
       "question": "What does 'x y z'[1] return?",
-      "answer": "' ' (a space)"
+      "answer": "'x y z'[1] is the space character between 'x' and 'y'.\n\ncode:\nprint(repr('x y z'[1]))  # ' '  (a single space)\n\nreal example:\nDetecting the position of a separator space in input."
     },
     {
       "id": 82,
       "question": "What does 'x y z'[2] return?",
-      "answer": "'y'"
+      "answer": "'x y z'[2] is the third character, which is 'y'.\n\ncode:\nprint('x y z'[2])  # y\n\nreal example:\nReading the second letter past a leading space."
     },
     {
       "id": 83,
       "question": "What is the character at index 2 of 'amazing'?",
-      "answer": "'a' (a-m-a-z-i-n-g)"
+      "answer": "'amazing' is a-m-a-z-i-n-g; index 2 (the third letter) is 'a'.\n\ncode:\nprint('amazing'[2])  # a\n\nreal example:\nExtracting a specific letter from a word for a puzzle."
     },
     {
       "id": 84,
       "question": "What does 'hello'[0:1] * 3 produce?",
-      "answer": "'hhh'"
+      "answer": "'hello'[0:1] gives just 'h', and multiplying it by 3 gives 'hhh'.\n\ncode:\nprint('hello'[0:1] * 3)  # hhh\n\nreal example:\nRepeating a single selected letter in a text design."
     },
     {
       "id": 85,
       "question": "What does 'ab'[1] + 'cd'[0] produce?",
-      "answer": "'bc'"
+      "answer": "'ab'[1] is 'b' and 'cd'[0] is 'c'; concatenating them gives 'bc'.\n\ncode:\nprint('ab'[1] + 'cd'[0])  # bc\n\nreal example:\nCombining the next letter of one word with the first of another."
     },
     {
       "id": 86,
       "question": "What does 'python'[0] return?",
-      "answer": "'p'"
+      "answer": "'python'[0] picks the very first character, 'p'.\n\ncode:\nprint('python'[0])  # p\n\nreal example:\nReading the first letter of a programming language name."
     },
     {
       "id": 87,
       "question": "What does 'Python'[0:2] return?",
-      "answer": "'Py'"
+      "answer": "Slicing from index 0 up to (but not including) 2 returns 'Py'.\n\ncode:\nprint('Python'[0:2])  # Py\n\nreal example:\nTaking the first two letters of a two-letter country code."
     },
     {
       "id": 88,
       "question": "What does 'Python'[1:3] return?",
-      "answer": "'yt'"
+      "answer": "Slicing from 1 to 3 returns characters at positions 1 and 2, giving 'yt'.\n\ncode:\nprint('Python'[1:3])  # yt\n\nreal example:\nExtracting the middle two letters from a word."
     },
     {
       "id": 89,
       "question": "What does 'Python'[:3] return?",
-      "answer": "'Pyt'"
+      "answer": "Slicing with no start index begins at 0, so [:3] returns the first three characters.\n\ncode:\nprint('Python'[:3])  # Pyt\n\nreal example:\nTaking the first three letters of a word as a short code."
     },
     {
       "id": 90,
       "question": "What does 'Python'[3:] return?",
-      "answer": "'hon'"
+      "answer": "Slicing with no end index goes to the end, so [3:] returns from position 3 onward.\n\ncode:\nprint('Python'[3:])  # hon\n\nreal example:\nDropping the first part of a string and keeping the rest."
     },
     {
       "id": 91,
       "question": "What does 'Python'[:] return?",
-      "answer": "'Python'"
+      "answer": "A slice with no start, stop, or step copies the entire string unchanged.\n\ncode:\nprint('Python'[:])  # Python\n\nreal example:\nMaking a fresh copy of a string to avoid modifying the original."
     },
     {
       "id": 92,
       "question": "What does 'Python'[::2] return?",
-      "answer": "'Pto'"
+      "answer": "A step of 2 skips every other character, taking 'P', 't', 'o' from 'Python'.\n\ncode:\nprint('Python'[::2])  # Pto\n\nreal example:\nPicking every second character in a periodic data string."
     },
     {
       "id": 93,
       "question": "What does 'Python'[::-1] return?",
-      "answer": "'nohtyP'"
+      "answer": "A step of -1 reverses the whole string, turning 'Python' into 'nohtyP'.\n\ncode:\nprint('Python'[::-1])  # nohtyP\n\nreal example:\nChecking whether a word reads the same backwards."
     },
     {
       "id": 94,
       "question": "What does 'Python'[1::2] return?",
-      "answer": "'yhn'"
+      "answer": "Starting at index 1 with step 2 skips the first character, taking 'y', 'h', 'n'.\n\ncode:\nprint('Python'[1::2])  # yhn\n\nreal example:\nPicking every other letter starting from the second one."
     },
     {
       "id": 95,
       "question": "What does 'Python'[-3:] return?",
-      "answer": "'hon'"
+      "answer": "Slicing [-3:] takes the last three characters, so 'Python' gives 'hon'.\n\ncode:\nprint('Python'[-3:])  # hon\n\nreal example:\nGetting the file extension from the last few characters of a name."
     },
     {
       "id": 96,
       "question": "What does 'Python'[-3::-1] return?",
-      "answer": "'htyP'"
+      "answer": "Starting at index -3 (which is 'h') and stepping backwards to the start gives 'h', 't', 'y', 'P'.\n\ncode:\nprint('Python'[-3::-1])  # htyP\n\nreal example:\nReading the first part of a string in reverse from a pivot point."
     },
     {
       "id": 97,
       "question": "What does 'Python'[:-2] return?",
-      "answer": "'Pyth'"
+      "answer": "[:-2] slices off the last two characters, so 'Python' becomes 'Pyth'.\n\ncode:\nprint('Python'[:-2])  # Pyth\n\nreal example:\nRemoving a two-character suffix from a word."
     },
     {
       "id": 98,
       "question": "What does 'Python'[1:-1] return?",
-      "answer": "'ytho'"
+      "answer": "Slicing from 1 up to -1 skips the first and last characters, giving 'ytho'.\n\ncode:\nprint('Python'[1:-1])  # ytho\n\nreal example:\nRemoving the opening and closing characters of a formatted string."
     },
     {
       "id": 99,
       "question": "What does 'abcdef'[::-1] return?",
-      "answer": "'fedcba'"
+      "answer": "A step of -1 with no start or stop reverses the whole string.\n\ncode:\nprint('abcdef'[::-1])  # fedcba\n\nreal example:\nReversing a word to check for a palindrome."
     },
     {
       "id": 100,
       "question": "What does 'abcdef'[0:6:2] return?",
-      "answer": "'ace'"
+      "answer": "Slicing [0:6:2] takes every other character from the full string: 'a', 'c', 'e'.\n\ncode:\nprint('abcdef'[0:6:2])  # ace\n\nreal example:\nPicking alternate characters from a hex string."
     },
     {
       "id": 101,
       "question": "What does 'abcdef'[1:5:2] return?",
-      "answer": "'bd'"
+      "answer": "From index 1 to 5 with a step of 2 picks 'b' (index 1) and 'd' (index 3), giving 'bd'.\n\ncode:\nprint('abcdef'[1:5:2])  # bd\n\nreal example:\nExtracting alternating characters from the middle of a code."
     },
     {
       "id": 102,
       "question": "What does 'abcdef'[4:0:-1] return?",
-      "answer": "'edcb'"
+      "answer": "Starting at index 4 and moving backwards to index 0 collects 'e', 'd', 'c', 'b'.\n\ncode:\nprint('abcdef'[4:0:-1])  # edcb\n\nreal example:\nReversing a chunk of a string between two chosen points."
     },
     {
       "id": 103,
       "question": "What does 'abc'[0:0] return?",
-      "answer": "''"
+      "answer": "A slice where start equals stop returns an empty string because no characters are selected.\n\ncode:\nprint('abc'[0:0])  # ''\n\nreal example:\nA zero-width slice can safely act as a placeholder."
     },
     {
       "id": 104,
       "question": "What does 'abc'[2:2] return?",
-      "answer": "''"
+      "answer": "Since start and stop are both 2, nothing is selected and the result is an empty string.\n\ncode:\nprint('abc'[2:2])  # ''\n\nreal example:\nHandling the empty case when a slice should capture nothing."
     },
     {
       "id": 105,
       "question": "What does 'hello world'[6:] return?",
-      "answer": "'world'"
+      "answer": "From index 6 onward, 'hello world' contains 'world' because index 6 is where it starts.\n\ncode:\nprint('hello world'[6:])  # world\n\nreal example:\nExtracting the second word of a two-word phrase."
     },
     {
       "id": 106,
       "question": "What does 'hello world'[:5] return?",
-      "answer": "'hello'"
+      "answer": "[:5] takes the first five characters, which form the word 'hello'.\n\ncode:\nprint('hello world'[:5])  # hello\n\nreal example:\nTaking the first word only from a longer sentence."
     },
     {
       "id": 107,
       "question": "What does 'hello'[1:4] return?",
-      "answer": "'ell'"
+      "answer": "Characters at indexes 1, 2, and 3 of 'hello' are 'e', 'l', 'l', giving 'ell'.\n\ncode:\nprint('hello'[1:4])  # ell\n\nreal example:\nGrabbing the inner portion of a word. "
     },
     {
       "id": 108,
       "question": "What does 'hello'[2:] return?",
-      "answer": "'llo'"
+      "answer": "From index 2 to the end, 'hello' gives 'llo'.\n\ncode:\nprint('hello'[2:])  # llo\n\nreal example:\nCutting the first two letters and keeping the rest."
     },
     {
       "id": 109,
       "question": "What does 'hello'[:2] return?",
-      "answer": "'he'"
+      "answer": "The first two characters of 'hello' are 'he'.\n\ncode:\nprint('hello'[:2])  # he\n\nreal example:\nTaking a person's first two initials from a name string."
     },
     {
       "id": 110,
       "question": "What does 'hello'[-4:-1] return?",
-      "answer": "'ell'"
+      "answer": "From index -4 to -1 picks characters four to two from the end: 'e', 'l', 'l'.\n\ncode:\nprint('hello'[-4:-1])  # ell\n\nreal example:\nRemoving the first and last letters using negative indexes."
     },
     {
       "id": 111,
       "question": "What does 'hello'[-4:] return?",
-      "answer": "'ello'"
+      "answer": "From index -4 to the end gives 'ello', leaving out the first letter.\n\ncode:\nprint('hello'[-4:])  # ello\n\nreal example:\nDropping the first character of a string."
     },
     {
       "id": 112,
       "question": "What does 'hello'[:-1] return?",
-      "answer": "'hell'"
+      "answer": "[:-1] removes just the last character, so 'hello' becomes 'hell'.\n\ncode:\nprint('hello'[:-1])  # hell\n\nreal example:\nTrimming a trailing punctuation or final letter."
     },
     {
       "id": 113,
       "question": "What does 'python'[0:7] return?",
-      "answer": "'python' (out-of-range is clamped)"
+      "answer": "Slicing past the end is clamped to the string length, so [0:7] still returns all of 'python'.\n\ncode:\nprint('python'[0:7])  # python\n\nreal example:\nSlicing with a generous end index without fear of IndexError."
     },
     {
       "id": 114,
       "question": "What does 'python'[3:99] return?",
-      "answer": "'hon'"
+      "answer": "The stop of 99 exceeds the length, so Python clamps it and returns everything from index 3 on.\n\ncode:\nprint('python'[3:99])  # hon\n\nreal example:\nCutting from a starting point to 'as far as possible'."
     },
     {
       "id": 115,
       "question": "What does 'abcdef'[::3] return?",
-      "answer": "'ad'"
+      "answer": "With a step of 3, characters at indexes 0 and 3 are taken: 'a' and 'd'.\n\ncode:\nprint('abcdef'[::3])  # ad\n\nreal example:\nSampling characters at regular intervals in a long string."
     },
     {
       "id": 116,
       "question": "What does 'abcdef'[2::3] return?",
-      "answer": "'cf'"
+      "answer": "Starting at index 2 with a step of 3 picks 'c' and 'f'.\n\ncode:\nprint('abcdef'[2::3])  # cf\n\nreal example:\nPicking positions in an evenly spaced pattern from the third character."
     },
     {
       "id": 117,
       "question": "What does 'abcdef'[:4:2] return?",
-      "answer": "'ac'"
+      "answer": "Up to index 4 with a step of 2 selects 'a' and 'c'.\n\ncode:\nprint('abcdef'[:4:2])  # ac\n\nreal example:\nTaking alternate characters from the beginning of a string."
     },
     {
       "id": 118,
       "question": "How do you reverse a string using slicing?",
-      "answer": "s[::-1]"
+      "answer": "Use s[::-1]; the negative step makes the slice walk the string backwards.\n\ncode:\ns = 'stressed'\nprint(s[::-1])  # desserts\n\nreal example:\nFlipping a word for a spelling game."
     },
     {
       "id": 119,
       "question": "What does 'racecar'[::-1] return?",
-      "answer": "'racecar'"
+      "answer": "Reversing 'racecar' gives the same word because it is a palindrome.\n\ncode:\nprint('racecar'[::-1])  # racecar\n\nreal example:\nChecking whether a word reads identically backwards."
     },
     {
       "id": 120,
       "question": "What does '123456'[::-2] return?",
-      "answer": "'642'"
+      "answer": "Reading from the end with a step of -2 (skipping one) collects '6', '4', '2'.\n\ncode:\nprint('123456'[::-2])  # 642\n\nreal example:\nTaking every other digit from a number string in reverse."
     },
     {
       "id": 121,
       "question": "What does '123456'[::-3] return?",
-      "answer": "'63'"
+      "answer": "With a step of -3, characters at the end and three back are taken: '6' and '3'.\n\ncode:\nprint('123456'[::-3])  # 63\n\nreal example:\nSampling every third character while counting backwards."
     },
     {
       "id": 122,
       "question": "What does 'aaa bbb'[4:] return?",
-      "answer": "'bbb'"
+      "answer": "Index 4 of 'aaa bbb' is the space after the first three 'a's, so [4:] gives 'bbb'.\n\ncode:\nprint('aaa bbb'[4:])  # bbb\n\nreal example:\nSplitting out everything after a separating space."
     },
     {
       "id": 123,
       "question": "What does 'a b c'[::2] return?",
-      "answer": "'abc'"
+      "answer": "With a step of 2, only positions 0, 2, and 4 are kept: 'a', 'b', 'c'.\n\ncode:\nprint('a b c'[::2])  # abc\n\nreal example:\nStripping out separator spaces by keeping alternate characters."
     },
     {
       "id": 124,
       "question": "What does 'A B C'[1::2] return?",
-      "answer": "'  ' (two spaces)"
+      "answer": "Starting at index 1 with a step of 2 keeps only the space characters at positions 1, 3, and 5.\n\ncode:\nprint(repr('A B C'[1::2]))  # '  '  (two spaces)\n\nreal example:\nIsolating the separator characters from a spaced string."
     },
     {
       "id": 125,
       "question": "What does 'hello'[5:] return?",
-      "answer": "''"
+      "answer": "Index 5 is exactly the end of 'hello', so there are no characters left and the slice is empty.\n\ncode:\nprint('hello'[5:])  # ''\n\nreal example:\nHandling the natural 'past the end' case without an error."
     },
     {
       "id": 126,
       "question": "What does 'hello'[0:5:1] return?",
-      "answer": "'hello'"
+      "answer": "A full slice from 0 to 5 with step 1 returns every character, so the whole string is kept.\n\ncode:\nprint('hello'[0:5:1])  # hello\n\nreal example:\nCopying a string while being explicit about the whole range."
     },
     {
       "id": 127,
       "question": "Which loop prints each character of 'abc'?",
-      "answer": "for c in 'abc': print(c)"
+      "answer": "Assign c to each character in turn and print it; 'abc' prints a, then b, then c.\n\ncode:\nfor c in 'abc':\n    print(c)\n\nreal example:\nPrinting each letter of a word on its own line."
     },
     {
       "id": 128,
       "question": "What does [c for c in 'abc'] produce?",
-      "answer": "['a', 'b', 'c']"
+      "answer": "A list comprehension creates a list containing each character as its own element.\n\ncode:\nprint([c for c in 'abc'])  # ['a', 'b', 'c']\n\nreal example:\nConverting a string into a list of its individual letters."
     },
     {
       "id": 129,
       "question": "What does list('python') produce?",
-      "answer": "['p', 'y', 't', 'h', 'o', 'n']"
+      "answer": "list('python') splits the string into separate single-character string elements.\n\ncode:\nprint(list('python'))  # ['p', 'y', 't', 'h', 'o', 'n']\n\nreal example:\nIterating over each letter of a username for a check."
     },
     {
       "id": 130,
       "question": "How do you iterate with index and character?",
-      "answer": "for i, c in enumerate(s):"
+      "answer": "Use enumerate(s), which yields both i (the index) and c (the character) together.\n\ncode:\nfor i, c in enumerate('abc'):\n    print(i, c)  # 0 a, 1 b, 2 c\n\nreal example:\nPrinting each character of a text with its position number."
     },
     {
       "id": 131,
       "question": "What does tuple('ab') return?",
-      "answer": "('a', 'b')"
+      "answer": "tuple('ab') turns each character into an element of a tuple, giving ('a', 'b').\n\ncode:\nprint(tuple('ab'))  # ('a', 'b')\n\nreal example:\nConverting string input into a fixed sequence for safe storage."
     },
     {
       "id": 132,
       "question": "What does set('abca') return?",
-      "answer": "{'a', 'b', 'c'} (order may vary)"
+      "answer": "set('abca') keeps unique characters only, so duplicates are removed; element order may vary.\n\ncode:\nprint(set('abca'))  # {'a', 'b', 'c'}\n\nreal example:\nFinding which distinct letters appear in an answer key."
     },
     {
       "id": 133,
       "question": "How many 'o' are in 'hello' using a generator?",
-      "answer": "sum(1 for c in 'hello' if c == 'o') == 1"
+      "answer": "The generator counts letters equal to 'o'; 'hello' has one, so the expression equals 1.\n\ncode:\nprint(sum(1 for c in 'hello' if c == 'o'))  # 1\n\nreal example:\nCounting a specific letter in a word without a loop counter."
     },
     {
       "id": 134,
       "question": "What does sum(c == 'a' for c in 'banana') equal?",
-      "answer": "3"
+      "answer": "True counts as 1 and False as 0, so summing the comparisons over 'banana' gives 3.\n\ncode:\nprint(sum(c == 'a' for c in 'banana'))  # 3\n\nreal example:\nCounting how many times a chosen letter appears in a word."
     },
     {
       "id": 135,
       "question": "What does max('python') return?",
-      "answer": "'y' (largest Unicode value)"
+      "answer": "Strings compare by Unicode values, and 'y' has the highest value among 'python' letters.\n\ncode:\nprint(max('python'))  # y\n\nreal example:\nFinding the alphabetically last letter in a word."
     },
     {
       "id": 136,
       "question": "What does min('python') return?",
-      "answer": "'h'"
+      "answer": "'h' has the smallest Unicode value among the letters of 'python'.\n\ncode:\nprint(min('python'))  # h\n\nreal example:\nFinding the alphabetically first letter in a word."
     },
     {
       "id": 137,
       "question": "What does 'ell' in 'hello' return?",
-      "answer": "True"
+      "answer": "The in operator checks whether a substring appears anywhere in the string, and 'ell' is inside 'hello'.\n\ncode:\nprint('ell' in 'hello')  # True\n\nreal example:\nChecking whether a keyword appears inside a sentence."
     },
     {
       "id": 138,
       "question": "What does 'Hell' in 'hello' return?",
-      "answer": "False"
+      "answer": "Substring checks are case-sensitive, and 'Hell' does not appear in 'hello' (lowercase 'h').\n\ncode:\nprint('Hell' in 'hello')  # False\n\nreal example:\nMatching exact product codes where case must line up."
     },
     {
       "id": 139,
       "question": "What does 'x' not in 'hello' return?",
-      "answer": "True"
+      "answer": "not in is the opposite of in; since 'x' is missing from 'hello', it returns True.\n\ncode:\nprint('x' not in 'hello')  # True\n\nreal example:\nConfirming a prohibited symbol is absent from input."
     },
     {
       "id": 140,
       "question": "What does '' in 'abc' return?",
-      "answer": "True (the empty string is in every string)"
+      "answer": "The empty string is considered to be present in every string, so the check is True.\n\ncode:\nprint('' in 'abc')  # True\n\nreal example:\nAn edge case that makes 'in' checks behave consistently for empty text."
     },
     {
       "id": 141,
       "question": "What does 'th' in 'python' return?",
-      "answer": "True"
+      "answer": "The characters 'th' appear together in 'python', so the check returns True.\n\ncode:\nprint('th' in 'python')  # True\n\nreal example:\nDetecting whether a pair of letters occurs in a word."
     },
     {
       "id": 142,
       "question": "What does 'on' in 'python' return?",
-      "answer": "True"
+      "answer": "The substring 'on' appears at the end of 'python', so the check is True.\n\ncode:\nprint('on' in 'python')  # True\n\nreal example:\nMatching a common suffix inside a candidate word."
     },
     {
       "id": 143,
       "question": "What does 'py' in 'Python' return?",
-      "answer": "False (case-sensitive)"
+      "answer": "The check is case-sensitive: lowercase 'py' does not match 'Python' (uppercase P).\n\ncode:\nprint('py' in 'Python')  # False\n\nreal example:\nAvoiding case mismatches when searching user-entered text."
     },
     {
       "id": 144,
       "question": "What does 'py' in 'Python'.lower() return?",
-      "answer": "True"
+      "answer": "Lowercasing the string first, as in 'Python'.lower(), makes the casing match so the check is True.\n\ncode:\nprint('py' in 'Python'.lower())  # True\n\nreal example:\nPerforming a case-insensitive search for a keyword."
     },
     {
       "id": 145,
       "question": "What does 'a' in 'banana' return?",
-      "answer": "True"
+      "answer": "The letter 'a' appears in 'banana', so the membership check returns True.\n\ncode:\nprint('a' in 'banana')  # True\n\nreal example:\nTesting whether a needed letter is present in a word."
     },
     {
       "id": 146,
       "question": "What does 'z' in 'banana' return?",
-      "answer": "False"
+      "answer": "Since 'z' does not occur in 'banana', the membership check returns False.\n\ncode:\nprint('z' in 'banana')  # False\n\nreal example:\nRejecting a word that lacks a required character."
     },
     {
       "id": 147,
       "question": "Which operator tests substring presence?",
-      "answer": "in"
+      "answer": "The in operator tests whether a substring is contained in a string.\n\ncode:\nprint('an' in 'banana')  # True\n\nreal example:\nUsing in to search for keywords inside a sentence."
     },
     {
       "id": 148,
       "question": "What does '10' in '1-10-100' return?",
-      "answer": "True"
+      "answer": "'10' appears as characters in '1-10-100', so the substring check is True.\n\ncode:\nprint('10' in '1-10-100')  # True\n\nreal example:\nSearching for a value inside a dash-separated data string."
     },
     {
       "id": 149,
       "question": "What does 'apple' < 'banana' return?",
-      "answer": "True (lexicographic order)"
+      "answer": "Strings compare alphabetically, and 'apple' comes before 'banana', so the comparison is True.\n\ncode:\nprint('apple' < 'banana')  # True\n\nreal example:\nSorting words alphabetically in a list."
     },
     {
       "id": 150,
       "question": "What does 'A' < 'a' return?",
-      "answer": "True (uppercase has lower Unicode values)"
+      "answer": "Uppercase letters have lower Unicode values than lowercase ones, so 'A' is considered smaller than 'a'.\n\ncode:\nprint('A' < 'a')  # True\n\nreal example:\nWhy 'Zebra' can sort before 'apple' when sorting with default casing."
     },
     {
       "id": 151,
       "question": "What does 'abc' == 'abc' return?",
-      "answer": "True"
+      "answer": "The == operator compares the exact characters of two strings, and they match exactly.\n\ncode:\nprint('abc' == 'abc')  # True\n\nreal example:\nValidating that two passwords typed in twice are identical."
     },
     {
       "id": 152,
       "question": "What does 'abc' == 'ABC' return?",
-      "answer": "False"
+      "answer": "String comparison is case-sensitive, so 'abc' and 'ABC' contain different characters.\n\ncode:\nprint('abc' == 'ABC')  # False\n\nreal example:\nChecking exact usernames where letter case matters."
     },
     {
       "id": 153,
       "question": "What does 'abc' < 'abcd' return?",
-      "answer": "True"
+      "answer": "'abc' is a prefix of 'abcd', and shorter strings that match are considered smaller.\n\ncode:\nprint('abc' < 'abcd')  # True\n\nreal example:\nOrdering words where one is a shorter version of another."
     },
     {
       "id": 154,
       "question": "What does '10' < '9' return?",
-      "answer": "True ('1' < '9' lexicographically)"
+      "answer": "Strings compare character by character, and '1' is less than '9', so '10' is smaller than '9'.\n\ncode:\nprint('10' < '9')  # True\n\nreal example:\nRemembering not to sort numbers as text when you want numeric order."
     },
     {
       "id": 155,
       "question": "How do you write a raw string?",
-      "answer": "r'text' or R'text'"
+      "answer": "Prefix a string with r or R, like r'text', to tell Python to treat backslashes as literal characters.\n\ncode:\npath = r'C:\\new'\nprint(path)  # C:\\new\n\nreal example:\nWriting Windows file paths and regex patterns without escaping."
     },
     {
       "id": 156,
       "question": "What does r'C:\\new' represent?",
-      "answer": "'C:\\\\new' (the backslash is literal)"
+      "answer": "In a raw string the backslash is kept literally, so r'C:\\new' represents the text C:\\new.\n\ncode:\npath = r'C:\\new'\nprint(path)  # C:\\new\n\nreal example:\nStoring a Windows file path length and name without escape surprises."
     },
     {
       "id": 157,
       "question": "What does r'\\n' represent?",
-      "answer": "Two characters: backslash and n"
+      "answer": "A raw string does no escape processing, so r'\\n' represents the two characters: a backslash and the letter n.\n\ncode:\nprint(repr(r'\\n'))  # '\\\\n'\n\nreal example:\nShowing a newline escape as typed when displaying regex patterns."
     },
     {
       "id": 158,
       "question": "What is len(r'\\n')?",
-      "answer": "2"
+      "answer": "Because r'\\n' holds a backslash and an 'n', it contains exactly 2 characters.\n\ncode:\nprint(len(r'\\n'))  # 2\n\nreal example:\nCounting characters in a pattern that includes a backslash."
     },
     {
       "id": 159,
       "question": "Why use raw strings?",
-      "answer": "To disable escape processing for regex and file paths"
+      "answer": "Raw strings disable escape processing, which is essential for regular expressions and Windows paths with backslashes.\n\ncode:\npattern = r'\\d+'  # matches digits, backslashes stay literal\n\nreal example:\nWriting a regex like r'C:\\\\Users' without backslash soup."
     },
     {
       "id": 160,
       "question": "How do you write a multi-line string?",
-      "answer": "Use triple quotes ''' or \"\"\" "
+      "answer": "Use triple quotes (either three single quotes or three double quotes) to write a string that spans several lines.\n\ncode:\ntext = '''first line\nsecond line'''\nprint(text)\n\nreal example:\nStoring a multi-line address or message in one variable."
     },
     {
       "id": 161,
       "question": "How do triple-quoted strings treat newlines?",
-      "answer": "They include the newlines as-is"
+      "answer": "Triple-quoted strings keep the newline characters exactly where you put them in the source.\n\ncode:\ntext = '''a\nb'''\nprint(text)  # prints a and b on separate lines\n\nreal example:\nTyping a paragraph naturally with real line breaks."
     },
     {
       "id": 162,
       "question": "Do escape sequences still work inside triple quotes?",
-      "answer": "Yes, e.g. '''a\\nb''' contains a newline"
+      "answer": "Yes, escape sequences still work inside triple quotes, so '''a\\nb''' contains an actual newline.\n\ncode:\ntext = '''a\\nb'''\nprint(text)  # a and b on separate lines\n\nreal example:\nMixing explicit newline escapes with multi-line text."
     },
     {
       "id": 163,
       "question": "What is a docstring?",
-      "answer": "A triple-quoted string as the first statement of a module/function/class"
+      "answer": "A docstring is the triple-quoted string placed as the very first statement of a module, function, or class to document it.\n\ncode:\ndef greet():\n    '''Prints a friendly hello.'''\n    print('hi')\n\nreal example:\nDocumenting what a function does so help() can read it."
     },
     {
       "id": 164,
       "question": "What does print('''one\\ntwo''') output?",
-      "answer": "one, then two on the next line"
+      "answer": "The \\n escape inside the triple quotes is a newline, so print writes 'one' on one line and 'two' on the next.\n\ncode:\nprint('''one\\ntwo''')\n# one\n# two\n\nreal example:\nPrinting a two-line address from a single string."
     },
     {
       "id": 165,
       "question": "What does len(r'a\\nb') equal?",
-      "answer": "4"
+      "answer": "In the raw string r'a\\nb' nothing is escaped, so it holds a, backslash, n, and b: 4 characters.\n\ncode:\nprint(len(r'a\\nb'))  # 4\n\nreal example:\nMeasuring a path string where backslashes must be counted."
     },
     {
       "id": 166,
       "question": "Can a raw string end with an odd number of backslashes?",
-      "answer": "No, that is a syntax error"
+      "answer": "No, a raw string cannot end with an odd number of backslashes because the final quote would be escaped, causing a syntax error.\n\ncode:\n# r'C:\\' is a syntax error; r'C:\\\\' works\n\nreal example:\nBe careful writing raw path strings that end in a backslash."
     },
     {
       "id": 167,
       "question": "What does ''' It's fine ''' handle correctly?",
-      "answer": "Single quotes inside triple quotes do not break it"
+      "answer": "Triple quotes let you include single quotes freely, so ''' It's fine ''' keeps the apostrophe without any escaping.\n\ncode:\nprint(''' It's fine ''')  # It's fine\n\nreal example:\nWriting contractions inside multi-line text blocks."
     },
     {
       "id": 168,
       "question": "What does \"\"\"hi\"\"\" evaluate to?",
-      "answer": "'hi'"
+      "answer": "Triple double quotes create a normal string, so the text inside them evaluates to the plain string 'hi'.\n\ncode:\nprint('hi')  # hi  (three quotes are just the delimiters)\n\nreal example:\nDefining strings that may later span multiple lines."
     },
     {
       "id": 169,
       "question": "Are strings mutable?",
-      "answer": "No, strings are immutable"
+      "answer": "Strings are immutable, meaning their characters cannot be changed after creation.\n\ncode:\ns = 'hi'\n# s[0] = 'x'  # TypeError: 'str' object does not support item assignment\n\nreal example:\nTreating strings as safe, unchangeable text you can trust."
     },
     {
       "id": 170,
       "question": "What happens when you assign s[0] = 'X'?",
-      "answer": "TypeError: 'str' object does not support item assignment"
+      "answer": "Assigning to a string index is not allowed because strings are immutable, raising a TypeError.\n\ncode:\ns = 'cat'\n# s[0] = 'X'  # TypeError\n\nreal example:\nCreate a replacement string with slicing and + instead."
     },
     {
       "id": 171,
       "question": "Does s.upper() change s?",
-      "answer": "No, it returns a new string"
+      "answer": "No, s.upper() creates and returns a new string while s itself stays unchanged.\n\ncode:\ns = 'hi'\nprint(s.upper())  # HI\nprint(s)  # hi\n\nreal example:\nComparing user input without altering the stored original."
     },
     {
       "id": 172,
       "question": "Why are strings immutable?",
-      "answer": "Enables hashing, safe sharing, and caching"
+      "answer": "Immutability lets strings be hashed, shared safely between variables, and cached for speed.\n\ncode:\ns1 = 'abc'\ns2 = s1  # both point to the same, unchangeable 'abc'\n\nreal example:\nUsing strings as dictionary keys that never change value."
     },
     {
       "id": 173,
       "question": "What does s = s + 'a' do?",
-      "answer": "Creates a new string and rebinds s"
+      "answer": "The + builds a brand new string and the assignment rebinds the name s to that new string.\n\ncode:\ns = 'a'\ns = s + 'a'\nprint(s)  # aa\n\nreal example:\nBuilding text by repeatedly reassigning a new combined string."
     },
     {
       "id": 174,
       "question": "Can a string be a dictionary key?",
-      "answer": "Yes, because it is hashable and immutable"
+      "answer": "Yes, because strings are immutable and hashable, they work perfectly as dictionary keys.\n\ncode:\nd = {'apple': 5, 'banana': 3}\nprint(d['apple'])  # 5\n\nreal example:\nCounting words with a dictionary keyed by word text."
     },
     {
       "id": 175,
       "question": "Does 'Hello'.replace('H','h') modify the original?",
-      "answer": "No, only a new string is returned"
+      "answer": "No, replace() returns a new string; the original string is left exactly as it was.\n\ncode:\ns = 'Hello'\nprint(s.replace('H', 'h'))  # hello\nprint(s)  # Hello\n\nreal example:\nFixing a typo in text while keeping the original stored value."
     },
     {
       "id": 176,
       "question": "What does 'abc'.upper() change about 'abc'?",
-      "answer": "Nothing, 'abc' stays 'abc'"
+      "answer": "Calling .upper() returns a new uppercased string but never changes the original, so 'abc' keeps its lowercase form.\n\ncode:\nw = 'abc'\nw.upper()\nprint(w)  # abc\n\nreal example:\nRelying on the stored value staying as the user typed it."
     },
     {
       "id": 177,
       "question": "What does hash('abc') return?",
-      "answer": "An integer hash value (varies between runs due to hash randomization)"
+      "answer": "hash('abc') returns an integer that may vary between runs because of hash randomisation, but stays stable within one run.\n\ncode:\nprint(hash('abc'))  # e.g. 6244805591782333743\n\nreal example:\nUsing strings as keys in dictionaries and sets relies on hashes."
     },
     {
       "id": 178,
       "question": "Can you extend a string in place with append()?",
-      "answer": "No; build a new one with + or join()"
+      "answer": "Strings have no append() method and cannot change in place; build a new string with + or join() instead.\n\ncode:\nparts = ['a', 'b']\nprint(''.join(parts))  # ab\n\nreal example:\nAccumulating text efficiently with a list and join()."
     },
     {
       "id": 179,
       "question": "What does ord('A') return?",
-      "answer": "65"
+      "answer": "ord() returns the Unicode code point of a character; 'A' has the value 65.\n\ncode:\nprint(ord('A'))  # 65\n\nreal example:\nConverting a letter to its number for sorting or encryption."
     },
     {
       "id": 180,
       "question": "What does ord('a') return?",
-      "answer": "97"
+      "answer": "ord('a') returns the Unicode code point of 'a', which is 97.\n\ncode:\nprint(ord('a'))  # 97\n\nreal example:\nUsing letter numbers to encode messages."
     },
     {
       "id": 181,
       "question": "What does ord('0') return?",
-      "answer": "48"
+      "answer": "The character '0' (zero) has Unicode code point 48.\n\ncode:\nprint(ord('0'))  # 48\n\nreal example:\nTranslating digit characters into numbers for processing."
     },
     {
       "id": 182,
       "question": "What does chr(65) return?",
-      "answer": "'A'"
+      "answer": "chr() turns a Unicode code point back into a character, so chr(65) is 'A'.\n\ncode:\nprint(chr(65))  # A\n\nreal example:\nGenerating uppercase letters for a password generator."
     },
     {
       "id": 183,
       "question": "What does chr(97) return?",
-      "answer": "'a'"
+      "answer": "chr(97) converts the code point 97 back into the character 'a'.\n\ncode:\nprint(chr(97))  # a\n\nreal example:\nAdding lower-case letters to a generated key."
     },
     {
       "id": 184,
       "question": "What does chr(48) return?",
-      "answer": "'0'"
+      "answer": "chr(48) returns the character whose code point is 48, which is the digit '0'.\n\ncode:\nprint(chr(48))  # 0\n\nreal example:\nProducing digit characters for a numeric display."
     },
     {
       "id": 185,
       "question": "What does ord('z') - ord('a') equal?",
-      "answer": "25"
+      "answer": "ord('z') is 122 and ord('a') is 97, and their difference is 25.\n\ncode:\nprint(ord('z') - ord('a'))  # 25\n\nreal example:\nComputing how far apart two letters are in the alphabet."
     },
     {
       "id": 186,
       "question": "What does chr(ord('a') - 32) return?",
-      "answer": "'A'"
+      "answer": "The subtraction gives the code point of 'A' (65), so chr(65) returns 'A'.\n\ncode:\nprint(chr(ord('a') - 32))  # A\n\nreal example:\nConverting lowercase letters to uppercase with plain math."
     },
     {
       "id": 187,
       "question": "What does ' '.join(chr(c) for c in range(65, 68)) return?",
-      "answer": "'A B C'"
+      "answer": "chr() creates 'A', 'B', 'C' and ' '.join() connects them with single spaces, giving 'A B C'.\n\ncode:\nprint(' '.join(chr(c) for c in range(65, 68)))  # A B C\n\nreal example:\nBuilding spaced, uppercase label sequences from numbers."
     },
     {
       "id": 188,
       "question": "What does ord('€') return?",
-      "answer": "8364"
+      "answer": "ord('€') returns the Unicode code point of the euro sign, which is 8364.\n\ncode:\nprint(ord('€'))  # 8364\n\nreal example:\nStoring non-ASCII symbols by their code point."
     },
     {
       "id": 189,
       "question": "How do you convert an integer like 42 to a string?",
-      "answer": "str(42)"
+      "answer": "str(42) converts the integer 42 into the string '42'.\n\ncode:\nprint(str(42))  # 42\n\nreal example:\nWriting a number into a text field or message."
     },
     {
       "id": 190,
       "question": "How do you convert '42' to an integer?",
-      "answer": "int('42')"
+      "answer": "int('42') parses the text '42' and returns the integer 42.\n\ncode:\nprint(int('42'))  # 42\n\nreal example:\nConverting digits typed by a user into a number for math."
     },
     {
       "id": 191,
       "question": "How do you convert '3.14' to a float?",
-      "answer": "float('3.14')"
+      "answer": "float('3.14') parses the text and returns the floating-point number 3.14.\n\ncode:\nprint(float('3.14'))  # 3.14\n\nreal example:\nConverting a price entered as text into a value to calculate with."
     },
     {
       "id": 192,
       "question": "What happens with int('abc')?",
-      "answer": "It raises a ValueError"
+      "answer": "int('abc') cannot be parsed as a number, so Python raises a ValueError.\n\ncode:\n# int('abc')  # ValueError: invalid literal for int()\n\nreal example:\nValidate numeric input before converting it."
     },
     {
       "id": 193,
       "question": "What does int('ff', 16) return?",
-      "answer": "255"
+      "answer": "int('ff', 16) reads the text as a base-16 (hexadecimal) number; hex ff equals 255.\n\ncode:\nprint(int('ff', 16))  # 255\n\nreal example:\nParsing hex colour codes like '#ff' into numbers."
     },
     {
       "id": 194,
       "question": "What does int('101', 2) return?",
-      "answer": "5"
+      "answer": "int('101', 2) treats the text as binary; binary 101 equals 5.\n\ncode:\nprint(int('101', 2))  # 5\n\nreal example:\nConverting binary flags or masks back into integers."
     },
     {
       "id": 195,
       "question": "What does float('inf') return?",
-      "answer": "inf"
+      "answer": "float('inf') parses the text 'inf' and returns the special infinity value.\n\ncode:\nprint(float('inf'))  # inf\n\nreal example:\nUsing infinity as a starting maximum when scanning data."
     },
     {
       "id": 196,
       "question": "What does 'abc'[1:3][::-1] return?",
-      "answer": "'cb'"
+      "answer": "First 'abc'[1:3] gives 'bc', then [::-1] reverses it into 'cb'.\n\ncode:\nprint('abc'[1:3][::-1])  # cb\n\nreal example:\nReversing a slice of a word in one chained expression."
     },
     {
       "id": 197,
       "question": "What does ('hi ' * 2).strip() return?",
-      "answer": "'hi hi'"
+      "answer": "'hi ' repeated twice is 'hi hi ', and strip() removes the outer spaces to give 'hi hi'.\n\ncode:\nprint(('hi ' * 2).strip())  # hi hi\n\nreal example:\nCleaning up repeated-text patterns that add stray spaces."
     },
     {
       "id": 198,
       "question": "What does 'a-b-c'.split('-')[::-1] return?",
-      "answer": "['c', 'b', 'a']"
+      "answer": "Splitting on '-' gives ['a', 'b', 'c'] and stepping through it in reverse gives ['c', 'b', 'a'].\n\ncode:\nprint('a-b-c'.split('-')[::-1])  # ['c', 'b', 'a']\n\nreal example:\nReversing the order of the parts of a path or version number."
     },
     {
       "id": 199,
       "question": "What does 'python'.index('y') + 1 return?",
-      "answer": "2"
+      "answer": "'python'.index('y') is 1, and 1 plus 1 is 2.\n\ncode:\nprint('python'.index('y') + 1)  # 2\n\nreal example:\nReporting a letter's 1-based position instead of its index."
     },
     {
       "id": 200,
       "question": "What does 'top'[::-1] + '!' return?",
-      "answer": "'pot!'"
+      "answer": "'top' reversed with [::-1] is 'pot', and adding '!' gives 'pot!'.\n\ncode:\nprint('top'[::-1] + '!')  # pot!\n\nreal example:\nReversing a short name for a fun punk-style label."
     }
   ]
 }
