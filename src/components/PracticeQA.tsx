@@ -2,9 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { QAQuestion } from "@/data/types";
-import { ChevronLeft, ChevronRight, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Eye, EyeOff, ArrowRight, CornerDownLeft } from "lucide-react";
 
 const CodeEditor = dynamic(() => import("@/components/CodeEditor"), { ssr: false });
 
@@ -94,30 +94,48 @@ function QuestionEditor({ q }: { q: QAQuestion }) {
 export default function PracticeQA({ questions }: PracticeQAProps) {
   const [current, setCurrent] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  const [jumpInput, setJumpInput] = useState("");
+  const topRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const total = questions.length;
   const q = questions[current];
   if (!q) return null;
 
+  const scrollToTop = () => {
+    topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const goTo = (index: number) => {
+    setCurrent(Math.min(Math.max(0, index), total - 1));
+    setRevealed(false);
+    scrollToTop();
+  };
+
   const handlePrev = () => {
     if (current > 0) {
-      setCurrent((c) => c - 1);
-      setRevealed(false);
+      goTo(current - 1);
     }
   };
 
   const handleNext = () => {
     if (current < total - 1) {
-      setCurrent((c) => c + 1);
-      setRevealed(false);
+      goTo(current + 1);
     } else {
       router.push("/practice");
     }
   };
 
+  const handleJump = () => {
+    const parsed = parseFloat(jumpInput);
+    if (Number.isFinite(parsed) && parsed >= 1 && parsed <= total) {
+      goTo(Math.round(parsed) - 1);
+      setJumpInput("");
+    }
+  };
+
   return (
-    <div>
+    <div ref={topRef}>
       {/* Progress bar */}
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm text-gray-500">
@@ -174,7 +192,7 @@ export default function PracticeQA({ questions }: PracticeQAProps) {
       </div>
 
       {/* Previous / Next navigation */}
-      <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-6">
+      <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-gray-200 pt-6">
         <button
           type="button"
           onClick={handlePrev}
@@ -187,9 +205,33 @@ export default function PracticeQA({ questions }: PracticeQAProps) {
         >
           <ChevronLeft size={18} /> Previous
         </button>
-        <span className="text-sm text-gray-400">
-          {current + 1} / {total}
-        </span>
+
+        {/* Jump to question */}
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            min={1}
+            max={total}
+            value={jumpInput}
+            onChange={(e) => setJumpInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleJump();
+            }}
+            placeholder="Question #"
+            className="w-28 px-3 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            onClick={handleJump}
+            className="flex items-center gap-2 px-5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition cursor-pointer"
+          >
+            Jump <CornerDownLeft size={18} />
+          </button>
+          <span className="text-sm text-gray-400 hidden lg:inline">
+            {current + 1} / {total}
+          </span>
+        </div>
+
         <button
           type="button"
           onClick={handleNext}
