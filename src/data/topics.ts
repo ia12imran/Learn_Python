@@ -34,15 +34,6 @@ print(2 + 3)
 # Python can work with text
 print("Python is awesome!".upper())
 print("Hello".center(20, "-"))`,
-        practiceCode: `# Try printing your name
-name = "Your Name"
-print(f"Hello, {name}!")
-
-# Try some math
-print(10 * 5)
-print(100 / 3)
-print(2 ** 10)  # 2 to the power of 10`,
-        practiceTask: "Print your name, calculate 10 * 5, and compute 2 to the power of 10.",
         quiz: [
           {
             question: "Who created Python?",
@@ -92,15 +83,6 @@ print(f"Name: {name}")
 print(f"Age: {age}")
 print(f"Height: {height} ft")
 print(f"Student: {is_student}")`,
-        practiceCode: `# Create your own variables
-name = "Your Name"
-age = 20
-language = "Python"
-
-print(f"I am {name}")
-print(f"I am {age} years old")
-print(f"I am learning {language}")`,
-        practiceTask: "Create variables for your name, age, and favorite language. Print them using f-strings.",
         quiz: [
           {
             question: 'What is the output of: x = 5; print(x + 3)?',
@@ -158,14 +140,6 @@ for i in range(3):
 total = 1 + 2 + 3 + \\
         4 + 5 + 6
 print(f"Total: {total}")`,
-        practiceCode: `# Try indentation with a loop
-for i in range(5):
-    print(f"Step {i}")
-    if i % 2 == 0:
-        print("  -> Even number!")
-    else:
-        print("  -> Odd number!")`,
-        practiceTask: "Write a for loop that prints numbers 0-4, labeling each as even or odd using if/else.",
         quiz: [
           {
             question: "How many spaces is standard Python indentation?",
@@ -222,23 +196,6 @@ print(type(name))
 a, b = 10, 20
 a, b = b, a
 print(f"a={a}, b={b}")`,
-        practiceCode: `# Create variables of different types
-integer_var = 42
-float_var = 3.14
-string_var = "Hello"
-bool_var = True
-
-print(type(integer_var))
-print(type(float_var))
-print(type(string_var))
-print(type(bool_var))
-
-# Swap two variables
-x = "first"
-y = "second"
-x, y = y, x
-print(f"x={x}, y={y}")`,
-        practiceTask: "Create one variable of each type (int, float, string, bool), print their types, then swap two variables.",
         quiz: [
           {
             question: "Which is a valid Python variable name?",
@@ -294,17 +251,6 @@ print(type(None))       # <class 'NoneType'>
 x = "100"
 y = int(x) + 50
 print(f"Converted: {y}")  # 150`,
-        practiceCode: `# Check types and convert
-values = [42, 3.14, "hello", True, None, [1,2], {"a":1}]
-
-for v in values:
-    print(f"{str(v):>12} -> {type(v).__name__}")
-
-# Convert string to number
-num_str = "256"
-num = int(num_str)
-print(f"Square of {num}: {num ** 2}")`,
-        practiceTask: "Print each data type and its value. Convert the string '256' to int and print its square.",
         quiz: [
           {
             question: "What is the type of [1, 2, 3]?",
@@ -383,20 +329,6 @@ print(len(combined))
 # Escape characters
 print("Line 1\\nLine 2")
 print("She said \\"Hello\\"")`,
-        practiceCode: `# Practice string operations
-word = "Python"
-
-print(f"Length: {len(word)}")
-print(f"Uppercase: {word.upper()}")
-print(f"Lowercase: {word.lower()}")
-print(f"Reversed: {word[::-1]}")
-print(f"First char: {word[0]}")
-print(f"Last char: {word[-1]}")
-
-# String repetition
-print("=" * 30)
-print("Python " * 3)`,
-        practiceTask: "Print the length, uppercase, lowercase, and reversed version of 'Python'. Create a line of 30 equals signs.",
         quiz: [
           {
             question: 'What is len("Hello")?',
@@ -451,22 +383,6 @@ print(sentence.endswith("mat"))    # True
 print(sentence.replace("cat", "dog"))
 print("a,b,c".split(","))
 print("-".join(["2024", "01", "01"]))`,
-        practiceCode: `# Practice string methods
-messy = "  HeLLo PyTHon WoRLD  "
-
-print(f"Original: '{messy}'")
-print(f"Stripped: '{messy.strip()}'")
-print(f"Lower: '{messy.strip().lower()}'")
-print(f"Title: '{messy.strip().title()}'")
-print(f"Replace: '{messy.strip().replace('Python', 'World')}'")
-
-# Split and join
-csv_data = "apple,banana,cherry"
-fruits = csv_data.split(",")
-print(f"Fruits: {fruits}")
-joined = " | ".join(fruits)
-print(f"Joined: {joined}")`,
-        practiceTask: "Clean up the messy string using strip, lower, and title methods. Split a CSV string and rejoin with pipes.",
         quiz: [
           {
             code: 'text = "  Hello  "',
@@ -540,26 +456,6 @@ for h in headers:
 big_num = 1000000
 print(f"Population: {big_num:,}")
 print(f"Percentage: {0.95:.0%}")`,
-        practiceCode: `# Practice f-string formatting
-product = "Laptop"
-price = 999.99
-quantity = 5
-
-print(f"Product: {product}")
-print(f"Price: \${price:.2f}")
-print(f"Quantity: {quantity}")
-print(f"Total: \${price * quantity:.2f}")
-
-# Table formatting
-print(f"{'Item':<15}{'Price':>10}{'Qty':>8}{'Total':>12}")
-print(f"{product:<15}\${price:>9.2f}{quantity:>8}\${price*quantity:>11.2f}")
-
-# Number formatting
-print(f"Hex: {255:x}")
-print(f"Oct: {255:o}")
-print(f"Binary: {255:b}")
-print(f"Scientific: {0.00123:.2e}")`,
-        practiceTask: "Create a product receipt using f-strings. Format a table with item, price, quantity, and total columns.",
         quiz: [
           {
             code: 'x = 3.14159',
@@ -620,24 +516,6 @@ print(f"{a} ** {b} = {a ** b}")  # 1419857
 print(f"\\n100 items, 3 per box:")
 print(f"  Boxes needed: {-(-100 // 3)}")  # Ceiling division
 print(f"  Leftover: {100 % 3}")`,
-        practiceCode: `# Calculator operations
-x = 48
-y = 7
-
-print(f"{x} + {y} = {x + y}")
-print(f"{x} - {y} = {x - y}")
-print(f"{x} * {y} = {x * y}")
-print(f"{x} / {y} = {x / y:.4f}")
-print(f"{x} // {y} = {x // y}")
-print(f"{x} % {y} = {x % y}")
-
-# Practical: convert seconds
-total_seconds = 3661
-hours = total_seconds // 3600
-minutes = (total_seconds % 3600) // 60
-seconds = total_seconds % 60
-print(f"\\n{total_seconds} seconds = {hours}h {minutes}m {seconds}s")`,
-        practiceTask: "Convert 3661 seconds into hours, minutes, and seconds using floor division and modulus.",
         quiz: [
           {
             question: "What is 17 // 5?",
@@ -691,28 +569,6 @@ print(f"\\n18 <= {age} <= 65: {18 <= age <= 65}")
 # String comparison
 print(f'"apple" < "banana": {"apple" < "banana"}')
 print(f'"abc" == "abc": {"abc" == "abc"}')`,
-        practiceCode: `# Comparison practice
-score = 85
-grade = ""
-
-if score >= 90:
-    grade = "A"
-elif score >= 80:
-    grade = "B"
-elif score >= 70:
-    grade = "C"
-elif score >= 60:
-    grade = "D"
-else:
-    grade = "F"
-
-print(f"Score: {score}")
-print(f"Grade: {grade}")
-
-# Test chaining
-temperature = 25
-print(f"{temperature}C is comfortable: {20 <= temperature <= 30}")`,
-        practiceTask: "Write code that assigns a letter grade (A-F) based on a score using comparison operators.",
         quiz: [
           {
             question: "What is the result of: 5 != 5?",
@@ -785,32 +641,6 @@ print(f"\\nPassed with honors: {passed}")
 name = ""
 display = name or "Anonymous"
 print(f"Name: {display}")`,
-        practiceCode: `# Logical operators practice
-username = "admin"
-password = "secret123"
-is_active = True
-
-# Check login
-valid_login = (username == "admin" and password == "secret123") and is_active
-print(f"Login valid: {valid_login}")
-
-# Age groups
-age = 17
-is_student = True
-discount = (age < 18 or age > 65) or is_student
-print(f"Gets discount: {discount}")
-
-# Not operator
-logged_in = False
-if not logged_in:
-    print("Please log in to continue")
-
-# Truthy/Falsy
-print(f"bool('') = {bool('')}")
-print(f"bool('hello') = {bool('hello')}")
-print(f"bool(0) = {bool(0)}")
-print(f"bool(42) = {bool(42)}")`,
-        practiceTask: "Write a login check that requires username='admin', password='secret', and is_active=True. Also test truthy/falsy values.",
         quiz: [
           {
             question: "What is True and False?",
@@ -896,29 +726,6 @@ else:
 number = 7
 parity = "even" if number % 2 == 0 else "odd"
 print(f"{number} is {parity}")`,
-        practiceCode: `# Grade calculator
-score = int(input("Enter score (0-100): ") or "85")
-
-if score >= 90:
-    grade = "A"
-    comment = "Excellent!"
-elif score >= 80:
-    grade = "B"
-    comment = "Good job!"
-elif score >= 70:
-    grade = "C"
-    comment = "Not bad!"
-elif score >= 60:
-    grade = "D"
-    comment = "Needs improvement"
-else:
-    grade = "F"
-    comment = "Try harder"
-
-print(f"Score: {score}")
-print(f"Grade: {grade}")
-print(f"Comment: {comment}")`,
-        practiceTask: "Create a program that takes a score (use 85 as default) and outputs the grade (A-F) with a comment.",
         quiz: [
           {
             question: "How many elif blocks can an if statement have?",
@@ -997,32 +804,6 @@ for i in range(1, 4):
     for j in range(1, 4):
         print(f"  {i}x{j}={i*j}", end="")
     print()`,
-        practiceCode: `# Practice loops
-# Print all even numbers from 1 to 20
-print("Even numbers:")
-for i in range(1, 21):
-    if i % 2 == 0:
-        print(f"  {i}", end="")
-print()
-
-# Sum of numbers 1-100
-total = 0
-for i in range(1, 101):
-    total += i
-print(f"\\nSum 1-100: {total}")
-
-# Factorial
-n = 5
-factorial = 1
-for i in range(1, n + 1):
-    factorial *= i
-print(f"{n}! = {factorial}")
-
-# Pattern
-print("\\nTriangle:")
-for i in range(1, 6):
-    print("*" * i)`,
-        practiceTask: "Print even numbers 1-20, calculate sum of 1-100, compute 5!, and print a triangle pattern of stars.",
         quiz: [
           {
             question: "What does range(1, 5) produce?",
@@ -1108,32 +889,6 @@ for i in range(1, 16):
         break
     print(f"  {i}", end="")
 print()`,
-        practiceCode: `# While loop exercises
-# Countdown
-print("Countdown:")
-n = 10
-while n > 0:
-    print(f"  {n}...")
-    n -= 1
-print("  Liftoff!")
-
-# Fibonacci
-print("\\nFibonacci (first 10):")
-a, b = 0, 1
-for _ in range(10):
-    print(f"  {a}", end="")
-    a, b = b, a + b
-
-# Sum until negative
-print("\\n\\nSum until negative:")
-numbers = [5, 3, 8, -1, 4]
-total = 0
-for num in numbers:
-    if num < 0:
-        break
-    total += num
-print(f"  Sum: {total}")`,
-        practiceTask: "Write a countdown from 10, print the first 10 Fibonacci numbers, and sum a list until a negative number.",
         quiz: [
           {
             question: "What happens if the while condition is never False?",
@@ -1214,23 +969,6 @@ print(f"Length: {len(colors)}")
 print(f"Index of blue: {colors.index('blue')}")
 print(f"Count of red: {colors.count('red')}")
 print(f"'red' in colors: {'red' in colors}")`,
-        practiceCode: `# List practice
-scores = [85, 92, 78, 95, 88]
-
-print(f"Scores: {scores}")
-print(f"Highest: {max(scores)}")
-print(f"Lowest: {min(scores)}")
-print(f"Average: {sum(scores) / len(scores):.1f}")
-
-# Add and sort
-scores.append(73)
-scores.sort(reverse=True)
-print(f"\\nAfter adding 73, sorted: {scores}")
-
-# Slicing
-print(f"Top 3: {scores[:3]}")
-print(f"Bottom 3: {scores[-3:]}")`,
-        practiceTask: "Create a list of 5 scores. Find max, min, average. Add a new score, sort it, and print top 3.",
         quiz: [
           {
             question: "Which method adds an element to the end of a list?",
@@ -1304,25 +1042,6 @@ print(f"Flat: {flat}")
 # Conditional
 labels = ["+" if x > 5 else "-" for x in range(1, 11)]
 print(f"Labels: {labels}")`,
-        practiceCode: `# List comprehension practice
-# 1. Cube of odd numbers 1-20
-cubes = [x**3 for x in range(1, 21) if x % 2 != 0]
-print(f"Odd cubes: {cubes}")
-
-# 2. Extract and transform
-data = ["  Alice ", " BOB", "charlie  "]
-cleaned = [name.strip().title() for name in data]
-print(f"Cleaned: {cleaned}")
-
-# 3. Grade conversion
-scores = [95, 82, 67, 73, 88, 45, 91]
-grades = ["A" if s >= 90 else "B" if s >= 80 else "C" if s >= 70 else "D" if s >= 60 else "F" for s in scores]
-print(f"Grades: {list(zip(scores, grades))}")
-
-# 4. Matrix operations
-transposed = [[row[i] for row in [[1,2,3],[4,5,6]]] for i in range(3)]
-print(f"Transposed: {transposed}")`,
-        practiceTask: "Use list comprehensions to: cube odd numbers, clean strings, convert scores to grades, and transpose a matrix.",
         quiz: [
           {
             question: "What does [x*2 for x in range(3)] produce?",
@@ -1407,32 +1126,6 @@ print()
 print_line()
 print("Section Title")
 print_line("-")`,
-        practiceCode: `# Practice functions
-def celsius_to_fahrenheit(celsius):
-    return (celsius * 9/5) + 32
-
-def is_prime(n):
-    if n < 2:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-def fibonacci(n):
-    fib = [0, 1]
-    for i in range(2, n):
-        fib.append(fib[-1] + fib[-2])
-    return fib
-
-# Test
-temps = [0, 20, 37, 100]
-for t in temps:
-    print(f"{t}°C = {celsius_to_fahrenheit(t):.1f}°F")
-
-print(f"\\nPrimes up to 30: {[x for x in range(31) if is_prime(x)]}")
-print(f"Fibonacci(10): {fibonacci(10)}")`,
-        practiceTask: "Create functions for: Celsius to Fahrenheit conversion, checking if a number is prime, and generating Fibonacci sequences.",
         quiz: [
           {
             question: "What does a function return without a return statement?",
@@ -1510,32 +1203,6 @@ print(f"Evens: {evens}")
 words = ["banana", "apple", "cherry", "date"]
 by_length = sorted(words, key=lambda w: len(w))
 print(f"\\nBy length: {by_length}")`,
-        practiceCode: `# Lambda practice
-# Sort list of dicts by different keys
-people = [
-    {"name": "Alice", "age": 30},
-    {"name": "Bob", "age": 25},
-    {"name": "Charlie", "age": 35}
-]
-by_age = sorted(people, key=lambda p: p["age"])
-print("By age:", [p["name"] for p in by_age])
-
-# Map: convert temperatures
-temps_c = [0, 20, 37, 100]
-temps_f = list(map(lambda c: c * 9/5 + 32, temps_c))
-print(f"\\nC: {temps_c}")
-print(f"F: {temps_f}")
-
-# Filter: words longer than 4 chars
-words = ["hi", "hello", "hey", "howdy", "yo"]
-long_words = list(filter(lambda w: len(w) > 4, words))
-print(f"\\nLong words: {long_words}")
-
-# Reduce (manual)
-from functools import reduce
-product = reduce(lambda a, b: a * b, [1, 2, 3, 4, 5])
-print(f"\\nProduct 1-5: {product}")`,
-        practiceTask: "Use lambda with sorted to sort a list of dicts, map to convert temperatures, and filter long words.",
         quiz: [
           {
             question: "What is a lambda function?",
@@ -1621,32 +1288,6 @@ print(f"Values: {list(student.values())}")
 print("\\nStudent info:")
 for key, value in student.items():
     print(f"  {key}: {value}")`,
-        practiceCode: `# Dictionary practice
-# Word frequency counter
-text = "the cat sat on the mat the cat"
-words = text.split()
-freq = {}
-for word in words:
-    freq[word] = freq.get(word, 0) + 1
-
-print("Word frequencies:")
-for word, count in sorted(freq.items(), key=lambda x: x[1], reverse=True):
-    print(f"  '{word}': {count}")
-
-# Nested dictionary
-contacts = {
-    "Alice": {"phone": "555-1234", "email": "alice@mail.com"},
-    "Bob": {"phone": "555-5678", "email": "bob@mail.com"}
-}
-
-print("\\nAlice's email:", contacts["Alice"]["email"])
-
-# Invert dictionary
-original = {"a": 1, "b": 2, "c": 3}
-inverted = {v: k for k, v in original.items()}
-print(f"\\nOriginal: {original}")
-print(f"Inverted: {inverted}")`,
-        practiceTask: "Count word frequencies in a string, access nested dictionary values, and invert a dictionary.",
         quiz: [
           {
             question: "What does .get() do vs direct access?",
@@ -1745,35 +1386,6 @@ acc = BankAccount("Alice", 1000)
 acc.deposit(500)
 acc.withdraw(200)
 print(acc.get_statement())`,
-        practiceCode: `class Student:
-    def __init__(self, name, grade):
-        self.name = name
-        self.grade = grade
-        self.courses = []
-
-    def add_course(self, course):
-        self.courses.append(course)
-
-    def average_grade(self):
-        return sum(self.grade) / len(self.grade) if self.grade else 0
-
-    def is_passing(self):
-        return self.average_grade() >= 60
-
-    def __str__(self):
-        status = "Passing" if self.is_passing() else "Failing"
-        return f"{self.name}: Avg {self.average_grade():.1f} ({status})"
-
-# Create students
-s1 = Student("Alice", [90, 85, 92])
-s2 = Student("Bob", [55, 62, 48])
-s3 = Student("Charlie", [78, 82, 75])
-
-for s in [s1, s2, s3]:
-    s.add_course("Python")
-    print(s)
-    print(f"  Courses: {s.courses}")`,
-        practiceTask: "Create a Student class with name, grades, and methods for average grade, pass/fail status, and course management.",
         quiz: [
           {
             question: "What does __init__ do?",
@@ -1860,41 +1472,6 @@ for s in shapes:
 c = Circle(10)
 print(f"\\nIs Shape: {isinstance(c, Shape)}")
 print(f"Is Circle: {isinstance(c, Circle)}")`,
-        practiceCode: `class Vehicle:
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.odometer = 0
-
-    def drive(self, miles):
-        self.odometer += miles
-        return f"Drove {miles} miles"
-
-    def __str__(self):
-        return f"{self.year} {self.make} {self.model} ({self.odometer} mi)"
-
-class ElectricCar(Vehicle):
-    def __init__(self, make, model, year, battery_kwh):
-        super().__init__(make, model, year)
-        self.battery = battery_kwh
-        self.charge_level = 100
-
-    def charge(self):
-        self.charge_level = 100
-        return "Fully charged!"
-
-    def drive(self, miles):
-        result = super().drive(miles)
-        self.charge_level -= miles * 0.3
-        return f"{result} (Battery: {max(0, self.charge_level):.0f}%)"
-
-car = ElectricCar("Tesla", "Model 3", 2024, 75)
-print(car)
-print(car.drive(50))
-print(car.drive(100))
-print(car.charge())`,
-        practiceTask: "Create a Vehicle class and extend it with ElectricCar that adds battery tracking and charging.",
         quiz: [
           {
             question: "What does super().__init__() do?",
@@ -2000,39 +1577,6 @@ for v in values:
     result = read_number(v)
     if result is not None:
         print(f"  Converted: {result}")`,
-        practiceCode: `# Error handling practice
-def divide_list(numbers, divisor):
-    results = []
-    for n in numbers:
-        try:
-            results.append(n / divisor)
-        except ZeroDivisionError:
-            results.append(float('inf'))
-            print(f"  {n} / 0 = inf")
-        except TypeError:
-            results.append(None)
-            print(f"  Cannot divide {type(n).__name__}")
-    return results
-
-print("Dividing [10, 20, 30] by 3:")
-print(f"  {divide_list([10, 20, 30], 3)}")
-
-print("\\nDividing [10, 20, 30] by 0:")
-print(f"  {divide_list([10, 20, 30], 0)}")
-
-# Context manager pattern
-def process_file_data(data_dict):
-    for key, value in data_dict.items():
-        try:
-            result = 100 / value
-            print(f"  {key}: {result:.1f}")
-        except (ZeroDivisionError, TypeError) as e:
-            print(f"  {key}: Error - {type(e).__name__}")
-
-data = {"a": 10, "b": 0, "c": 5, "d": "x"}
-print("\\nProcessing:")
-process_file_data(data)`,
-        practiceTask: "Write a safe division function that handles ZeroDivisionError and TypeError. Process a mixed dictionary of values.",
         quiz: [
           {
             question: "When does the 'else' block in try/except run?",
@@ -2123,42 +1667,6 @@ with open("students.json", "r") as f:
     loaded = json.load(f)
     for s in loaded["students"]:
         print(f"{s['name']}: {s['grade']}")`,
-        practiceCode: `# File handling practice
-import os
-
-# Create sample data
-lines = [
-    "Python is great",
-    "I love coding",
-    "Practice makes perfect",
-    "Keep learning",
-    "Never give up"
-]
-
-# Write with line numbers
-with open("numbered.txt", "w") as f:
-    for i, line in enumerate(lines, 1):
-        f.write(f"{i}. {line}\\n")
-
-# Read and count
-with open("numbered.txt", "r") as f:
-    content = f.read()
-    words = content.split()
-    lines_list = content.strip().split("\\n")
-
-print(f"Words: {len(words)}")
-print(f"Lines: {len(lines_list)}")
-print(f"Characters: {len(content)}")
-
-# Search for a word
-search = "Python"
-count = content.lower().count(search.lower())
-print(f"\\n'{search}' found {count} time(s)")
-
-# File info
-size = os.path.getsize("numbered.txt")
-print(f"File size: {size} bytes")`,
-        practiceTask: "Write 5 lines to a file, read them back, count words/lines/characters, and search for a specific word.",
         quiz: [
           {
             question: "Why use 'with' when opening files?",
@@ -2251,31 +1759,6 @@ print(f"  Date: {now.strftime('%Y-%m-%d')}")
 print(f"  Time: {now.strftime('%H:%M:%S')}")
 tomorrow = now + timedelta(days=1)
 print(f"  Tomorrow: {tomorrow.strftime('%A')}")`,
-        practiceCode: `import random
-from collections import Counter
-
-# Generate random data
-scores = [random.randint(40, 100) for _ in range(20)]
-print(f"Random scores: {scores}")
-
-# Analyze with Counter
-score_counts = Counter(scores)
-print(f"\\nMost common: {score_counts.most_common(3)}")
-
-# Statistics
-import statistics
-print(f"\\nMean: {statistics.mean(scores):.1f}")
-print(f"Median: {statistics.median(scores)}")
-print(f"Stdev: {statistics.stdev(scores):.2f}")
-
-# Simulate dice rolls
-dice_rolls = [random.randint(1, 6) for _ in range(1000)]
-dice_counts = Counter(dice_rolls)
-print(f"\\nDice rolls (1000):")
-for face in range(1, 7):
-    bar = "#" * (dice_counts[face] // 5)
-    print(f"  {face}: {bar} ({dice_counts[face]})")`,
-        practiceTask: "Generate 20 random scores (40-100), analyze them with Counter and statistics, and simulate 1000 dice rolls.",
         quiz: [
           {
             question: "What's the difference between 'import math' and 'from math import sqrt'?",

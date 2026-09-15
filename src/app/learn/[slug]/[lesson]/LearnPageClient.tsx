@@ -288,16 +288,6 @@ function LessonView({ topicSlug, lessonSlug }: { topicSlug: string; lessonSlug: 
                 </div>
               )}
 
-              <div className="mt-10">
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
-                  <p className="text-amber-800 font-medium text-sm">Your Task:</p>
-                  <p className="text-amber-700">{lesson.practiceTask}</p>
-                </div>
-                <ClientOnly fallback={<EditorPlaceholder height={400} />}>
-                  <CodeEditor key={`practice-${lessonSlug}`} initialCode={lesson.practiceCode} height="400px" />
-                </ClientOnly>
-              </div>
-
               <div className="mt-8 flex space-x-4">
                 <button
                   type="button"

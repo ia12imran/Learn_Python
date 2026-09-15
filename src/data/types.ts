@@ -4,8 +4,6 @@ export interface Lesson {
   description: string;
   content: string;
   codeExample: string;
-  practiceCode: string;
-  practiceTask: string;
   quiz: QuizQuestion[];
 }
 

@@ -66,10 +66,11 @@ export default function QuizPage() {
     setLoadingSection(sectionKey);
     setQaError(null);
     try {
-      const res = await fetch(`/api/questions?section=${sectionKey}`);
-      if (!res.ok) throw new Error("Failed to load questions");
-      const data = (await res.json()) as { questions: QAQuestion[] };
-      setQaQuestions(data.questions);
+      const m = await import("@/data/question-sections");
+      const section = m.getSection(sectionKey);
+      const questions = section?.questions ?? [];
+      if (questions.length === 0) throw new Error("Section not found");
+      setQaQuestions(questions);
       setQaLabel(label);
       setMode("qa");
     } catch (err) {
