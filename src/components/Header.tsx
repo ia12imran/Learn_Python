@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { BookOpen, Code2, FlaskConical, Home, Menu, X } from "lucide-react";
+import { BookOpen, Bot, Code2, FlaskConical, Home, Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Home },
   { href: "/learn/intro/what-is-python", label: "Learn", icon: BookOpen },
   { href: "/practice", label: "Practice", icon: Code2 },
-  { href: "/quiz", label: "Quick Test", icon: FlaskConical },
+  { href: "/automation", label: "Python Automation", icon: Bot },
+  { href: "/quiz", label: "Quiz", icon: FlaskConical },
 ];
 
 export default function Header() {

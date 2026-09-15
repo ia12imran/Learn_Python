@@ -4,7 +4,7 @@ import Link from "next/link";
 import { topics } from "@/data/topics";
 import { getProgress } from "@/lib/progress";
 import { useEffect, useState } from "react";
-import { ChevronRight, ChevronDown, CheckCircle2, FlaskConical, Code2 } from "lucide-react";
+import { ChevronRight, ChevronDown, CheckCircle2, FlaskConical, Code2, Bot } from "lucide-react";
 
 export default function Sidebar({ currentTopic, currentLesson }: { currentTopic: string; currentLesson: string }) {
   const [progress, setProgress] = useState<Record<string, boolean>>({});
@@ -33,6 +33,13 @@ export default function Sidebar({ currentTopic, currentLesson }: { currentTopic:
           >
             <Code2 size={16} />
             Practice Exercises
+          </Link>
+          <Link
+            href="/automation"
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-cyan-700 hover:bg-cyan-50 rounded-lg transition"
+          >
+            <Bot size={16} />
+            Python Automation
           </Link>
           <Link
             href="/quiz"

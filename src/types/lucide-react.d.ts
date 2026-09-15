@@ -39,4 +39,8 @@ declare module "lucide-react" {
   export const EyeOff: ComponentType<SVGProps<SVGSVGElement> & { size?: number }>;
   export const HelpCircle: ComponentType<SVGProps<SVGSVGElement> & { size?: number }>;
   export const CornerDownLeft: ComponentType<SVGProps<SVGSVGElement> & { size?: number }>;
+  export const Bot: ComponentType<SVGProps<SVGSVGElement> & { size?: number; className?: string }>;
+  export const Sparkles: ComponentType<SVGProps<SVGSVGElement> & { size?: number; className?: string }>;
+  export const Quote: ComponentType<SVGProps<SVGSVGElement> & { size?: number; className?: string }>;
+  export const ListChecks: ComponentType<SVGProps<SVGSVGElement> & { size?: number; className?: string }>;
 }

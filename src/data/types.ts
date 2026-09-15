@@ -35,6 +35,16 @@ export interface QuestionBankSection {
   questions: QAQuestion[];
 }
 
+export interface AutomationQuestion {
+  id: number;
+  priority: "MUST KNOW" | "HIGH VALUE" | "MEDIUM" | "LOW";
+  topic: string;
+  question: string;
+  simple_solution: string;
+  why_for_automation: string;
+  key_takeaway: string;
+}
+
 export interface QuestionBank {
   [key: string]: QuestionBankSection;
 }

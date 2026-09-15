@@ -1,5 +1,5 @@
 {
-  "description": "100 questions on Python string formatting (coding questions, beginner to intermediate)",
+  "description": "50 most important questions for automation testing interviews",
   "questions": [
     {
       "id": 1,
@@ -8,498 +8,248 @@
     },
     {
       "id": 2,
-      "question": "What is len('a\\nb')?",
-      "answer": "The \\n is one single character (a newline), even though it is written with two symbols, so the length is 3.\n\ncode:\nprint(len('a\\nb'))  # 3\n\nreal example:\nCounting characters correctly when text contains line breaks."
-    },
-    {
-      "id": 3,
       "question": "What is the escape sequence for a tab?",
       "answer": "The tab escape is \\t, which produces a tab character that jumps to the next tab stop.\n\ncode:\nprint('a\\tb')  # a TAB b\n\nreal example:\nAligning columns in a plain-text table or log."
     },
     {
-      "id": 4,
-      "question": "What does 'a\\tb' represent?",
-      "answer": "The string holds three characters: the letter 'a', a tab, and the letter 'b'.\n\ncode:\nprint(repr('a\\tb'))  # 'a\\tb'\n\nreal example:\nStoring text positions in a tab-separated data string."
-    },
-    {
-      "id": 5,
+      "id": 3,
       "question": "What is the escape for a newline?",
       "answer": "The escape for a newline is \\n, which inserts a line break into the text.\n\ncode:\nprint('first\\nsecond')\n# first\n# second\n\nreal example:\nCreating multi-line output for a receipt."
     },
     {
-      "id": 6,
+      "id": 4,
       "question": "What is the escape for a backslash?",
       "answer": "The escape for a backslash is '\\\\' in source code, which stands for one literal backslash character.\n\ncode:\nbs = chr(92)\nprint(bs)  # \nreal example:\nWriting Windows file paths safely inside strings."
     },
     {
-      "id": 7,
+      "id": 5,
       "question": "What does the literal 'C:\\\\Users' represent?",
       "answer": "In source, 'C:\\\\Users' represents the text C:\\Users, with a single backslash between 'C:' and 'Users'.\n\ncode:\npath = r'C:\\Users'\nprint(path)  # C:\\Users\n\nreal example:\nA raw string keeps a real file path looking exactly like the folder bar."
     },
     {
-      "id": 8,
+      "id": 6,
       "question": "How do you put a double quote inside a double-quoted string?",
       "answer": "Escape the double quote with \\\" inside the string, or simply wrap it in single quotes instead.\n\ncode:\nprint('He said \"hi\"')  # He said \"hi\"\n\nreal example:\nIncluding spoken quotes inside a chat message without breaking it."
     },
     {
-      "id": 9,
-      "question": "What does 'He said \"hi\"' represent?",
-      "answer": "Single quotes let you place double quotes inside without escaping, so the text is He said \"hi\" with quotes kept.\n\ncode:\ns = 'He said \"hi\"'\nprint(s)  # He said \"hi\"\n\nreal example:\nStoring a line of quoted dialogue."
-    },
-    {
-      "id": 10,
-      "question": "What is the escape for a single quote?",
-      "answer": "The escape for a single quote is \\', a backslash followed by a single quote character.\n\ncode:\nprint(\"don't\")  # don't  (double quotes avoid the escape too)\n\nreal example:\nWriting contractions like don't inside a single-quoted string."
-    },
-    {
-      "id": 11,
-      "question": "What does 'don\\'t' represent?",
-      "answer": "The escaped text represents the word don't, with the apostrophe kept as a real character.\n\ncode:\ns = 'don\\'t'\nprint(s)  # don't\n\nreal example:\nTyping contractions or possessives such as it's."
-    },
-    {
-      "id": 12,
-      "question": "What does print('a\\rb') typically show?",
-      "answer": "\\r returns the cursor to the start of the current line, so printing 'a' then \\r then 'b' overwrites the 'a', showing just b.\n\ncode:\nprint('a\\rb')  # typically shows: b\n\nreal example:\nRedrawing progress text in place on a terminal."
-    },
-    {
-      "id": 13,
-      "question": "What is the escape for a form feed?",
-      "answer": "The escape for a form feed is \\f, a control character used to eject a new page.\n\ncode:\ns = 'a\\f'\nprint(len(s))  # 2\n\nreal example:\nMarking page breaks in legacy printed reports."
-    },
-    {
-      "id": 14,
-      "question": "What is the escape for backspace?",
-      "answer": "The escape for backspace is \\b, which moves the cursor back one position.\n\ncode:\ns = 'a\\b'\nprint(len(s))  # 2\n\nreal example:\nMinor cursor tricks in terminal output scripts."
-    },
-    {
-      "id": 15,
-      "question": "What does '\\x41' represent?",
-      "answer": "\\x41 is a hexadecimal escape; hex 41 is the code point of 'A', so the string is just 'A'.\n\ncode:\nprint('\\x41')  # A\n\nreal example:\nWriting characters by their hex code in low-level text."
-    },
-    {
-      "id": 16,
-      "question": "What does '\\u0041' represent?",
-      "answer": "\\u0041 is a Unicode escape; U+0041 is the code point of 'A'.\n\ncode:\nprint('\\u0041')  # A\n\nreal example:\nTyping special characters such as emojis by their Unicode number."
-    },
-    {
-      "id": 17,
-      "question": "What does '\\t' * 3 produce?",
-      "answer": "Multiplying a single tab escape by 3 produces three tab characters.\n\ncode:\nprint(repr('\\t' * 3))  # '\\t\\t\\t'\n\nreal example:\nIndenting three levels deep in indented output."
-    },
-    {
-      "id": 18,
-      "question": "How do you print a literal backslash?",
-      "answer": "Use the escape '\\\\' or a raw string such as r'\\' to print one literal backslash.\n\ncode:\nprint('\\\\')  # \nreal example:\nPrinting a single backslash in a folder diagram."
-    },
-    {
-      "id": 19,
-      "question": "What does '\\' + 'n' evaluate to?",
-      "answer": "Concatenating a literal backslash with 'n' builds the two-character text '\\n', which is the written form of a newline escape.\n\ncode:\nnl = '\\\\' + 'n'\nprint(repr(nl))  # '\\n'\nprint(len(nl))  # 2\n\nreal example:\nBuilding escape-text dynamically for regex patterns."
-    },
-    {
-      "id": 20,
-      "question": "What does len('\\\\') return?",
-      "answer": "'\\\\' in source is a single escaped backslash, so the string value has exactly one character.\n\ncode:\ns = '\\\\'\nprint(len(s))  # 1\n\nreal example:\nCounting backslashes in a Windows path segment."
-    },
-    {
-      "id": 21,
-      "question": "How do you put a newline between two printed lines?",
-      "answer": "Write both lines inside one string separated by the \\n escape, then single print shows them on two lines.\n\ncode:\nprint('a\\nb')\n# a\n# b\n\nreal example:\nPrinting a two-line address with one print statement."
-    },
-    {
-      "id": 22,
-      "question": "What is the null character escape in Python?",
-      "answer": "The null character is written in source as \\x00 and is a single special character.\n\ncode:\nnull = '\\x00'\nprint(len(null))  # 1\n\nreal example:\nRepresenting a terminal string terminator in low-level data."
-    },
-    {
-      "id": 23,
+      "id": 7,
       "question": "How do you write an f-string?",
       "answer": "Prefix the string with f and put the expression inside curly braces, like f\"text {variable}\".\n\ncode:\nname = 'Py'\nprint(f'Hello {name}')  # Hello Py\n\nreal example:\nShowing a live price or time inside a message."
     },
     {
-      "id": 24,
+      "id": 8,
       "question": "What does f'{2 + 3}' evaluate to?",
       "answer": "Inside an f-string, {2 + 3} is evaluated first and converted to text, so the result is the string '5'.\n\ncode:\nprint(f'{2 + 3}')  # 5\n\nreal example:\nInserting a computed count straight into a status line."
     },
     {
-      "id": 25,
+      "id": 9,
       "question": "What does f'{3.14159:.2f}' return?",
       "answer": "The :.2f format keeps 2 decimal places, rounding 3.14159 to 3.14.\n\ncode:\nprint(f'{3.14159:.2f}')  # 3.14\n\nreal example:\nDisplaying prices with exactly two decimal places."
     },
     {
-      "id": 26,
+      "id": 10,
       "question": "What does f'{10:03d}' return?",
       "answer": "The :03d format pads the number 10 to width 3 with leading zeros, giving '010'.\n\ncode:\nprint(f'{10:03d}')  # 010\n\nreal example:\nNumbering files as 001, 002, 003 so they sort correctly."
     },
     {
-      "id": 27,
+      "id": 11,
       "question": "What does f'{255:x}' return?",
       "answer": "The :x format writes the number in lowercase hexadecimal, and 255 in hex is ff.\n\ncode:\nprint(f'{255:x}')  # ff\n\nreal example:\nShowing colour components as hex codes in HTML."
     },
     {
-      "id": 28,
-      "question": "What does f'{255:X}' return?",
-      "answer": "The :X format writes uppercase hexadecimal, so 255 becomes FF.\n\ncode:\nprint(f'{255:X}')  # FF\n\nreal example:\nDisplaying a hex value in an uppercase colour code."
-    },
-    {
-      "id": 29,
+      "id": 12,
       "question": "What does f'{255:b}' return?",
       "answer": "The :b format writes the number in binary, and 255 in binary is 11111111.\n\ncode:\nprint(f'{255:b}')  # 11111111\n\nreal example:\nShowing permissions or bitmasks in binary form."
     },
     {
-      "id": 30,
+      "id": 13,
       "question": "What does f'{10:>5}' return?",
       "answer": ">5 aligns the text to the right in a width of 5, so 10 becomes '   10' with three leading spaces.\n\ncode:\nprint(repr(f'{10:>5}'))  # '   10'\n\nreal example:\nRight-aligning numbers in a fixed-width table column."
     },
     {
-      "id": 31,
+      "id": 14,
       "question": "What does f'{10:<5}' return?",
       "answer": "The <5 format left-aligns within width 5, so 10 gets trailing spaces: '10   '.\n\ncode:\nprint(repr(f'{10:<5}'))  # '10   '\n\nreal example:\nLeft-aligning names in a printed list."
     },
     {
-      "id": 32,
+      "id": 15,
       "question": "What does f'{10:^5}' return?",
       "answer": "The ^5 format centres the value in width 5; the two spare spaces split left and right.\n\ncode:\nprint(repr(f'{10:^5}'))  # ' 10  '\n\nreal example:\nCentring a title in a fixed-width banner."
     },
     {
-      "id": 33,
+      "id": 16,
       "question": "What does f'{1000:,}' return?",
       "answer": "The comma , format adds thousands separators, so 1000 becomes 1,000.\n\ncode:\nprint(f'{1000:,}')  # 1,000\n\nreal example:\nShowing large totals like 1234567 as 1,234,567."
     },
     {
-      "id": 34,
+      "id": 17,
       "question": "What does f'{0.5:.1%}' return?",
       "answer": ":.1% multiplies by 100, keeps one decimal, and appends a percent sign, so 0.5 becomes 50.0%.\n\ncode:\nprint(f'{0.5:.1%}')  # 50.0%\n\nreal example:\nDisplaying a completion ratio as a readable percentage."
     },
     {
-      "id": 35,
-      "question": "What does f'{5/2:.2f}' return?",
-      "answer": ":.2f rounds to two decimals, so 5/2 which is 2.5 displays as 2.50.\n\ncode:\nprint(f'{5/2:.2f}')  # 2.50\n\nreal example:\nShowing an average or score with two decimal places."
-    },
-    {
-      "id": 36,
-      "question": "What does '{} {}'.format('hi', 'bye') return?",
-      "answer": "The {} placeholders are filled left to right with the given values: first 'hi', then 'bye'.\n\ncode:\nprint('{} {}'.format('hi', 'bye'))  # hi bye\n\nreal example:\nFilling a template with a name and a greeting."
-    },
-    {
-      "id": 37,
+      "id": 18,
       "question": "What does '{0} {1}'.format('a', 'b') return?",
       "answer": "{0} and {1} refer to the first and second arguments, so 'a' and 'b' appear in that order.\n\ncode:\nprint('{0} {1}'.format('a', 'b'))  # a b\n\nreal example:\nReordering words, for example '{1} {0}' to swap them."
     },
     {
-      "id": 38,
+      "id": 19,
       "question": "What does '{1} {0}'.format('a', 'b') return?",
       "answer": "{1} pulls the second argument 'b' and {0} pulls the first 'a', giving 'b a'.\n\ncode:\nprint('{1} {0}'.format('a', 'b'))  # b a\n\nreal example:\nRearranging a last-first name into first-last order."
     },
     {
-      "id": 39,
+      "id": 20,
       "question": "What does '{name} is {n}'.format(name='Py', n=1) return?",
       "answer": "Named placeholders are filled by keyword arguments, so {name} gets 'Py' and {n} gets 1.\n\ncode:\nprint('{name} is {n}'.format(name='Py', n=1))  # Py is 1\n\nreal example:\nFilling a template like '{city} is {rank}' with variables."
     },
     {
-      "id": 40,
+      "id": 21,
       "question": "What does '{:.2f}'.format(3.14159) return?",
       "answer": ":.2f rounds 3.14159 to two decimal places, giving 3.14.\n\ncode:\nprint('{:.2f}'.format(3.14159))  # 3.14\n\nreal example:\nShowing a measurement to two decimal places."
     },
     {
-      "id": 41,
+      "id": 22,
       "question": "What does '{:>10}'.format('x') return?",
       "answer": ">10 right-aligns 'x' in a width of 10, so it sits after nine spaces.\n\ncode:\nprint(repr('{:>10}'.format('x')))  # '         x'\n\nreal example:\nRight-aligning a small value in a wide report column."
     },
     {
-      "id": 42,
+      "id": 23,
       "question": "What does f'{2 ** 10}' return?",
       "answer": "The expression inside the braces is evaluated first, so 2 ** 10 calculates to 1024.\n\ncode:\nprint(f'{2 ** 10}')  # 1024\n\nreal example:\nShowing a computed power of two in a technical table."
     },
     {
-      "id": 43,
-      "question": "What does f\"{'a' * 3}\" return?",
-      "answer": "The inner expression evaluates first, so 'a' * 3 produces 'aaa', which is then inserted.\n\ncode:\nprint(f\"{'a' * 3}\")  # aaa\n\nreal example:\nInserting a repeated character pattern into a label."
-    },
-    {
-      "id": 44,
+      "id": 24,
       "question": "What does f'{len(\"hello\")}' return?",
       "answer": "The length is computed inside the braces, so len(\"hello\") evaluates to 5 before formatting.\n\ncode:\nprint(f'{len(\"hello\")}')  # 5\n\nreal example:\nDisplaying the character count of a message."
     },
     {
-      "id": 45,
+      "id": 25,
       "question": "What does '%s' % 'Py' return?",
       "answer": "The %s placeholder is replaced by the value 'Py', converted to a string.\n\ncode:\nprint('%s' % 'Py')  # Py\n\nreal example:\nThe old-style formatting still appears in legacy code."
     },
     {
-      "id": 46,
+      "id": 26,
       "question": "What does 'Hello %s' % 'World' return?",
       "answer": "%s is replaced by 'World' inside the fixed text, giving 'Hello World'.\n\ncode:\nprint('Hello %s' % 'World')  # Hello World\n\nreal example:\nFilling a greeting name into an older-style message."
     },
     {
-      "id": 47,
+      "id": 27,
       "question": "What does '%.2f' % 3.14159 return?",
       "answer": "%.2f rounds 3.14159 to two decimal places, so the result is 3.14.\n\ncode:\nprint('%.2f' % 3.14159)  # 3.14\n\nreal example:\nFormatting decimals in code written years ago."
     },
     {
-      "id": 48,
-      "question": "What does '%s-%d' % ('x', 1) return?",
-      "answer": "%s takes the string 'x', %d takes the integer 1, and the dash separates them.\n\ncode:\nprint('%s-%d' % ('x', 1))  # x-1\n\nreal example:\nCombining a text code and a number in legacy logs."
-    },
-    {
-      "id": 49,
-      "question": "What does f'{True}' return?",
-      "answer": "f-strings convert any expression to text, so True becomes the string 'True'.\n\ncode:\nprint(f'{True}')  # True\n\nreal example:\nPrinting a boolean setting into a report line."
-    },
-    {
-      "id": 50,
-      "question": "How do you show a literal brace in an f-string?",
-      "answer": "Use double braces, so {{ produces one literal { and }} produces one literal } inside an f-string.\n\ncode:\nprint(f'{{literal}}')  # {literal}\n\nreal example:\nWriting JSON-like text that must contain real braces."
-    },
-    {
-      "id": 51,
+      "id": 28,
       "question": "What does f'{{literal}}' return?",
       "answer": "The double braces are escapes, so f'{{literal}}' produces the plain text '{literal}'.\n\ncode:\nprint(f'{{literal}}')  # {literal}\n\nreal example:\nBuilding format strings or JSON snippets that contain real braces."
     },
     {
-      "id": 52,
+      "id": 29,
       "question": "What does '{:.0f}'.format(6.7) return?",
       "answer": "The :.0f format uses zero decimals, so 6.7 rounds up to the whole number 7.\n\ncode:\nprint('{:.0f}'.format(6.7))  # 7\n\nreal example:\nRounding a score to a whole number for display."
     },
     {
-      "id": 53,
+      "id": 30,
       "question": "How do you reverse a string in one expression?",
       "answer": "Reverse with the slice s[::-1], where the -1 step walks the string from the end.\n\ncode:\ns = 'abc'\nprint(s[::-1])  # cba\n\nreal example:\nFlipping a word for a word-game check."
     },
     {
-      "id": 54,
+      "id": 31,
       "question": "How do you check if a string is a palindrome?",
       "answer": "A palindrome reads the same forwards and backwards, checked with s == s[::-1].\n\ncode:\ndef is_pal(s):\n    return s == s[::-1]\nprint(is_pal('madam'))  # True\n\nreal example:\nValidating a name like 'level' in a puzzle app."
     },
     {
-      "id": 55,
-      "question": "What is 'racecar'[::-1]?",
-      "answer": "Reversing 'racecar' gives the same word because it reads identically both ways.\n\ncode:\nprint('racecar'[::-1])  # racecar\n\nreal example:\nA classic example used when testing palindrome logic."
-    },
-    {
-      "id": 56,
+      "id": 32,
       "question": "How do you count the words in a sentence?",
       "answer": "split() breaks the sentence on whitespace, and len() counts the resulting words.\n\ncode:\nprint(len('the quick fox'.split()))  # 3\n\nreal example:\nCounting words in a blog post or essay text."
     },
     {
-      "id": 57,
+      "id": 33,
       "question": "How do you count a specific character?",
       "answer": "s.count(ch) counts how many times the character ch appears in s.\n\ncode:\nprint('banana'.count('a'))  # 3\n\nreal example:\nCounting occurrences of a letter in a word puzzle."
     },
     {
-      "id": 58,
+      "id": 34,
       "question": "How do you find the most frequent character?",
       "answer": "max(s, key=s.count) scans each character and returns the one that appears most often.\n\ncode:\ns = 'banana'\nprint(max(s, key=s.count))  # a\n\nreal example:\nFinding the most repeated letter in a word."
     },
     {
-      "id": 59,
+      "id": 35,
       "question": "Write code to reverse the order of words.",
       "answer": "Split into words, reverse the list with [::-1], then join back with spaces.\n\ncode:\ns = 'one two three'\nprint(' '.join(s.split()[::-1]))  # three two one\n\nreal example:\nReversing a sentence's word order for a cipher."
     },
     {
-      "id": 60,
+      "id": 36,
       "question": "What does ' '.join('hello world'.split()[::-1]) return?",
       "answer": "'hello world'.split() gives ['hello', 'world'], which reversed and joined becomes 'world hello'.\n\ncode:\nprint(' '.join('hello world'.split()[::-1]))  # world hello\n\nreal example:\nReordering a two-word phrase before sending it."
     },
     {
-      "id": 61,
+      "id": 37,
       "question": "How do you check if two strings are anagrams?",
       "answer": "Two strings are anagrams when their sorted character lists are equal.\n\ncode:\nprint(sorted('listen') == sorted('silent'))  # True\n\nreal example:\nComparing words in an anagram game."
     },
     {
-      "id": 62,
-      "question": "What does sorted('listen') return?",
-      "answer": "sorted('listen') returns its characters in alphabetical order as a list.\n\ncode:\nprint(sorted('listen'))  # ['e', 'i', 'l', 'n', 's', 't']\n\nreal example:\nNormalising two words so their letters can be compared."
-    },
-    {
-      "id": 63,
+      "id": 38,
       "question": "Are 'listen' and 'silent' anagrams?",
       "answer": "Yes, 'listen' and 'silent' contain exactly the same letters, just in different order.\n\ncode:\nprint(sorted('listen') == sorted('silent'))  # True\n\nreal example:\nA well-known pair used to test anagram detection."
     },
     {
-      "id": 64,
+      "id": 39,
       "question": "How do you remove duplicate characters preserving order?",
       "answer": "dict.fromkeys(s) keeps only first occurrences as keys; joining those keys removes duplicates in order.\n\ncode:\ns = 'abca'\nprint(''.join(dict.fromkeys(s)))  # abc\n\nreal example:\nCleaning a list of IDs by keeping each one once."
     },
     {
-      "id": 65,
+      "id": 40,
       "question": "What does ''.join(dict.fromkeys('abca')) return?",
       "answer": "dict.fromkeys keeps the first 'a', 'b', and 'c' in order, so joining them gives 'abc'.\n\ncode:\nprint(''.join(dict.fromkeys('abca')))  # abc\n\nreal example:\nDe-duplicating a sequence of letters while keeping their order."
     },
     {
-      "id": 66,
-      "question": "How do you check if a string starts with a vowel?",
-      "answer": "Check the first character after lowercasing and test whether it is in 'aeiou'.\n\ncode:\ns = 'apple'\nprint(s and s[0].lower() in 'aeiou')  # True\n\nreal example:\nSorting words into vowel-start and consonant-start buckets."
-    },
-    {
-      "id": 67,
+      "id": 41,
       "question": "Write code to count vowels.",
       "answer": "Loop over the lowercased characters and count how many are vowels.\n\ncode:\ns = 'hello'\nprint(sum(1 for c in s.lower() if c in 'aeiou'))  # 2\n\nreal example:\nCounting vowels in names for a word game."
     },
     {
-      "id": 68,
-      "question": "How many vowels are in 'book'?",
-      "answer": "'book' contains two vowels: the two 'o's.\n\ncode:\nprint(sum(1 for c in 'book' if c in 'aeiou'))  # 2\n\nreal example:\nEstimating vowel-heavy words in a tongue twister."
-    },
-    {
-      "id": 69,
-      "question": "Write code to remove all vowels.",
-      "answer": "Keep only characters that are not vowels by filtering the string.\n\ncode:\ns = 'hello'\nprint(''.join(c for c in s if c.lower() not in 'aeiou'))  # hll\n\nreal example:\nStripping vowels from a word to make a puzzle hint."
-    },
-    {
-      "id": 70,
+      "id": 42,
       "question": "Write code to mask all but the last 4 characters.",
       "answer": "Replace everything except the last 4 characters with asterisks.\n\ncode:\ns = '12345678'\nprint('*' * (len(s) - 4) + s[-4:])  # ****5678\n\nreal example:\nHiding a credit card number while keeping the last four digits."
     },
     {
-      "id": 71,
+      "id": 43,
       "question": "How do you convert spaces in a string to underscores?",
       "answer": "s.replace(' ', '_') swaps every space for an underscore.\n\ncode:\ns = 'my file name'\nprint(s.replace(' ', '_'))  # my_file_name\n\nreal example:\nTurning a sentence into a URL-friendly slug."
     },
     {
-      "id": 72,
-      "question": "How do you rotate a string left by one character?",
-      "answer": "Moving the first character to the end, s[1:] + s[0], rotates the string left by one.\n\ncode:\ns = 'abcd'\nprint(s[1:] + s[0])  # bcda\n\nreal example:\nRotating a spinner icon through its states."
-    },
-    {
-      "id": 73,
-      "question": "What does 'hello'[1:] + 'hello'[0] return?",
-      "answer": "'hello'[1:] is 'ello' and 'hello'[0] is 'h', so joining them gives 'elloh'.\n\ncode:\nprint('hello'[1:] + 'hello'[0])  # elloh\n\nreal example:\nStepping a rotating-wheel animation one position."
-    },
-    {
-      "id": 74,
+      "id": 44,
       "question": "Write code to title-case each word of a sentence.",
       "answer": "Split into words, capitalise each, and rejoin with spaces to title-case every word.\n\ncode:\ns = 'hello world'\nprint(' '.join(w.capitalize() for w in s.split()))  # Hello World\n\nreal example:\nFormatting a name or title that comes as lowercase text."
     },
     {
-      "id": 75,
-      "question": "What is the center character of 'hello'?",
-      "answer": "The middle character sits at index len(s)//2, which for 'hello' is position 2, 'l'.\n\ncode:\ns = 'hello'\nprint(s[len(s) // 2])  # l\n\nreal example:\nFinding the middle letter of a word to balance a layout."
-    },
-    {
-      "id": 76,
+      "id": 45,
       "question": "Write a one-line Caesar shift of +1.",
       "answer": "Add 1 to each character's code point with ord() and convert back with chr() to shift every letter.\n\ncode:\ns = 'abc'\nprint(''.join(chr(ord(c) + 1) for c in s))  # bcd\n\nreal example:\nMaking a simple secret code that shifts letters by one."
     },
     {
-      "id": 77,
-      "question": "What does ''.join(chr(ord(c) + 1) for c in 'abc') return?",
-      "answer": "Each letter is replaced by the next one in the alphabet: a->b, b->c, c->d.\n\ncode:\nprint(''.join(chr(ord(c) + 1) for c in 'abc'))  # bcd\n\nreal example:\nA Caesar-style shift for a tiny message."
-    },
-    {
-      "id": 78,
-      "question": "What does all('a' in w for w in ['cat', 'car']) return?",
-      "answer": "all() returns True only if every word in the list contains 'a', which both 'cat' and 'car' do.\n\ncode:\nprint(all('a' in w for w in ['cat', 'car']))  # True\n\nreal example:\nChecking that every item on a list includes a required letter."
-    },
-    {
-      "id": 79,
+      "id": 46,
       "question": "How do you check a string has only letters and digits?",
       "answer": "s.isalnum() returns True when every character is a letter or a digit (no spaces or symbols).\n\ncode:\nprint('abc123'.isalnum())  # True\nprint('abc 1'.isalnum())  # False\n\nreal example:\nValidating a username that must be letters and digits only."
     },
     {
-      "id": 80,
-      "question": "What does 'hello world'.replace(' ', '') return?",
-      "answer": "replace(' ', '') deletes every space by replacing it with nothing.\n\ncode:\nprint('hello world'.replace(' ', ''))  # helloworld\n\nreal example:\nRemoving spaces before hashing a phrase."
-    },
-    {
-      "id": 81,
+      "id": 47,
       "question": "How do you check the string contains any digit?",
       "answer": "any(c.isdigit() for c in s) is True as soon as one character is a digit.\n\ncode:\nprint(any(c.isdigit() for c in 'ab1'))  # True\n\nreal example:\nChecking that a password contains at least one number."
     },
     {
-      "id": 82,
-      "question": "What does ''.join(str(len(w)) for w in 'go blue'.split()) return?",
-      "answer": "Each word's length is converted to text; 'go' is 2 and 'blue' is 4, joined as '24'.\n\ncode:\nprint(''.join(str(len(w)) for w in 'go blue'.split()))  # 24\n\nreal example:\nEncoding word lengths as a compact code, like a word ladder hint."
-    },
-    {
-      "id": 83,
-      "question": "If value = 'ok', what does f'{value}' return?",
-      "answer": "With value = 'ok', the f-string inserts the text 'ok' between the braces, returning the string 'ok'.\n\ncode:\nvalue = 'ok'\nprint(f'{value}')  # ok\n\nreal example:\nDisplaying a stored status value inside a sentence."
-    },
-    {
-      "id": 84,
-      "question": "For x = 42, what does f'{x:5d}' return?",
-      "answer": ":5d right-aligns the integer in a width of 5, so 42 becomes '   42' with three spaces.\n\ncode:\nprint(repr(f'{42:5d}'))  # '   42'\n\nreal example:\nAligning numbers in a fixed-width column of a text report."
-    },
-    {
-      "id": 85,
-      "question": "What does f'{3.14159:010.3f}' return?",
-      "answer": ":010.3f pads to width 10 with leading zeros and shows 3 decimals, so 3.14159 becomes 000003.142.\n\ncode:\nprint(f'{3.14159:010.3f}')  # 000003.142\n\nreal example:\nFormatting sensor readings into aligned, zero-padded records."
-    },
-    {
-      "id": 86,
-      "question": "What does '{:<10}'.format('hi') return?",
-      "answer": "The <10 format left-aligns 'hi' in a width of 10, adding eight trailing spaces.\n\ncode:\nprint(repr('{:<10}'.format('hi')))  # 'hi        '\n\nreal example:\nPadding short labels to line up in a table."
-    },
-    {
-      "id": 87,
-      "question": "What does '{:^10}'.format('hi') return?",
-      "answer": "The ^10 format centres 'hi' in width 10; four spaces on each side.\n\ncode:\nprint(repr('{:^10}'.format('hi')))  # '    hi    '\n\nreal example:\nCentring a short word in a fixed-width header."
-    },
-    {
-      "id": 88,
+      "id": 48,
       "question": "What does '{:,}'.format(1234567) return?",
       "answer": "The comma adds thousands separators, turning 1234567 into 1,234,567.\n\ncode:\nprint('{:,}'.format(1234567))  # 1,234,567\n\nreal example:\nPrinting population or money totals with separators."
     },
     {
-      "id": 89,
-      "question": "What does '{:b}'.format(10) return?",
-      "answer": ":b displays the number in binary, and 10 in binary is 1010.\n\ncode:\nprint('{:b}'.format(10))  # 1010\n\nreal example:\nShowing a machine number's binary form."
-    },
-    {
-      "id": 90,
-      "question": "What does '{:x}'.format(255).upper() return?",
-      "answer": ":x first writes 255 as lowercase hex 'ff', then .upper() makes it 'FF'.\n\ncode:\nprint('{:x}'.format(255).upper())  # FF\n\nreal example:\nFormatting uppercase hex colour codes."
-    },
-    {
-      "id": 91,
+      "id": 49,
       "question": "What does f'{0.1 + 0.2:.3f}' return?",
       "answer": ":.3f rounds to three decimals, so the tiny floating-point error of 0.1 + 0.2 is hidden and shows 0.300.\n\ncode:\nprint(f'{0.1 + 0.2:.3f}')  # 0.300\n\nreal example:\nAvoiding ugly binary floating-point noise in currency sums."
     },
     {
-      "id": 92,
-      "question": "What does f'{7:04d}' return?",
-      "answer": ":04d pads the number 7 to four digits with leading zeros, giving 0007.\n\ncode:\nprint(f'{7:04d}')  # 0007\n\nreal example:\nFormatting year numbers or PIN codes with leading zeros."
-    },
-    {
-      "id": 93,
+      "id": 50,
       "question": "What does '{!r}'.format('hi') return?",
       "answer": "{!r} uses repr(), which shows a string with its quotes, so 'hi' becomes the text 'hi' surrounded by quotes.\n\ncode:\nimport json\nprint('{!r}'.format('hi'))  # 'hi'\nprint(json.dumps('{!r}'.format('hi')))  # \"'hi'\"\n\nreal example:\nDebugging values so their type is visible in output."
-    },
-    {
-      "id": 94,
-      "question": "What does '{!s}'.format('hi') return?",
-      "answer": "{!s} uses str(), which shows a string plainly without surrounding quotes.\n\ncode:\nprint('{!s}'.format('hi'))  # hi\n\nreal example:\nInserting a plain text value into a sentence."
-    },
-    {
-      "id": 95,
-      "question": "What does f'{10:o}' return?",
-      "answer": ":o displays the number in octal (base 8), and 10 in octal is 12.\n\ncode:\nprint(f'{10:o}')  # 12\n\nreal example:\nWorking with Unix-style file permission triplets."
-    },
-    {
-      "id": 96,
-      "question": "What does '{:.3e}'.format(12345.678) return?",
-      "answer": ":.3e writes scientific notation with 3 decimals: 12345.678 becomes 1.235e+04.\n\ncode:\nprint('{:.3e}'.format(12345.678))  # 1.235e+04\n\nreal example:\nShowing very large or tiny measurements compactly."
-    },
-    {
-      "id": 97,
-      "question": "What does f'{5:+d}' return?",
-      "answer": ":+d always shows the sign, so positive 5 is displayed as +5.\n\ncode:\nprint(f'{5:+d}')  # +5\n\nreal example:\nShowing budget changes with an explicit plus sign."
-    },
-    {
-      "id": 98,
-      "question": "What does f'{5: d}' return?",
-      "answer": "d puts a space where a plus sign would go, so positive 5 shows with a leading space.\n\ncode:\nprint(repr(f'{5: d}'))  # ' 5'\n\nreal example:\nKeeping positive and negative numbers aligned without a plus sign."
-    },
-    {
-      "id": 99,
-      "question": "What does '{:05d}'.format(-7) return?",
-      "answer": ":05d pads to width 5; the minus sign takes one position, so -7 becomes -0007.\n\ncode:\nprint('{:05d}'.format(-7))  # -0007\n\nreal example:\nPrinting amounts where the minus sign shares the padded field."
-    },
-    {
-      "id": 100,
-      "question": "What does f'{0.25:.0%}' return?",
-      "answer": ":.0% multiplies by 100 with no decimals, so 0.25 becomes 25%.\n\ncode:\nprint(f'{0.25:.0%}')  # 25%\n\nreal example:\nShowing a discount few or completion ratio as a clean percentage."
     }
   ]
 }
