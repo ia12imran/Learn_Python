@@ -1,5 +1,5 @@
 {
-  "description": "100 questions on Python if/elif/else (control flow, beginner to intermediate)",
+  "description": "57 curated IF ELSE questions for Automation Testing interviews (trimmed from 100; removed 43 redundant near-duplicate questions that tested the same concept).",
   "questions": [
     {
       "id": 1,
@@ -28,83 +28,83 @@
     },
     {
       "id": 6,
-      "question": "What does this print?\nx = 5\nif x:\n    print(\"truthy\")\nelse:\n    print(\"falsy\")",
-      "answer": "5 is not zero, so it counts as truthy and truthy is printed.\n\ncode:\nif 5:\n    print(\"truthy\")\n\nreal example:\nChecking that a quantity is positive before adding it to a cart."
-    },
-    {
-      "id": 7,
-      "question": "What does this print?\nx = 0\nif x:\n    print(\"truthy\")\nelse:\n    print(\"falsy\")",
-      "answer": "0 is falsy, so the if is skipped and the else branch prints falsy.\n\ncode:\nif 0:\n    print(\"truthy\")\nelse:\n    print(\"falsy\")\n\nreal example:\nTreating a zero stock count as out of stock."
-    },
-    {
-      "id": 8,
-      "question": "What does this print?\nname = \"\"\nif name:\n    print(\"has name\")\nelse:\n    print(\"no name\")",
-      "answer": "An empty string is falsy, so the else branch prints no name.\n\ncode:\nname = \"\"\nif name:\n    print(\"has name\")\nelse:\n    print(\"no name\")\n\nreal example:\nShowing a default message when a profile has no name filled in."
-    },
-    {
-      "id": 9,
-      "question": "What does this print?\nitems = []\nif items:\n    print(\"not empty\")\nelse:\n    print(\"empty\")",
-      "answer": "An empty list is falsy, so the else branch prints empty.\n\ncode:\nitems = []\nif items:\n    print(\"not empty\")\nelse:\n    print(\"empty\")\n\nreal example:\nShowing an empty-cart notice when the cart holds no items."
-    },
-    {
-      "id": 10,
-      "question": "What does this print?\nitems = [1]\nif items:\n    print(\"not empty\")\nelse:\n    print(\"empty\")",
-      "answer": "A list with one item is truthy, so not empty is printed.\n\ncode:\nitems = [1]\nif items:\n    print(\"not empty\")\nelse:\n    print(\"empty\")\n\nreal example:\nEnabling the checkout button only when the cart contains items."
-    },
-    {
-      "id": 11,
-      "question": "What does this print?\nx = None\nif x:\n    print(\"set\")\nelse:\n    print(\"unset\")",
-      "answer": "None is falsy, so the else branch prints unset.\n\ncode:\nx = None\nif x:\n    print(\"set\")\nelse:\n    print(\"unset\")\n\nreal example:\nChecking if an optional field was filled in before using it."
-    },
-    {
-      "id": 12,
-      "question": "Which is the correct syntax for a conditional check?",
-      "answer": "Write the condition after if, end the line with a colon, and indent the following block.\n\ncode:\nif age > 18:\n    print(\"adult\")\n\nreal example:\nVerifying that an email field is not empty before submitting a form."
-    },
-    {
-      "id": 13,
-      "question": "What does this print?\nage = 17\nif age >= 18:\n    print(\"adult\")\nelse:\n    print(\"minor\")",
-      "answer": "age is 17, which is not >= 18, so the else branch prints minor.\n\ncode:\nage = 17\nif age >= 18:\n    print(\"adult\")\nelse:\n    print(\"minor\")\n\nreal example:\nAge-gating content such as adult-only web pages."
-    },
-    {
-      "id": 14,
-      "question": "What does this print?\nresult = \"even\" if 10 % 2 == 0 else \"odd\"\nprint(result)",
-      "answer": "10 % 2 is 0, so the condition is True and result becomes even.\n\ncode:\nresult = \"even\" if 10 % 2 == 0 else \"odd\"\nprint(result)\n\nreal example:\nLabeling row numbers as even or odd in a seating chart."
-    },
-    {
-      "id": 15,
-      "question": "What does this print?\nresult = \"even\" if 7 % 2 == 0 else \"odd\"\nprint(result)",
-      "answer": "7 % 2 is 1, so the condition is False and result becomes odd.\n\ncode:\nresult = \"even\" if 7 % 2 == 0 else \"odd\"\nprint(result)\n\nreal example:\nChoosing odd or even lanes for customers in a queue."
-    },
-    {
-      "id": 16,
-      "question": "What is the ternary operator syntax?",
-      "answer": "The syntax is: value_if_true if condition else value_if_false. It picks one of two values on a single line.\n\ncode:\nprice = 60\nlabel = \"discount\" if price < 50 else \"normal\"\nprint(label)\n\nreal example:\nAssigning a cheap or normal tag to a product in one line."
-    },
-    {
-      "id": 17,
       "question": "What does this print?\nnum = 0\nif num > 0:\n    print(\"positive\")\nelif num < 0:\n    print(\"negative\")\nelse:\n    print(\"zero\")",
       "answer": "num is 0, so neither comparison is True and the else prints zero.\n\ncode:\nnum = 0\nif num > 0:\n    print(\"positive\")\nelif num < 0:\n    print(\"negative\")\nelse:\n    print(\"zero\")\n\nreal example:\nReporting whether a bank balance is positive, negative, or zero."
     },
     {
+      "id": 7,
+      "question": "What does this print?\ntemperature = 18\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")",
+      "answer": "18 fails the hot check but passes temperature > 15, so the elif prints warm.\n\ncode:\ntemperature = 18\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")\n\nreal example:\nA thermostat picking a comfortable setting for mild weather."
+    },
+    {
+      "id": 8,
+      "question": "What does this print?\nrole = \"guest\"\nif role == \"admin\":\n    print(\"full access\")\nelif role == \"editor\":\n    print(\"edit access\")\nelse:\n    print(\"read only\")",
+      "answer": "role is guest, which matches neither admin nor editor, so the else prints read only.\n\ncode:\nrole = \"guest\"\nif role == \"admin\":\n    print(\"full access\")\nelif role == \"editor\":\n    print(\"edit access\")\nelse:\n    print(\"read only\")\n\nreal example:\nRestricting guest visitors to viewing content only."
+    },
+    {
+      "id": 9,
+      "question": "What does this print?\ndef grade(score):\n    if score >= 90: return \"A\"\n    if score >= 80: return \"B\"\n    return \"C\"\nprint(grade(95), grade(85), grade(75))",
+      "answer": "95 gets A, 85 gets B, and 75 falls through to the default C, printing A B C.\n\ncode:\ndef grade(score):\n    if score >= 90: return \"A\"\n    if score >= 80: return \"B\"\n    return \"C\"\nprint(grade(95), grade(85), grade(75))\n\nreal example:\nAssigning letter grades to a class of student scores."
+    },
+    {
+      "id": 10,
+      "question": "What does this print?\nsalary = 50000\nbonus = 5000\nif salary >= 60000:\n    tax = 0.3\nelif salary >= 40000:\n    tax = 0.2\nelse:\n    tax = 0.1\nprint(salary * tax)",
+      "answer": "salary 50000 falls in the second band, so tax is 0.2, giving 50000 * 0.2 = 10000.0.\n\ncode:\nsalary = 50000\nif salary >= 60000:\n    tax = 0.3\nelif salary >= 40000:\n    tax = 0.2\nelse:\n    tax = 0.1\nprint(salary * tax)\n\nreal example:\nComputing income tax for different salary bands."
+    },
+    {
+      "id": 11,
+      "question": "What does this print?\nx = 5\nif x:\n    print(\"truthy\")\nelse:\n    print(\"falsy\")",
+      "answer": "5 is not zero, so it counts as truthy and truthy is printed.\n\ncode:\nif 5:\n    print(\"truthy\")\n\nreal example:\nChecking that a quantity is positive before adding it to a cart."
+    },
+    {
+      "id": 12,
+      "question": "What does this print?\nx = 0\nif x:\n    print(\"truthy\")\nelse:\n    print(\"falsy\")",
+      "answer": "0 is falsy, so the if is skipped and the else branch prints falsy.\n\ncode:\nif 0:\n    print(\"truthy\")\nelse:\n    print(\"falsy\")\n\nreal example:\nTreating a zero stock count as out of stock."
+    },
+    {
+      "id": 13,
+      "question": "What does this print?\nname = \"\"\nif name:\n    print(\"has name\")\nelse:\n    print(\"no name\")",
+      "answer": "An empty string is falsy, so the else branch prints no name.\n\ncode:\nname = \"\"\nif name:\n    print(\"has name\")\nelse:\n    print(\"no name\")\n\nreal example:\nShowing a default message when a profile has no name filled in."
+    },
+    {
+      "id": 14,
+      "question": "What does this print?\nitems = []\nif items:\n    print(\"not empty\")\nelse:\n    print(\"empty\")",
+      "answer": "An empty list is falsy, so the else branch prints empty.\n\ncode:\nitems = []\nif items:\n    print(\"not empty\")\nelse:\n    print(\"empty\")\n\nreal example:\nShowing an empty-cart notice when the cart holds no items."
+    },
+    {
+      "id": 15,
+      "question": "What does this print?\nx = None\nif x:\n    print(\"set\")\nelse:\n    print(\"unset\")",
+      "answer": "None is falsy, so the else branch prints unset.\n\ncode:\nx = None\nif x:\n    print(\"set\")\nelse:\n    print(\"unset\")\n\nreal example:\nChecking if an optional field was filled in before using it."
+    },
+    {
+      "id": 16,
+      "question": "Which is the correct syntax for a conditional check?",
+      "answer": "Write the condition after if, end the line with a colon, and indent the following block.\n\ncode:\nif age > 18:\n    print(\"adult\")\n\nreal example:\nVerifying that an email field is not empty before submitting a form."
+    },
+    {
+      "id": 17,
+      "question": "What does this print?\nresult = \"even\" if 7 % 2 == 0 else \"odd\"\nprint(result)",
+      "answer": "7 % 2 is 1, so the condition is False and result becomes odd.\n\ncode:\nresult = \"even\" if 7 % 2 == 0 else \"odd\"\nprint(result)\n\nreal example:\nChoosing odd or even lanes for customers in a queue."
+    },
+    {
       "id": 18,
-      "question": "What does this print?\nnum = -5\nif num > 0:\n    print(\"positive\")\nelif num < 0:\n    print(\"negative\")\nelse:\n    print(\"zero\")",
-      "answer": "num is -5, so num < 0 is True and the elif prints negative.\n\ncode:\nnum = -5\nif num > 0:\n    print(\"positive\")\nelif num < 0:\n    print(\"negative\")\nelse:\n    print(\"zero\")\n\nreal example:\nClassifying temperatures below zero as freezing."
+      "question": "What is the ternary operator syntax?",
+      "answer": "The syntax is: value_if_true if condition else value_if_false. It picks one of two values on a single line.\n\ncode:\nprice = 60\nlabel = \"discount\" if price < 50 else \"normal\"\nprint(label)\n\nreal example:\nAssigning a cheap or normal tag to a product in one line."
     },
     {
       "id": 19,
-      "question": "What does this print?\na, b = 5, 10\nif a < b:\n    print(\"a is smaller\")",
-      "answer": "a is 5 and b is 10, so a < b is True and the message prints.\n\ncode:\na, b = 5, 10\nif a < b:\n    print(\"a is smaller\")\n\nreal example:\nAnnouncing which of two products is the cheaper option."
+      "question": "Wrap this into one conditional expression: if x > 0: r = \"pos\" else: r = \"neg\"",
+      "answer": "Use the ternary operator to assign on one line: r gets pos when x > 0, otherwise neg.\n\ncode:\nr = \"pos\" if x > 0 else \"neg\"\n\nreal example:\nAssigning a single status label to a value without a multi-line if."
     },
     {
       "id": 20,
-      "question": "What does this print?\npassword = \"secret123\"\nuser_input = \"secret123\"\nif user_input == password:\n    print(\"access granted\")\nelse:\n    print(\"access denied\")",
-      "answer": "user_input equals password, so the equality check is True and access granted prints.\n\ncode:\nif user_input == password:\n    print(\"access granted\")\nelse:\n    print(\"access denied\")\n\nreal example:\nLogging a user in when their typed password matches the stored one."
+      "question": "What does this print?\nval = \"\"\nresult = \"empty\" if not val else \"filled\"\nprint(result)",
+      "answer": "val is an empty string, so not val is True and the ternary chooses empty.\n\ncode:\nval = \"\"\nresult = \"empty\" if not val else \"filled\"\nprint(result)\n\nreal example:\nShowing empty when a search box has no text."
     },
     {
       "id": 21,
-      "question": "What does this print?\nif 5 > 3 and 10 > 7:\n    print(\"both true\")\nelse:\n    print(\"some false\")",
-      "answer": "Both 5 > 3 and 10 > 7 are True, and requires every part to be True, so both true prints.\n\ncode:\nif 5 > 3 and 10 > 7:\n    print(\"both true\")\nelse:\n    print(\"some false\")\n\nreal example:\nGranting a loan only when income is high and credit score is good."
+      "question": "What does this print?\npassword = \"secret123\"\nuser_input = \"secret123\"\nif user_input == password:\n    print(\"access granted\")\nelse:\n    print(\"access denied\")",
+      "answer": "user_input equals password, so the equality check is True and access granted prints.\n\ncode:\nif user_input == password:\n    print(\"access granted\")\nelse:\n    print(\"access denied\")\n\nreal example:\nLogging a user in when their typed password matches the stored one."
     },
     {
       "id": 22,
@@ -118,388 +118,173 @@
     },
     {
       "id": 24,
-      "question": "What does this print?\nif not False:\n    print(\"yep\")\nelse:\n    print(\"nope\")",
-      "answer": "not False is True, so the if branch prints yep.\n\ncode:\nif not False:\n    print(\"yep\")\n\nreal example:\nAllowing an action when something is not disabled."
-    },
-    {
-      "id": 25,
       "question": "What does this print?\nis_active = True\nhas_permission = False\nif is_active and has_permission:\n    print(\"allowed\")\nelse:\n    print(\"blocked\")",
       "answer": "is_active is True but has_permission is False, so the and is False and blocked prints.\n\ncode:\nis_active = True\nhas_permission = False\nif is_active and has_permission:\n    print(\"allowed\")\nelse:\n    print(\"blocked\")\n\nreal example:\nLetting a user into a dashboard only when the account is active and has permission."
     },
     {
-      "id": 26,
-      "question": "Which keyword checks 'or equal to' conditions like age >= 18?",
-      "answer": "There is no 'or' keyword for comparisons; use the >= operator, which means greater than or equal to.\n\ncode:\nage = 18\nif age >= 18:\n    print(\"allowed\")\n\nreal example:\nChecking whether a customer is old enough to buy a ticket."
-    },
-    {
-      "id": 27,
-      "question": "What does this print?\nitem = \"apple\"\nfruits = [\"apple\", \"banana\"]\nif item in fruits:\n    print(\"found\")\nelse:\n    print(\"not found\")",
-      "answer": "apple is in the fruits list, so the in check is True and found prints.\n\ncode:\nfruits = [\"apple\", \"banana\"]\nif \"apple\" in fruits:\n    print(\"found\")\n\nreal example:\nChecking if a chosen dish is on a restaurant's menu."
-    },
-    {
-      "id": 28,
+      "id": 25,
       "question": "What does this print?\nitem = \"mango\"\nfruits = [\"apple\", \"banana\"]\nif item in fruits:\n    print(\"found\")\nelse:\n    print(\"not found\")",
       "answer": "mango is not in the list, so the else prints not found.\n\ncode:\nfruits = [\"apple\", \"banana\"]\nif \"mango\" in fruits:\n    print(\"found\")\nelse:\n    print(\"not found\")\n\nreal example:\nTelling a shopper that a product is unavailable."
     },
     {
-      "id": 29,
-      "question": "What does this print?\ntax_rate = 0.05\npayment = \"card\"\nif payment == \"cash\":\n    print(\"cash discount\")\nelse:\n    print(\"standard price\")",
-      "answer": "payment is card, not cash, so the if does not run and standard price prints.\n\ncode:\npayment = \"card\"\nif payment == \"cash\":\n    print(\"cash discount\")\nelse:\n    print(\"standard price\")\n\nreal example:\nApplying a small discount only when a buyer pays in cash."
-    },
-    {
-      "id": 30,
+      "id": 26,
       "question": "What does this print?\nkey = \"name\"\nd = {\"name\": \"Alice\"}\nif key in d:\n    print(d[key])\nelse:\n    print(\"missing\")",
       "answer": "name is a key in the dictionary, so the if prints its value, Alice.\n\ncode:\nd = {\"name\": \"Alice\"}\nif \"name\" in d:\n    print(d[\"name\"])\nelse:\n    print(\"missing\")\n\nreal example:\nFetching a user's display name when it exists in the profile."
     },
     {
-      "id": 31,
-      "question": "What does this print?\nkey = \"age\"\nd = {\"name\": \"Alice\"}\nif key in d:\n    print(d[key])\nelse:\n    print(\"missing\")",
-      "answer": "age is not a key in the dictionary, so the else prints missing.\n\ncode:\nd = {\"name\": \"Alice\"}\nif \"age\" in d:\n    print(d[\"age\"])\nelse:\n    print(\"missing\")\n\nreal example:\nShowing a fallback message when a requested field is absent."
-    },
-    {
-      "id": 32,
-      "question": "What is wrong with this code?\nx = 5\nif x = 10:\n    print(\"yes\")",
-      "answer": "A single = assigns a value instead of comparing. Use == for comparison, otherwise Python raises a SyntaxError.\n\ncode:\nx = 5\nif x == 10:\n    print(\"yes\")\n\nreal example:\nComparing a running price to a budgeted amount."
-    },
-    {
-      "id": 33,
-      "question": "What does this print?\na = [1, 2, 3]\nb = [1, 2, 3]\nif a == b:\n    print(\"equal\")\nelse:\n    print(\"different\")",
-      "answer": "== compares values, and both lists contain the same numbers, so equal prints.\n\ncode:\na = [1, 2, 3]\nb = [1, 2, 3]\nif a == b:\n    print(\"equal\")\n\nreal example:\nChecking whether two carts contain the same items."
-    },
-    {
-      "id": 34,
-      "question": "What does this print?\na = [1, 2, 3]\nb = [1, 2, 3]\nif a is b:\n    print(\"same object\")\nelse:\n    print(\"different objects\")",
-      "answer": "is checks identity, not value. Two separately created lists are different objects even with equal contents, so different objects prints.\n\ncode:\na = [1, 2, 3]\nb = [1, 2, 3]\nif a is b:\n    print(\"same object\")\nelse:\n    print(\"different objects\")\n\nreal example:\nUsing == rather than is when comparing user-entered data."
-    },
-    {
-      "id": 35,
-      "question": "What does this print?\nx = 5.0\nif x == 5:\n    print(\"equal\")\nelse:\n    print(\"not equal\")",
-      "answer": "In Python 5.0 and 5 have the same numeric value, so the comparison is True and equal prints.\n\ncode:\nx = 5.0\nif x == 5:\n    print(\"equal\")\nelse:\n    print(\"not equal\")\n\nreal example:\nComparing a price stored as a float with an integer budget."
-    },
-    {
-      "id": 36,
-      "question": "What does this print?\ntext = \"HELLO\"\nif text.isupper():\n    print(\"all caps\")\nelse:\n    print(\"mixed\")",
-      "answer": "HELLO has no lowercase letters, so isupper() is True and all caps prints.\n\ncode:\nif \"HELLO\".isupper():\n    print(\"all caps\")\n\nreal example:\nValidating that coupon codes were typed in all capital letters."
-    },
-    {
-      "id": 37,
-      "question": "What does this print?\ntext = \"Hello\"\nif text.islower():\n    print(\"lowercase\")\nelse:\n    print(\"not lowercase\")",
-      "answer": "Hello contains an uppercase H, so islower() is False and the else prints not lowercase.\n\ncode:\nif \"Hello\".islower():\n    print(\"lowercase\")\nelse:\n    print(\"not lowercase\")\n\nreal example:\nFlagging a username that is supposed to be all lowercase."
-    },
-    {
-      "id": 38,
-      "question": "What does this print?\nnum = 15\nif num % 2 == 0:\n    print(\"even\")\nelse:\n    print(\"odd\")",
-      "answer": "15 % 2 is 1, so the even check is False and the else prints odd.\n\ncode:\nnum = 15\nif num % 2 == 0:\n    print(\"even\")\nelse:\n    print(\"odd\")\n\nreal example:\nAlternating colors on the rows of a transaction list."
-    },
-    {
-      "id": 39,
-      "question": "What does this print?\nnum = 16\nif num % 2 == 0:\n    print(\"even\")\nelse:\n    print(\"odd\")",
-      "answer": "16 % 2 is 0, so the condition is True and even prints.\n\ncode:\nnum = 16\nif num % 2 == 0:\n    print(\"even\")\n\nreal example:\nSplitting a queue into even and odd customer numbers."
-    },
-    {
-      "id": 40,
-      "question": "How do you check if a number is divisible by 3?",
-      "answer": "Use the modulo operator and test whether the remainder is 0: num % 3 == 0.\n\ncode:\nif num % 3 == 0:\n    print(\"divisible by 3\")\n\nreal example:\nGrouping rows into batches of three for layout."
-    },
-    {
-      "id": 41,
-      "question": "What does this print?\nnum = 9\nif num % 3 == 0 and num % 2 != 0:\n    print(\"odd multiple of 3\")\nelse:\n    print(\"other\")",
-      "answer": "9 % 3 is 0 and 9 % 2 is 1 (so the != check holds), making both parts True and printing odd multiple of 3.\n\ncode:\nnum = 9\nif num % 3 == 0 and num % 2 != 0:\n    print(\"odd multiple of 3\")\n\nreal example:\nFinding puzzle numbers divisible by 3 but not by 2."
-    },
-    {
-      "id": 42,
-      "question": "What does this print?\nnum = 6\nif num % 3 == 0 and num % 2 != 0:\n    print(\"odd multiple of 3\")\nelse:\n    print(\"other\")",
-      "answer": "6 % 3 is 0 but 6 % 2 is 0, so the second condition is False and other prints.\n\ncode:\nnum = 6\nif num % 3 == 0 and num % 2 != 0:\n    print(\"odd multiple of 3\")\nelse:\n    print(\"other\")\n\nreal example:\nFiltering a dataset for odd multiples of 3 only."
-    },
-    {
-      "id": 43,
-      "question": "What does this print?\nyear = 2024\nif year % 4 == 0:\n    print(\"likely leap\")\nelse:\n    print(\"not leap\")",
-      "answer": "2024 divided by 4 leaves no remainder, so the check passes and likely leap prints.\n\ncode:\nyear = 2024\nif year % 4 == 0:\n    print(\"likely leap\")\n\nreal example:\nRoughly spotting leap years in a calendar app."
-    },
-    {
-      "id": 44,
-      "question": "What does this print?\nx, y = 10, 20\nif x > y:\n    print(x)\nelse:\n    print(y)",
-      "answer": "x > y is False, so the else prints y, which is 20.\n\ncode:\nx, y = 10, 20\nif x > y:\n    print(x)\nelse:\n    print(y)\n\nreal example:\nPicking the higher of two scores to decide a winner."
-    },
-    {
-      "id": 45,
-      "question": "What does this print?\ntemperature = 30\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")",
-      "answer": "temperature is 30, which is above 25, so the first condition is True and hot prints.\n\ncode:\ntemperature = 30\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")\n\nreal example:\nA weather app advising you to dress for heat."
-    },
-    {
-      "id": 46,
-      "question": "What does this print?\ntemperature = 18\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")",
-      "answer": "18 fails the hot check but passes temperature > 15, so the elif prints warm.\n\ncode:\ntemperature = 18\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")\n\nreal example:\nA thermostat picking a comfortable setting for mild weather."
-    },
-    {
-      "id": 47,
-      "question": "What does this print?\ntemperature = 10\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")",
-      "answer": "10 fails both the hot and warm checks, so the else prints cold.\n\ncode:\ntemperature = 10\nif temperature > 25:\n    print(\"hot\")\nelif temperature > 15:\n    print(\"warm\")\nelse:\n    print(\"cold\")\n\nreal example:\nA weather widget showing a coat recommendation for low temps."
-    },
-    {
-      "id": 48,
-      "question": "What happens if no condition is True and there is no else block?",
-      "answer": "Nothing runs. The whole if statement is skipped and the program continues with the next line after it.\n\ncode:\nif x > 100:\n    print(\"big\")\nprint(\"continues\")\n\nreal example:\nLogging an error only for special cases, like extremely large orders."
-    },
-    {
-      "id": 49,
+      "id": 27,
       "question": "What does this print?\ns = \"Hello World\"\nif \"World\" in s:\n    print(\"contains World\")\nelse:\n    print(\"does not contain\")",
       "answer": "World appears inside the string, so the in check is True and contains World prints.\n\ncode:\ns = \"Hello World\"\nif \"World\" in s:\n    print(\"contains World\")\n\nreal example:\nScanning an email subject line for a matching keyword."
     },
     {
-      "id": 50,
-      "question": "Wrap this into one conditional expression: if x > 0: r = \"pos\" else: r = \"neg\"",
-      "answer": "Use the ternary operator to assign on one line: r gets pos when x > 0, otherwise neg.\n\ncode:\nr = \"pos\" if x > 0 else \"neg\"\n\nreal example:\nAssigning a single status label to a value without a multi-line if."
-    },
-    {
-      "id": 51,
-      "question": "What does this print?\nrole = \"admin\"\nif role == \"admin\":\n    print(\"full access\")\nelif role == \"editor\":\n    print(\"edit access\")\nelse:\n    print(\"read only\")",
-      "answer": "role is admin, so the first condition matches and full access prints; the elif and else are skipped.\n\ncode:\nrole = \"admin\"\nif role == \"admin\":\n    print(\"full access\")\nelif role == \"editor\":\n    print(\"edit access\")\nelse:\n    print(\"read only\")\n\nreal example:\nGiving different menus to admins, editors, and readers."
-    },
-    {
-      "id": 52,
-      "question": "What does this print?\nrole = \"guest\"\nif role == \"admin\":\n    print(\"full access\")\nelif role == \"editor\":\n    print(\"edit access\")\nelse:\n    print(\"read only\")",
-      "answer": "role is guest, which matches neither admin nor editor, so the else prints read only.\n\ncode:\nrole = \"guest\"\nif role == \"admin\":\n    print(\"full access\")\nelif role == \"editor\":\n    print(\"edit access\")\nelse:\n    print(\"read only\")\n\nreal example:\nRestricting guest visitors to viewing content only."
-    },
-    {
-      "id": 53,
-      "question": "What does this print?\nprice = 100\nquantity = 3\nif quantity >= 5:\n    total = price * 0.8 * quantity\nelse:\n    total = price * quantity\nprint(total)",
-      "answer": "quantity is 3, below 5, so no discount applies and total is 100 * 3 = 300.\n\ncode:\nprice = 100\nquantity = 3\ntotal = price * quantity\nprint(total)\n\nreal example:\nA shop charging full price when an order is too small for bulk discount."
-    },
-    {
-      "id": 54,
-      "question": "What does this print?\nprice = 100\nquantity = 6\nif quantity >= 5:\n    total = price * 0.8 * quantity\nelse:\n    total = price * quantity\nprint(total)",
-      "answer": "quantity 6 is at least 5, so the 20% off branch runs: 100 * 0.8 * 6 = 480.0.\n\ncode:\nprice = 100\nquantity = 6\ntotal = price * 0.8 * quantity\nprint(total)\n\nreal example:\nChecking out a bulk order that qualifies for a discount."
-    },
-    {
-      "id": 55,
-      "question": "What does this print?\nval = \"\"\nresult = \"empty\" if not val else \"filled\"\nprint(result)",
-      "answer": "val is an empty string, so not val is True and the ternary chooses empty.\n\ncode:\nval = \"\"\nresult = \"empty\" if not val else \"filled\"\nprint(result)\n\nreal example:\nShowing empty when a search box has no text."
-    },
-    {
-      "id": 56,
-      "question": "What does this print?\nspeed = 120\nlimit = 100\nif speed > limit:\n    print(\"over limit\")\nelif speed == limit:\n    print(\"at limit\")\nelse:\n    print(\"under limit\")",
-      "answer": "speed 120 is above the limit of 100, so over limit prints.\n\ncode:\nspeed = 120\nlimit = 100\nif speed > limit:\n    print(\"over limit\")\n\nreal example:\nA GPS alerting you when you exceed the road's speed limit."
-    },
-    {
-      "id": 57,
-      "question": "What does this print?\nspeed = 100\nif speed > limit:\n    print(\"over limit\")\nelif speed == limit:\n    print(\"at limit\")\nelse:\n    print(\"under limit\")",
-      "answer": "speed is 100 and limit stays 100, so speed != limit is False but speed == limit is True, printing at limit.\n\ncode:\nspeed = 100\nlimit = 100\nif speed > limit:\n    print(\"over limit\")\nelif speed == limit:\n    print(\"at limit\")\n\nreal example:\nA cruise control reporting that you are right at the limit."
-    },
-    {
-      "id": 58,
-      "question": "What does this print?\nfor i in range(3):\n    if i == 1:\n        print(\"middle\")",
-      "answer": "i takes 0, 1, 2 and the if only fires when i equals 1, printing middle once.\n\ncode:\nfor i in range(3):\n    if i == 1:\n        print(\"middle\")\n\nreal example:\nPrinting a separator when a loop reaches the middle item."
-    },
-    {
-      "id": 59,
-      "question": "What does this print?\nfor i in range(4):\n    if i % 2 == 0:\n        print(i, end=\" \")",
-      "answer": "i is 0, 1, 2, 3; only 0 and 2 are even, and end=\" \" keeps them on one line: 0 2.\n\ncode:\nfor i in range(4):\n    if i % 2 == 0:\n        print(i, end=\" \")\n\nreal example:\nOutputting every other item in a sequence on a single line."
-    },
-    {
-      "id": 60,
-      "question": "What does this print?\ndef grade(score):\n    if score >= 90: return \"A\"\n    if score >= 80: return \"B\"\n    return \"C\"\nprint(grade(95), grade(85), grade(75))",
-      "answer": "95 gets A, 85 gets B, and 75 falls through to the default C, printing A B C.\n\ncode:\ndef grade(score):\n    if score >= 90: return \"A\"\n    if score >= 80: return \"B\"\n    return \"C\"\nprint(grade(95), grade(85), grade(75))\n\nreal example:\nAssigning letter grades to a class of student scores."
-    },
-    {
-      "id": 61,
-      "question": "What does this print?\ndef grade(score):\n    if score >= 90: return \"A\"\n    if score >= 80: return \"B\"\n    return \"C\"\nprint(grade(99), grade(70))",
-      "answer": "99 is >= 90 so it returns A; 70 misses both checks and returns the default C.\n\ncode:\ndef grade(score):\n    if score >= 90: return \"A\"\n    if score >= 80: return \"B\"\n    return \"C\"\nprint(grade(99), grade(70))\n\nreal example:\nTurning raw exam marks into pass grades on a report card."
-    },
-    {
-      "id": 62,
-      "question": "What does this print?\nif (n := 5) > 3:\n    print(\"n is\", n)\nelse:\n    print(\"too small\")",
-      "answer": "The walrus operator assigns n = 5, then checks 5 > 3, so the if runs and prints n is 5.\n\ncode:\nif (n := 5) > 3:\n    print(\"n is\", n)\n\nreal example:\nReusing an assigned value inside the same condition to avoid computing it twice."
-    },
-    {
-      "id": 63,
-      "question": "What does this print?\nn = 5\ncount = 0\nif n > 0:\n    count += 1\nprint(count)",
-      "answer": "n is 5, which is > 0, so count increases from 0 to 1 and 1 prints.\n\ncode:\nn = 5\ncount = 0\nif n > 0:\n    count += 1\nprint(count)\n\nreal example:\nCounting how many positive numbers appeared in a batch."
-    },
-    {
-      "id": 64,
-      "question": "What does this print?\nx = \"5\"\nif x.isdigit():\n    print(int(x) + 1)\nelse:\n    print(\"not a number\")",
-      "answer": "x is the digit string 5, so isdigit() is True and int(\"5\") + 1 is 6.\n\ncode:\nx = \"5\"\nif x.isdigit():\n    print(int(x) + 1)\n\nreal example:\nConverting text typed into a form box into a number for arithmetic."
-    },
-    {
-      "id": 65,
-      "question": "What does this print?\nx = \"five\"\nif x.isdigit():\n    print(int(x) + 1)\nelse:\n    print(\"not a number\")",
-      "answer": "five is not made of digit characters, so isdigit() is False and the else prints not a number.\n\ncode:\nx = \"five\"\nif x.isdigit():\n    print(int(x) + 1)\nelse:\n    print(\"not a number\")\n\nreal example:\nRejecting a non-numeric age typed into a registration form."
-    },
-    {
-      "id": 66,
-      "question": "What does this print?\nemail = \"user@example.com\"\nif \"@\" in email and email.endswith(\".com\"):\n    print(\"valid\")\nelse:\n    print(\"invalid\")",
-      "answer": "The email contains @ and ends with .com, so both halves of the and are True and valid prints.\n\ncode:\nemail = \"user@example.com\"\nif \"@\" in email and email.endswith(\".com\"):\n    print(\"valid\")\nelse:\n    print(\"invalid\")\n\nreal example:\nA quick sanity check before a signup form accepts an email."
-    },
-    {
-      "id": 67,
-      "question": "What does this print?\nemail = \"userexample.com\"\nif \"@\" in email and email.endswith(\".com\"):\n    print(\"valid\")\nelse:\n    print(\"invalid\")",
-      "answer": "userexample.com has no @, so the and condition is False and invalid prints.\n\ncode:\nemail = \"userexample.com\"\nif \"@\" in email and email.endswith(\".com\"):\n    print(\"valid\")\nelse:\n    print(\"invalid\")\n\nreal example:\nCatching a typo where a user forgot the @ in their email."
-    },
-    {
-      "id": 68,
-      "question": "What does this print?\na = 5\nb = 10\noutput = a if a > b else b\nprint(output)",
-      "answer": "a > b is False, so the ternary picks b, which is 10.\n\ncode:\na, b = 5, 10\noutput = a if a > b else b\nprint(output)\n\nreal example:\nChoosing the greater of two bids in an auction."
-    },
-    {
-      "id": 69,
-      "question": "What does this print?\na = 5\nb = 10\nc = 3\nm = a if a > b else b\nm = m if m > c else c\nprint(m)",
-      "answer": "The first line picks 10, then 10 > 3 keeps it, so m is 10.\n\ncode:\na, b, c = 5, 10, 3\nm = a if a > b else b\nm = m if m > c else c\nprint(m)\n\nreal example:\nFinding the maximum of three numbers step by step."
-    },
-    {
-      "id": 70,
-      "question": "How do you write a nested if to check age >= 18 AND has_ticket True?",
-      "answer": "Put one if inside another, indenting the inner block further. The inner only runs when the outer passes.\n\ncode:\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n\nreal example:\nA venue's door check: an adult who is also holding a ticket."
-    },
-    {
-      "id": 71,
-      "question": "What does this print?\nage = 20\nhas_ticket = False\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\nelse:\n    print(\"too young\")",
-      "answer": "age 20 passes the outer if, but has_ticket is False, so the inner else prints no ticket.\n\ncode:\nage = 20\nhas_ticket = False\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\n\nreal example:\nA bouncer turning away an adult who has no ticket."
-    },
-    {
-      "id": 72,
-      "question": "What does this print?\nage = 15\nhas_ticket = True\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\nelse:\n    print(\"too young\")",
-      "answer": "age 15 fails the outer check, so the outer else prints too young and the ticket is never examined.\n\ncode:\nage = 15\nhas_ticket = True\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\nelse:\n    print(\"too young\")\n\nreal example:\nRefusing entry to minors regardless of whether they hold a ticket."
-    },
-    {
-      "id": 73,
-      "question": "What does this print?\nvalue = [1, 2]\nif len(value):\n    print(\"has items\")\nelse:\n    print(\"empty\")",
-      "answer": "len([1, 2]) is 2, and 2 is truthy, so has items prints.\n\ncode:\nvalue = [1, 2]\nif len(value):\n    print(\"has items\")\nelse:\n    print(\"empty\")\n\nreal example:\nChecking a list has entries before exporting it."
-    },
-    {
-      "id": 74,
-      "question": "What does this print?\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(3, 3))",
-      "answer": "3 equals 3, so compare returns equal immediately and the ternary line never runs.\n\ncode:\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(3, 3))\n\nreal example:\nComparing two submitted answers for equality."
-    },
-    {
-      "id": 75,
-      "question": "What does this print?\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(4, 3))",
-      "answer": "4 does not equal 3 and 4 > 3 is True, so the ternary returns a.\n\ncode:\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(4, 3))\n\nreal example:\nDeciding which competitor scored higher."
-    },
-    {
-      "id": 76,
-      "question": "What does this print?\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(2, 3))",
-      "answer": "2 is not equal to 3 and 2 > 3 is False, so the ternary picks b.\n\ncode:\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(2, 3))\n\nreal example:\nReporting which of two stocks closed lower."
-    },
-    {
-      "id": 77,
-      "question": "True or False: an if statement can be followed by multiple else blocks.",
-      "answer": "False. Only one else is allowed per if chain; any further checks must be elif or separate if statements.\n\ncode:\nif x > 0:\n    print(\"positive\")\nelse:\n    print(\"not positive\")\n\nreal example:\nA single pass-or-fail check needs exactly one else."
-    },
-    {
-      "id": 78,
-      "question": "What does this print?\nx = 100\nif x == 100:\n    print(\"hundred\")\nif x % 2 == 0:\n    print(\"even\")",
-      "answer": "These are two separate if statements, so both can run: 100 is both a hundred and even.\n\ncode:\nx = 100\nif x == 100:\n    print(\"hundred\")\nif x % 2 == 0:\n    print(\"even\")\n\nreal example:\nApplying two independent labels to the same record."
-    },
-    {
-      "id": 79,
-      "question": "What does this print?\nx = 100\nif x == 100:\n    print(\"hundred\")\nelif x % 2 == 0:\n    print(\"even\")",
-      "answer": "An elif chain stops at the first match, so once hundred prints the even check is skipped.\n\ncode:\nx = 100\nif x == 100:\n    print(\"hundred\")\nelif x % 2 == 0:\n    print(\"even\")\n\nreal example:\nA menu that routes a request to the first matching option only."
-    },
-    {
-      "id": 80,
-      "question": "What does this print?\nstatus = \"pending\"\nif status == \"paid\":\n    print(\"ship it\")\nelif status == \"pending\":\n    print(\"waiting\")\nelif status == \"cancelled\":\n    print(\"refund\")\nelse:\n    print(\"unknown\")",
-      "answer": "status is pending, which only matches the second elif, so waiting prints.\n\ncode:\nstatus = \"pending\"\nif status == \"paid\":\n    print(\"ship it\")\nelif status == \"pending\":\n    print(\"waiting\")\nelif status == \"cancelled\":\n    print(\"refund\")\nelse:\n    print(\"unknown\")\n\nreal example:\nAn order tracker showing waiting when payment is still pending."
-    },
-    {
-      "id": 81,
+      "id": 28,
       "question": "What does this print?\nday = \"Saturday\"\nif day in (\"Saturday\", \"Sunday\"):\n    print(\"weekend\")\nelse:\n    print(\"weekday\")",
       "answer": "Saturday is inside the weekend tuple, so the in check is True and weekend prints.\n\ncode:\nday = \"Saturday\"\nif day in (\"Saturday\", \"Sunday\"):\n    print(\"weekend\")\nelse:\n    print(\"weekday\")\n\nreal example:\nTurning on weekend delivery pricing for a shop."
     },
     {
-      "id": 82,
-      "question": "What does this print?\nday = \"Monday\"\nif day in (\"Saturday\", \"Sunday\"):\n    print(\"weekend\")\nelse:\n    print(\"weekday\")",
-      "answer": "Monday is not in the weekend tuple, so the else prints weekday.\n\ncode:\nday = \"Monday\"\nif day in (\"Saturday\", \"Sunday\"):\n    print(\"weekend\")\nelse:\n    print(\"weekday\")\n\nreal example:\nApplying weekday opening hours to a business."
+      "id": 29,
+      "question": "What is wrong with this code?\nx = 5\nif x = 10:\n    print(\"yes\")",
+      "answer": "A single = assigns a value instead of comparing. Use == for comparison, otherwise Python raises a SyntaxError.\n\ncode:\nx = 5\nif x == 10:\n    print(\"yes\")\n\nreal example:\nComparing a running price to a budgeted amount."
     },
     {
-      "id": 83,
-      "question": "What does this print?\nsalary = 50000\nbonus = 5000\nif salary >= 60000:\n    tax = 0.3\nelif salary >= 40000:\n    tax = 0.2\nelse:\n    tax = 0.1\nprint(salary * tax)",
-      "answer": "salary 50000 falls in the second band, so tax is 0.2, giving 50000 * 0.2 = 10000.0.\n\ncode:\nsalary = 50000\nif salary >= 60000:\n    tax = 0.3\nelif salary >= 40000:\n    tax = 0.2\nelse:\n    tax = 0.1\nprint(salary * tax)\n\nreal example:\nComputing income tax for different salary bands."
+      "id": 30,
+      "question": "What does this print?\na = [1, 2, 3]\nb = [1, 2, 3]\nif a == b:\n    print(\"equal\")\nelse:\n    print(\"different\")",
+      "answer": "== compares values, and both lists contain the same numbers, so equal prints.\n\ncode:\na = [1, 2, 3]\nb = [1, 2, 3]\nif a == b:\n    print(\"equal\")\n\nreal example:\nChecking whether two carts contain the same items."
     },
     {
-      "id": 84,
+      "id": 31,
+      "question": "What does this print?\na = [1, 2, 3]\nb = [1, 2, 3]\nif a is b:\n    print(\"same object\")\nelse:\n    print(\"different objects\")",
+      "answer": "is checks identity, not value. Two separately created lists are different objects even with equal contents, so different objects prints.\n\ncode:\na = [1, 2, 3]\nb = [1, 2, 3]\nif a is b:\n    print(\"same object\")\nelse:\n    print(\"different objects\")\n\nreal example:\nUsing == rather than is when comparing user-entered data."
+    },
+    {
+      "id": 32,
+      "question": "What does this print?\nx = 5.0\nif x == 5:\n    print(\"equal\")\nelse:\n    print(\"not equal\")",
+      "answer": "In Python 5.0 and 5 have the same numeric value, so the comparison is True and equal prints.\n\ncode:\nx = 5.0\nif x == 5:\n    print(\"equal\")\nelse:\n    print(\"not equal\")\n\nreal example:\nComparing a price stored as a float with an integer budget."
+    },
+    {
+      "id": 33,
+      "question": "What does this print?\ntext = \"HELLO\"\nif text.isupper():\n    print(\"all caps\")\nelse:\n    print(\"mixed\")",
+      "answer": "HELLO has no lowercase letters, so isupper() is True and all caps prints.\n\ncode:\nif \"HELLO\".isupper():\n    print(\"all caps\")\n\nreal example:\nValidating that coupon codes were typed in all capital letters."
+    },
+    {
+      "id": 34,
+      "question": "What does this print?\nnum = 16\nif num % 2 == 0:\n    print(\"even\")\nelse:\n    print(\"odd\")",
+      "answer": "16 % 2 is 0, so the condition is True and even prints.\n\ncode:\nnum = 16\nif num % 2 == 0:\n    print(\"even\")\n\nreal example:\nSplitting a queue into even and odd customer numbers."
+    },
+    {
+      "id": 35,
+      "question": "What does this print?\nnum = 9\nif num % 3 == 0 and num % 2 != 0:\n    print(\"odd multiple of 3\")\nelse:\n    print(\"other\")",
+      "answer": "9 % 3 is 0 and 9 % 2 is 1 (so the != check holds), making both parts True and printing odd multiple of 3.\n\ncode:\nnum = 9\nif num % 3 == 0 and num % 2 != 0:\n    print(\"odd multiple of 3\")\n\nreal example:\nFinding puzzle numbers divisible by 3 but not by 2."
+    },
+    {
+      "id": 36,
+      "question": "What does this print?\nyear = 2024\nif year % 4 == 0:\n    print(\"likely leap\")\nelse:\n    print(\"not leap\")",
+      "answer": "2024 divided by 4 leaves no remainder, so the check passes and likely leap prints.\n\ncode:\nyear = 2024\nif year % 4 == 0:\n    print(\"likely leap\")\n\nreal example:\nRoughly spotting leap years in a calendar app."
+    },
+    {
+      "id": 37,
+      "question": "What does this print?\nx, y = 10, 20\nif x > y:\n    print(x)\nelse:\n    print(y)",
+      "answer": "x > y is False, so the else prints y, which is 20.\n\ncode:\nx, y = 10, 20\nif x > y:\n    print(x)\nelse:\n    print(y)\n\nreal example:\nPicking the higher of two scores to decide a winner."
+    },
+    {
+      "id": 38,
+      "question": "What happens if no condition is True and there is no else block?",
+      "answer": "Nothing runs. The whole if statement is skipped and the program continues with the next line after it.\n\ncode:\nif x > 100:\n    print(\"big\")\nprint(\"continues\")\n\nreal example:\nLogging an error only for special cases, like extremely large orders."
+    },
+    {
+      "id": 39,
+      "question": "What does this print?\nprice = 100\nquantity = 6\nif quantity >= 5:\n    total = price * 0.8 * quantity\nelse:\n    total = price * quantity\nprint(total)",
+      "answer": "quantity 6 is at least 5, so the 20% off branch runs: 100 * 0.8 * 6 = 480.0.\n\ncode:\nprice = 100\nquantity = 6\ntotal = price * 0.8 * quantity\nprint(total)\n\nreal example:\nChecking out a bulk order that qualifies for a discount."
+    },
+    {
+      "id": 40,
+      "question": "What does this print?\nspeed = 100\nif speed > limit:\n    print(\"over limit\")\nelif speed == limit:\n    print(\"at limit\")\nelse:\n    print(\"under limit\")",
+      "answer": "speed is 100 and limit stays 100, so speed != limit is False but speed == limit is True, printing at limit.\n\ncode:\nspeed = 100\nlimit = 100\nif speed > limit:\n    print(\"over limit\")\nelif speed == limit:\n    print(\"at limit\")\n\nreal example:\nA cruise control reporting that you are right at the limit."
+    },
+    {
+      "id": 41,
+      "question": "What does this print?\nif (n := 5) > 3:\n    print(\"n is\", n)\nelse:\n    print(\"too small\")",
+      "answer": "The walrus operator assigns n = 5, then checks 5 > 3, so the if runs and prints n is 5.\n\ncode:\nif (n := 5) > 3:\n    print(\"n is\", n)\n\nreal example:\nReusing an assigned value inside the same condition to avoid computing it twice."
+    },
+    {
+      "id": 42,
+      "question": "What does this print?\nn = 5\ncount = 0\nif n > 0:\n    count += 1\nprint(count)",
+      "answer": "n is 5, which is > 0, so count increases from 0 to 1 and 1 prints.\n\ncode:\nn = 5\ncount = 0\nif n > 0:\n    count += 1\nprint(count)\n\nreal example:\nCounting how many positive numbers appeared in a batch."
+    },
+    {
+      "id": 43,
+      "question": "What does this print?\nx = \"five\"\nif x.isdigit():\n    print(int(x) + 1)\nelse:\n    print(\"not a number\")",
+      "answer": "five is not made of digit characters, so isdigit() is False and the else prints not a number.\n\ncode:\nx = \"five\"\nif x.isdigit():\n    print(int(x) + 1)\nelse:\n    print(\"not a number\")\n\nreal example:\nRejecting a non-numeric age typed into a registration form."
+    },
+    {
+      "id": 44,
+      "question": "What does this print?\nemail = \"user@example.com\"\nif \"@\" in email and email.endswith(\".com\"):\n    print(\"valid\")\nelse:\n    print(\"invalid\")",
+      "answer": "The email contains @ and ends with .com, so both halves of the and are True and valid prints.\n\ncode:\nemail = \"user@example.com\"\nif \"@\" in email and email.endswith(\".com\"):\n    print(\"valid\")\nelse:\n    print(\"invalid\")\n\nreal example:\nA quick sanity check before a signup form accepts an email."
+    },
+    {
+      "id": 45,
+      "question": "What does this print?\nage = 20\nhas_ticket = False\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\nelse:\n    print(\"too young\")",
+      "answer": "age 20 passes the outer if, but has_ticket is False, so the inner else prints no ticket.\n\ncode:\nage = 20\nhas_ticket = False\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\n\nreal example:\nA bouncer turning away an adult who has no ticket."
+    },
+    {
+      "id": 46,
+      "question": "What does this print?\nage = 15\nhas_ticket = True\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\nelse:\n    print(\"too young\")",
+      "answer": "age 15 fails the outer check, so the outer else prints too young and the ticket is never examined.\n\ncode:\nage = 15\nhas_ticket = True\nif age >= 18:\n    if has_ticket:\n        print(\"welcome\")\n    else:\n        print(\"no ticket\")\nelse:\n    print(\"too young\")\n\nreal example:\nRefusing entry to minors regardless of whether they hold a ticket."
+    },
+    {
+      "id": 47,
+      "question": "What does this print?\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(3, 3))",
+      "answer": "3 equals 3, so compare returns equal immediately and the ternary line never runs.\n\ncode:\ndef compare(a, b):\n    if a == b:\n        return \"equal\"\n    return \"a\" if a > b else \"b\"\nprint(compare(3, 3))\n\nreal example:\nComparing two submitted answers for equality."
+    },
+    {
+      "id": 48,
+      "question": "True or False: an if statement can be followed by multiple else blocks.",
+      "answer": "False. Only one else is allowed per if chain; any further checks must be elif or separate if statements.\n\ncode:\nif x > 0:\n    print(\"positive\")\nelse:\n    print(\"not positive\")\n\nreal example:\nA single pass-or-fail check needs exactly one else."
+    },
+    {
+      "id": 49,
+      "question": "What does this print?\nx = 100\nif x == 100:\n    print(\"hundred\")\nif x % 2 == 0:\n    print(\"even\")",
+      "answer": "These are two separate if statements, so both can run: 100 is both a hundred and even.\n\ncode:\nx = 100\nif x == 100:\n    print(\"hundred\")\nif x % 2 == 0:\n    print(\"even\")\n\nreal example:\nApplying two independent labels to the same record."
+    },
+    {
+      "id": 50,
+      "question": "What does this print?\nx = 100\nif x == 100:\n    print(\"hundred\")\nelif x % 2 == 0:\n    print(\"even\")",
+      "answer": "An elif chain stops at the first match, so once hundred prints the even check is skipped.\n\ncode:\nx = 100\nif x == 100:\n    print(\"hundred\")\nelif x % 2 == 0:\n    print(\"even\")\n\nreal example:\nA menu that routes a request to the first matching option only."
+    },
+    {
+      "id": 51,
       "question": "Match this to Python:\nswitch(choice) {\n  case 1: print(\"one\"); break;\n  case 2: print(\"two\"); break;\n  default: print(\"other\");\n}",
       "answer": "Python has no switch. Use if/elif/else, or the match statement available in Python 3.10 and later.\n\ncode:\nchoice = 2\nmatch choice:\n    case 1: print(\"one\")\n    case 2: print(\"two\")\n    case _: print(\"other\")\n\nreal example:\nHandling menu options like the buttons on a remote control."
     },
     {
-      "id": 85,
+      "id": 52,
       "question": "What does this print?\nmoney = 0\nhas_card = True\nif money or has_card:\n    print(\"can pay\")\nelse:\n    print(\"cannot pay\")",
       "answer": "money is 0 (falsy) but has_card is True, and or needs only one True, so can pay prints.\n\ncode:\nmoney = 0\nhas_card = True\nif money or has_card:\n    print(\"can pay\")\nelse:\n    print(\"cannot pay\")\n\nreal example:\nAccepting payment with either cash or a card."
     },
     {
-      "id": 86,
-      "question": "What does this print?\nmoney = 0\nhas_card = False\nif money or has_card:\n    print(\"can pay\")\nelse:\n    print(\"cannot pay\")",
-      "answer": "Both money and has_card are falsy, so the or is False and cannot pay prints.\n\ncode:\nmoney = 0\nhas_card = False\nif money or has_card:\n    print(\"can pay\")\nelse:\n    print(\"cannot pay\")\n\nreal example:\nBlocking checkout when a customer has no way to pay."
-    },
-    {
-      "id": 87,
-      "question": "What does this print?\ncount = 3\nif count:\n    print(\"count:\", count)\nelse:\n    print(\"no count\")",
-      "answer": "3 is truthy, so the if runs and prints count: 3.\n\ncode:\ncount = 3\nif count:\n    print(\"count:\", count)\nelse:\n    print(\"no count\")\n\nreal example:\nShowing a badge with the number of new notifications."
-    },
-    {
-      "id": 88,
-      "question": "What does this print?\ncount = 0\nif count:\n    print(\"count:\", count)\nelse:\n    print(\"no count\")",
-      "answer": "0 is falsy, so the else prints no count.\n\ncode:\ncount = 0\nif count:\n    print(\"count:\", count)\nelse:\n    print(\"no count\")\n\nreal example:\nHiding the notification badge when there are zero unread items."
-    },
-    {
-      "id": 89,
-      "question": "What does this print?\nx = \"123\"\nif x.isdigit():\n    print(\"a number\")\nelse:\n    print(\"not a number\")",
-      "answer": "123 consists only of digits, so isdigit() is True and a number prints.\n\ncode:\nx = \"123\"\nif x.isdigit():\n    print(\"a number\")\nelse:\n    print(\"not a number\")\n\nreal example:\nChecking that a phone number field contains only digits."
-    },
-    {
-      "id": 90,
+      "id": 53,
       "question": "What does this print?\nx = \"12.5\"\nif x.isdigit():\n    print(\"a number\")\nelse:\n    print(\"not a number\")",
       "answer": "The dot is not a digit, so isdigit() is False and the else prints not a number.\n\ncode:\nx = \"12.5\"\nif x.isdigit():\n    print(\"a number\")\nelse:\n    print(\"not a number\")\n\nreal example:\nRemembering isdigit only accepts whole numbers, not decimals."
     },
     {
-      "id": 91,
-      "question": "What does this print?\npoints = 95\nif points >= 90:\n    grade = \"A\"\n    honor = True\nif points >= 90 and points >= 95:\n    print(\"highest honors\")",
-      "answer": "points 95 passes both parts, so the second if is True and highest honors prints.\n\ncode:\npoints = 95\nif points >= 90 and points >= 95:\n    print(\"highest honors\")\n\nreal example:\nAwarding a scholarship only to the very top scorers."
-    },
-    {
-      "id": 92,
-      "question": "What does this print?\nuser = {\"age\": 25}\nif user.get(\"age\", 0) >= 21:\n    print(\"welcome\")\nelse:\n    print(\"blocked\")",
-      "answer": "user.get(\"age\", 0) finds 25, which is >= 21, so welcome prints.\n\ncode:\nuser = {\"age\": 25}\nif user.get(\"age\", 0) >= 21:\n    print(\"welcome\")\nelse:\n    print(\"blocked\")\n\nreal example:\nAdmitting members who meet an age requirement."
-    },
-    {
-      "id": 93,
+      "id": 54,
       "question": "What does this print?\nuser = {}\nif user.get(\"age\", 0) >= 21:\n    print(\"welcome\")\nelse:\n    print(\"blocked\")",
       "answer": "The dict has no age key, so get returns the default 0, which fails the check, and blocked prints.\n\ncode:\nuser = {}\nif user.get(\"age\", 0) >= 21:\n    print(\"welcome\")\nelse:\n    print(\"blocked\")\n\nreal example:\nSafely reading a missing profile field without crashing."
     },
     {
-      "id": 94,
+      "id": 55,
       "question": "What does this print?\nweight = 50\nheight = 2.5\nif 18.5 <= weight / height**2 <= 24.9:\n    print(\"healthy range\")\nelse:\n    print(\"outside range\")",
       "answer": "BMI is 50 / 2.5**2 = 50 / 6.25 = 8.0, which is below 18.5, so the else prints outside range.\n\ncode:\nweight = 50\nheight = 2.5\nbmi = weight / height**2\nif 18.5 <= bmi <= 24.9:\n    print(\"healthy range\")\nelse:\n    print(\"outside range\")\n\nreal example:\nRaising a health alert for an out-of-range BMI."
     },
     {
-      "id": 95,
+      "id": 56,
       "question": "What does this print?\nloan = 1000\ncredit = 750\nif loan < 2000 and credit >= 700:\n    print(\"approved\")\nelse:\n    print(\"declined\")",
       "answer": "loan 1000 is under 2000 and credit 750 is over 700, so both hold and approved prints.\n\ncode:\nloan = 1000\ncredit = 750\nif loan < 2000 and credit >= 700:\n    print(\"approved\")\nelse:\n    print(\"declined\")\n\nreal example:\nApproving a small loan for a borrower with a strong credit score."
     },
     {
-      "id": 96,
-      "question": "What does this print?\nloan = 3000\ncredit = 750\nif loan < 2000 and credit >= 700:\n    print(\"approved\")\nelse:\n    print(\"declined\")",
-      "answer": "loan 3000 is not under 2000, so the and fails and declined prints.\n\ncode:\nloan = 3000\ncredit = 750\nif loan < 2000 and credit >= 700:\n    print(\"approved\")\nelse:\n    print(\"declined\")\n\nreal example:\nDeclining a loan because the requested amount is too large."
-    },
-    {
-      "id": 97,
+      "id": 57,
       "question": "What does this print?\ns = \"racecar\"\nif s == s[::-1]:\n    print(\"palindrome\")\nelse:\n    print(\"not palindrome\")",
       "answer": "racecar reversed is racecar, so s == s[::-1] is True and palindrome prints.\n\ncode:\ns = \"racecar\"\nif s == s[::-1]:\n    print(\"palindrome\")\nelse:\n    print(\"not palindrome\")\n\nreal example:\nValidating words for a word-game puzzle."
-    },
-    {
-      "id": 98,
-      "question": "What does this print?\ns = \"hello\"\nif s == s[::-1]:\n    print(\"palindrome\")\nelse:\n    print(\"not palindrome\")",
-      "answer": "hello reversed is olleh, which differs, so the else prints not palindrome.\n\ncode:\ns = \"hello\"\nif s == s[::-1]:\n    print(\"palindrome\")\nelse:\n    print(\"not palindrome\")\n\nreal example:\nFiltering palindrome candidates from a word list."
-    },
-    {
-      "id": 99,
-      "question": "What does this print?\nnum = 28\nif num % 7 == 0:\n    print(\"lucky 7\")\nif num // 4 == 7:\n    print(\"quotient is 7\")",
-      "answer": "Two separate ifs both run: 28 % 7 is 0 and 28 // 4 is 7, so both messages print.\n\ncode:\nnum = 28\nif num % 7 == 0:\n    print(\"lucky 7\")\nif num // 4 == 7:\n    print(\"quotient is 7\")\n\nreal example:\nApplying two independent rules to the same number."
-    },
-    {
-      "id": 100,
-      "question": "What does this print?\nhour = 14\nif hour < 12:\n    print(\"morning\")\nelif hour < 18:\n    print(\"afternoon\")\nelse:\n    print(\"evening\")",
-      "answer": "hour 14 is not below 12 but is below 18, so the elif prints afternoon.\n\ncode:\nhour = 14\nif hour < 12:\n    print(\"morning\")\nelif hour < 18:\n    print(\"afternoon\")\nelse:\n    print(\"evening\")\n\nreal example:\nShowing the right greeting for the time of day."
     }
   ]
 }

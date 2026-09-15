@@ -156,7 +156,6 @@ export default function PracticeQA({ questions }: PracticeQAProps) {
       <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white flex flex-col">
         <div className="text-xs text-slate-400 mb-3 uppercase tracking-wider">Question #{q.id}</div>
         <p className="text-lg sm:text-xl font-medium leading-relaxed">{q.question}</p>
-        <p className="text-sm text-slate-400 mt-3">Write and run code below to test your answer.</p>
       </div>
 
       {/* Code editor to write and run code */}

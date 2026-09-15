@@ -1,5 +1,5 @@
 {
-  "description": "Python Functions & Methods - Basic and Intermediate Q&A covering definitions, parameters, return values, recursion, scope, higher-order functions and what-print traces. 250 questions.",
+  "description": "156 curated FUNCTION BASICS questions for Automation Testing interviews (trimmed from 250; removed 94 redundant near-duplicate questions that tested the same concept).",
   "questions": [
     {
       "id": 1,
@@ -23,1231 +23,761 @@
     },
     {
       "id": 5,
-      "question": "How do you write a docstring?",
-      "answer": "Put triple-quoted text as the first line inside the function body.\n\ncode:\ndef greet():\n    '''Says hello to the user.'''\n    print(\"hi\")\n\nreal example:\nAdding a docstring is like writing a one-line manual for each function you share."
-    },
-    {
-      "id": 6,
       "question": "How do you call a function?",
       "answer": "Write the function name followed by parentheses, passing arguments if it needs any.\n\ncode:\ndef greet(name):\n    print(\"Hi \" + name)\n\ngreet(\"Sam\")  # Hi Sam\n\nreal example:\nYou call print() constantly; calling works the same way for your own functions."
     },
     {
-      "id": 7,
+      "id": 6,
       "question": "What does a function return if it has no return statement?",
       "answer": "It returns None, Python's special value for nothing.\n\ncode:\ndef f():\n    pass\n\nprint(f())  # None\n\nreal example:\nA function that just saves to disk gives back None because there is nothing to hand you."
     },
     {
-      "id": 8,
+      "id": 7,
       "question": "What is a parameter?",
       "answer": "A parameter is the name written in the function definition that receives a value.\n\ncode:\ndef add(a, b):\n    return a + b\n\nreal example:\nA parameter is like a blank field in a form that the function fills with what you pass in."
     },
     {
-      "id": 9,
+      "id": 8,
       "question": "What is an argument?",
       "answer": "An argument is the actual value you pass into a function when calling it.\n\ncode:\ndef add(a, b):\n    return a + b\n\nprint(add(3, 5))  # 8\n\nreal example:\nWhen you call add(3, 5), the 3 and the 5 are the arguments handed over for a and b."
     },
     {
-      "id": 10,
-      "question": "Can a function have zero parameters?",
-      "answer": "Yes, a function can take no inputs at all.\n\ncode:\ndef hi():\n    print(\"Hello\")\n\nhi()  # Hello\n\nreal example:\nFunctions like hi() or a dice-roller that needs no data use an empty parameter list."
-    },
-    {
-      "id": 11,
-      "question": "What is the body of a function?",
-      "answer": "The body is the indented block of code after the colon that runs when the function is called.\n\ncode:\ndef greet():\n    print(\"hi\")  # this line is the body\n\nreal example:\nThe body is the set of instructions your function carries out every time you invoke it."
-    },
-    {
-      "id": 12,
+      "id": 9,
       "question": "What happens if the function body is not indented?",
       "answer": "Python raises an IndentationError because it cannot find the function's block.\n\ncode:\n# Wrong: missing indent after the colon causes IndentationError\n# def f():\n# print(\"hi\")\n\nreal example:\nPython uses indentation instead of braces, so a missing indent means it cannot read your code."
     },
     {
-      "id": 13,
+      "id": 10,
       "question": "What does pass do inside a function?",
       "answer": "pass does nothing; it is a placeholder that lets an empty body be valid.\n\ncode:\ndef todo():\n    pass\n\nreal example:\nUse pass as a stub while you plan a function but are not ready to write its logic yet."
     },
     {
-      "id": 14,
+      "id": 11,
       "question": "Are functions first-class objects in Python?",
       "answer": "Yes, functions can be assigned, stored, and passed around just like any other value.\n\ncode:\ndef f():\n    return 1\n\ng = f\nprint(g())  # 1\n\nreal example:\nYou can hand a function to another function like passing a tool to a colleague."
     },
     {
-      "id": 15,
+      "id": 12,
       "question": "Can you assign a function to a variable?",
       "answer": "Yes, a function can be stored in a variable and later called through that variable.\n\ncode:\ndef f():\n    return 42\n\ng = f\nprint(g())  # 42\n\nreal example:\nStore a callback such as an id-card checker in a variable so you can run it later."
     },
     {
-      "id": 16,
+      "id": 13,
       "question": "What is the type of a user-defined function?",
       "answer": "Its type is function.\n\ncode:\ndef f():\n    pass\n\nprint(type(f))  # <class 'function'>\n\nreal example:\nPython treats your own functions as the same kind of object as built-ins like print."
     },
     {
-      "id": 17,
+      "id": 14,
       "question": "Must a function be defined before it is called?",
       "answer": "Yes, the definition must have run before the call, otherwise a NameError occurs.\n\ncode:\ndef greet():\n    pass\n\ngreet()  # works because greet was defined first\n\nreal example:\nLike a recipe, the definition must exist before you can follow it."
     },
     {
-      "id": 18,
+      "id": 15,
       "question": "What error is raised when you call an undefined function?",
       "answer": "A NameError is raised.\n\ncode:\nfly()  # NameError: name 'fly' is not defined\n\nreal example:\nCalling a missing function is like asking for a colleague who is not on the team list."
     },
     {
-      "id": 19,
+      "id": 16,
       "question": "What is the difference between a function and a method?",
       "answer": "A method is a function that belongs to a class or object and usually receives self.\n\ncode:\ns = \"abc\"\nprint(s.upper())  # upper is a method of the string\n\nreal example:\nA Car object has methods like start() that operate on that specific car."
     },
     {
-      "id": 20,
+      "id": 17,
       "question": "How do you view a function's docstring?",
       "answer": "Use help(fn) or print(fn.__doc__) to see a function's documentation string.\n\ncode:\ndef add(a, b):\n    'Sum two numbers.'\n    return a + b\n\nprint(add.__doc__)  # Sum two numbers.\n\nreal example:\nRun help(len) in the interpreter to read how a library function is meant to be used."
     },
     {
-      "id": 21,
-      "question": "Which naming convention is used for functions?",
-      "answer": "snake_case, meaning lowercase words joined by underscores.\n\ncode:\ndef calculate_total():\n    return 100\n\nreal example:\nFollowing snake_case keeps project code consistent and easy for other developers to read."
-    },
-    {
-      "id": 22,
-      "question": "Can a function name start with a digit?",
-      "answer": "No, a name must start with a letter or an underscore, not a digit.\n\ncode:\ndef add1():  # OK, digit inside the name\n    return 1\n\nreal example:\nA name like 2check() is invalid, so programmers write check2() instead."
-    },
-    {
-      "id": 23,
+      "id": 18,
       "question": "What happens if you define two functions with the same name?",
       "answer": "The second definition overwrites the first, so the newest version wins.\n\ncode:\ndef f():\n    return 1\n\ndef f():\n    return 2\n\nprint(f())  # 2\n\nreal example:\nA later update to a script can unintentionally replace an earlier function with the same name."
     },
     {
-      "id": 24,
+      "id": 19,
       "question": "What does return do?",
       "answer": "return exits the function and sends a value back to the caller.\n\ncode:\ndef add(a, b):\n    return a + b\n\nprint(add(2, 3))  # 5\n\nreal example:\nA calculator function returns the result so the rest of your program can store and use it."
     },
     {
-      "id": 25,
+      "id": 20,
       "question": "What is returned by a bare return (no value)?",
       "answer": "A bare return returns None.\n\ncode:\ndef f():\n    return\n\nprint(f())  # None\n\nreal example:\nA function that merely signals \"done\" returns None, just like print() does."
     },
     {
-      "id": 26,
+      "id": 21,
       "question": "What are positional arguments?",
       "answer": "Positional arguments are matched to parameters by their order in the call.\n\ncode:\ndef add(a, b):\n    return a + b\n\nprint(add(2, 3))  # a=2, b=3 -> 5\n\nreal example:\nOrder matters: switching arguments can give the wrong answer, like putting hours in the minutes box."
     },
     {
-      "id": 27,
+      "id": 22,
       "question": "How do you pass arguments by keyword?",
       "answer": "Use fn(param=value) to match by name instead of position.\n\ncode:\ndef greet(name, age):\n    return name + \" is \" + str(age)\n\nprint(greet(age=8, name=\"Bo\"))  # Bo is 8\n\nreal example:\nKeyword arguments make a config call like set_color(red=255) self-explanatory."
     },
     {
-      "id": 28,
+      "id": 23,
       "question": "Can you mix positional and keyword arguments?",
       "answer": "Yes, but all positional arguments must come before any keyword ones.\n\ncode:\ndef f(a, b, c):\n    return a + b + c\n\nprint(f(1, 2, c=3))  # 6\n\nreal example:\nA registration form call log(title, user, level=1) reads clearly and stays valid."
     },
     {
-      "id": 29,
+      "id": 24,
       "question": "What is a default parameter?",
       "answer": "A default parameter has a value that is used when no argument is passed for it.\n\ncode:\ndef greet(name=\"World\"):\n    return \"Hello \" + name\n\nprint(greet())       # Hello World\nprint(greet(\"Amy\"))  # Hello Amy\n\nreal example:\nA contact form gives fields default values like country=\"US\" when nothing is chosen."
     },
     {
-      "id": 30,
-      "question": "How do you define a default parameter?",
-      "answer": "Write an equals sign and a value after the parameter name, like def f(a, b=10).\n\ncode:\ndef f(a, b=10):\n    return a + b\n\nprint(f(1))     # 11 (b uses the default)\nprint(f(1, 2))  # 3\n\nreal example:\nDefaults let a function work with optional inputs, like a timeout of 30 seconds."
-    },
-    {
-      "id": 31,
+      "id": 25,
       "question": "Where must default parameters appear?",
       "answer": "They must come after all non-default (required) parameters.\n\ncode:\ndef f(a, b=2):  # a required, b default\n    return a + b\n\nprint(f(1))  # 3\n\nreal example:\nRequired options come first, optional ones last, just like a form's mandatory fields."
     },
     {
-      "id": 32,
-      "question": "What error occurs if a default parameter comes before a required one?",
-      "answer": "A SyntaxError with the message that a non-default argument follows a default argument.\n\ncode:\n# def f(a=1, b):  -> SyntaxError (default before required)\ndef f(a=1, b=2):\n    return a + b\n\nreal example:\nPython rejects ambiguous orderings so a call can never be unsure which argument fills which slot."
-    },
-    {
-      "id": 33,
-      "question": "Can a function have multiple default parameters?",
-      "answer": "Yes, a function may have as many default parameters as it needs.\n\ncode:\ndef f(a=1, b=2, c=3):\n    return a + b + c\n\nprint(f())        # 6\nprint(f(b=10))    # 14\n\nreal example:\nA settings dialog can default plenty of options, like color, size, and theme."
-    },
-    {
-      "id": 34,
+      "id": 26,
       "question": "What is the mutable default argument gotcha?",
       "answer": "With def f(x, lst=[]), the default list is created once and shared across all calls.\n\ncode:\ndef f(x, lst=[]):\n    lst.append(x)\n    return lst\n\nprint(f(1))  # [1]\nprint(f(2))  # [1, 2]  (not [2]!)\n\nreal example:\nIt is like everyone sharing one clipboard instead of each call getting its own fresh pad."
     },
     {
-      "id": 35,
+      "id": 27,
       "question": "How do you correctly handle a mutable default?",
       "answer": "Use None as a sentinel and create the mutable object inside the body.\n\ncode:\ndef f(x, lst=None):\n    if lst is None:\n        lst = []\n    lst.append(x)\n    return lst\n\nprint(f(1))  # [1]\nprint(f(2))  # [2]\n\nreal example:\nThis gives every call its own fresh list, like giving each customer a new shopping cart."
     },
     {
-      "id": 36,
+      "id": 28,
       "question": "What does *args do in a parameter list?",
       "answer": "It collects any extra positional arguments into a tuple.\n\ncode:\ndef f(*args):\n    return sum(args)\n\nprint(f(1, 2, 3))  # 6\n\nreal example:\nA summing function can accept any number of numbers thanks to *args."
     },
     {
-      "id": 37,
+      "id": 29,
       "question": "What does **kwargs do in a parameter list?",
       "answer": "It collects any extra keyword arguments into a dictionary.\n\ncode:\ndef f(**kwargs):\n    return kwargs\n\nprint(f(a=1, b=2))  # {'a': 1, 'b': 2}\n\nreal example:\nConfig functions can accept any number of named settings using **kwargs."
     },
     {
-      "id": 38,
+      "id": 30,
       "question": "In def f(a, b, *args, **kwargs), what type is args?",
       "answer": "args is a tuple holding the extra positional arguments.\n\ncode:\ndef f(a, b, *args, **kwargs):\n    return args\n\nprint(f(1, 2, 3, 4))  # (3, 4)\n\nreal example:\nThe extras are packed in order, like a queue of leftover items behind the required two."
     },
     {
-      "id": 39,
+      "id": 31,
       "question": "In def f(a, b, *args, **kwargs), what type is kwargs?",
       "answer": "kwargs is a dictionary holding the extra keyword arguments.\n\ncode:\ndef f(a, b, *args, **kwargs):\n    return kwargs\n\nprint(f(1, 2, x=9, y=8))  # {'x': 9, 'y': 8}\n\nreal example:\nNamed extras arrive in a dict, like a list of optional settings passed by names."
     },
     {
-      "id": 40,
+      "id": 32,
       "question": "What is the correct order of parameters in a definition?",
       "answer": "The order is positional/required, defaults, *args, keyword-only, then **kwargs.\n\ncode:\ndef f(a, b=2, *args, c, **kwargs):\n    return a + b + c\n\nprint(f(1, c=3))  # 6\n\nreal example:\nThis fixed ordering is the only way Python can tell each argument where it belongs."
     },
     {
-      "id": 41,
+      "id": 33,
       "question": "How do you create keyword-only arguments?",
       "answer": "Put a bare * in the parameter list so later parameters must be passed by keyword.\n\ncode:\ndef f(*, year):\n    return year\n\nprint(f(year=2020))  # 2020\n\nreal example:\nMandating keywords makes long option lists readable, like a search with sort_by=."
     },
     {
-      "id": 42,
+      "id": 34,
       "question": "What happens when you call f(2020) if f is defined as def f(*, year)?",
       "answer": "A TypeError is raised; it must be called as f(year=2020).\n\ncode:\ndef f(*, year):\n    return year\n\n# f(2020) -> TypeError: f() takes 0 positional arguments but 1 was given\n\nreal example:\nForcing the name prevents mistakes when many optional flags share similar values."
     },
     {
-      "id": 43,
+      "id": 35,
       "question": "How do you create positional-only arguments?",
       "answer": "Put a slash after those parameters: def f(a, b, /).\n\ncode:\ndef f(a, b, /):\n    return a + b\n\nprint(f(1, 2))  # 3\n\nreal example:\nPositional-only is used by built-ins like print so order is fixed and calls stay short."
     },
     {
-      "id": 44,
+      "id": 36,
       "question": "What happens calling f(a=1, b=2) when f is defined as def f(a, b, /)?",
       "answer": "A TypeError is raised because a and b are positional-only.\n\ncode:\ndef f(a, b, /):\n    return a + b\n\n# f(a=1, b=2) -> TypeError: f() got some positional-only arguments passed as keyword arguments\n\nreal example:\nSome functions forbid keywords by design because their arguments only make sense in order."
     },
     {
-      "id": 45,
+      "id": 37,
       "question": "What do / and * mean in a function signature?",
       "answer": "A slash marks parameters before it as positional-only; a star marks parameters after it as keyword-only.\n\ncode:\ndef f(a, /, b, *, c):\n    return a + b + c\n\nprint(f(1, 2, c=3))  # 6\n\nreal example:\nSignatures like this control exactly how callers can pass values to built-in functions."
     },
     {
-      "id": 46,
+      "id": 38,
       "question": "How do you unpack a list into positional arguments?",
       "answer": "Use a starred call like f(*[1, 2]) to spread the list into arguments.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f(*[1, 2]))  # 3\n\nreal example:\nSpread a list of coordinates into a point-drawing function with one short call."
     },
     {
-      "id": 47,
+      "id": 39,
       "question": "How do you unpack a dict into keyword arguments?",
       "answer": "Use f(**{\"a\": 1}) to turn dict keys into keyword arguments.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f(**{\"a\": 5, \"b\": 2}))  # 7\n\nreal example:\nPass a settings dict straight into a function that expects named options."
     },
     {
-      "id": 48,
+      "id": 40,
       "question": "What does f(*\"ab\") pass to f?",
       "answer": "It passes two arguments: \"a\" and \"b\", because iterating a string yields its characters.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f(*\"ab\"))  # ab\n\nreal example:\nUnpacking a string is handy when a function expects each character as its own argument."
     },
     {
-      "id": 49,
+      "id": 41,
       "question": "What happens if you pass more positional arguments than parameters?",
       "answer": "A TypeError is raised saying the function takes N positional arguments but M were given.\n\ncode:\ndef f(a):\n    return a\n\n# f(1, 2) -> TypeError: f() takes 1 positional argument but 2 were given\n\nreal example:\nLike ordering a bike but delivering a car: extra inputs are rejected to avoid silent mistakes."
     },
     {
-      "id": 50,
+      "id": 42,
       "question": "What happens if you omit a required argument?",
       "answer": "A TypeError is raised reporting the missing required positional argument.\n\ncode:\ndef f(a, b):\n    return a + b\n\n# f(1) -> TypeError: f() missing 1 required positional argument: 'b'\n\nreal example:\nSubmitting a form without a required field gets an error listing exactly what is missing."
     },
     {
-      "id": 51,
+      "id": 43,
       "question": "What happens if you pass an unexpected keyword argument?",
       "answer": "A TypeError is raised with the message that an unexpected keyword argument was given.\n\ncode:\ndef f(a):\n    return a\n\n# f(a=1, x=2) -> TypeError: f() got an unexpected keyword argument 'x'\n\nreal example:\nPassing a misspelled option to a config function is caught immediately by this error."
     },
     {
-      "id": 52,
-      "question": "What is arity?",
-      "answer": "Arity is the number of parameters a function accepts.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f.__code__.co_argcount)  # 2\n\nreal example:\nTools use arity to inspect how many arguments a callback expects before calling it."
-    },
-    {
-      "id": 53,
-      "question": "Can you pass a whole list as a single parameter?",
-      "answer": "Yes, a list passed as f([1, 2, 3]) counts as one argument.\n\ncode:\ndef total(nums):\n    return sum(nums)\n\nprint(total([1, 2, 3]))  # 6\n\nreal example:\nA shopping-cart function takes one list of items rather than hundreds of separate values."
-    },
-    {
-      "id": 54,
+      "id": 44,
       "question": "In def f(name, /, age, *, city), which parameters are positional-only?",
       "answer": "name is positional-only, city is keyword-only, and age can be passed either way.\n\ncode:\ndef f(name, /, age, *, city):\n    return name + str(age) + city\n\nprint(f(\"Ann\", 12, city=\"NY\"))  # Ann12NY\n\nreal example:\nMixed signature styles give exact control over how each field must be supplied."
     },
     {
-      "id": 55,
+      "id": 45,
       "question": "What does f(1, 2, 3, 4) give *args when f is def f(*args)?",
       "answer": "*args receives the tuple (1, 2, 3, 4).\n\ncode:\ndef f(*args):\n    return args\n\nprint(f(1, 2, 3, 4))  # (1, 2, 3, 4)\n\nreal example:\nLogger functions collect all extra values into one tuple to record them together."
     },
     {
-      "id": 56,
-      "question": "How do you sum all values collected by *args?",
-      "answer": "Pass the args tuple straight to sum(args).\n\ncode:\ndef add_all(*args):\n    return sum(args)\n\nprint(add_all(1, 2, 3, 4))  # 10\n\nreal example:\nA bill-splitter can total as many prices as the user enters using sum(args)."
-    },
-    {
-      "id": 57,
-      "question": "What does f(a=1, b=2) give **kwargs when f is def f(**kwargs)?",
-      "answer": "**kwargs receives the dictionary {\"a\": 1, \"b\": 2}.\n\ncode:\ndef f(**kwargs):\n    return kwargs\n\nprint(f(a=1, b=2))  # {'a': 1, 'b': 2}\n\nreal example:\nCollecting arbitrary named settings into a dict lets tools forward them easily."
-    },
-    {
-      "id": 58,
+      "id": 46,
       "question": "How do you safely read a key from **kwargs?",
       "answer": "Use kwargs.get(\"key\", default), which avoids KeyError when the key is absent.\n\ncode:\ndef f(**kwargs):\n    return kwargs.get(\"name\", \"guest\")\n\nprint(f())            # guest\nprint(f(name=\"Bo\"))   # Bo\n\nreal example:\nConfig handlers use .get() so missing options quietly fall back to a safe default."
     },
     {
-      "id": 59,
+      "id": 47,
       "question": "When are default parameter values evaluated?",
       "answer": "Once, at the time the def statement runs, then stored on the function.\n\ncode:\ndef f(a=[]):\n    return a\n\nf().append(1)\nprint(f())  # [1]  (same default object reused)\n\nreal example:\nThat is why mutable defaults are shared, making the gotcha in the earlier question happen."
     },
     {
-      "id": 60,
+      "id": 48,
       "question": "Does the order of keyword arguments matter?",
       "answer": "No, f(b=2, a=1) and f(a=1, b=2) give the same result.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f(b=2, a=1), f(a=1, b=2))  # 3 3\n\nreal example:\nNamed options in any order make configuration calls like font(size=12, bold=True) easy to read."
     },
     {
-      "id": 61,
+      "id": 49,
       "question": "What happens if you pass the same keyword twice? e.g., f(a=1, a=2)",
       "answer": "A TypeError is raised saying there are multiple values for argument a.\n\ncode:\ndef f(a):\n    return a\n\n# f(a=1, a=2) -> TypeError: f() got multiple values for argument 'a'\n\nreal example:\nPython rejects duplicate keywords so a function can never be ambiguous about a value."
     },
     {
-      "id": 62,
+      "id": 50,
       "question": "If you mutate a list passed to a function, does the caller see the change?",
       "answer": "Yes, mutating the list inside the function changes it for the caller too.\n\ncode:\ndef bump(nums):\n    nums.append(99)\n\ndata = [1, 2]\nbump(data)\nprint(data)  # [1, 2, 99]\n\nreal example:\nHanding a shared shopping list to a helper means changes made there are visible outside."
     },
     {
-      "id": 63,
+      "id": 51,
       "question": "Does rebinding an integer parameter affect the caller's variable?",
       "answer": "No, integers are immutable; the parameter is just a new local name.\n\ncode:\ndef f(x):\n    x += 1\n    return x\n\na = 5\nprint(f(a), a)  # 6 5\n\nreal example:\nPassing a counter to a function never changes the original counter, so surprises are avoided."
     },
     {
-      "id": 64,
+      "id": 52,
       "question": "a = []; def f(x): x.append(1); f(a). What is a?",
       "answer": "a is [1], because the function mutated the same list object.\n\ncode:\na = []\ndef f(x):\n    x.append(1)\n\nf(a)\nprint(a)  # [1]\n\nreal example:\nQueue helpers that append to a list update the caller's shared queue as intended."
     },
     {
-      "id": 65,
+      "id": 53,
       "question": "a = 5; def f(x): x += 1; f(a). What is a?",
       "answer": "a stays 5, since int is immutable and only the local x was rebound.\n\ncode:\na = 5\ndef f(x):\n    x += 1\n\nf(a)\nprint(a)  # 5\n\nreal example:\nAn immutable value behaves like a printed receipt: the copy changes, not the original."
     },
     {
-      "id": 66,
+      "id": 54,
       "question": "a = \"hi\"; def f(x): x.upper(); f(a). What is a?",
       "answer": "a stays \"hi\", because strings are immutable and upper() returns a new string that is ignored.\n\ncode:\na = \"hi\"\ndef f(x):\n    x.upper()\n\nf(a)\nprint(a)  # hi\n\nreal example:\nTrying to fix text in place fails silently unless you assign the result back, like f(a).upper()."
     },
     {
-      "id": 67,
+      "id": 55,
       "question": "How is Python's argument passing best described?",
       "answer": "Pass by object reference: the value (object) is passed, and assignment rebinds the local name only.\n\ncode:\ndef f(x):\n    x = 99  # rebind local only\n\na = 1\nf(a)\nprint(a)  # 1\n\nreal example:\nWhether the caller sees changes depends on mutating the object, not on rebinding the name."
     },
     {
-      "id": 68,
+      "id": 56,
       "question": "Can a function read a global variable without the global keyword?",
       "answer": "Yes, reading a global does not need any special keyword.\n\ncode:\nmsg = \"hello\"\n\ndef show():\n    return msg  # reading the global is fine\n\nprint(show())  # hello\n\nreal example:\nReport functions often read a global database connection without declaring it global."
     },
     {
-      "id": 69,
+      "id": 57,
       "question": "If you assign to a name inside a function, what does Python create?",
       "answer": "Python creates a local variable for that name.\n\ncode:\nx = \"global\"\ndef f():\n    x = \"local\"\n    return x\n\nprint(f(), x)  # local global\n\nreal example:\nInside a function, x = 5 creates its own local x, leaving the outer x untouched."
     },
     {
-      "id": 70,
+      "id": 58,
       "question": "How do you modify a global variable inside a function?",
       "answer": "Declare global name and then assign to it.\n\ncode:\ncount = 0\ndef bump():\n    global count\n    count += 1\n\nbump()\nprint(count)  # 1\n\nreal example:\nA web-page visit counter stored globally is updated this way from request handlers."
     },
     {
-      "id": 71,
-      "question": "What is the global statement used for?",
-      "answer": "It tells Python that an assignment refers to a module-level variable, not a new local.\n\ncode:\nprice = 10\ndef set_price():\n    global price\n    price = 15\n\nset_price()\nprint(price)  # 15\n\nreal example:\nSettings shared across a program are modified with global so all modules see the new value."
-    },
-    {
-      "id": 72,
+      "id": 59,
       "question": "What is the nonlocal statement used for?",
       "answer": "It rebinds a variable in an enclosing (non-global) function scope.\n\ncode:\ndef outer():\n    n = 0\n    def inner():\n        nonlocal n\n        n += 1\n        return n\n    return inner\n\nup = outer()\nprint(up(), up())  # 1 2\n\nreal example:\nA counter closure needs nonlocal to update its remembered count between calls."
     },
     {
-      "id": 73,
+      "id": 60,
       "question": "What does LEGB stand for?",
       "answer": "Local, Enclosing, Global, Built-in, the order Python searches for a name.\n\ncode:\nx = \"global\"\ndef outer():\n    x = \"enclosing\"\n    def inner():\n        return x  # finds \"enclosing\" first\n    return inner()\n\nprint(outer())  # enclosing\n\nreal example:\nThis search order is why a local variable hides a global one of the same name."
     },
     {
-      "id": 74,
+      "id": 61,
       "question": "Which scope contains names like len and print?",
       "answer": "The built-in scope is where len and print live.\n\ncode:\nprint(len(\"abc\"))  # 3 (built-ins resolved from the builtins scope)\n\nreal example:\nBuilt-ins are always available, which is why you can call print() in any file."
     },
     {
-      "id": 75,
+      "id": 62,
       "question": "What is UnboundLocalError?",
       "answer": "An error raised when you read a local variable before assigning it.\n\ncode:\n# def f():\n#     print(x)\n#     x = 1\n# f()  -> UnboundLocalError: local variable 'x' referenced before assignment\n\nreal example:\nAn accidental later assignment makes the earlier read fail, revealing a variable-use mistake."
     },
     {
-      "id": 76,
+      "id": 63,
       "question": "Which of these raises UnboundLocalError?\ndef f():\n    print(x)\n    x = 1",
       "answer": "This function does, because x is made local by its later assignment but read before it.\n\ncode:\ndef f():\n    print(x)  # error here\n    x = 1\n\n# f() -> UnboundLocalError: local variable 'x' referenced before assignment\n\nreal example:\nMoving the assignment before the print, or declaring global x, fixes the ordering problem."
     },
     {
-      "id": 77,
+      "id": 64,
       "question": "What is variable shadowing?",
       "answer": "Shadowing happens when a local name hides a global name with the same spelling.\n\ncode:\nx = \"global\"\ndef f():\n    x = \"local\"  # this local x shadows the global\n    return x\n\nprint(f(), x)  # local global\n\nreal example:\nA function-local variable named total hides the outer total, keeping the two independent."
     },
     {
-      "id": 78,
+      "id": 65,
       "question": "How do you access a shadowed global?",
       "answer": "Use globals()[\"name\"] or declare the name global inside the function.\n\ncode:\nx = 99\ndef f():\n    x = 1\n    return globals()[\"x\"]\n\nprint(f())  # 99\n\nreal example:\nRecovery code can still reach a global flag even when a local variable shares its name."
     },
     {
-      "id": 79,
-      "question": "What does globals() return?",
-      "answer": "A dictionary of the module's global namespace, mapping names to values.\n\ncode:\nx = 5\nprint(globals()[\"x\"])  # 5\n\nreal example:\nDebug dashboards use globals() to poke at all top-level variables at once."
-    },
-    {
-      "id": 80,
-      "question": "What does locals() return?",
-      "answer": "A dictionary of the current local namespace.\n\ncode:\ndef f():\n    a = 1\n    b = 2\n    return locals()\n\nprint(f())  # {'a': 1, 'b': 2}\n\nreal example:\nTools that build test reports can snapshot locals() to see what a function was working with."
-    },
-    {
-      "id": 81,
+      "id": 66,
       "question": "How do you return multiple values from a function?",
       "answer": "Use return a, b and Python packs them into a single tuple.\n\ncode:\ndef minmax(nums):\n    return min(nums), max(nums)\n\nprint(minmax([3, 1, 2]))  # (1, 3)\n\nreal example:\nA stats function returns both average and count in one tuple for the caller to unpack."
     },
     {
-      "id": 82,
+      "id": 67,
       "question": "How do you capture multiple returned values?",
       "answer": "Unpack the tuple with x, y = f().\n\ncode:\ndef get():\n    return 1, 2\n\na, b = get()\nprint(a, b)  # 1 2\n\nreal example:\nMouse code uses x, y = get_position() to read both coordinates at once."
     },
     {
-      "id": 83,
+      "id": 68,
       "question": "Can return appear in the middle of a function?",
       "answer": "Yes, return exits the function immediately wherever it appears.\n\ncode:\ndef check(n):\n    if n < 0:\n        return \"negative\"\n    return \"ok\"\n\nprint(check(-3))  # negative\n\nreal example:\nValidation helpers return early on the first failing rule instead of continuing."
     },
     {
-      "id": 84,
+      "id": 69,
       "question": "What is an early return?",
       "answer": "An early return stops the function before its end, usually to exit on a condition.\n\ncode:\ndef is_adult(age):\n    if age < 18:\n        return False\n    return True\n\nprint(is_adult(20))  # True\n\nreal example:\nGuard clauses use early returns so each check exits as soon as an answer is known."
     },
     {
-      "id": 85,
+      "id": 70,
       "question": "Does return inside a loop stop the whole function?",
       "answer": "Yes, return ends the entire function, not just the loop.\n\ncode:\ndef find_even(nums):\n    for n in nums:\n        if n % 2 == 0:\n            return n\n    return None\n\nprint(find_even([1, 3, 4]))  # 4\n\nreal example:\nA search function returns as soon as it finds a match, without scanning the rest."
     },
     {
-      "id": 86,
+      "id": 71,
       "question": "What is the difference between return and print?",
       "answer": "return sends a value back to the caller; print only displays text on screen.\n\ncode:\ndef f():\n    return 42\n\nprint(f())  # 42, the returned value is printed\n\nreal example:\nA price calculator returns the total so software can use it, while print just shows it."
     },
     {
-      "id": 87,
-      "question": "What does a function with only a print statement return?",
-      "answer": "It returns None, because print is not a return.\n\ncode:\ndef f():\n    print(\"hi\")\n\nprint(f())  # hi then None\n\nreal example:\nButtons that only display a message return None; callers must not expect a value back."
-    },
-    {
-      "id": 88,
-      "question": "If a function has two return statements, which runs?",
-      "answer": "The first one that is actually executed.\n\ncode:\ndef f(n):\n    if n > 0:\n        return \"positive\"\n    return \"zero or less\"\n\nprint(f(5))  # positive\n\nreal example:\nBranching functions pick a return based on the input, like a grade boundary checker."
-    },
-    {
-      "id": 89,
+      "id": 72,
       "question": "What is the type of return 1, \"a\"?",
       "answer": "It is a tuple: (1, \"a\").\n\ncode:\ndef f():\n    return 1, \"a\"\n\nprint(f())      # (1, 'a')\nprint(type(f()))  # <class 'tuple'>\n\nreal example:\nStatus pairs like (code, message) are returned as tuples by many API helpers."
     },
     {
-      "id": 90,
-      "question": "Can you ignore a returned value?",
-      "answer": "Yes, simply do not assign it and the function still runs its work.\n\ncode:\ndef f():\n    print(\"running\")\n    return 1\n\nf()  # running (return value ignored)\n\nreal example:\nCalling a save function and ignoring its result still performs the save."
-    },
-    {
-      "id": 91,
+      "id": 73,
       "question": "What does return g() do?",
       "answer": "It calls g immediately and returns whatever g returns.\n\ncode:\ndef g():\n    return \"hi\"\n\ndef f():\n    return g()\n\nprint(f())  # hi\n\nreal example:\nWrapper functions forward the inner call's result without keeping copies of it."
     },
     {
-      "id": 92,
-      "question": "Can a function return a list?",
-      "answer": "Yes, any Python object, including a list, can be returned.\n\ncode:\ndef squares(n):\n    return [x * x for x in range(n)]\n\nprint(squares(4))  # [0, 1, 4, 9]\n\nreal example:\nA query function returns its result rows as a list for the caller to loop over."
-    },
-    {
-      "id": 93,
+      "id": 74,
       "question": "What is the type of None?",
       "answer": "None is of type NoneType.\n\ncode:\nprint(type(None))  # <class 'NoneType'>\n\nreal example:\nFunctions without a return value end up producing a NoneType object for the caller."
     },
     {
-      "id": 94,
-      "question": "Does return and return None produce the same value?",
-      "answer": "Yes, both return None.\n\ncode:\ndef a():\n    return\n\ndef b():\n    return None\n\nprint(a() is b())  # True\n\nreal example:\nStyle guides may prefer an explicit return None where the intent should be obvious."
-    },
-    {
-      "id": 95,
+      "id": 75,
       "question": "In a try/finally with return inside try, when does finally run?",
       "answer": "The finally block runs before the value is actually returned.\n\ncode:\ndef f():\n    try:\n        return \"try\"\n    finally:\n        print(\"cleanup\")\n\nprint(f())  # prints cleanup, then try\n\nreal example:\nClosing a file in finally guarantees cleanup even when the function returns early."
     },
     {
-      "id": 96,
+      "id": 76,
       "question": "Can a function return another function?",
       "answer": "Yes, functions are values and can be returned.\n\ncode:\ndef outer():\n    def inner():\n        return \"hi\"\n    return inner\n\nf = outer()\nprint(f())  # hi\n\nreal example:\nFactories return tailored functions, like a multiplier configured with a favorite factor."
     },
     {
-      "id": 97,
-      "question": "Can a function return a lambda?",
-      "answer": "Yes, a lambda is a normal function object that can be returned.\n\ncode:\ndef make_adder(n):\n    return lambda x: x + n\n\nadd5 = make_adder(5)\nprint(add5(3))  # 8\n\nreal example:\nA discount factory returns a lambda that applies a fixed percent to any price."
-    },
-    {
-      "id": 98,
+      "id": 77,
       "question": "What is a nested function?",
       "answer": "A nested function is a function defined inside another function.\n\ncode:\ndef outer():\n    def inner():\n        return \"inside\"\n    return inner()\n\nprint(outer())  # inside\n\nreal example:\nHelper routines private to one function are kept nested so they do not clutter the module."
     },
     {
-      "id": 99,
+      "id": 78,
       "question": "What is a closure?",
       "answer": "A closure is an inner function that captures and uses variables from its enclosing scope.\n\ncode:\ndef outer(x):\n    def inner(y):\n        return x + y\n    return inner\n\nadd = outer(10)\nprint(add(5))  # 15\n\nreal example:\nClosures remember settings, like a greeting function remembering the message language."
     },
     {
-      "id": 100,
+      "id": 79,
       "question": "Give a minimal closure example.",
       "answer": "An inner function captures x from its enclosing scope and uses it later.\n\ncode:\ndef outer(x):\n    def inner(y):\n        return x + y\n    return inner\n\nprint(outer(7)(3))  # 10\n\nreal example:\nThe remembered x acts like saved state, giving customized behavior without a class."
     },
     {
-      "id": 101,
+      "id": 80,
       "question": "What is a base case in recursion?",
       "answer": "A base case is the condition that stops the recursion from continuing.\n\ncode:\ndef count(n):\n    if n == 0:      # base case\n        return 0\n    return n + count(n - 1)\n\nprint(count(3))  # 6\n\nreal example:\nA base case is like knowing the bottom stair so the climb eventually ends."
     },
     {
-      "id": 102,
+      "id": 81,
       "question": "What happens if a recursive function has no base case?",
       "answer": "It keeps calling itself until Python raises a RecursionError.\n\ncode:\ndef boom():\n    return boom()\n\n# boom() -> RecursionError: maximum recursion depth exceeded\n\nreal example:\nAn endless loop down the call stack is caught so the program fails clearly instead of freezing."
     },
     {
-      "id": 103,
+      "id": 82,
       "question": "What is the default recursion limit in Python?",
       "answer": "It is about 1000 recursive calls deep by default.\n\ncode:\nimport sys\nprint(sys.getrecursionlimit())  # 1000\n\nreal example:\nDepth-first crawls that go too deep hit this limit, so loops are often a safer choice."
     },
     {
-      "id": 104,
+      "id": 83,
       "question": "What error is raised when recursion is too deep?",
       "answer": "A RecursionError is raised when the recursion limit is exceeded.\n\ncode:\ndef f(n):\n    return f(n + 1)\n\n# f(0) -> RecursionError: maximum recursion depth exceeded\n\nreal example:\nMistaken never-ending recursion is surfaced as a clear error instead of crashing mysteriously."
     },
     {
-      "id": 105,
+      "id": 84,
       "question": "How do you raise the recursion limit?",
       "answer": "Call sys.setrecursionlimit(n) with a larger number.\n\ncode:\nimport sys\nsys.setrecursionlimit(5000)\nprint(sys.getrecursionlimit())  # 5000\n\nreal example:\nHeavy recursive algorithms can ask for more headroom before running at scale."
     },
     {
-      "id": 106,
+      "id": 85,
       "question": "Why is raising the recursion limit risky?",
       "answer": "Too high a limit can crash the program with a C-level stack overflow.\n\ncode:\n# import sys\n# sys.setrecursionlimit(1000000)  # risky\n\nreal example:\nRaising the limit far past the real C stack budget can hard-crash, unlike a clean Python error."
     },
     {
-      "id": 107,
+      "id": 86,
       "question": "What is the call stack?",
       "answer": "The call stack is the runtime structure tracking the chain of active function calls.\n\ncode:\ndef a():\n    return b()\n\ndef b():\n    return \"done\"\n\nprint(a())  # done  (a called b, both on the stack)\n\nreal example:\nWhen an error occurs, its traceback reads the call stack to show which functions were called."
     },
     {
-      "id": 108,
-      "question": "What is a stack frame?",
-      "answer": "A stack frame is one entry on the call stack representing a single function call.\n\ncode:\ndef f():\n    return g()\n\ndef g():\n    return 1\n\nprint(f())  # 1 (two frames: f and g)\n\nreal example:\nEach nested call adds a frame, just like stacking boxes until the innermost one finishes."
-    },
-    {
-      "id": 109,
+      "id": 87,
       "question": "Write a recursive factorial function.",
       "answer": "A factorial multiplies n by the factorial of n minus 1, stopping at 1.\n\ncode:\ndef fact(n):\n    return 1 if n <= 1 else n * fact(n - 1)\n\nprint(fact(5))  # 120\n\nreal example:\nCombination counts in statistics use factorial, computed easily this way for small n."
     },
     {
-      "id": 110,
+      "id": 88,
       "question": "What is 0! ?",
       "answer": "0! equals 1 by mathematical convention.\n\ncode:\nprint(1 if 0 <= 1 else 0 * 0)  # 1\n\nreal example:\nBase case 1 lets factorial stop cleanly: fact(0) returns 1 so formulas stay consistent."
     },
     {
-      "id": 111,
+      "id": 89,
       "question": "Write a recursive Fibonacci function.",
       "answer": "Add the two previous numbers, using n as the base case for small n.\n\ncode:\ndef fib(n):\n    return n if n < 2 else fib(n - 1) + fib(n - 2)\n\nprint(fib(6))  # 8\n\nreal example:\nFibonacci-style growth models rabbit or branching counts, though it gets slow for large n."
     },
     {
-      "id": 112,
+      "id": 90,
       "question": "Why is the naive recursive Fibonacci slow?",
       "answer": "It recomputes the same subproblems over and over, growing exponentially.\n\ncode:\ndef fib(n):  # recalculates fib(3) many times\n    return n if n < 2 else fib(n - 1) + fib(n - 2)\n\nreal example:\nComputing fib(40) redoes millions of calls, which is why caching or loops are preferred."
     },
     {
-      "id": 113,
+      "id": 91,
       "question": "How do you speed up repeated recursion?",
       "answer": "Use memoization: store results in a dict or apply the lru_cache decorator.\n\ncode:\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fib(n):\n    return n if n < 2 else fib(n - 1) + fib(n - 2)\n\nprint(fib(40))  # 102334155\n\nreal example:\nCached math results make repeated server-side calculations much faster."
     },
     {
-      "id": 114,
+      "id": 92,
       "question": "Write a recursive power function power(x, n).",
       "answer": "Multiply x by the power of x to n minus 1, stopping when n is zero.\n\ncode:\ndef power(x, n):\n    return 1 if n == 0 else x * power(x, n - 1)\n\nprint(power(2, 3))  # 8\n\nreal example:\nComputing compound interest to the nth year can follow this same repeated-multiply shape."
     },
     {
-      "id": 115,
-      "question": "Write a recursive sum function for 1..n.",
-      "answer": "Add n to the sum of everything below it, stopping at zero.\n\ncode:\ndef s(n):\n    return 0 if n == 0 else n + s(n - 1)\n\nprint(s(4))  # 10\n\nreal example:\nA ladder of payments or tasks can be totalled with the same add-one-per-level pattern."
-    },
-    {
-      "id": 116,
+      "id": 93,
       "question": "Write a recursive string reversal.",
       "answer": "Take the last character, then recurse on the rest of the string.\n\ncode:\ndef rev(s):\n    return s if len(s) <= 1 else s[-1] + rev(s[:-1])\n\nprint(rev(\"abc\"))  # cba\n\nreal example:\nPalindrome checkers often use this idea to mirror a word front to back."
     },
     {
-      "id": 117,
-      "question": "What is direct recursion?",
-      "answer": "Direct recursion is when a function calls itself.\n\ncode:\ndef count(n):\n    return 0 if n == 0 else 1 + count(n - 1)\n\nprint(count(3))  # 3\n\nreal example:\nA countdown function that calls itself is the simplest form of recursion."
-    },
-    {
-      "id": 118,
-      "question": "What is indirect (mutual) recursion?",
-      "answer": "Two functions call each other in a cycle, like A calls B and B calls A.\n\ncode:\ndef is_even(n):\n    return True if n == 0 else is_odd(n - 1)\n\ndef is_odd(n):\n    return False if n == 0 else is_even(n - 1)\n\nprint(is_even(4))  # True\n\nreal example:\nState machines that bounce between two states can be modeled with mutual recursion."
-    },
-    {
-      "id": 119,
+      "id": 94,
       "question": "Is Python's recursion tail-optimized?",
       "answer": "No, Python has no tail-call optimization, so deep tail recursion still fills the stack.\n\ncode:\ndef tail(n, acc=0):  # still uses the call stack in Python\n    return acc if n == 0 else tail(n - 1, acc + 1)\n\nreal example:\nLanguages that optimize tail calls can recurse forever; Python programs should loop instead."
     },
     {
-      "id": 120,
+      "id": 95,
       "question": "When should you prefer loops over recursion?",
       "answer": "Prefer loops for very deep or simple iterative tasks to avoid RecursionError and overhead.\n\ncode:\ndef fact(n):  # iterative version\n    r = 1\n    for i in range(1, n + 1):\n        r *= i\n    return r\n\nprint(fact(5))  # 120\n\nreal example:\nProcessing a million-row file with a loop is safe where recursion would crash."
     },
     {
-      "id": 121,
+      "id": 96,
       "question": "What does fn.__name__ give?",
       "answer": "It gives the function's name as a string.\n\ncode:\ndef my_func():\n    pass\n\nprint(my_func.__name__)  # my_func\n\nreal example:\nLogging tools print fn.__name__ to show which function produced each message."
     },
     {
-      "id": 122,
+      "id": 97,
       "question": "What does callable(x) do?",
       "answer": "It returns True if x can be called like a function.\n\ncode:\ndef f():\n    pass\n\nprint(callable(f))  # True\n\nreal example:\nPlugin loaders check callable() before treating a config value as a function to run."
     },
     {
-      "id": 123,
+      "id": 98,
       "question": "What does print(callable(5)) output?",
       "answer": "It prints False because an integer cannot be called.\n\ncode:\nprint(callable(5))  # False\n\nreal example:\nBefore invoking a user-provided handler, callable() tells you whether it is runnable."
     },
     {
-      "id": 124,
+      "id": 99,
       "question": "Can you store functions in a list and call them?",
       "answer": "Yes, with funcs[0]().\n\ncode:\ndef add(a, b):\n    return a + b\n\ndef mul(a, b):\n    return a * b\n\nfuncs = [add, mul]\nprint(funcs[0](2, 3))  # 5\n\nreal example:\nA menu of operations can live in one list and be picked by index or name."
     },
     {
-      "id": 125,
+      "id": 100,
       "question": "What is a dispatch table?",
       "answer": "A dict mapping keys to functions so you can call funcs[key](args).\n\ncode:\ndef add(a, b):\n    return a + b\n\nops = {\"+\": add}\nprint(ops[\"+\"](2, 3))  # 5\n\nreal example:\nCommand-line tools map subcommand names to handler functions in one table."
     },
     {
-      "id": 126,
+      "id": 101,
       "question": "Give a counter example using a mutable default.",
       "answer": "A mutable default list is reused across calls, so the counter never resets.\n\ncode:\ndef counter(count=[]):\n    count.append(1)\n    return len(count)\n\nprint(counter())  # 1\nprint(counter())  # 2\n\nreal example:\nThough a working trick, this relies on shared default state, which is easy to misunderstand."
     },
     {
-      "id": 127,
+      "id": 102,
       "question": "Why is a mutable default shared while a new list literal is not?",
       "answer": "The default object is created once at def time and reused, while a literal inside the body runs each call.\n\ncode:\ndef a(lst=[]):      # one shared list\n    lst.append(1)\n    return lst\n\ndef b():\n    lst = []        # a fresh list every call\n    lst.append(1)\n    return lst\n\nreal example:\nSharing a default feels like passing one reusable ice tray; a literal makes a new tray each time."
     },
     {
-      "id": 128,
+      "id": 103,
       "question": "What does fn.__defaults__ hold?",
       "answer": "A tuple of the default values for the regular parameters.\n\ncode:\ndef f(a, b=2, c=3):\n    pass\n\nprint(f.__defaults__)  # (2, 3)\n\nreal example:\nIntrospection tools read __defaults__ to summarize a function's optional arguments."
     },
     {
-      "id": 129,
-      "question": "What does fn.__kwdefaults__ hold?",
-      "answer": "A dict of the keyword-only defaults.\n\ncode:\ndef f(*, x=1, y=2):\n    pass\n\nprint(f.__kwdefaults__)  # {'x': 1, 'y': 2}\n\nreal example:\nInspection tools use __kwdefaults__ to describe function parameters that must be keyword."
-    },
-    {
-      "id": 130,
-      "question": "What does fn.__annotations__ hold?",
-      "answer": "A dict of parameter and return type annotations.\n\ncode:\ndef f(x: int, name: str) -> bool:\n    return bool(x)\n\nprint(f.__annotations__)  # {'x': <class 'int'>, 'name': <class 'str'>, 'return': <class 'bool'>}\n\nreal example:\nType checkers like mypy read __annotations__ to validate your code."
-    },
-    {
-      "id": 131,
+      "id": 104,
       "question": "What is the syntax of a type hint?",
       "answer": "Write def f(x: int, name: str) -> bool: with types after parameters and return.\n\ncode:\ndef f(x: int, name: str) -> bool:\n    return x > 0\n\nreal example:\nHints document intent and help editors flag mistakes before the code even runs."
     },
     {
-      "id": 132,
+      "id": 105,
       "question": "Does Python enforce type hints at runtime?",
       "answer": "No, they are documentation for tools like mypy, not runtime checks.\n\ncode:\ndef add(a: int, b: int) -> int:\n    return a + b\n\nprint(add(\"x\", \"y\"))  # xy, no runtime complaint\n\nreal example:\nHints are advisory, so a fast prototype can still pass anything despite the types written."
     },
     {
-      "id": 133,
+      "id": 106,
       "question": "What is duck typing in functions?",
       "answer": "Relying on an object's behavior or methods rather than its declared type.\n\ncode:\ndef total(t):\n    return sum(t)\n\nprint(total([1, 2]))      # 3, works for lists\nprint(total((1, 2, 3)))   # 6, works for tuples\n\nreal example:\nIf it walks and talks like a sequence, the function accepts it, so both lists and tuples work."
     },
     {
-      "id": 134,
+      "id": 107,
       "question": "What does EAFP stand for and mean?",
       "answer": "Easier to Ask Forgiveness than Permission: use try/except instead of pre-checks.\n\ncode:\ndef parse_int(s):\n    try:\n        return int(s)\n    except ValueError:\n        return None\n\nprint(parse_int(\"12\"), parse_int(\"x\"))  # 12 None\n\nreal example:\nReading a config value with try/except is clean when failures are rare but possible."
     },
     {
-      "id": 135,
-      "question": "How do you raise an error inside a function?",
-      "answer": "Use raise ValueError(\"message\").\n\ncode:\ndef divide(a, b):\n    if b == 0:\n        raise ValueError(\"division by zero\")\n    return a / b\n\n# print(divide(1, 0)) -> ValueError: division by zero\n\nreal example:\nValidator functions raise errors so callers learn immediately when input is invalid."
-    },
-    {
-      "id": 136,
-      "question": "Can a function catch errors raised internally?",
-      "answer": "Yes, with a try/except block inside the function.\n\ncode:\ndef safe_divide(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return None\n\nprint(safe_divide(1, 0))  # None\n\nreal example:\nA math helper returns None instead of crashing when a denominator happens to be zero."
-    },
-    {
-      "id": 137,
-      "question": "What does print-return of a validation function usually look like?",
-      "answer": "It returns early with an error or raises, keeping one clean validation path.\n\ncode:\ndef check_age(age):\n    if age < 0:\n        raise ValueError(\"age cannot be negative\")\n    return \"ok\"\n\nreal example:\nSignup forms validate each field and stop at the first problem with a clear message."
-    },
-    {
-      "id": 138,
+      "id": 108,
       "question": "What is a pure function?",
       "answer": "A pure function always gives the same output for the same input and has no side effects.\n\ncode:\ndef square(x):\n    return x * x\n\nprint(square(3), square(3))  # 9 9\n\nreal example:\nA tax calculator is pure: same price in, same tax out, no files touched."
     },
     {
-      "id": 139,
+      "id": 109,
       "question": "What counts as a side effect?",
       "answer": "Changing globals, printing, writing files, or network calls are all side effects.\n\ncode:\nx = 0\ndef bump():\n    global x\n    x += 1  # mutates global: a side effect\n\ndef pure(n):\n    return n + 1  # no side effects\n\nreal example:\nA function that writes to a log file has side effects that tests must account for."
     },
     {
-      "id": 140,
+      "id": 110,
       "question": "Why are pure functions easier to test?",
       "answer": "They are deterministic and independent of external state.\n\ncode:\ndef add(a, b):\n    return a + b\n\nassert add(2, 3) == 5\n\nreal example:\nUnit tests call a pure function with fixed inputs and always expect the fixed answer."
     },
     {
-      "id": 141,
+      "id": 111,
       "question": "What is function composition?",
       "answer": "Chaining functions so one's output feeds the next: h(x) = g(f(x)).\n\ncode:\ndef double(x):\n    return x * 2\n\ndef add1(x):\n    return x + 1\n\nprint(add1(double(3)))  # 7\n\nreal example:\nPipeline stages like validate then format chain naturally into one composed flow."
     },
     {
-      "id": 142,
+      "id": 112,
       "question": "How do you import a function from another module?",
       "answer": "Use from math import sqrt to import just that one name.\n\ncode:\nfrom math import sqrt\n\nprint(sqrt(16))  # 4.0\n\nreal example:\nImporting only sqrt avoids polluting your namespace with the rest of math."
     },
     {
-      "id": 143,
-      "question": "How do you import an entire module?",
-      "answer": "Use import math and then call math.sqrt().\n\ncode:\nimport math\n\nprint(math.sqrt(16))  # 4.0\n\nreal example:\nA stats script imports math once and uses its functions with the math. prefix."
-    },
-    {
-      "id": 144,
+      "id": 113,
       "question": "What does if __name__ == \"__main__\": do?",
       "answer": "It runs the block only when the file is executed directly, not when imported.\n\ncode:\ndef main():\n    print(\"running\")\n\nif __name__ == \"__main__\":\n    main()\n\nreal example:\nScripts can be tested by import without triggering their command-line logic by accident."
     },
     {
-      "id": 145,
+      "id": 114,
       "question": "Why wrap the main code in a main() function?",
       "answer": "It keeps globals clean, improves structure, and works with the guard statement.\n\ncode:\ndef main():\n    print(\"start\")\n\nif __name__ == \"__main__\":\n    main()\n\nreal example:\nLarger tools keep entry logic in main() so imports stay side-effect free."
     },
     {
-      "id": 146,
+      "id": 115,
       "question": "What is a higher-order function?",
       "answer": "A higher-order function takes another function as input, returns one, or both.\n\ncode:\ndef apply(fn, x):\n    return fn(x)\n\nprint(apply(abs, -5))  # 5\n\nreal example:\nEvent handlers are passed into frameworks, a classic higher-order use."
     },
     {
-      "id": 147,
-      "question": "Give a high-level example of passing a function as an argument.",
-      "answer": "Pass a function into another function so it can be applied to data.\n\ncode:\ndef apply(fn, x):\n    return fn(x)\n\nprint(apply(len, \"abc\"))  # 3\n\nreal example:\nData pipelines hand each row to a transform function via apply-style helpers."
-    },
-    {
-      "id": 148,
+      "id": 116,
       "question": "What does list(map(f, items)) do?",
       "answer": "It applies f to every item and returns the results as a list.\n\ncode:\nprint(list(map(str.upper, [\"a\", \"b\"])))  # ['A', 'B']\n\nreal example:\nConvert a list of typed readings to upper-case labels in one line."
     },
     {
-      "id": 149,
+      "id": 117,
       "question": "What does map() return?",
       "answer": "It returns a lazy map object (an iterator), not a list.\n\ncode:\nm = map(lambda x: x + 1, [1, 2])\nprint(type(m))  # <class 'map'>\n\nreal example:\nLaziness means huge inputs can be processed without building a full result upfront."
     },
     {
-      "id": 150,
-      "question": "How do you turn a map object into a list?",
-      "answer": "Call list(map(...)) to collect the results.\n\ncode:\nprint(list(map(lambda x: x * 2, [1, 2, 3])))  # [2, 4, 6]\n\nreal example:\nAfter mapping raw sensor values, wrap in list() to store them for a report."
-    },
-    {
-      "id": 151,
+      "id": 118,
       "question": "What does filter() do?",
       "answer": "It returns an iterator of the items for which the function gives a truthy result.\n\ncode:\nprint(list(filter(lambda x: x > 1, [1, 2, 3])))  # [2, 3]\n\nreal example:\nKeep only paid orders from a list using a filter that tests the paid flag."
     },
     {
-      "id": 152,
+      "id": 119,
       "question": "What is sorted(items, key=f) doing?",
       "answer": "It sorts items using f's result for each item as the comparison key.\n\ncode:\nprint(sorted([\"bb\", \"a\", \"ccc\"], key=len))  # ['a', 'bb', 'ccc']\n\nreal example:\nSort customers by a computed name length or by last name extracted with a key."
     },
     {
-      "id": 153,
+      "id": 120,
       "question": "Is sorted() stable?",
       "answer": "Yes, equal keys keep their original relative order.\n\ncode:\ndata = [(1, \"b\"), (2, \"a\"), (1, \"a\")]\nprint(sorted(data, key=lambda t: t[0]))  # [(1, 'b'), (1, 'a'), (2, 'a')]\n\nreal example:\nStable sort preserves input order among ties, like keeping entry order for equal scores."
     },
     {
-      "id": 154,
-      "question": "What is the difference between sort() and sorted()?",
-      "answer": "list.sort() mutates the list in place; sorted() returns a new list.\n\ncode:\na = [3, 1, 2]\na.sort()\nprint(a)  # [1, 2, 3]\n\nb = [3, 1, 2]\nprint(sorted(b))  # [1, 2, 3]\nprint(b)          # [3, 1, 2] unchanged\n\nreal example:\nUse sorted() when the original order must be kept, like preserving a source dataset."
-    },
-    {
-      "id": 155,
+      "id": 121,
       "question": "What does print(def f(): return 1)\nf() output?",
       "answer": "Calling f() returns 1, which is what gets printed.\n\ncode:\ndef f():\n    return 1\n\nprint(f())  # 1\n\nreal example:\nSmall config lookups like get_timeout() returning a fixed number follow this pattern."
     },
     {
-      "id": 156,
+      "id": 122,
       "question": "What does print(f()) output for def f(x=5): return x?",
       "answer": "It prints 5, the default value of x.\n\ncode:\ndef f(x=5):\n    return x\n\nprint(f())  # 5\n\nreal example:\nFallback settings like a default page size of 5 are returned when nothing is passed."
     },
     {
-      "id": 157,
-      "question": "What does print(f(1), f(1, 3)) output for def f(a, b=2): return a + b?",
-      "answer": "It prints 3 and 4, because the default b=2 only applies to the first call.\n\ncode:\ndef f(a, b=2):\n    return a + b\n\nprint(f(1), f(1, 3))  # 3 4\n\nreal example:\nOptional parameters let one function serve both default and customized calls."
-    },
-    {
-      "id": 158,
-      "question": "What does print(g()) output for def g(): pass?",
-      "answer": "It prints None, because a pass-only function returns nothing.\n\ncode:\ndef g():\n    pass\n\nprint(g())  # None\n\nreal example:\nA placeholder stub returns None until its real logic is written."
-    },
-    {
-      "id": 159,
-      "question": "What does print(f()) output for def f(): return?",
-      "answer": "It prints None, since a bare return sends nothing back.\n\ncode:\ndef f():\n    return\n\nprint(f())  # None\n\nreal example:\nSignals like \"finished, nothing to report\" return None to the caller."
-    },
-    {
-      "id": 160,
+      "id": 123,
       "question": "What does print(f(1)) output for def f(x): return x * 2 if x > 2 else x?",
       "answer": "It prints 1, because 1 is not greater than 2, so it returns x unchanged.\n\ncode:\ndef f(x):\n    return x * 2 if x > 2 else x\n\nprint(f(1))  # 1\n\nreal example:\nBulk discounts often double only above a threshold, leaving small orders untouched."
     },
     {
-      "id": 161,
-      "question": "What does print(f(3), f(1)) output for def f(x): return x * 2 if x > 2 else x?",
-      "answer": "It prints 6 and 1: 3 doubles to 6, but 1 stays 1.\n\ncode:\ndef f(x):\n    return x * 2 if x > 2 else x\n\nprint(f(3), f(1))  # 6 1\n\nreal example:\nA shipping rule doubles weight over 2kg and keeps lighter orders as-is."
-    },
-    {
-      "id": 162,
-      "question": "What does print(f()) output for def f(): return 1, 2?",
-      "answer": "It prints (1, 2), a tuple packed from the two values.\n\ncode:\ndef f():\n    return 1, 2\n\nprint(f())  # (1, 2)\n\nreal example:\nReturning (status, message) as a tuple is a common API response shape."
-    },
-    {
-      "id": 163,
-      "question": "What does a, b = f() print for def f(): return 1, 2?",
-      "answer": "It assigns a = 1 and b = 2 via tuple unpacking.\n\ncode:\ndef f():\n    return 1, 2\n\na, b = f()\nprint(a, b)  # 1 2\n\nreal example:\nCoordinates like x, y = get_point() come from unpacking a returned tuple."
-    },
-    {
-      "id": 164,
+      "id": 124,
       "question": "What does print(f(1, 2)) output for def f(x, y): return y, x?",
       "answer": "It prints (2, 1), the values swapped.\n\ncode:\ndef f(x, y):\n    return y, x\n\nprint(f(1, 2))  # (2, 1)\n\nreal example:\nA swap helper returns (y, x) so callers can reorder fields like date and name."
     },
     {
-      "id": 165,
-      "question": "What does print(f(\"ab\")) output for def f(s): return s[::-1]?",
-      "answer": "It prints \"ba\", the reversed string.\n\ncode:\ndef f(s):\n    return s[::-1]\n\nprint(f(\"ab\"))  # ba\n\nreal example:\nReversing a DNA fragment or a word for a puzzle uses the same slice trick."
-    },
-    {
-      "id": 166,
-      "question": "What does print(f(4)) output for def f(n): return n if n < 2 else f(n-1) + f(n-2)?",
-      "answer": "It prints 3, the fourth Fibonacci number.\n\ncode:\ndef f(n):\n    return n if n < 2 else f(n - 1) + f(n - 2)\n\nprint(f(4))  # 3\n\nreal example:\nFibonacci-style recurrence models growth in populations or price series."
-    },
-    {
-      "id": 167,
+      "id": 125,
       "question": "What does print(f([10, 20, 30])) output for def f(a): return sum(a) / len(a)?",
       "answer": "It prints 20.0, the average of the list.\n\ncode:\ndef f(a):\n    return sum(a) / len(a)\n\nprint(f([10, 20, 30]))  # 20.0\n\nreal example:\nGrade or rating systems compute an average this exact way."
     },
     {
-      "id": 168,
-      "question": "What does print(f([1, 2])) output for def f(a): return [x for x in a]?",
-      "answer": "It prints [1, 2], a new list built from the same items.\n\ncode:\ndef f(a):\n    return [x for x in a]\n\nprint(f([1, 2]))  # [1, 2]\n\nreal example:\nMaking a shallow copy of a row before editing avoids changing the original data."
-    },
-    {
-      "id": 169,
+      "id": 126,
       "question": "What does the following print?\ndef f(a=[]):\n    a.append(1)\n    return a\nprint(f())\nprint(f())",
       "answer": "It prints [1] then [1, 1], because the default list is shared between calls.\n\ncode:\ndef f(a=[]):\n    a.append(1)\n    return a\n\nprint(f())  # [1]\nprint(f())  # [1, 1]\n\nreal example:\nA shared default is like one community notepad everyone appends to without knowing."
     },
     {
-      "id": 170,
+      "id": 127,
       "question": "What does the following print?\ndef f(a=None):\n    a = [] if a is None else a\n    a.append(1)\n    return a\nprint(f())\nprint(f())",
       "answer": "It prints [1] then [1], because None resets to a fresh list each call.\n\ncode:\ndef f(a=None):\n    a = [] if a is None else a\n    a.append(1)\n    return a\n\nprint(f())  # [1]\nprint(f())  # [1]\n\nreal example:\nEach request gets its own fresh list copy, so no data leaks between callers."
     },
     {
-      "id": 171,
-      "question": "What does print(f(1), f(1, 3)) output for def f(a, b=2): return a - b?",
-      "answer": "It prints -1 and -2, computed as 1-2 and 1-3.\n\ncode:\ndef f(a, b=2):\n    return a - b\n\nprint(f(1), f(1, 3))  # -1 -2\n\nreal example:\nSubtracting defaults, like minutes remaining minus a default buffer, follows this pattern."
-    },
-    {
-      "id": 172,
-      "question": "What does print(f(1)) output for def f(*a): return a?",
-      "answer": "It prints (1,), a one-item tuple.\n\ncode:\ndef f(*a):\n    return a\n\nprint(f(1))  # (1,)\n\nreal example:\nCollecting any number of extras into a tuple keeps the trailing comma that marks a tuple."
-    },
-    {
-      "id": 173,
-      "question": "What does print(f(1, 2, 3)) output for def f(*a): return sum(a)?",
-      "answer": "It prints 6, the sum of all collected arguments.\n\ncode:\ndef f(*a):\n    return sum(a)\n\nprint(f(1, 2, 3))  # 6\n\nreal example:\nCart totals can add 2 or 20 prices because *a gathers them all."
-    },
-    {
-      "id": 174,
-      "question": "What does print(f(a=1)) output for def f(**k): return k?",
-      "answer": "It prints {'a': 1}, the collected keyword arguments dict.\n\ncode:\ndef f(**k):\n    return k\n\nprint(f(a=1))  # {'a': 1}\n\nreal example:\nReceiving arbitrary named options into a dict lets config spread cleanly."
-    },
-    {
-      "id": 175,
-      "question": "What does print(f(*[1, 2])) output for def f(a, b): return a + b?",
-      "answer": "It prints 3, since the list is unpacked into arguments a=1 and b=2.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f(*[1, 2]))  # 3\n\nreal example:\nUnpacking a saved pair of coordinates into a function is quick and clear."
-    },
-    {
-      "id": 176,
-      "question": "What does print(f(**{\"a\": 5, \"b\": 2})) output for def f(a, b): return a - b?",
-      "answer": "It prints 3, computed as 5 - 2 from the unpacked dict.\n\ncode:\ndef f(a, b):\n    return a - b\n\nprint(f(**{\"a\": 5, \"b\": 2}))  # 3\n\nreal example:\nA settings dict can be spread straight into a function expecting those named options."
-    },
-    {
-      "id": 177,
+      "id": 128,
       "question": "What does print(f(1, c=10)) output for def f(a, b=1, c=2): return a + b + c?",
       "answer": "It prints 12, from 1 + 1 + 10 using the c override.\n\ncode:\ndef f(a, b=1, c=2):\n    return a + b + c\n\nprint(f(1, c=10))  # 12\n\nreal example:\nOverriding just one default, like an extra delivery fee, keeps other defaults intact."
     },
     {
-      "id": 178,
-      "question": "What does print(f(y=1, x=2)) output for def f(x, y): return x + y?",
-      "answer": "It prints 3, because keyword order does not matter for named arguments.\n\ncode:\ndef f(x, y):\n    return x + y\n\nprint(f(y=1, x=2))  # 3\n\nreal example:\nNamed options like color=\"red\", size=12 can be written in any convenient order."
-    },
-    {
-      "id": 179,
-      "question": "What happens with f(1, a=2) for def f(a, b)?",
-      "answer": "A TypeError is raised because a gets both a positional and a keyword value.\n\ncode:\ndef f(a, b):\n    return a + b\n\n# f(1, a=2) -> TypeError: f() got multiple values for argument 'a'\n\nreal example:\nPassing the same slot twice is caught immediately, preventing ambiguous arguments."
-    },
-    {
-      "id": 180,
-      "question": "What does print(list(map(len, [\"a\", \"ab\"]))) output?",
-      "answer": "It prints [1, 2], the lengths of the two strings.\n\ncode:\nprint(list(map(len, [\"a\", \"ab\"])))  # [1, 2]\n\nreal example:\nCounting characters across many usernames is done in one line with map(len, ...)."
-    },
-    {
-      "id": 181,
-      "question": "What does print(list(filter(None, [0, 1, \"\", \"x\"]))) output?",
-      "answer": "It prints [1, 'x'], since None keeps only truthy items.\n\ncode:\nprint(list(filter(None, [0, 1, \"\", \"x\"])))  # [1, 'x']\n\nreal example:\nRemoving empty replies and zero scores from a data feed keeps only meaningful values."
-    },
-    {
-      "id": 182,
-      "question": "What does print(f(3)) output for def f(): return 42?",
-      "answer": "A TypeError occurs because f takes 0 positional arguments but 1 was given.\n\ncode:\ndef f():\n    return 42\n\n# f(3) -> TypeError: f() takes 0 positional arguments but 1 was given\n\nreal example:\nPassing extra arguments by mistake is flagged instead of being silently ignored."
-    },
-    {
-      "id": 183,
-      "question": "What does print(list(map(lambda x: x * 2, [1, 2, 3]))) output?",
-      "answer": "It prints [2, 4, 6], doubling each value.\n\ncode:\nprint(list(map(lambda x: x * 2, [1, 2, 3])))  # [2, 4, 6]\n\nreal example:\nScaling prices by a tax factor across a product list uses this pattern."
-    },
-    {
-      "id": 184,
-      "question": "What is the name of this kind of function: return n if n <= 1 else n * f(n - 1)?",
-      "answer": "It is a recursive function, one that calls itself.\n\ncode:\ndef f(n):\n    return 1 if n <= 1 else n * f(n - 1)\n\nprint(f(5))  # 120\n\nreal example:\nRecursion fits problems that repeat a step on smaller inputs, like nested folders."
-    },
-    {
-      "id": 185,
-      "question": "What does print(f(5)) output for def f(n): return 1 if n <= 1 else n * f(n - 1)?",
-      "answer": "It prints 120, which is 5 factorial.\n\ncode:\ndef f(n):\n    return 1 if n <= 1 else n * f(n - 1)\n\nprint(f(5))  # 120\n\nreal example:\nCombination counts used in lotteries or seating arrangements are factorial products."
-    },
-    {
-      "id": 186,
-      "question": "What does print(f(4)) output for def f(n): return 0 if n == 0 else n + f(n - 1)?",
-      "answer": "It prints 10, the sum 1 + 2 + 3 + 4.\n\ncode:\ndef f(n):\n    return 0 if n == 0 else n + f(n - 1)\n\nprint(f(4))  # 10\n\nreal example:\nTotalling a running ladder of costs, like daily deposits, uses this sum recursion."
-    },
-    {
-      "id": 187,
-      "question": "What does f(0) return for a power function with base x?",
-      "answer": "It returns 1, since any number to the power of zero equals 1.\n\ncode:\ndef power(x, n):\n    return 1 if n == 0 else x * power(x, n - 1)\n\nprint(power(5, 0))  # 1\n\nreal example:\nInterest and growth formulas rely on the zero-exponent convention being 1."
-    },
-    {
-      "id": 188,
-      "question": "What does print(func.__name__) output for def my_func(): pass?",
-      "answer": "It prints my_func, the function's name string.\n\ncode:\ndef my_func():\n    pass\n\nprint(my_func.__name__)  # my_func\n\nreal example:\nLogging systems display func.__name__ to identify which handler ran."
-    },
-    {
-      "id": 189,
-      "question": "What is the __doc__ attribute?",
-      "answer": "It holds the function's docstring, or None when there is none.\n\ncode:\ndef f():\n    \"My description.\"\n    return 1\n\nprint(f.__doc__)  # My description.\n\nreal example:\nDocumentation generators read __doc__ to build help pages automatically."
-    },
-    {
-      "id": 190,
+      "id": 129,
       "question": "What does print(type(max)) output?",
       "answer": "It prints <class 'builtin_function_or_method'>.\n\ncode:\nprint(type(max))  # <class 'builtin_function_or_method'>\n\nreal example:\nReflection tools inspect built-ins like max to understand what kind of callable they are."
     },
     {
-      "id": 191,
-      "question": "Can you pass a bound method to another function?",
-      "answer": "Yes, a bound method like s.upper is a callable that can be handed around.\n\ncode:\ns = \"abc\"\nprint(list(map(s.upper, [\"a\", \"b\"])))  # ['A', 'B']\n\nreal example:\nPassing obj.method as a callback keeps the object attached automatically."
-    },
-    {
-      "id": 192,
+      "id": 130,
       "question": "What is a callable object?",
       "answer": "Anything invokable with parentheses, including functions, classes, and instances with __call__.\n\ncode:\nclass Adder:\n    def __call__(self, x):\n        return x + 1\n\nf = Adder()\nprint(callable(f), f(1))  # True 2\n\nreal example:\nFramework callbacks accept any callable, so classes and functions both work."
     },
     {
-      "id": 193,
+      "id": 131,
       "question": "What does __call__ do?",
       "answer": "It makes an instance callable, so obj() invokes its __call__ method.\n\ncode:\nclass Double:\n    def __call__(self, x):\n        return x * 2\n\nd = Double()\nprint(d(4))  # 8\n\nreal example:\nConfiguration objects that behave like functions can hide setup behind obj(args)."
     },
     {
-      "id": 194,
-      "question": "What is a functor?",
-      "answer": "A functor is a class instance that behaves like a function via __call__.\n\ncode:\nclass Scale:\n    def __init__(self, k):\n        self.k = k\n    def __call__(self, x):\n        return x * self.k\n\ns = Scale(3)\nprint(s(5))  # 15\n\nreal example:\nA scaling functor remembers its factor while being callable like a plain function."
-    },
-    {
-      "id": 195,
-      "question": "When would you use a class with __call__ instead of a closure?",
-      "answer": "Use it when you need extra state, methods, or reusable behavior.\n\ncode:\nclass Count:\n    def __init__(self):\n        self.n = 0\n    def __call__(self):\n        self.n += 1\n        return self.n\n\nc = Count()\nprint(c(), c())  # 1 2\n\nreal example:\nA retry counter with methods like reset() is clearer as a class than a closure."
-    },
-    {
-      "id": 196,
+      "id": 132,
       "question": "What is a factory function?",
       "answer": "A factory is a function that creates and returns another object or function.\n\ncode:\ndef make_adder(n):\n    return lambda x: x + n\n\nadd7 = make_adder(7)\nprint(add7(3))  # 10\n\nreal example:\nGenerating tailored validators or handlers per user is typical factory work."
     },
     {
-      "id": 197,
-      "question": "Give a function factory example.",
-      "answer": "A factory captures a value and returns a function that uses it.\n\ncode:\ndef make_adder(n):\n    return lambda x: x + n\n\nadd5 = make_adder(5)\nprint(add5(10))  # 15\n\nreal example:\nFactories create discount functions with fixed percentages for different product tiers."
-    },
-    {
-      "id": 198,
-      "question": "What does fn.__code__.co_argcount represent?",
-      "answer": "The number of positional parameters the function accepts.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f.__code__.co_argcount)  # 2\n\nreal example:\nIntrospection libraries inspect arity before passing callbacks to an engine."
-    },
-    {
-      "id": 199,
+      "id": 133,
       "question": "What module do you import functools.partial from?",
       "answer": "You import it with from functools import partial.\n\ncode:\nfrom functools import partial\n\ndef add(a, b):\n    return a + b\n\nadd9 = partial(add, 9)\nprint(add9(1))  # 10\n\nreal example:\nPre-filling options like base=2 for int() simplifies repeated structured calls."
     },
     {
-      "id": 200,
+      "id": 134,
       "question": "What does partial do?",
       "answer": "It fixes some arguments of a function and returns a new function with fewer arguments.\n\ncode:\nfrom functools import partial\n\ndef power(base, exp):\n    return base ** exp\n\nsquare = partial(power, exp=2)\nprint(square(3))  # 9\n\nreal example:\nBuilding reusable custom functions from library ones is a classic partial use."
     },
     {
-      "id": 201,
-      "question": "What does partial(pow, 2) create?",
-      "answer": "It creates a function that computes 2 ** x when called with one argument.\n\ncode:\nfrom functools import partial\n\ntwo_pow = partial(pow, 2)\nprint(two_pow(3))  # 8\n\nreal example:\nPre-fixing the base lets you reuse small_scale_calc = partial(pow, 2) across a data job."
-    },
-    {
-      "id": 202,
-      "question": "What is reduce used for?",
-      "answer": "It folds a sequence into one cumulative value from left to right.\n\ncode:\nfrom functools import reduce\n\nprint(reduce(lambda a, b: a + b, [1, 2, 3, 4]))  # 10\n\nreal example:\nTotalling sales or building one combined report from many rows is reduce in action."
-    },
-    {
-      "id": 203,
-      "question": "Where is reduce imported from?",
-      "answer": "From the functools module: from functools import reduce.\n\ncode:\nfrom functools import reduce\n\nprint(reduce(lambda a, b: a * b, [2, 3, 4]))  # 24\n\nreal example:\nPython separates tools like reduce so the core namespace stays small and clear."
-    },
-    {
-      "id": 204,
-      "question": "What does reduce(lambda a, b: a + b, [1, 2, 3, 4]) return?",
-      "answer": "It returns 10, the sum folded over the list.\n\ncode:\nfrom functools import reduce\n\nprint(reduce(lambda a, b: a + b, [1, 2, 3, 4]))  # 10\n\nreal example:\nSumming order totals across a transaction list is exactly this fold."
-    },
-    {
-      "id": 205,
-      "question": "What does reduce(lambda a, b: a * b, [1, 2, 3, 4, 5]) return?",
-      "answer": "It returns 120, the product of all the numbers.\n\ncode:\nfrom functools import reduce\n\nprint(reduce(lambda a, b: a * b, [1, 2, 3, 4, 5]))  # 120\n\nreal example:\nScaling a set of growth ratios into an overall multiplier uses multiplying folds."
-    },
-    {
-      "id": 206,
+      "id": 135,
       "question": "Give the initial value argument of reduce.",
       "answer": "Pass it as the third argument: reduce(fn, iterable, initial_value).\n\ncode:\nfrom functools import reduce\n\nprint(reduce(lambda a, b: a + b, [1, 2, 3], 10))  # 16\n\nreal example:\nStarting a total from a carry-forward balance is a natural use for the initial value."
     },
     {
-      "id": 207,
-      "question": "How do you find the max with reduce?",
-      "answer": "Keep the larger of the accumulated value and each next item.\n\ncode:\nfrom functools import reduce\n\ndef bigger(a, b):\n    return a if a > b else b\n\nprint(reduce(bigger, [3, 9, 2]))  # 9\n\nreal example:\nFinding the highest bid across auction entries mirrors this keep-the-max fold."
-    },
-    {
-      "id": 208,
-      "question": "What are the two main types of higher-order built-ins?",
-      "answer": "Transforming lazily with map/filter and reducing a whole sequence with reduce.\n\ncode:\nfrom functools import reduce\n\nprint(list(map(lambda x: x * 2, [1, 2])))       # [2, 4]\nprint(reduce(lambda a, b: a + b, [1, 2, 3]))     # 6\n\nreal example:\nCleaning a dataset uses map/filter transforms, while summarizing it uses reduce."
-    },
-    {
-      "id": 209,
+      "id": 136,
       "question": "What does functools.lru_cache do?",
       "answer": "It caches function results keyed by arguments to avoid recomputation.\n\ncode:\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef sq(n):\n    return n * n\n\nprint(sq(4), sq(4))  # 16 16, second call is cached\n\nreal example:\nCaching expensive database lookups speeds up repeated identical requests."
     },
     {
-      "id": 210,
+      "id": 137,
       "question": "What does print(f()) output for def f(a=None): return a if a is not None else \"default\"?",
       "answer": "It prints \"default\", the fallback when a is None.\n\ncode:\ndef f(a=None):\n    return a if a is not None else \"default\"\n\nprint(f())  # default\n\nreal example:\nOptional form fields return a standard value when the user leaves them blank."
     },
     {
-      "id": 211,
-      "question": "What does print(f(5)) output for def f(a=None): return a if a is not None else \"default\"?",
-      "answer": "It prints 5, since a provided value bypasses the fallback.\n\ncode:\ndef f(a=None):\n    return a if a is not None else \"default\"\n\nprint(f(5))  # 5\n\nreal example:\nA provided shipping method is used; otherwise a default option kicks in."
-    },
-    {
-      "id": 212,
-      "question": "What does print(sorted([3, 1, 2], key=lambda x: -x)) output?",
-      "answer": "It prints [3, 2, 1], sorted descending by negating each key.\n\ncode:\nprint(sorted([3, 1, 2], key=lambda x: -x))  # [3, 2, 1]\n\nreal example:\nShowing highest scores first is easy with a negated key in sorted()."
-    },
-    {
-      "id": 213,
-      "question": "What does sorted([\"banana\", \"apple\"], key=len) return?",
-      "answer": "It returns [\"apple\", \"banana\"], shortest word first.\n\ncode:\nprint(sorted([\"banana\", \"apple\"], key=len))  # ['apple', 'banana']\n\nreal example:\nArranging titles by length for a layout sorts on a len key."
-    },
-    {
-      "id": 214,
+      "id": 138,
       "question": "Can a function return both a value and a boolean status?",
       "answer": "Yes, return value, ok and unpack with result, ok = f().\n\ncode:\ndef lookup(key):\n    if key == \"a\":\n        return \"found it\", True\n    return None, False\n\nval, ok = lookup(\"a\")\nprint(val, ok)  # found it True\n\nreal example:\nAPI calls return (data, success) so callers can check the status easily."
     },
     {
-      "id": 215,
-      "question": "What is the general rule for keeping functions small?",
-      "answer": "One function should do one clear thing, following the single responsibility idea.\n\ncode:\ndef tax(price, rate):\n    return price * rate\n\ndef total(price, rate):\n    return price + tax(price, rate)\n\nprint(total(100, 0.1))  # 110.0\n\nreal example:\nSplitting tax and total logic makes each part testable and easy to change."
-    },
-    {
-      "id": 216,
-      "question": "What is the PEP 8 rule about blank lines around functions?",
-      "answer": "Use two blank lines above top-level function definitions.\n\ncode:\ndef first():\n    pass\n\n\ndef second():  # two blank lines separate top-level functions\n    pass\n\nreal example:\nFollowing this spacing keeps scripts readable and consistent with Python style guides."
-    },
-    {
-      "id": 217,
+      "id": 139,
       "question": "Why avoid changing a parameter that is also an original list?",
       "answer": "Mutating it changes the caller's data, so copy first if you must modify it.\n\ncode:\ndef clean(items):\n    items = list(items)  # copy before changing\n    items.sort(reverse=True)\n    return items\n\ndata = [3, 1, 2]\nprint(clean(data), data)  # [3, 2, 1] [3, 1, 2]\n\nreal example:\nRendering a sorted ranking should not reorder the underlying customer list."
     },
     {
-      "id": 218,
+      "id": 140,
       "question": "How do you copy a list inside a function before modifying it?",
       "answer": "Use lst = list(lst) or lst = lst[:] to make a copy.\n\ncode:\ndef cap(lst):\n    lst = lst[:]\n    lst.append(\"end\")\n    return lst\n\na = [1]\nprint(cap(a), a)  # [1, 'end'] [1]\n\nreal example:\nTaking a copy keeps the original report intact while you build a modified version."
     },
     {
-      "id": 219,
-      "question": "What does *args unpacking on the call side do?",
-      "answer": "It splits an iterable into separate positional arguments.\n\ncode:\ndef f(a, b, c):\n    return a + b + c\n\nprint(f(*[1, 2, 3]))  # 6\n\nreal example:\nFeeding a trio of coordinates from a list into a drawing call is a perfect use."
-    },
-    {
-      "id": 220,
-      "question": "What does **dict in a call do?",
-      "answer": "It splits the dict into keyword arguments.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f(**{\"a\": 1, \"b\": 2}))  # 3\n\nreal example:\nReusing stored options like **options fills every named parameter in one step."
-    },
-    {
-      "id": 221,
-      "question": "What does print(f(*[1, 2], 3)) output for def f(a, b, c): return a + b + c?",
-      "answer": "It prints 6, combining unpacked 1, 2 with the explicit 3.\n\ncode:\ndef f(a, b, c):\n    return a + b + c\n\nprint(f(*[1, 2], 3))  # 6\n\nreal example:\nMixing unpacked pairs with a fixed third value keeps calls compact and clear."
-    },
-    {
-      "id": 222,
-      "question": "What does print(f(*\"ab\")) output for def f(a, b): return a + b?",
-      "answer": "It prints \"ab\", the concatenation of the unpacked characters.\n\ncode:\ndef f(a, b):\n    return a + b\n\nprint(f(*\"ab\"))  # ab\n\nreal example:\nSplitting a two-letter country code into separate slots uses this unpacking."
-    },
-    {
-      "id": 223,
-      "question": "What does print(f(1, *[2, 3])) output for def f(a, b, c): return a * b + c?",
-      "answer": "It prints 5, since a=1, b=2, c=3 gives 1*2+3.\n\ncode:\ndef f(a, b, c):\n    return a * b + c\n\nprint(f(1, *[2, 3]))  # 5\n\nreal example:\nFilling leaders and rest of a call from a saved list works seamlessly when ordered."
-    },
-    {
-      "id": 224,
-      "question": "Can you combine *args and **kwargs in one definition?",
-      "answer": "Yes, def f(*args, **kwargs) collects both positional and keyword extras.\n\ncode:\ndef f(*args, **kwargs):\n    return args, kwargs\n\nprint(f(1, 2, x=3))  # ((1, 2), {'x': 3})\n\nreal example:\nGeneric wrappers and dispatch helpers use this combo to forward any call."
-    },
-    {
-      "id": 225,
+      "id": 141,
       "question": "What is the purpose of *args, **kwargs in decorators?",
       "answer": "They let the wrapper accept and forward any arguments the decorated function gets.\n\ncode:\ndef deco(fn):\n    def wrapper(*args, **kwargs):\n        print(\"called\")\n        return fn(*args, **kwargs)\n    return wrapper\n\n@deco\ndef add(a, b):\n    return a + b\n\nprint(add(1, 2))  # called then 3\n\nreal example:\nA logging decorator can wrap functions of any signature thanks to *args, **kwargs."
     },
     {
-      "id": 226,
+      "id": 142,
       "question": "What happens if you call f(**{\"b\": 2}) for def f(a, b=1)?",
       "answer": "A TypeError occurs because only b arrives and the required a is still missing.\n\ncode:\ndef f(a, b=1):\n    return a + b\n\n# f(**{\"b\": 2}) -> TypeError: f() missing 1 required positional argument: 'a'\n\nreal example:\nSpreading a partial options dict reveals missing required fields instead of guessing."
     },
     {
-      "id": 227,
-      "question": "What does print(f()*2) do for def f(): return \"ab\"?",
-      "answer": "It prints \"abab\", the returned string multiplied by 2.\n\ncode:\ndef f():\n    return \"ab\"\n\nprint(f() * 2)  # abab\n\nreal example:\nRepeating a divider string like separator() * 3 builds simple visual separators."
-    },
-    {
-      "id": 228,
+      "id": 143,
       "question": "What does print(bool(f)) output for a defined function f?",
       "answer": "It prints True, because functions are always truthy.\n\ncode:\ndef f():\n    pass\n\nprint(bool(f))  # True\n\nreal example:\nChecking if a handler exists with if handler: relies on functions being truthy."
     },
     {
-      "id": 229,
-      "question": "Can you put a function as an element in a dict value and call it later?",
-      "answer": "Yes, store functions as dict values and invoke them with key(args).\n\ncode:\ndef add(a, b):\n    return a + b\n\nops = {\"add\": add}\nprint(ops[\"add\"](1, 2))  # 3\n\nreal example:\nMenu systems keep id-display functions in a dict and call the chosen one."
-    },
-    {
-      "id": 230,
-      "question": "What is exception delegation inside a function?",
-      "answer": "It means letting an exception propagate to the caller unless you explicitly handle it.\n\ncode:\ndef risky():\n    return int(\"x\")  # ValueError propagates to the caller\n\ntry:\n    risky()\nexcept ValueError:\n    print(\"handled by caller\")  # handled by caller\n\nreal example:\nLetting errors bubble up to one top-level handler centralizes error reporting."
-    },
-    {
-      "id": 231,
-      "question": "Can a function return another function, and how would you call the result?",
-      "answer": "Yes, and you call the result with outer()().\n\ncode:\ndef outer():\n    def inner():\n        return \"hi\"\n    return inner\n\nprint(outer()())  # hi\n\nreal example:\nDouble-call factories produce a function then immediately invoke it with arguments."
-    },
-    {
-      "id": 232,
-      "question": "What is the difference between default args and keyword-only defaults?",
-      "answer": "Default args may be passed positionally; keyword-only defaults must be passed by name.\n\ncode:\ndef f(a=1, *, b=2):\n    return a + b\n\nprint(f(5, b=6))  # 11  (a positional, b keyword-only)\n\nreal example:\nForcing connected settings like lock=True to be named reduces argument-order mistakes."
-    },
-    {
-      "id": 233,
-      "question": "What does f(a=1, b=2) do when f is def f(a, /, b)?",
-      "answer": "It raises TypeError because a is positional-only and cannot be a keyword.\n\ncode:\ndef f(a, /, b):\n    return a + b\n\n# f(a=1, b=2) -> TypeError: f() got some positional-only arguments passed as keyword arguments\n\nreal example:\nRestricting built-in-style parameters to position avoids name collisions with options."
-    },
-    {
-      "id": 234,
-      "question": "What does f(1, b=2) do when f is def f(a, /, b)?",
-      "answer": "It works: a is positional (1), and b is passed by keyword.\n\ncode:\ndef f(a, /, b):\n    return a + b\n\nprint(f(1, b=2))  # 3\n\nreal example:\nSignatures mixing positional-only and keyword styles keep short calls while naming key options."
-    },
-    {
-      "id": 235,
-      "question": "What is the maximum recursion depth controlled by?",
-      "answer": "It is controlled by sys.setrecursionlimit().\n\ncode:\nimport sys\nsys.setrecursionlimit(3000)\nprint(sys.getrecursionlimit())  # 3000\n\nreal example:\nDeep tree-processing code may need a higher limit to finish its walk."
-    },
-    {
-      "id": 236,
-      "question": "What does print(f(6)) output for def f(n): return 1 if n <= 1 else n * f(n - 1)?",
-      "answer": "It prints 720, which is 6 factorial.\n\ncode:\ndef f(n):\n    return 1 if n <= 1 else n * f(n - 1)\n\nprint(f(6))  # 720\n\nreal example:\nFactorials scale arrangements, like ordering 6 books on a shelf, rapidly with n."
-    },
-    {
-      "id": 237,
-      "question": "How do you inspect all attributes of a function?",
-      "answer": "Use dir(fn) to list a function's attributes.\n\ncode:\ndef f():\n    pass\n\nprint([a for a in dir(f) if a.startswith(\"_\")])  # ['__annotations__', '__defaults__', ...]\n\nreal example:\nExplorers use dir() to discover what metadata a callable exposes."
-    },
-    {
-      "id": 238,
+      "id": 144,
       "question": "What are the three steps to a decorator?",
       "answer": "Define the decorator, define a wrapper inside it, and return the wrapper.\n\ncode:\ndef deco(fn):\n    def wrapper(*args, **kwargs):\n        return fn(*args, **kwargs)\n    return wrapper\n\n@deco\ndef f():\n    return 1\n\nprint(f())  # 1\n\nreal example:\nAdding logging, timing, or permissions around functions uses this same skeleton."
     },
     {
-      "id": 239,
+      "id": 145,
       "question": "What does @deco above def f(): mean in plain code?",
       "answer": "It is shorthand for f = deco(f).\n\ncode:\ndef deco(fn):\n    def wrapper():\n        print(\"wrapped\")\n        return fn()\n    return wrapper\n\n@deco\ndef f():\n    return 1\n\nprint(f())  # wrapped then 1\n\nreal example:\nThe decorator rewraps the function before it is bound to its name."
     },
     {
-      "id": 240,
+      "id": 146,
       "question": "What is the purpose of functools.wraps?",
       "answer": "It copies metadata, like __name__ and __doc__, from the original function to the wrapper.\n\ncode:\nfrom functools import wraps\n\ndef deco(fn):\n    @wraps(fn)\n    def wrapper(*args, **kwargs):\n        return fn(*args, **kwargs)\n    return wrapper\n\n@deco\ndef f():\n    \"Hi there.\"\n    return 1\n\nprint(f.__name__, f.__doc__)  # f Hi there.\n\nreal example:\nKeeping docs and names intact preserves help() output for decorated library functions."
     },
     {
-      "id": 241,
+      "id": 147,
       "question": "When writing a simple timing decorator, what must the wrapper do?",
       "answer": "Record the start time, call the function, print the duration, and return its result.\n\ncode:\nimport time\n\ndef timer(fn):\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = fn(*args, **kwargs)\n        print(\"took\", time.time() - start)\n        return result\n    return wrapper\n\nreal example:\nProfiling slow endpoints wraps them with a timer that reports elapsed seconds."
     },
     {
-      "id": 242,
+      "id": 148,
       "question": "What does a decorator that takes arguments look like?",
       "answer": "A three-level structure: outer captures args, middle captures the function, inner runs.\n\ncode:\ndef repeat(times):\n    def deco(fn):\n        def wrapper(*args, **kwargs):\n            for _ in range(times):\n                fn(*args, **kwargs)\n        return wrapper\n    return deco\n\nreal example:\nRepeating a retry a fixed number of times is a common decorator-with-arguments use."
     },
     {
-      "id": 243,
+      "id": 149,
       "question": "How are stacked decorators applied?\n@a\n@b\ndef f()",
       "answer": "Bottom-up: the result is f = a(b(f)).\n\ncode:\ndef a(fn):\n    def w():\n        fn()\n        print(\"a\")\n    return w\n\ndef b(fn):\n    def w():\n        fn()\n        print(\"b\")\n    return w\n\n@a\n@b\ndef f():\n    print(\"f\")\n\nf()  # prints f, then b, then a\n\nreal example:\nStacking order matters: caching outside logging wraps the logged version with cache."
     },
     {
-      "id": 244,
+      "id": 150,
       "question": "What are the three built-in method decorators?",
       "answer": "They are @staticmethod, @classmethod, and @property.\n\ncode:\nclass Demo:\n    @staticmethod\n    def helper():\n        return \"static\"\n    @classmethod\n    def make(cls):\n        return cls()\n    @property\n    def name(self):\n        return \"demo\"\n\nreal example:\nModel classes combine these to define helpers, constructors, and computed fields."
     },
     {
-      "id": 245,
+      "id": 151,
       "question": "What does @staticmethod do?",
       "answer": "It marks a method that receives neither self nor cls.\n\ncode:\nclass MathBox:\n    @staticmethod\n    def double(x):\n        return x * 2\n\nprint(MathBox.double(4))  # 8\n\nreal example:\nRelated helper utilities that do not need instance data are grouped as static methods."
     },
     {
-      "id": 246,
+      "id": 152,
       "question": "What does @classmethod do?",
       "answer": "It marks a method whose first argument is the class itself (cls).\n\ncode:\nclass Point:\n    def __init__(self, x):\n        self.x = x\n    @classmethod\n    def origin(cls):\n        return cls(0)\n\nprint(Point.origin().x)  # 0\n\nreal example:\nAlternative constructors like from_json(cls, data) use classmethods."
     },
     {
-      "id": 247,
+      "id": 153,
       "question": "What does @property do?",
       "answer": "It lets you access a method like an attribute, using obj.x instead of obj.x().\n\ncode:\nclass Temp:\n    def __init__(self, c):\n        self.c = c\n    @property\n    def f(self):\n        return self.c * 9 / 5 + 32\n\nt = Temp(100)\nprint(t.f)  # 212.0\n\nreal example:\nRead-only computed attributes like a temperature's Fahrenheit twin feel like plain fields."
     },
     {
-      "id": 248,
+      "id": 154,
       "question": "What is a generator?",
       "answer": "A function that uses yield to produce a sequence of values lazily.\n\ncode:\ndef nums():\n    for i in range(3):\n        yield i\n\nprint(list(nums()))  # [0, 1, 2]\n\nreal example:\nStreaming a large file line by line avoids loading it all into memory."
     },
     {
-      "id": 249,
+      "id": 155,
       "question": "What does yield do?",
       "answer": "It pauses the function, returns a value, and remembers its state to resume later.\n\ncode:\ndef gen():\n    yield 1\n    yield 2\n\ng = gen()\nprint(next(g))  # 1\nprint(next(g))  # 2\n\nreal example:\nA sensor feed yields one reading at a time and resumes right where it left off."
     },
     {
-      "id": 250,
+      "id": 156,
       "question": "What is a generator expression?",
       "answer": "A one-line lazy generator, written with parentheses like (x * 2 for x in range(10)).\n\ncode:\ng = (x * 2 for x in range(3))\nprint(list(g))  # [0, 2, 4]\n\nreal example:\nFeeding a large stream directly to sum() or max() without building a list is efficient."
     }
